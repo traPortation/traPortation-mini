@@ -6,12 +6,13 @@ public class Person : MovingObject
 {
     // 移動の種類を持つ stringじゃなくてもいい
     private string[] pathType;
+    public float velocity = 0.005f;
 
     // Start is called before the first frame update
     void Start()
     {
-        float x = Random.Range(-5f, 5f);
-        float y = Random.Range(-5f, 5f);
+        float x = Random.Range(0f, 16f);
+        float y = Random.Range(0f, 8f);
         transform.position = new Vector3(x, y, 0f);
         Vector2 position = new Vector2(transform.position.x, transform.position.y);
         Vector2 destination;
@@ -24,7 +25,7 @@ public class Person : MovingObject
     // Update is called once per frame
     void Update()
     {
-        this.Move(0.005f);
+        this.Move(this.velocity);
     }
 
     // 経路の端に着いたら ArriveDestination() を呼び出したり、pathType[arriveIndex + 1] を見てあれこれしたりする
@@ -46,8 +47,8 @@ public class Person : MovingObject
 
     // 仮
     private Vector2 SelectDestination() {
-        float x = Random.Range(-5f, 5f);
-        float y = Random.Range(-5f, 5f);
+        float x = Random.Range(0f, 16f);
+        float y = Random.Range(0f, 8f);
         return new Vector2(x, y);
     }
 
