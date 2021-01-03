@@ -6,11 +6,12 @@ public class Person : MovingObject
 {
     // 移動の種類を持つ stringじゃなくてもいい
     private string[] pathType;
-    public float velocity = 0.005f;
+    
 
     // Start is called before the first frame update
     void Start()
     {
+        velocity = 0.005f;
         float x = Random.Range(0f, 16f);
         float y = Random.Range(0f, 8f);
         transform.position = new Vector3(x, y, 0f);

@@ -6,6 +6,8 @@ public abstract class MovingObject : MonoBehaviour
 {
     protected List<List<Vector2>> path;
 
+    protected float velocity;
+
     // this.path[lastPoint.first][lastPoint.second] が最後に通った点になる
     protected (int first, int second) lastPoint = (0, 0);
 
