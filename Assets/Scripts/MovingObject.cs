@@ -34,7 +34,7 @@ public abstract class MovingObject : MonoBehaviour
         this.path = path;
         this.lastPoint.first = 0;
         this.lastPoint.second = 0;
-        transform.position = new Vector3(this.path[0][0].x, this.path[0][0].y, 0f);
+        transform.position = new Vector3(this.path[0][0].x, this.path[0][0].y, 8f);
     }
 
     // それぞれの List<Vector2> の最後に到着したときに行う処理
