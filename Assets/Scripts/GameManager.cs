@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject person;
     public GameObject building;
-    public int PeopleCount = 10;
+    private int PeopleCount = 10;
     // Start is called before the first frame update
     void Start()
     {
