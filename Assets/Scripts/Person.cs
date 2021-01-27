@@ -15,7 +15,7 @@ public class Person : MovingObject
         velocity = 0.005f;
         float x = Random.Range(0f, 16f);
         float y = Random.Range(0f, 8f);
-        transform.position = new Vector3(x, y, Z.PERSON);
+        transform.position = new Vector3(x, y, Z.Person);
         Vector2 position = new Vector2(transform.position.x, transform.position.y);
         Vector2 destination;
         do {

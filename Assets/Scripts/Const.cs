@@ -5,8 +5,8 @@ using UnityEngine;
 namespace Const
 {
     public class Z {
-        public static readonly float BUILDING = 0f;
-        public static readonly float PERSON = 8f;
-        public static readonly float CAMERA = 10f;
+        public static readonly float Building = 0f;
+        public static readonly float Person = 8f;
+        public static readonly float Camera = 10f;
     }
 }

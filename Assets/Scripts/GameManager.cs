@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     void InstantiateBuildings() {
         for (float x = 0.5f; x < 16; x++) {
             for (float y = 0.5f; y < 8; y++) {
-                Instantiate(building, new Vector3(x, y, Z.BUILDING), Quaternion.identity);
+                Instantiate(building, new Vector3(x, y, Z.Building), Quaternion.identity);
             }
         }
     }
