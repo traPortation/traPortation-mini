@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Const;
 
 public abstract class MovingObject : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public abstract class MovingObject : MonoBehaviour
         this.path = path;
         this.lastPoint.first = 0;
         this.lastPoint.second = 0;
-        transform.position = new Vector3(this.path[0][0].x, this.path[0][0].y, 8f);
+        transform.position = new Vector3(this.path[0][0].x, this.path[0][0].y, Z.PERSON);
     }
 
     // それぞれの List<Vector2> の最後に到着したときに行う処理
