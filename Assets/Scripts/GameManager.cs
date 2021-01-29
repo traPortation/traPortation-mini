@@ -7,12 +7,16 @@ public class GameManager : MonoBehaviour
 {
     public GameObject person;
     public GameObject building;
+    // 盤面を管理するクラス
+    public Board board;
     private int PeopleCount = 10;
+
     // Start is called before the first frame update
     void Start()
     {
         InstantiatePeople();
         InstantiateBuildings();
+        this.board = new Board();
     }
 
     // Update is called once per frame
