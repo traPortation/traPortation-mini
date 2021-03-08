@@ -43,7 +43,7 @@ public class Person : MovingObject
         do {
             destination = this.SelectDestination();
         } while (transform.position.x == destination.x && transform.position.y == destination.y);
-        Debug.Log("(" + position.x.ToString() + " ," + position.y.ToString() + ") に到着しました。次の目的地: (" + destination.x.ToString() + " ," + destination.y.ToString() + ")");
+        // Debug.Log($"({position.x.ToString()} ,{position.y.ToString()}) に到着しました。次の目的地: ({destination.x.ToString()} ,{destination.y.ToString()})");
         this.Initialize(this.SearchPath(position, destination));
     }
 
