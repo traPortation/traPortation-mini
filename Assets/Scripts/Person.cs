@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Const;
+using System.Linq;
 
 public class Person : MovingObject
 {
@@ -65,113 +66,92 @@ public class Person : MovingObject
 
     // 2点間を歩く経路を返す関数
     private List<Vector2> PathBetweenTwoPoints(Vector2 origin, Vector2 destination) {
-        List<Vector2> path = new List<Vector2>();
-        Vector2[] position_list = new Vector2[] {origin, origin, destination, destination};
-        for (int i = 1; i < 3; i++) {
-            if ((int)position_list[i].x != position_list[i].x && (int)position_list[i].y != position_list[i].y) {
-                float right_side_road = Mathf.Ceil(position_list[i].x) - position_list[i].x;
-                float up_side_road = Mathf.Ceil(position_list[i].y) - position_list[i].y;
-                float left_side_road = 1f - right_side_road;
-                float down_side_road = 1f - up_side_road;
-                float min_road = Mathf.Min(down_side_road, Mathf.Min(left_side_road, Mathf.Min(up_side_road, right_side_road)));
-                if (min_road == right_side_road) {
-                    position_list[i].x = Mathf.Ceil(position_list[i].x);
-                    continue;
+        Vector2 getRoad(Vector2 position) { // ある点がそこから一番近い道にでるための関数
+            if ((int)position.x != position.x && (int)position.y != position.y) { // position が道以外に置かれている時
+                float leftSideRoad = position.x % 1;
+                float downSideRoad = position.y % 1;
+                float rightSideRoad = 1f - leftSideRoad;
+                float upSideRoad = 1f - downSideRoad;
+                float minRoad = new float[] {leftSideRoad, downSideRoad, rightSideRoad, upSideRoad}.Min();
+                if (minRoad == rightSideRoad) {
+                    position.x = Mathf.Ceil(position.x);
+                    return position;
                 }
-                if (min_road == up_side_road) {
-                    position_list[i].y = Mathf.Ceil(position_list[i].y);
-                    continue;     
+                else if (minRoad == upSideRoad) {
+                    position.y = Mathf.Ceil(position.y);
+                    return position;     
                 }
-                if (min_road == left_side_road) {
-                    position_list[i].x = Mathf.Floor(position_list[i].x);
-                    continue;     
+                else if (minRoad == leftSideRoad) {
+                    position.x = Mathf.Floor(position.x);
+                    return position;     
                 }
-                if (min_road == down_side_road) {
-                    position_list[i].y = Mathf.Floor(position_list[i].y);
-                    continue;     
+                else {
+                    position.y = Mathf.Floor(position.y);
+                    return position;     
                 }
             }
+            return position;
         }
-        Vector2 goban_first = position_list[1], goban_last = position_list[2];
-        if (position_list[2].x - position_list[1].x >= 0) {
-            if ((int)position_list[1].x != position_list[1].x) {
-                goban_first.x = Mathf.Ceil(position_list[1].x);
+
+        Vector2 GetIntersection(Vector2 position) { // ある点がそこから一番近い交差点に出るための関数
+            if ((int)position.x != position.x) {
+                position.x = Mathf.Round(position.x);
             }
-            if ((int)position_list[2].x != position_list[2].x) {
-                goban_last.x = Mathf.Floor(position_list[2].x);
+            if ((int)position.y != position.y) {
+                position.y = Mathf.Round(position.y);
             }
+            return position;
         }
-        else {
-            if ((int)position_list[1].x != position_list[1].x) {
-                goban_first.x = Mathf.Floor(position_list[1].x);
-            }
-            if ((int)position_list[2].x != position_list[2].x) {
-                goban_last.x = Mathf.Ceil(position_list[2].x);
-            }
-        }
-        if (position_list[2].y - position_list[1].y >= 0) {
-            if ((int)position_list[1].y != position_list[1].y) {
-                goban_first.y = Mathf.Ceil(position_list[1].y);
-                Debug.Log(position_list[1].y);
-            }
-            if ((int)position_list[2].y != position_list[2].y) {
-                goban_last.y = Mathf.Floor(position_list[2].y);
-            }
-        }
-        else {
-            if ((int)position_list[1].y != position_list[1].y) {
-                goban_first.y = Mathf.Floor(position_list[1].y);
-            }
-            if ((int)position_list[2].y != position_list[2].y) {
-                goban_last.y = Mathf.Ceil(position_list[2].y);
-            }
-        }
-        int x_moving = (int)(goban_last.x - goban_first.x), y_moving = (int)(goban_last.y - goban_first.y);
-        int n = Mathf.Abs(x_moving) + Mathf.Abs(y_moving) + 1;
-        Vector2[] random_path = new Vector2[n];
-        random_path[0] = goban_first;
-        int ord = 1;
-        int plus_minus_x = x_moving / Mathf.Abs(x_moving), plus_minus_y = y_moving / Mathf.Abs(y_moving);
-        while (x_moving != 0 || y_moving != 0) {
-            if (x_moving == 0) {
-                while (y_moving != 0) {
-                    random_path[ord].y = random_path[ord - 1].y + plus_minus_y;
-                    random_path[ord].x = random_path[ord - 1].x;
-                    ord++;
-                    y_moving = y_moving - plus_minus_y;    
+        
+        Vector2 originToRoad = getRoad(origin), destinationToRoad = getRoad(destination); // origin, destination から道に出た時のそれぞれの座標
+        
+        // 碁盤の目状でランダムに進むための準備
+        Vector2 gobanFirst = GetIntersection(originToRoad), gobanLast = GetIntersection(destinationToRoad);
+        int xMoving = (int)(gobanLast.x - gobanFirst.x), yMoving = (int)(gobanLast.y - gobanFirst.y); // gobanFirst から gobanLast まで x 方向、y 方向にいくら進むか。
+        int n = Mathf.Abs(xMoving) + Mathf.Abs(yMoving) + 1; // 移動量
+        Vector2[] randomPath = new Vector2[n];
+        randomPath[0] = gobanFirst;
+        int ord = 1; // 現在の移動量
+        int plusOrMinusX = xMoving / Mathf.Abs(xMoving), plusOrMinusY = yMoving / Mathf.Abs(yMoving); // gobanFirst から gobanLast までの各軸の移動の方向を表す
+        
+        // randomPath の生成
+        while (xMoving != 0 || yMoving != 0) {
+            if (xMoving != 0 && yMoving != 0) { // x 軸方向とy 軸方向共に移動可能か
+                int rnd = Random.Range(0, 2); // 0 なら x 軸方向へ、1 なら y 軸方向へ
+                if (rnd == 0) {
+                    randomPath[ord].x = randomPath[ord - 1].x + plusOrMinusX;
+                    randomPath[ord].y = randomPath[ord - 1].y;
+                    xMoving = xMoving - plusOrMinusX;
                 }
-                break;
-            }
-            if (y_moving == 0) { 
-                while (x_moving != 0) {
-                    random_path[ord].x = random_path[ord - 1].x + plus_minus_x;
-                    random_path[ord].y = random_path[ord - 1].y;
-                    ord++;
-                    x_moving = x_moving - plus_minus_x;
+                else {
+                    randomPath[ord].y = randomPath[ord - 1].y + plusOrMinusY;
+                    randomPath[ord].x = randomPath[ord - 1].x;
+                    yMoving = yMoving - plusOrMinusY;
                 }
-                break;
-            }
-            if (Random.Range(0, 2) == 0) {
-                random_path[ord].x = random_path[ord - 1].x + plus_minus_x;
-                random_path[ord].y = random_path[ord - 1].y;
-                ord++;
-                x_moving = x_moving - plus_minus_x;
-                continue;
             }
             else {
-                random_path[ord].y = random_path[ord - 1].y + plus_minus_y;
-                random_path[ord].x = random_path[ord - 1].x;
-                ord++;
-                y_moving = y_moving - plus_minus_y;
-                continue;
-            }           
+                if (xMoving == 0) { // ずっと y 軸方向へ
+                    randomPath[ord].y = randomPath[ord - 1].y + plusOrMinusY;
+                    randomPath[ord].x = randomPath[ord - 1].x;
+                    yMoving = yMoving - plusOrMinusY;
+                }
+                else if (yMoving == 0) { // ずっと x 軸方向へ
+                    randomPath[ord].x = randomPath[ord - 1].x + plusOrMinusX;
+                    randomPath[ord].y = randomPath[ord - 1].y;
+                    xMoving = xMoving - plusOrMinusX;
+                }
+            }
+            ord++;           
         }
+
+        // 返り値 path の生成
+        List<Vector2> path = new List<Vector2>(); // 返り値
         path.Add(origin);
-        if (position_list[0] != position_list[1]) path.Add(position_list[1]);
-        if (goban_first != origin) path.Add(goban_first);
-        for (int i = 1; i < n; i++) path.Add(random_path[i]);
-        if (goban_last != destination) path.Add(position_list[2]);
-        if (position_list[2] != position_list[3]) path.Add(destination);
+        if (origin != originToRoad) path.Add(positionList[1]); // origin が道の上でないなら
+        if (gobanFirst != origin) path.Add(gobanFirst); // origin が交差点上でないなら
+        for (int i = 1; i < n; i++) path.Add(randomPath[i]);
+        if (gobanLast != destination) path.Add(positionList[2]); // destination が交差点上でないなら
+        if (destinationToRoad != destination) path.Add(destination); // destination が道の上でないなら
         return path;
     }
 }
