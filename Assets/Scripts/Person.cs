@@ -66,7 +66,7 @@ public class Person : MovingObject
 
     // 2点間を歩く経路を返す関数
     private List<Vector2> PathBetweenTwoPoints(Vector2 origin, Vector2 destination) {
-        Vector2 getRoad(Vector2 position) { // ある点がそこから一番近い道にでるための関数
+        Vector2 getRoad(Vector2 position) { // ある点がそこから一番近い道にでるための関数、ある点が道上ならそのまま返す
             if ((int)position.x != position.x && (int)position.y != position.y) { // position が道以外に置かれている時
                 float leftSideRoad = position.x % 1;
                 float downSideRoad = position.y % 1;
@@ -147,10 +147,10 @@ public class Person : MovingObject
         // 返り値 path の生成
         List<Vector2> path = new List<Vector2>(); // 返り値
         path.Add(origin);
-        if (origin != originToRoad) path.Add(positionList[1]); // origin が道の上でないなら
+        if (origin != originToRoad) path.Add(originToRoad); // origin が道の上でないなら
         if (gobanFirst != origin) path.Add(gobanFirst); // origin が交差点上でないなら
         for (int i = 1; i < n; i++) path.Add(randomPath[i]);
-        if (gobanLast != destination) path.Add(positionList[2]); // destination が交差点上でないなら
+        if (gobanLast != destination) path.Add(destinationToRoad); // destination が交差点上でないなら
         if (destinationToRoad != destination) path.Add(destination); // destination が道の上でないなら
         return path;
     }
