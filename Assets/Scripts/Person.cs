@@ -6,8 +6,24 @@ using System.Linq;
 
 public class Person : MovingObject
 {
+    // 移動法
+    private string[] howToMove = new string[3];
+    /*
+        howToMove[0] : 移動方法、文字列で保存
+            - walking : 徒歩
+            - train : 電車
+            - bus : バス
+            -
+        howToMove[1] : 乗る駅、バス停等のid、徒歩の場合-1、string型に注意
+        howToMove[2] : 降りる駅、バス停等のid、徒歩の場合-1、string型に注意
+    */ 
+    
     // 移動の種類を持つ stringじゃなくてもいい
-    private string[] pathType;
+    private string[] pathType
+    {
+        set {this.howToMove = value;}
+        get {return howToMove;}
+    }
     
 
     // Start is called before the first frame update
