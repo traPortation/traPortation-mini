@@ -31,7 +31,8 @@ public class Person : MovingObject
         this.Move(this.velocity);
     }
 
-    // 経路の端に着いたら ArriveDestination() を呼び出したり、pathType[arriveIndex + 1] を見てあれこれしたりする
+    // 経路の端に着いたら ArriveDestination() を呼び出す
+    // pathType[arriveIndex + 1] を見てあれこれしたりもする
     protected override void Arrive(int arriveIndex){
         if (arriveIndex == path.Count - 1) {
             this.ArriveDestination();
