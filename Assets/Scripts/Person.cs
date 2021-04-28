@@ -7,7 +7,7 @@ using System.Linq;
 public class Person : MovingObject
 {   
     // 移動の種類を持つ stringじゃなくてもいい
-    private struct pathType 
+    private struct PathType 
     {
         private string howToMoving;
         private int gettingOnId;
@@ -24,7 +24,7 @@ public class Person : MovingObject
         {
             get 
             {
-                if (this.howToMoving == Const.howToMove.walking) return -1; // 移動方法が徒歩ならidを-1にする
+                if (this.howToMoving == Const.Move.Walking) return -1; // 移動方法が徒歩ならidを-1にする
                 else return this.gettingOnId;
             } 
             set {this.gettingOnId = value;}
@@ -34,7 +34,7 @@ public class Person : MovingObject
         {
             get 
             {
-                if (this.howToMoving == Const.howToMove.walking) return -1; // 移動方法が徒歩ならidを-1にする
+                if (this.howToMoving == Const.Move.Walking) return -1; // 移動方法が徒歩ならidを-1にする
                 else return this.gettingOffId;
             } 
             set {this.gettingOffId = value;}

@@ -10,9 +10,9 @@ namespace Const
         public static readonly float Camera = 10f;
     }
 
-    public class howToMove {
-        public static readonly string walking = "walking";
-        public static readonly string train = "train";
-        public static readonly string bus = "bus";
+    public class Move {
+        public static readonly string Walking = "Walking";
+        public static readonly string Train = "Train";
+        public static readonly string Bus = "Bus";
     }
 }
