@@ -9,35 +9,35 @@ public class Person : MovingObject
     // 移動の種類を持つ stringじゃなくてもいい
     private struct PathType 
     {
-        private string howToMoving;
-        private int gettingOnId;
-        private int gettingOffId;
+        private string howToMove;
+        private int getOnId;
+        private int getOffId;
         
         // 移動方法
-        private string howToMove
+        private string HowToMove
         {
-            get {return this.howToMoving;} 
-            set {this.howToMoving = value;}
+            get {return this.howToMove;} 
+            set {this.howToMove = value;}
         }
         // 乗り物に乗った所のid
-        private int getOnId
+        private int GetOnId
         {
             get 
             {
-                if (this.howToMoving == Const.Move.Walking) return -1; // 移動方法が徒歩ならidを-1にする
-                else return this.gettingOnId;
+                if (this.howToMove == Const.Move.Walking) return -1; // 移動方法が徒歩ならidを-1にする
+                else return this.getOnId;
             } 
-            set {this.gettingOnId = value;}
+            set {this.getOnId = value;}
         }
         // 乗り物から降りた時のid
-        private int getOffId
+        private int GetOffId
         {
             get 
             {
-                if (this.howToMoving == Const.Move.Walking) return -1; // 移動方法が徒歩ならidを-1にする
-                else return this.gettingOffId;
+                if (this.howToMove == Const.Move.Walking) return -1; // 移動方法が徒歩ならidを-1にする
+                else return this.getOffId;
             } 
-            set {this.gettingOffId = value;}
+            set {this.getOffId = value;}
         }
     }
     
