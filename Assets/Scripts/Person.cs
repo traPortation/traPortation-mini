@@ -40,6 +40,8 @@ public class Person : MovingObject
             set {this.getOffId = value;}
         }
     }
+
+    private PathType moving; 
     
     // Start is called before the first frame update
     void Start()
