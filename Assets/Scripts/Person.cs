@@ -5,11 +5,44 @@ using Const;
 using System.Linq;
 
 public class Person : MovingObject
-{
+{   
     // 移動の種類を持つ stringじゃなくてもいい
-    private string[] pathType;
-    
+    private struct PathType 
+    {
+        private string howToMove;
+        private int getOnId;
+        private int getOffId;
+        
+        // 移動方法
+        private string HowToMove
+        {
+            get {return this.howToMove;} 
+            set {this.howToMove = value;}
+        }
+        // 乗り物に乗った所のid
+        private int GetOnId
+        {
+            get 
+            {
+                if (this.howToMove == Const.Move.Walking) return -1; // 移動方法が徒歩ならidを-1にする
+                else return this.getOnId;
+            } 
+            set {this.getOnId = value;}
+        }
+        // 乗り物から降りた時のid
+        private int GetOffId
+        {
+            get 
+            {
+                if (this.howToMove == Const.Move.Walking) return -1; // 移動方法が徒歩ならidを-1にする
+                else return this.getOffId;
+            } 
+            set {this.getOffId = value;}
+        }
+    }
 
+    private PathType moving; 
+    
     // Start is called before the first frame update
     void Start()
     {
