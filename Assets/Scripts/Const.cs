@@ -10,6 +10,14 @@ namespace Const
         public static readonly float Camera = 10f;
     }
 
+    // Edgeの種類 (要追加)
+    public class EdgeType {
+        public const int Walk = 0;
+        public const int Train = 1;
+
+    }
+
+    // 多分そのうちいらなくなる
     public class Move {
         public static readonly string Walking = "Walking";
         public static readonly string Train = "Train";
