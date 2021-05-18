@@ -11,10 +11,22 @@ namespace Const
     }
 
     // Edgeの種類 (要追加)
-    public class EdgeType {
-        public const int Walk = 0;
-        public const int Train = 1;
-
+    // デフォルト引数で使いたかったので const
+    public class Edge {
+        public class Type {
+            public const int Walk = 0;
+            public const int Train = 1;
+        }
+        public static float Cost(int type) {
+            switch (type) {
+                case Type.Walk:
+                    return 10;
+                case Type.Train:
+                    return 2;
+                default:
+                    throw new System.Exception();
+            }
+        }
     }
 
     // 多分そのうちいらなくなる

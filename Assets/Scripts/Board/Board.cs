@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
-using Const;
 using System.Linq;
 using Collections;
 
@@ -14,8 +13,13 @@ public class Board
         graph = new List<Vertex>();
     }
 
-    public void AddEdge(int from, int to, int cost, int type = EdgeType.Walk) {
+    private float distance(int from, int to) {
+        return Mathf.Sqrt(Mathf.Pow(graph[from].X - graph[to].X, 2) + Mathf.Pow(graph[from].Y - graph[to].Y, 2));
+    }
+
+    public void AddEdge(int from, int to, int type = Const.Edge.Type.Walk) {
         if (from >= this.size() || to >= this.size()) throw new System.Exception("vertex index is invalid");
+        float cost = Const.Edge.Cost(type) * distance(from, to);
         var edge = new Edge(from, to, cost, type);
         graph[from].Edges.Add(edge);
     }
