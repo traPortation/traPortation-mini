@@ -7,64 +7,63 @@ using Collections;
 
 public class Board
 {
-    private List<Vertex> graph;
+    private List<Vertex> vertexes;
     // コンストラクタ
     public Board() {
-        graph = new List<Vertex>();
+        vertexes = new List<Vertex>();
     }
 
-    private float distance(int from, int to) {
-        return Mathf.Sqrt(Mathf.Pow(graph[from].X - graph[to].X, 2) + Mathf.Pow(graph[from].Y - graph[to].Y, 2));
+    private float distance(Vertex from, Vertex to) {
+        return Mathf.Sqrt(Mathf.Pow(from.X - to.X, 2) + Mathf.Pow(from.Y - to.Y, 2));
     }
 
-    public void AddEdge(int from, int to, int type = Const.Edge.Type.Walk) {
-        if (from >= this.size() || to >= this.size()) throw new System.Exception("vertex index is invalid");
+    public void AddEdge(Vertex from, Vertex to, int type = Const.Edge.Type.Walk) {
         float cost = Const.Edge.Cost(type) * distance(from, to);
         var edge = new Edge(from, to, cost, type);
-        graph[from].Edges.Add(edge);
+        from.Edges.Add(edge);
     }
 
-    public void AddVertex(float x, float y) {
-        var vertex = new Vertex(x, y);
-        graph.Add(vertex);
+    public Vertex AddVertex(float x, float y) {
+        var vertex = new Vertex(x, y, this.size());
+        vertexes.Add(vertex);
+        return vertex;
     }
 
     private int size() {
-        return this.graph.Count;
+        return this.vertexes.Count;
     }
 
-    // start から end への最短経路を探す
-    private void dijkstra(int start, int end, ref float[] dist, ref int[] from) {
+    // start から goal への最短経路を探す
+    private void dijkstra(Vertex start, Vertex goal, ref float[] dist, ref Edge[] from) {
         var que = new PriorityQueue<(float, int)>();
         
-        que.Push((dist[start], start));
+        que.Push((dist[start.Index], start.Index));
         while (que.Count != 0) {
             var (cost, idx) = que.Top;
             que.Pop();
-            if (dist[end] < cost) break;
+            if (dist[goal.Index] < cost) break;
             if (dist[idx] < cost) continue;
-            foreach (var edge in this.graph[idx].Edges) {
+            foreach (var edge in this.vertexes[idx].Edges) {
                 var nextCost = cost + edge.Cost;
-                if (dist[edge.To] <= nextCost) continue;
-                dist[edge.To] = nextCost;
-                from[edge.To] = idx;
-                que.Push((dist[edge.To], edge.To));
+                if (dist[edge.To.Index] <= nextCost) continue;
+                dist[edge.To.Index] = nextCost;
+                from[edge.To.Index] = edge;
+                que.Push((dist[edge.To.Index], edge.To.Index));
             }
         }
     }
-    public List<int> GetPath(int start, int end) {
+    public List<Edge> GetPath(Vertex start, Vertex goal) {
         const float INF = float.MaxValue;
         var dist = Enumerable.Repeat<float>(INF, this.size()).ToArray();
-        var from = Enumerable.Repeat<int>(-1, this.size()).ToArray();
+        var from = Enumerable.Repeat<Edge>(null, this.size()).ToArray();
         
-        dijkstra(start, end, ref dist, ref from);
-        var path = new List<int>();
+        dijkstra(start, goal, ref dist, ref from);
+        var path = new List<Edge>();
         
-        for (int cur = end; cur != -1; cur = from[cur]) {
+        for (var cur = from[goal.Index]; cur != null; cur = from[cur.From.Index]) {
             path.Add(cur);
         }
         path.Reverse();
         return path;
     }
-
 }

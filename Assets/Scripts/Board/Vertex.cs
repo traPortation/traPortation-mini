@@ -8,12 +8,14 @@ namespace BoardElements
     {
         public float X { get; }
         public float Y { get; }
-        public List<Edge> Edges{ get; }
+        public List<Edge> Edges { get; }
+        public int Index { get; }
         // コンストラクタ
-        public Vertex(float x, float y) {
+        public Vertex(float x, float y, int index) {
             this.X = x;
             this.Y = y;
             this.Edges = new List<Edge>();
+            this.Index = index;
         }
     }
 }
