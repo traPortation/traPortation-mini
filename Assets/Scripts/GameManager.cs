@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
         InstantiatePeople();
         InstantiateBuildings();
         this.board = new Board();
+        InitBoard();
     }
 
     // Update is called once per frame
@@ -32,9 +33,26 @@ public class GameManager : MonoBehaviour
     }
 
     void InstantiateBuildings() {
-        for (float x = 0.5f; x < 16; x++) {
+        for (float x = 0.5f; x < 12; x++) {
             for (float y = 0.5f; y < 8; y++) {
                 Instantiate(building, new Vector3(x, y, Z.Building), Quaternion.identity);
+            }
+        }
+    }
+    
+    void InitBoard() {
+        var vList = new List<BoardElements.Vertex>();
+        for (float x = 0; x < 14; x++) {
+            for (float y = 0; y < 9; y++) {
+                vList.Add(this.board.AddVertex(x, y));
+            }
+        }
+        for (int x = 0; x < 14; x++) {
+            for (int y = 0; y < 9; y++) {
+                if (x != 13) this.board.AddEdge(vList[x * 8 + y], vList[(x + 1) * 8 + y], 1);
+                if (x != 0) this.board.AddEdge(vList[x * 8 + y], vList[(x - 1) * 8 + y], 1);
+                if (y != 8) this.board.AddEdge(vList[x * 8 + y], vList[x * 8 + y + 1], 1);
+                if (y != 0) this.board.AddEdge(vList[x * 8 + y], vList[x * 8 + y - 1], 1);
             }
         }
     }
