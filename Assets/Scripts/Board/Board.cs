@@ -30,8 +30,8 @@ public class Board
     }
 
     // start から end への最短経路を探す
-    private void dijkstra(int start, int end, ref int[] dist, ref int[] from) {
-        var que = new PriorityQueue<(int, int)>();
+    private void dijkstra(int start, int end, ref float[] dist, ref int[] from) {
+        var que = new PriorityQueue<(float, int)>();
         
         que.Push((dist[start], start));
         while (que.Count != 0) {
@@ -49,8 +49,8 @@ public class Board
         }
     }
     public List<int> GetPath(int start, int end) {
-        const int INF = System.Int32.MaxValue;
-        var dist = Enumerable.Repeat<int>(INF, this.size()).ToArray();
+        const float INF = float.MaxValue;
+        var dist = Enumerable.Repeat<float>(INF, this.size()).ToArray();
         var from = Enumerable.Repeat<int>(-1, this.size()).ToArray();
         
         dijkstra(start, end, ref dist, ref from);

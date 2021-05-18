@@ -15,10 +15,10 @@ namespace BoardElements
         public int Type { get; }
 
         // 経路探索で用いるコスト
-        public int Cost { get; }
+        public float Cost { get; }
 
         // コンストラクタ
-        public Edge(int from, int to, int cost, int type) {
+        public Edge(int from, int to, float cost, int type) {
             if (cost < 0) throw new System.Exception("cost must not be negative number");
             this.From = from;
             this.To = to;
