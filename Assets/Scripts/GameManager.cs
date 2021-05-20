@@ -42,17 +42,17 @@ public class GameManager : MonoBehaviour
     
     void InitBoard() {
         var vList = new List<BoardElements.Vertex>();
-        for (float x = 0; x < 14; x++) {
+        for (float x = 0; x < 13; x++) {
             for (float y = 0; y < 9; y++) {
                 vList.Add(this.board.AddVertex(x, y));
             }
         }
-        for (int x = 0; x < 14; x++) {
+        for (int x = 0; x < 13; x++) {
             for (int y = 0; y < 9; y++) {
-                if (x != 13) this.board.AddEdge(vList[x * 8 + y], vList[(x + 1) * 8 + y], 1);
-                if (x != 0) this.board.AddEdge(vList[x * 8 + y], vList[(x - 1) * 8 + y], 1);
-                if (y != 8) this.board.AddEdge(vList[x * 8 + y], vList[x * 8 + y + 1], 1);
-                if (y != 0) this.board.AddEdge(vList[x * 8 + y], vList[x * 8 + y - 1], 1);
+                if (x != 12) this.board.AddEdge(vList[x * 9 + y], vList[(x + 1) * 9 + y], 1);
+                if (x != 0) this.board.AddEdge(vList[x * 9 + y], vList[(x - 1) * 9 + y], 1);
+                if (y != 8) this.board.AddEdge(vList[x * 9 + y], vList[x * 9 + y + 1], 1);
+                if (y != 0) this.board.AddEdge(vList[x * 9 + y], vList[x * 9 + y - 1], 1);
             }
         }
     }

@@ -34,14 +34,17 @@ public class Board
     }
 
     // start から goal への最短経路を探す
-    private void dijkstra(Vertex start, Vertex goal, ref float[] dist, ref Edge[] from) {
+    private Edge[] dijkstra(Vertex start, Vertex goal) {
+        const float INF = float.MaxValue;
+        var dist = Enumerable.Repeat<float>(INF, this.size()).ToArray();
+        var from = Enumerable.Repeat<Edge>(null, this.size()).ToArray();
         var que = new PriorityQueue<(float, int)>();
         
+        dist[start.Index] = 0;
         que.Push((dist[start.Index], start.Index));
         while (que.Count != 0) {
             var (cost, idx) = que.Top;
             que.Pop();
-            if (dist[goal.Index] < cost) break;
             if (dist[idx] < cost) continue;
             foreach (var edge in this.vertexes[idx].Edges) {
                 var nextCost = cost + edge.Cost;
@@ -51,19 +54,25 @@ public class Board
                 que.Push((dist[edge.To.Index], edge.To.Index));
             }
         }
+        return from;
     }
-    public List<Edge> GetPath(Vertex start, Vertex goal) {
-        const float INF = float.MaxValue;
-        var dist = Enumerable.Repeat<float>(INF, this.size()).ToArray();
-        var from = Enumerable.Repeat<Edge>(null, this.size()).ToArray();
-        
-        dijkstra(start, goal, ref dist, ref from);
-        var path = new List<Edge>();
+    public Path GetPath(Vertex start, Vertex goal) {
+        var from = dijkstra(start, goal);
+        var edges = new List<Edge>();
         
         for (var cur = from[goal.Index]; cur != null; cur = from[cur.From.Index]) {
-            path.Add(cur);
+            edges.Add(cur);
         }
-        path.Reverse();
-        return path;
+        edges.Reverse();
+        return new Path(edges);
+    }
+    public Vertex GetRandomVertex() {
+        return vertexes[Random.Range(0, this.size())];
+    }
+    public Path GetRandomPath(Vertex start) {
+        while (true) {
+            int idx = Random.Range(0, this.size());
+            if (start != vertexes[idx]) return GetPath(start, vertexes[idx]);
+        }
     }
 }
