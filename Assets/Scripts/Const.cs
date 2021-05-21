@@ -36,4 +36,7 @@ namespace Const
             }
         }
     }
+    public static class Count {
+        public static readonly int Person = 10;
+    }
 }

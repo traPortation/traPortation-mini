@@ -6,11 +6,9 @@ using BoardElements;
 namespace BoardElements {
     public class BoardNode: Node
     {
-        public int Index;
+        public readonly int Index;
         private List<BoardEdge> edges;
-        public IReadOnlyList<BoardEdge> Edges {
-            get { return this.edges; }
-        }
+        public IReadOnlyList<BoardEdge> Edges => this.edges; 
         public BoardNode(float x, float y, int index): base(x, y) {
             this.Index = index;
             this.edges = new List<BoardEdge>();

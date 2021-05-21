@@ -9,9 +9,7 @@ namespace BoardElements {
         public Node To { get; }
         public float Cost { get; }
         private List<Edge> edges;
-        public IReadOnlyList<Edge> Edges {
-            get { return this.edges; }
-        }
+        public IReadOnlyList<Edge> Edges => this.edges;
         public MultiEdge(List<Edge> edges) {
             if (edges.Count == 0) throw new System.Exception("MultiEdge needs 1 Edge at least");
             this.From = edges.First().From;

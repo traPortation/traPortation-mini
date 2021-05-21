@@ -12,17 +12,17 @@ public class Board
     public IReadOnlyList<BoardNode> Nodes {
         get { return nodes; }
     }
-    // コンストラクタ
     public Board() {
         this.nodes = new List<BoardNode>();
     }
 
-    public void AddEdge(BoardNode from, BoardNode to, int type = EdgeType.Walk) {
+    public BoardEdge AddEdge(BoardNode from, BoardNode to, int type = EdgeType.Walk) {
         float cost = EdgeCost.Get(type) * Node.Distance(from, to);
         var edge = new BoardEdge(from, to, cost, type);
         if (edge == null) throw new System.Exception("edge is null");
-        if (edge.To == null) throw new System.Exception("node is null"); 
+        if (edge.From == null || edge.To == null) throw new System.Exception("node is null"); 
         from.AddEdge(edge);
+        return edge;
     }
 
     public BoardNode AddNode(float x, float y) {
@@ -36,24 +36,25 @@ public class Board
     private List<Edge> dijkstra(Node start, Node goal) {
         var fromStart = new List<MultiEdge>();
         var toGoal = new List<MultiEdge>();
+
         foreach (var node in nodes) {
             fromStart.Add(multiPathBetweenNodes(start, node));
             toGoal.Add(multiPathBetweenNodes(node, goal));
         }
 
-        const float INF = float.MaxValue;
-        var dist = Enumerable.Repeat<float>(INF, this.Nodes.Count).ToList();
         var from = Enumerable.Repeat<BoardEdge>(null, this.Nodes.Count).ToList();
         var que = new PriorityQueue<(float, int)>();
-        
-        for (int i = 0; i < fromStart.Count; i++) {
-            dist[i] = fromStart[i].Cost;
-            que.Push((dist[i], i));
-        }
 
-        int toGoalIndex = -1;
-        MultiEdge toGoalEdge = multiPathBetweenNodes(start, goal);
-        var toGoalCost = toGoalEdge.Cost;
+        var dist = this.nodes.Select(node => {
+            var edge = multiPathBetweenNodes(start, node);
+            fromStart.Add(edge);
+            que.Push((edge.Cost, node.Index));
+            return edge.Cost;
+        }).ToList();
+
+        int lastIndex = -1;
+        MultiEdge lastEdge = multiPathBetweenNodes(start, goal);
+        var goalCost = lastEdge.Cost;
 
         while (que.Count != 0) {
             var (cost, idx) = que.Top;
@@ -66,21 +67,20 @@ public class Board
                 from[edge.To.Index] = edge;
                 que.Push((dist[edge.To.Index], edge.To.Index));
             }
-            if (cost + toGoal[idx].Cost < toGoalCost) {
-                toGoalIndex = idx;
-                toGoalEdge = toGoal[idx];
-                toGoalCost = cost + toGoal[idx].Cost;
+            if (cost + toGoal[idx].Cost < goalCost) {
+                lastIndex = idx;
+                lastEdge = toGoal[idx];
+                goalCost = cost + toGoal[idx].Cost;
             }
         }
         var edges = new List<Edge>();
         
-        if (toGoalIndex != -1) {
-            for (var cur = from[toGoalIndex]; cur!= null; cur = from[cur.From.Index]) {
+        if (lastIndex != -1) {
+            for (var cur = from[lastIndex]; cur!= null; cur = from[cur.From.Index]) {
                 edges.Add(cur);
                 if (from[cur.From.Index] == null) {
                     var bef = edges.Count;
                     var startEdge = fromStart[cur.From.Index].Edges.AsEnumerable().Reverse();
-                    
                     // edges.Concat(startEdge); がなんか上手くいかない
                     foreach (var edge in startEdge) edges.Add(edge);
                 }
@@ -88,7 +88,7 @@ public class Board
         }
         edges.Reverse();
         // 同上
-        foreach (var edge in toGoalEdge.Edges) edges.Add(edge);
+        foreach (var edge in lastEdge.Edges) edges.Add(edge);
         return edges;
     }
     public Path GetPath(Node start, Node goal) {

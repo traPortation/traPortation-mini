@@ -33,6 +33,6 @@ public class Person : MovingObject
     private void setRandomPath() {
         var start = new Node(transform.position.x, transform.position.y);
         var goal = new Node(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max));
-        this.path = manager.board.GetPath(start, goal);
+        this.path = manager.Board.GetPath(start, goal);
     }
 }
