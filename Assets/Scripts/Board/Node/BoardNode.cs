@@ -4,6 +4,9 @@ using UnityEngine;
 using BoardElements;
 
 namespace BoardElements {
+    /// <summary>
+    /// Board上のNodeを表す
+    /// </summary>
     public class BoardNode: Node
     {
         public readonly int Index;

@@ -11,17 +11,22 @@ public class Path
 
     public float X, Y;
 
+    /// <summary>
+    /// 今いるEdgeのType
+    /// 移動が完了している場合には -1
+    /// </summary>
+    /// <value></value>
     public int Type { 
         get {
-            if (index == edges.Count) return this.edges[this.index].Type;
+            if (this.index < this.edges.Count) return this.edges[this.index].Type;
             else return -1;
         }
     }
-    public bool Finished {
-        get {
-            return index == edges.Count;
-        }
-    }
+    /// <summary>
+    /// 移動が終了しているかどうか
+    /// </summary>
+    public bool Finished => index == edges.Count;
+
     public Path(List<Edge> edges) {
         if (edges.Count == 0) throw new System.Exception("edges are empty");
         this.edges = edges;
@@ -29,6 +34,11 @@ public class Path
         this.X = edges[0].From.X;
         this.Y = edges[0].From.Y;
     }
+    /// <summary>
+    /// deltaだけpath上を移動する
+    /// </summary>
+    /// <param name="delta"></param>
+    /// <returns>Nodeに到達した場合はそのNode、していない場合はnull</returns>
     public Node Move(float delta) {
         if (this.Finished) return null;
         var nextV = edges[index].To;

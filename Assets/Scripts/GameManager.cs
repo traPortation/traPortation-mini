@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject person;
     public GameObject building;
-    // 盤面を管理するクラス
+    
     public Board Board { get; private set; }
 
     // Start is called before the first frame update
@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Prefabから人をインスタンス化する
+    /// </summary>
     private void InstantiatePeople()
     {
         for (int i = 0; i < Count.Person; i++)
@@ -33,7 +36,9 @@ public class GameManager : MonoBehaviour
             Instantiate(person, start, Quaternion.identity);
         }
     }
-
+    /// <summary>
+    /// Prefabから建物をインスタンス化する
+    /// </summary>
     private void InstantiateBuildings()
     {
         for (float x = 0.5f; x < 12; x++)
@@ -44,7 +49,9 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    // 仮 
+    /// <summary>
+    /// 仮でEdgeをおいてるだけ
+    /// </summary>
     private void InitBoard()
     {
         var from = this.Board.AddNode(2, 2);

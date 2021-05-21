@@ -5,6 +5,9 @@ using BoardElements;
 
 namespace BoardElements
 {
+    /// <summary>
+    /// Board上のEdgeを表す
+    /// </summary>
     public class BoardEdge : Edge {
         public readonly new BoardNode From;
         public readonly new BoardNode To;

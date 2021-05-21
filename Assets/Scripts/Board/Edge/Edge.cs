@@ -4,7 +4,9 @@ using UnityEngine;
 
 namespace BoardElements
 {
-    // 片方向の辺
+    /// <summary>
+    /// 片方向への辺
+    /// </summary>
     public class Edge: IEdge
     {
         // それぞれのNode

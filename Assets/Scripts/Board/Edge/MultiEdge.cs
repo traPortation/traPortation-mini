@@ -4,6 +4,9 @@ using UnityEngine;
 using System.Linq;
 
 namespace BoardElements {
+    /// <summary>
+    /// (経路探索用に) 複数の辺をまとめて1つの辺として扱う
+    /// </summary>
     public class MultiEdge : IEdge {
         public Node From { get; }
         public Node To { get; }

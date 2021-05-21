@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace BoardElements
 {
+    /// <summary>
+    /// 頂点
+    /// </summary>
     public class Node
     {
         public float X { get; }

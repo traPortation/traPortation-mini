@@ -6,6 +6,9 @@ using System.Linq;
 using Collections;
 using Const;
 
+/// <summary>
+/// 盤面 頂点 (Node) と辺 (Edge) によって構成される
+/// </summary>
 public class Board
 {
     private List<BoardNode> nodes;
@@ -16,6 +19,13 @@ public class Board
         this.nodes = new List<BoardNode>();
     }
 
+    /// <summary>
+    /// BoardにEdgeを追加する
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
+    /// <param name="type">Const.EdgeTypeから指定する</param>
+    /// <returns>追加されたEdge</returns>
     public BoardEdge AddEdge(BoardNode from, BoardNode to, int type = EdgeType.Walk) {
         float cost = EdgeCost.Get(type) * Node.Distance(from, to);
         var edge = new BoardEdge(from, to, cost, type);
@@ -24,7 +34,12 @@ public class Board
         from.AddEdge(edge);
         return edge;
     }
-
+    /// <summary>
+    /// BoardにNodeを追加する
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns>追加されたNode</returns>
     public BoardNode AddNode(float x, float y) {
         var node = new BoardNode(x, y, this.Nodes.Count);
         this.nodes.Add(node);
@@ -32,7 +47,12 @@ public class Board
         return node;
     }
 
-    // start から goal への最短経路を探す
+    /// <summary>
+    /// 経路探索を行う
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="goal"></param>
+    /// <returns>最短経路</returns>
     private List<Edge> dijkstra(Node start, Node goal) {
         var fromStart = new List<MultiEdge>();
         var toGoal = new List<MultiEdge>();
@@ -91,11 +111,22 @@ public class Board
         foreach (var edge in lastEdge.Edges) edges.Add(edge);
         return edges;
     }
+    /// <summary>
+    /// 経路を取得する
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="goal"></param>
+    /// <returns></returns>
     public Path GetPath(Node start, Node goal) {
         var edges = dijkstra(start, goal);
         return new Path(edges);
     }
-
+    /// <summary>
+    /// 2点間の歩く経路をMultiEdgeとして返す
+    /// </summary>
+    /// <param name="origin"></param>
+    /// <param name="destination"></param>
+    /// <returns></returns>
     private MultiEdge multiPathBetweenNodes(Node origin, Node destination) {
         Node getRoad(Node position) { // ある点がそこから一番近い道にでるための関数、ある点が道上ならそのまま返す
             float leftSideRoad = position.X % 1;
