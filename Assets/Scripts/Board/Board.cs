@@ -17,12 +17,8 @@ public class Board
         this.nodes = new List<BoardNode>();
     }
 
-    private float distance(Node from, Node to) {
-        return Mathf.Sqrt(Mathf.Pow(from.X - to.X, 2) + Mathf.Pow(from.Y - to.Y, 2));
-    }
-
     public void AddEdge(BoardNode from, BoardNode to, int type = EdgeType.Walk) {
-        float cost = EdgeCost.Get(type) * distance(from, to);
+        float cost = EdgeCost.Get(type) * Node.Distance(from, to);
         var edge = new BoardEdge(from, to, cost, type);
         if (edge == null) throw new System.Exception("edge is null");
         if (edge.To == null) throw new System.Exception("node is null"); 
@@ -165,7 +161,7 @@ public class Board
         for (int i = 0; i < path.Count - 1; i++) {
             Node from = path[i];
             Node to = path[i + 1];
-            float cost = distance(from, to) * EdgeCost.Get(EdgeType.Walk);
+            float cost = Node.Distance(from, to) * EdgeCost.Get(EdgeType.Walk);
             edges.Add(new Edge(from, to, cost, EdgeType.Walk));
         }
         return new MultiEdge(edges);
