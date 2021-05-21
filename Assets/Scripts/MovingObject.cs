@@ -11,9 +11,9 @@ public abstract class MovingObject : MonoBehaviour
     protected float velocity;
 
     protected void Move(float delta) {
-        var vertex = path.Move(delta);
+        var node = path.Move(delta);
         transform.position = new Vector3(path.X, path.Y, transform.position.z);
-        if (vertex != null) Arrive(vertex);
+        if (node != null) Arrive(node);
     }
     // Start() 内で呼び出したり path が変わったときに呼び出したり
     protected void Initialize(Path path) {
@@ -22,5 +22,5 @@ public abstract class MovingObject : MonoBehaviour
     }
 
     // 継承先で実装する
-    protected abstract void Arrive(BoardElements.Vertex vertex);
+    protected abstract void Arrive(BoardElements.Node vertex);
 }

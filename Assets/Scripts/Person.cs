@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Const;
 using System.Linq;
-
+using BoardElements;
 public class Person : MovingObject
 {  
     private GameManager manager; 
@@ -12,24 +12,27 @@ public class Person : MovingObject
     {
         this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (this.manager == null) throw new System.Exception("GameManager not found");
-
-        var path = this.manager.board.GetRandomPath(this.manager.board.GetRandomVertex());
-        if (path == null) throw new System.Exception("path is null");
+        this.setRandomPath();
         this.Initialize(path);
+        if (this.path == null) throw new System.Exception("path not found");
         this.velocity = 0.01f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (this.path == null) throw new System.Exception("path not found");
         this.Move(this.velocity);
     }
 
-    protected override void Arrive(BoardElements.Vertex vertex){
+    protected override void Arrive(BoardElements.Node vertex){
         if (this.path.Finished) {
-            var path = this.manager.board.GetRandomPath(vertex);
+            this.setRandomPath();
             this.Initialize(path);
         }
+    }
+    private void setRandomPath() {
+        var start = new Node(transform.position.x, transform.position.y);
+        var goal = new Node(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max));
+        this.path = manager.board.GetPath(start, goal);
     }
 }

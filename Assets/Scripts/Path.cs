@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
+using System.Linq;
 
 public class Path 
 {
@@ -28,7 +29,7 @@ public class Path
         this.X = edges[0].From.X;
         this.Y = edges[0].From.Y;
     }
-    public Vertex Move(float delta) {
+    public Node Move(float delta) {
         if (this.Finished) return null;
         var nextV = edges[index].To;
         float distance = Mathf.Sqrt(Mathf.Pow(nextV.X - this.X, 2) + Mathf.Pow(nextV.Y - this.Y, 2));

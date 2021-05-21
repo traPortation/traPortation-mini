@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject building;
     // 盤面を管理するクラス
     public Board board;
-    private int PeopleCount = 10;
+    private int PeopleCount = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -41,19 +41,9 @@ public class GameManager : MonoBehaviour
     }
     
     void InitBoard() {
-        var vList = new List<BoardElements.Vertex>();
-        for (float x = 0; x < 13; x++) {
-            for (float y = 0; y < 9; y++) {
-                vList.Add(this.board.AddVertex(x, y));
-            }
-        }
-        for (int x = 0; x < 13; x++) {
-            for (int y = 0; y < 9; y++) {
-                if (x != 12) this.board.AddEdge(vList[x * 9 + y], vList[(x + 1) * 9 + y], 1);
-                if (x != 0) this.board.AddEdge(vList[x * 9 + y], vList[(x - 1) * 9 + y], 1);
-                if (y != 8) this.board.AddEdge(vList[x * 9 + y], vList[x * 9 + y + 1], 1);
-                if (y != 0) this.board.AddEdge(vList[x * 9 + y], vList[x * 9 + y - 1], 1);
-            }
-        }
+        var from = this.board.AddNode(2, 2);
+        var to = this.board.AddNode(10, 6);
+        this.board.AddEdge(from, to, EdgeType.Train);
+        this.board.AddEdge(to, from, EdgeType.Train);
     }
 }

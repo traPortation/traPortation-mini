@@ -4,7 +4,15 @@ using UnityEngine;
 
 namespace Const
 {
-    public class Z {
+    public static class X {
+        public static readonly float Min = 0f;
+        public static readonly float Max = 12f;
+    }
+    public static class Y {
+        public static readonly float Min = 0f;
+        public static readonly float Max = 8f;
+    }
+    public static class Z {
         public static readonly float Building = 0f;
         public static readonly float Person = 8f;
         public static readonly float Camera = 10f;
@@ -12,27 +20,20 @@ namespace Const
 
     // Edgeの種類 (要追加)
     // デフォルト引数で使いたかったので const
-    public class Edge {
-        public class Type {
-            public const int Walk = 0;
-            public const int Train = 1;
-        }
-        public static float Cost(int type) {
+    public static class EdgeType {
+        public const int Walk = 0;
+        public const int Train = 1;
+        public const int Multi = 2;
+    }
+    public static class EdgeCost {
+        public const int Walk = 10;
+        public const int Train = 3;
+        public static int Get(int type) {
             switch (type) {
-                case Type.Walk:
-                    return 10;
-                case Type.Train:
-                    return 2;
-                default:
-                    throw new System.Exception();
+                case EdgeType.Walk: return Walk;
+                case EdgeType.Train: return Train;
+                default: throw new System.Exception("edge type is wrong");
             }
         }
-    }
-
-    // 多分そのうちいらなくなる
-    public class Move {
-        public static readonly string Walking = "Walking";
-        public static readonly string Train = "Train";
-        public static readonly string Bus = "Bus";
     }
 }
