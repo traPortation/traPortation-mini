@@ -29,7 +29,8 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < Count.Person; i++)
         {
-            Instantiate(person, Vector3.zero, Quaternion.identity);
+            var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+            Instantiate(person, start, Quaternion.identity);
         }
     }
 
