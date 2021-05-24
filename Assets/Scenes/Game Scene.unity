@@ -457,8 +457,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b4469926941f44c93435c2c67ed200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  person: {fileID: 4606904413214956355, guid: b0d3eb735e9458844ab768a7cb1dbafd, type: 3}
-  building: {fileID: 7706427037400990607, guid: 3d4163803c84c5241ae7d153056bbcd6,
+  Person: {fileID: 7779628519595083127, guid: 5418d54aaf981a145a88dac0f69b91a3, type: 3}
+  Building: {fileID: 7706427037400990607, guid: 3d4163803c84c5241ae7d153056bbcd6,
     type: 3}
 --- !u!4 &1121038819
 Transform:
