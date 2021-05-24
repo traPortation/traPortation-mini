@@ -7,7 +7,7 @@ namespace BoardElements
     /// <summary>
     /// 片方向への辺
     /// </summary>
-    public class Edge: IEdge
+    public class Edge : IEdge
     {
         // それぞれのNode
         public Node From { get; }
@@ -20,7 +20,8 @@ namespace BoardElements
         public float Cost { get; }
 
         // コンストラクタ
-        public Edge(Node from, Node to, float cost, int type) {
+        public Edge(Node from, Node to, float cost, int type)
+        {
             if (cost < 0) throw new System.Exception("cost must not be negative number");
             this.From = from;
             this.To = to;

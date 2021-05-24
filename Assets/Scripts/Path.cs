@@ -4,7 +4,7 @@ using UnityEngine;
 using BoardElements;
 using System.Linq;
 
-public class Path 
+public class Path
 {
     private List<Edge> edges;
     private int index;
@@ -16,8 +16,10 @@ public class Path
     /// 移動が完了している場合には -1
     /// </summary>
     /// <value></value>
-    public int Type { 
-        get {
+    public int Type
+    {
+        get
+        {
             if (this.index < this.edges.Count) return this.edges[this.index].Type;
             else return -1;
         }
@@ -27,7 +29,8 @@ public class Path
     /// </summary>
     public bool Finished => index == edges.Count;
 
-    public Path(List<Edge> edges) {
+    public Path(List<Edge> edges)
+    {
         if (edges.Count == 0) throw new System.Exception("edges are empty");
         this.edges = edges;
         this.index = 0;
@@ -39,15 +42,19 @@ public class Path
     /// </summary>
     /// <param name="delta"></param>
     /// <returns>Nodeに到達した場合はそのNode、していない場合はnull</returns>
-    public Node Move(float delta) {
+    public Node Move(float delta)
+    {
         if (this.Finished) return null;
         var nextV = edges[index].To;
         float distance = Mathf.Sqrt(Mathf.Pow(nextV.X - this.X, 2) + Mathf.Pow(nextV.Y - this.Y, 2));
-        if (distance > delta) {
+        if (distance > delta)
+        {
             this.X += (nextV.X - this.X) * delta / distance;
             this.Y += (nextV.Y - this.Y) * delta / distance;
             return null;
-        } else {
+        }
+        else
+        {
             this.X = nextV.X;
             this.Y = nextV.Y;
             this.index++;

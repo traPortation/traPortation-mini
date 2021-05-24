@@ -5,8 +5,8 @@ using Const;
 using System.Linq;
 using BoardElements;
 public class Person : MovingObject
-{  
-    private GameManager manager; 
+{
+    private GameManager manager;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +24,10 @@ public class Person : MovingObject
         this.Move(this.velocity);
     }
 
-    protected override void Arrive(BoardElements.Node vertex){
-        if (this.path.Finished) {
+    protected override void Arrive(BoardElements.Node vertex)
+    {
+        if (this.path.Finished)
+        {
             this.setRandomPath();
             this.Initialize(path);
         }
@@ -33,7 +35,8 @@ public class Person : MovingObject
     /// <summary>
     /// ランダムにゴールを設定し、そこまでの経路をセットする
     /// </summary>
-    private void setRandomPath() {
+    private void setRandomPath()
+    {
         var start = new Node(transform.position.x, transform.position.y);
         var goal = new Node(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max));
         var path = manager.Board.GetPath(start, goal);
