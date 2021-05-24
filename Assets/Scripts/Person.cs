@@ -12,7 +12,7 @@ public class Person : MovingObject
     {
         this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (this.manager == null) throw new System.Exception("GameManager not found");
-        this.setRandomPath();
+        var path = this.getRandomPath();
         this.Initialize(path);
         if (this.path == null) throw new System.Exception("path not found");
         this.velocity = 0.01f;
@@ -28,18 +28,17 @@ public class Person : MovingObject
     {
         if (this.path.Finished)
         {
-            this.setRandomPath();
+            var path = this.getRandomPath();
             this.Initialize(path);
         }
     }
     /// <summary>
     /// ランダムにゴールを設定し、そこまでの経路をセットする
     /// </summary>
-    private void setRandomPath()
+    private Path getRandomPath()
     {
         var start = new Node(transform.position.x, transform.position.y);
         var goal = new Node(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max));
-        var path = manager.Board.GetPath(start, goal);
-        this.Initialize(path);
+        return this.manager.Board.GetPath(start, goal);
     }
 }

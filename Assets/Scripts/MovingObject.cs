@@ -12,10 +12,11 @@ public abstract class MovingObject : MonoBehaviour
 
     protected void Move(float delta)
     {
-        var node = path.Move(delta);
+        var node = this.path.Move(delta);
         transform.position = new Vector3(path.X, path.Y, transform.position.z);
-        if (node != null) Arrive(node);
+        if (node != null) this.Arrive(node);
     }
+
     /// <summary>
     /// pathをsetし、自分の位置をpathの始点にする
     /// </summary>
@@ -25,6 +26,7 @@ public abstract class MovingObject : MonoBehaviour
         this.path = path;
         transform.position = new Vector3(path.X, path.Y, transform.position.z);
     }
+
     /// <summary>
     /// Nodeに到着するごとに呼び出される
     /// </summary>

@@ -55,8 +55,8 @@ namespace Const
         {
             switch (type)
             {
-                case EdgeType.Walk: return Walk;
-                case EdgeType.Train: return Train;
+                case Const.EdgeType.Walk: return Walk;
+                case Const.EdgeType.Train: return Train;
                 default: throw new System.Exception("edge type is wrong");
             }
         }

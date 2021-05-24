@@ -12,10 +12,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InstantiatePeople();
-        InstantiateBuildings();
+        this.InstantiatePeople();
+        this.InstantiateBuildings();
         this.Board = new Board();
-        InitBoard();
+        this.InitBoard();
     }
 
     // Update is called once per frame
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < Count.Person; i++)
         {
             var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
-            Instantiate(Person, start, Quaternion.identity);
+            Instantiate(this.Person, start, Quaternion.identity);
         }
     }
     /// <summary>
@@ -40,11 +40,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void InstantiateBuildings()
     {
-        for (float x = 0.5f; x < Const.X.Max; x++)
+        for (float x = 0.5f; x < X.Max; x++)
         {
-            for (float y = 0.5f; y < Const.Y.Max; y++)
+            for (float y = 0.5f; y < Y.Max; y++)
             {
-                Instantiate(Building, new Vector3(x, y, Z.Building), Quaternion.identity);
+                Instantiate(this.Building, new Vector3(x, y, Z.Building), Quaternion.identity);
             }
         }
     }

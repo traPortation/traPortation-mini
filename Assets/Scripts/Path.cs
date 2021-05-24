@@ -16,22 +16,16 @@ public class Path
     /// 移動が完了している場合には -1
     /// </summary>
     /// <value></value>
-    public int Type
-    {
-        get
-        {
-            if (this.index < this.edges.Count) return this.edges[this.index].Type;
-            else return -1;
-        }
-    }
+    public int Type => this.index < this.edges.Count ? this.edges[this.index].Type : -1;
+
     /// <summary>
     /// 移動が終了しているかどうか
     /// </summary>
-    public bool Finished => index == edges.Count;
+    public bool Finished => index == this.edges.Count;
 
     public Path(List<Edge> edges)
     {
-        if (edges.Count == 0) throw new System.Exception("edges are empty");
+        if (this.edges.Count == 0) throw new System.Exception("edges are empty");
         this.edges = edges;
         this.index = 0;
         this.X = edges[0].From.X;
@@ -45,7 +39,7 @@ public class Path
     public Node Move(float delta)
     {
         if (this.Finished) return null;
-        var nextV = edges[index].To;
+        var nextV = this.edges[this.index].To;
         float distance = Mathf.Sqrt(Mathf.Pow(nextV.X - this.X, 2) + Mathf.Pow(nextV.Y - this.Y, 2));
         if (distance > delta)
         {

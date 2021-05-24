@@ -20,6 +20,7 @@ namespace BoardElements
             if (edges.Count == 0) throw new System.Exception("MultiEdge needs 1 Edge at least");
             this.From = edges.First().From;
             this.To = edges.Last().To;
+            // それぞれのedgeごとのCostの合計
             this.Cost = edges.Aggregate(0f, (acc, edge) => acc + edge.Cost);
             this.edges = edges;
         }

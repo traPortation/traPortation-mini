@@ -13,7 +13,7 @@ public class Board
 {
     private List<BoardNode> nodes;
     public IReadOnlyList<BoardNode> Nodes {
-        get { return nodes; }
+        get { return this.nodes; }
     }
     public Board() {
         this.nodes = new List<BoardNode>();
@@ -57,7 +57,7 @@ public class Board
         var fromStart = new List<MultiEdge>();
         var toGoal = new List<MultiEdge>();
 
-        foreach (var node in nodes) {
+        foreach (var node in this.nodes) {
             fromStart.Add(multiPathBetweenNodes(start, node));
             toGoal.Add(multiPathBetweenNodes(node, goal));
         }

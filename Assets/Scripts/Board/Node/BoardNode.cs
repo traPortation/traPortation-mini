@@ -20,7 +20,7 @@ namespace BoardElements
         }
         public void AddEdge(BoardEdge edge)
         {
-            edges.Add(edge);
+            this.edges.Add(edge);
         }
     }
 }

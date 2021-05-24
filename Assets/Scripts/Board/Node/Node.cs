@@ -6,7 +6,7 @@ namespace BoardElements
 {
     /// <summary>
     /// 頂点
-    /// </summary>
+    /// /// </summary>
     public class Node
     {
         public float X { get; }
