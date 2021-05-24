@@ -5,8 +5,8 @@ using Const;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject Person;
-    public GameObject Building;
+    [SerializeField] private GameObject person;
+    [SerializeField] private GameObject building;
     public Board Board { get; private set; }
 
     // Start is called before the first frame update
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < Count.Person; i++)
         {
             var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
-            Instantiate(this.Person, start, Quaternion.identity);
+            Instantiate(this.person, start, Quaternion.identity);
         }
     }
     /// <summary>
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         {
             for (float y = 0.5f; y < Y.Max; y++)
             {
-                Instantiate(this.Building, new Vector3(x, y, Z.Building), Quaternion.identity);
+                Instantiate(this.building, new Vector3(x, y, Z.Building), Quaternion.identity);
             }
         }
     }

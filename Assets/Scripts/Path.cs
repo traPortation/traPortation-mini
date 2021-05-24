@@ -25,7 +25,7 @@ public class Path
 
     public Path(List<Edge> edges)
     {
-        if (this.edges.Count == 0) throw new System.Exception("edges are empty");
+        if (edges.Count == 0) throw new System.Exception("edges are empty");
         this.edges = edges;
         this.index = 0;
         this.X = edges[0].From.X;
