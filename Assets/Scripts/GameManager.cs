@@ -5,37 +5,57 @@ using Const;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject person;
-    public GameObject building;
-    // 盤面を管理するクラス
-    public Board board;
-    private int PeopleCount = 10;
+    [SerializeField] private GameObject person;
+    [SerializeField] private GameObject building;
+    public Board Board { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
-        InstantiatePeople();
-        InstantiateBuildings();
-        this.board = new Board();
+        this.InstantiatePeople();
+        this.InstantiateBuildings();
+        this.Board = new Board();
+        this.InitBoard();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void InstantiatePeople() {
-        for (int i = 0; i < PeopleCount; i++) {
-            Instantiate(person, Vector3.zero, Quaternion.identity);
+    /// <summary>
+    /// Prefabから人をインスタンス化する
+    /// </summary>
+    private void InstantiatePeople()
+    {
+        for (int i = 0; i < Count.Person; i++)
+        {
+            var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+            Instantiate(this.person, start, Quaternion.identity);
         }
     }
-
-    void InstantiateBuildings() {
-        for (float x = 0.5f; x < 16; x++) {
-            for (float y = 0.5f; y < 8; y++) {
-                Instantiate(building, new Vector3(x, y, Z.Building), Quaternion.identity);
+    /// <summary>
+    /// Prefabから建物をインスタンス化する
+    /// </summary>
+    private void InstantiateBuildings()
+    {
+        for (float x = 0.5f; x < X.Max; x++)
+        {
+            for (float y = 0.5f; y < Y.Max; y++)
+            {
+                Instantiate(this.building, new Vector3(x, y, Z.Building), Quaternion.identity);
             }
         }
+    }
+    /// <summary>
+    /// 仮でEdgeをおいてるだけ
+    /// </summary>
+    private void InitBoard()
+    {
+        var from = this.Board.AddNode(2, 2);
+        var to = this.Board.AddNode(10, 6);
+        this.Board.AddEdge(from, to, EdgeType.Train);
+        this.Board.AddEdge(to, from, EdgeType.Train);
     }
 }
