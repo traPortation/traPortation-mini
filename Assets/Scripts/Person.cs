@@ -19,7 +19,7 @@ public class Person : MovingObject
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         this.Move(this.velocity);
     }

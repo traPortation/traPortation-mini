@@ -58,4 +58,10 @@ public class GameManager : MonoBehaviour
         this.Board.AddEdge(from, to, EdgeType.Train);
         this.Board.AddEdge(to, from, EdgeType.Train);
     }
+
+    public void AlterPauseStatus()
+    {
+        Time.timeScale = 1 - Time.timeScale;
+        Debug.Log(Time.timeScale.ToString());
+    }
 }
