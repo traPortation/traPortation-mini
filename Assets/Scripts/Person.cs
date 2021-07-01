@@ -7,20 +7,20 @@ using System.Linq;
 public class Person : MovingObject
 {   
     // 移動の種類を持つ stringじゃなくてもいい
-    private struct PathType 
+    public struct PathType 
     {
         private string howToMove;
         private int getOnId;
         private int getOffId;
         
         // 移動方法
-        private string HowToMove
+        public string HowToMove
         {
             get {return this.howToMove;} 
             set {this.howToMove = value;}
         }
         // 乗り物に乗った所のid
-        private int GetOnId
+        public int GetOnId
         {
             get 
             {
@@ -30,7 +30,7 @@ public class Person : MovingObject
             set {this.getOnId = value;}
         }
         // 乗り物から降りた時のid
-        private int GetOffId
+        public int GetOffId
         {
             get 
             {
@@ -41,7 +41,7 @@ public class Person : MovingObject
         }
     }
 
-    private PathType moving; 
+    public PathType moving; 
     
     // Start is called before the first frame update
     void Start()
