@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace BoardElements
 {
-    public class Edge
+    public interface IEdge
     {
-        // コンストラクタ
-        public Edge() {}
+        Node From { get; }
+        Node To { get; }
+        float Cost { get; }
     }
 }

@@ -12,16 +12,18 @@ public class StationManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        //buildModeを切り替えるためのボタンクリックを無視する
         if (buttonClicked)
         {
             buttonClicked = false;
         }
+        //それ以外の場合はbuildModeを判定し、駅を追加する
         else if (Input.GetMouseButtonUp(0) && buildMode)
         {
             Vector3 mousePosition = Input.mousePosition;
