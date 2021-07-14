@@ -11,7 +11,8 @@ public class Station : MonoBehaviour
     {
 
     }
-    
+
+    /* 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Person")) //タグで衝突した物体を判定（要設定：Personのプレハブのタグとコライダー）
@@ -23,7 +24,6 @@ public class Station : MonoBehaviour
             }
         }
         // 乗り物への人の乗り降りに必要なpassengers配列をVehicleクラスに実装が必要
-        /*
         if (collision.gameObject.CompareTag("Transport")) // 乗り物が駅に着いた時
         {
             Vehicle transport = collision.gameObject.GetComponent<Vehicle>();
@@ -39,6 +39,6 @@ public class Station : MonoBehaviour
                 transport.passengers.Add(passenger);
             }
         }
-        */
     }
+    */
 }

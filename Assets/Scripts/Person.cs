@@ -5,49 +5,8 @@ using Const;
 using System.Linq;
 using BoardElements;
 public class Person : MovingObject
-<<<<<<< HEAD
-{   
-    // 移動の種類を持つ stringじゃなくてもいい
-    public struct PathType 
-    {
-        private string howToMove;
-        private int getOnId;
-        private int getOffId;
-        
-        // 移動方法
-        public string HowToMove
-        {
-            get {return this.howToMove;} 
-            set {this.howToMove = value;}
-        }
-        // 乗り物に乗った所のid
-        public int GetOnId
-        {
-            get 
-            {
-                if (this.howToMove == Const.Move.Walking) return -1; // 移動方法が徒歩ならidを-1にする
-                else return this.getOnId;
-            } 
-            set {this.getOnId = value;}
-        }
-        // 乗り物から降りた時のid
-        public int GetOffId
-        {
-            get 
-            {
-                if (this.howToMove == Const.Move.Walking) return -1; // 移動方法が徒歩ならidを-1にする
-                else return this.getOffId;
-            } 
-            set {this.getOffId = value;}
-        }
-    }
-
-    public PathType moving; 
-    
-=======
 {
     private GameManager manager;
->>>>>>> master
     // Start is called before the first frame update
     void Start()
     {
