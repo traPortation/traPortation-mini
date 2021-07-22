@@ -55,8 +55,8 @@ public class GameManager : MonoBehaviour
     {
         var from = this.Board.AddNode(2, 2);
         var to = this.Board.AddNode(10, 6);
-        this.Board.AddEdge(from, to, EdgeType.Train);
-        this.Board.AddEdge(to, from, EdgeType.Train);
+        this.Board.AddEdge(from, to, EdgeCost.Get(EdgeCost.Type.Train));
+        this.Board.AddEdge(to, from, EdgeCost.Get(EdgeCost.Type.Train));
     }
 
     public void AlterPauseStatus()

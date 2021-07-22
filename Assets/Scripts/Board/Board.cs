@@ -26,7 +26,7 @@ public class Board
     /// <param name="to"></param>
     /// <param name="type">Const.EdgeTypeから指定する</param>
     /// <returns>追加されたEdge</returns>
-    public BoardEdge AddEdge(BoardNode from, BoardNode to, int type = EdgeType.Walk) {
+    public BoardEdge AddEdge(BoardNode from, BoardNode to, int type = EdgeCost.Get(EdgeCost.Type.Walk)) {
         float cost = EdgeCost.Get(type) * Node.Distance(from, to);
         var edge = new BoardEdge(from, to, cost, type);
         if (edge == null) throw new System.Exception("edge is null");
