@@ -55,4 +55,14 @@ public class Path
             return nextV;
         }
     }
+    public void ReverseEdge(){
+        this.edges.Reverse();
+        var reverseEdge = new List<Edge>();
+        for(int i = 0;i < this.edges.Count; i++){
+            var tem = new Edge(this.edges[i].To, this.edges[i].From, this.edges[i].Cost, this.edges[i].Type);
+            reverseEdge.Add(tem);
+        }
+        this.edges = reverseEdge;
+        this.index = 0;
+    }
 }

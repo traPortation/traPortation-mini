@@ -61,6 +61,12 @@ namespace Const
             }
         }
     }
+    public static class Trains{
+        public const int Capacity = 4;
+        public const int Wage = 100;
+        public const float TrainVelocity = 0.03f;
+        public const float StopStationTime = 1f;
+    }
     /// <summary>
     /// 数に関する定数
     /// </summary>
