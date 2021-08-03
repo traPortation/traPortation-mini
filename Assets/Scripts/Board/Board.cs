@@ -9,7 +9,7 @@ using Const;
 /// <summary>
 /// 盤面 頂点 (Node) と辺 (Edge) によって構成される
 /// </summary>
-public class Board
+public class Board: Singleton<Board>
 {
     private List<BoardNode> nodes;
     public IReadOnlyList<BoardNode> Nodes {
@@ -196,5 +196,10 @@ public class Board
             edges.Add(new Edge(from, to, cost, EdgeType.Walk));
         }
         return new MultiEdge(edges);
+    }
+
+    public void Test()
+    {
+        Debug.Log("Test");
     }
 }

@@ -37,5 +37,6 @@ public class StationManager : MonoBehaviour
     {
         buttonClicked = true;
         buildMode = !buildMode;
+        Board.Instance.Test();
     }
 }
