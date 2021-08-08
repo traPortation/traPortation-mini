@@ -14,13 +14,13 @@ namespace BoardElements
         public Node To { get; }
 
         // edgeの種類 (Const.EdgeType が入る)
-        public int Type { get; }
+        public Const.EdgeCost.Type Type { get; }
 
         // 経路探索で用いるコスト
         public float Cost { get; }
 
         // コンストラクタ
-        public Edge(Node from, Node to, float cost, int type)
+        public Edge(Node from, Node to, float cost, Const.EdgeCost.Type type)
         {
             if (cost < 0) throw new System.Exception("cost must not be negative number");
             this.From = from;

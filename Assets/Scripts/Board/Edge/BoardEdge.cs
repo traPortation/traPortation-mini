@@ -12,7 +12,7 @@ namespace BoardElements
     {
         public readonly new BoardNode From;
         public readonly new BoardNode To;
-        public BoardEdge(BoardNode from, BoardNode to, float cost, int type) : base(from, to, cost, type)
+        public BoardEdge(BoardNode from, BoardNode to, float cost, Const.EdgeCost.Type type) : base(from, to, cost, type)
         {
             this.From = from;
             this.To = to;

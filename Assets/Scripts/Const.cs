@@ -39,6 +39,7 @@ namespace Const
         {
             Walk = 10,
             Train = 3,
+            Finished = -1 // 使い終わったEdge
             // Multi = ?,
         }
         public static int Get(Type type)

@@ -16,7 +16,7 @@ public class Path
     /// 移動が完了している場合には -1
     /// </summary>
     /// <value></value>
-    public int Type => this.index < this.edges.Count ? this.edges[this.index].Type : -1;
+    public Const.EdgeCost.Type Type => this.index < this.edges.Count ? this.edges[this.index].Type : Const.EdgeCost.Type.Finished;
 
     /// <summary>
     /// 移動が終了しているかどうか
