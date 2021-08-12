@@ -7,7 +7,7 @@ using Const;
 public class Train : Vehicle
 {
     private float stopStationTime = Trains.StopStationTime;
-    private bool moveTrain = true;
+    private bool isMoving = true;
     void Start(){
         this.Capacity = Trains.Capacity;
         this.Wage = Trains.Wage;
@@ -16,21 +16,21 @@ public class Train : Vehicle
     }
     
     void FixedUpdate(){
-        if(moveTrain){
+        if(isMoving){
             this.Move(this.velocity);
         }
     }
     protected override void Arrive(BoardElements.Node node){
         if(this.path.Finished){
-            this.path.ReverseEdge();
+            this.path.InitializeEdge();
             Initialize(this.path);
         }
-        moveTrain = false;
+        isMoving = false;
         StartCoroutine("stopstation");
     }
     private IEnumerator stopstation()
-    {   moveTrain = false;
+    {   isMoving = false;
         yield return new WaitForSeconds(stopStationTime);
-        moveTrain = true;
+        isMoving = true;
     }   
 }
