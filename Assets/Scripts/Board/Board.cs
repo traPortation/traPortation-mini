@@ -9,7 +9,7 @@ using Const;
 /// <summary>
 /// 盤面 頂点 (Node) と辺 (Edge) によって構成される
 /// </summary>
-public class Board
+public class Board: Singleton<Board>
 {
     private List<BoardNode> nodes;
     public IReadOnlyList<BoardNode> Nodes {
@@ -26,7 +26,7 @@ public class Board
     /// <param name="to"></param>
     /// <param name="type">Const.EdgeTypeから指定する</param>
     /// <returns>追加されたEdge</returns>
-    public BoardEdge AddEdge(BoardNode from, BoardNode to, int type = EdgeType.Walk) {
+    public BoardEdge AddEdge(BoardNode from, BoardNode to, EdgeCost.Type type = EdgeCost.Type.Walk) {
         float cost = EdgeCost.Get(type) * Node.Distance(from, to);
         var edge = new BoardEdge(from, to, cost, type);
         if (edge == null) throw new System.Exception("edge is null");
@@ -192,9 +192,14 @@ public class Board
         for (int i = 0; i < path.Count - 1; i++) {
             Node from = path[i];
             Node to = path[i + 1];
-            float cost = Node.Distance(from, to) * EdgeCost.Get(EdgeType.Walk);
-            edges.Add(new Edge(from, to, cost, EdgeType.Walk));
+            float cost = Node.Distance(from, to) * EdgeCost.Get(EdgeCost.Type.Walk);
+            edges.Add(new Edge(from, to, cost, EdgeCost.Type.Walk));
         }
         return new MultiEdge(edges);
+    }
+
+    public void Test()
+    {
+        Debug.Log("Test");
     }
 }

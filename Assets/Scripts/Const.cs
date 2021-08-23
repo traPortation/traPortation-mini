@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,42 +31,30 @@ namespace Const
     }
 
     /// <summary>
-    /// Edgeの種類
-    /// </summary>
-    public static class EdgeType
-    {
-        public const int Walk = 0;
-        public const int Train = 1;
-        public const int Multi = 2;
-    }
-    /// <summary>
     /// Edgeのコスト
     /// </summary>
     public static class EdgeCost
     {
-        public const int Walk = 10;
-        public const int Train = 3;
-        /// <summary>
-        /// Const.EdgeType を引数としてコストを返す
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static int Get(int type)
+        public enum Type
         {
-            switch (type)
-            {
-                case Const.EdgeType.Walk: return Walk;
-                case Const.EdgeType.Train: return Train;
-                default: throw new System.Exception("edge type is wrong");
-            }
+            Walk = 10,
+            Train = 3,
+            Finished = -1 // 使い終わったEdge
+            // Multi = ?,
+        }
+        public static int Get(Type type)
+        {
+            return (int) type;
         }
     }
+
     public static class Trains{
         public const int Capacity = 4;
         public const int Wage = 100;
         public const float TrainVelocity = 0.03f;
         public const float StopStationTime = 1f;
     }
+
     /// <summary>
     /// 数に関する定数
     /// </summary>

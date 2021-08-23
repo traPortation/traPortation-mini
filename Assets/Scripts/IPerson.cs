@@ -1,27 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using BoardElements;
+﻿using BoardElements;
 
 /// <summary>
-/// とりあえず仮で (ここ大事) 人の仕様を置いておきます
-/// わりと適当なので変えたい場合は気軽に言ってください
+/// Personに (将来的に) 実装する機能
 /// </summary>
 public interface IPerson
 {
     /// <summary>
-    /// 乗り物が駅に着いたときに、駅で待ってる人について呼ばれる
-    /// 次の駅を見て乗るか決めるみたいな
+    /// 駅で待ってる人について呼ばれる
+    /// 次の駅を見て乗るか決める
     /// </summary>
     /// <param name="nextStation">次の駅</param>
     /// <returns>乗るかどうか</returns>
-    bool DecideToRide(BoardNode nextStation);
+    bool DecideToRide(Vehicle vehicle);
 
     /// <summary>
-    /// 乗り物が駅に着いたときに、乗り物に乗ってる人について呼ばれる
-    /// 次の駅を見て降りるか決めるみたいな
+    /// 乗り物に乗る処理
+    /// </summary>
+    /// <param name="vheicle"></param>
+    void Ride(Vehicle vheicle);
+
+    /// <summary>
+    /// 乗り物に乗ってる人について呼ばれる
+    /// 降りるか決める
     /// </summary>
     /// <param name="nextStation">次の駅</param>
     /// <returns>降りるかどうか</returns>
-    bool DecideToGetOff(BoardNode nextStation);
+    bool DecideToGetOff(BoardNode station);
 }
