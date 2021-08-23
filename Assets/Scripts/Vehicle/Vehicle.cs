@@ -5,12 +5,7 @@ using Const;
 
 public abstract class Vehicle : MovingObject
 {
-    public readonly int wage;
-    public readonly int capacity;
-
-    public Vehicle(int wage, int capacity)
-    {
-        this.wage = wage;
-        this.capacity = capacity;
-    }
+    public int Wage{get; protected set;}
+    public int Capacity{get; protected set;}
+    
 }

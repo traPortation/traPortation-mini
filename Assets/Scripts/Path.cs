@@ -55,4 +55,10 @@ public class Path
             return nextV;
         }
     }
+    
+    public void InitializeEdge(){   
+        this.index = 0;
+        this.X = edges[0].From.X;
+        this.Y = edges[0].From.Y;
+    }
 }
