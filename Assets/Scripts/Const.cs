@@ -62,4 +62,13 @@ namespace Const
     {
         public static readonly int Person = 10;
     }
+
+    /// <summary>
+    /// 所持金に関する定数
+    /// </summary>
+    public static class MoneyLimit
+    {
+        private static const int minMoney = 0;
+        private static const int maxMoney = 999999999;
+    }
 }
