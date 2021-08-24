@@ -68,7 +68,7 @@ namespace Const
     /// </summary>
     public static class MoneyLimit
     {
-        private const int minMoney = 0;
-        private const int maxMoney = 999999999;
+        public const int minMoney = 0;
+        public const int maxMoney = 999999999;
     }
 }
