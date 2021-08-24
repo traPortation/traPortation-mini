@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Station : MonoBehaviour
 {
+    /*
+        LinkedList: 連結リスト
+        要素の追加、削除がO(1)
+    */
     private LinkedList<IPerson> people = new LinkedList<IPerson>();
     public int ID;
     // Start is called before the first frame update
