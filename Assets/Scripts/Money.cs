@@ -1,5 +1,5 @@
 ﻿using System;
-using namespace Const;
+using Const;
 
 class ManageMoney
 {
