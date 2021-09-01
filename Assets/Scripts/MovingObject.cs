@@ -21,7 +21,7 @@ public abstract class MovingObject : MonoBehaviour
     /// pathをsetし、自分の位置をpathの始点にする
     /// </summary>
     /// <param name="path"></param>
-    protected void Initialize(Path path)
+    public void Initialize(Path path)
     {
         this.path = path;
         transform.position = new Vector3(path.X, path.Y, transform.position.z);

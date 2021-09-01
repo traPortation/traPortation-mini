@@ -7,15 +7,19 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject person;
     [SerializeField] private GameObject building;
+    [SerializeField] private GameObject train;
     public Board Board { get; private set; }
+    public StationManager StationManager { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
         this.InstantiatePeople();
         this.InstantiateBuildings();
-        this.Board = new Board();
-        this.InitBoard();
+        this.Board = Board.Instance;
+        var gameObj = GameObject.FindGameObjectsWithTag("StationManager")[0];
+        this.StationManager = gameObj.GetComponent<StationManager>();
+        this.initBoardForTest();
     }
 
     // Update is called once per frame
@@ -49,14 +53,21 @@ public class GameManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// 仮でEdgeをおいてるだけ
+    /// 動作確認用に色々置いてるだけ
     /// </summary>
-    private void InitBoard()
+    private void initBoardForTest()
     {
-        var from = this.Board.AddNode(2, 2);
-        var to = this.Board.AddNode(10, 6);
-        this.Board.AddEdge(from, to, EdgeCost.Type.Train);
-        this.Board.AddEdge(to, from, EdgeCost.Type.Train);
+        // 駅を追加
+        var from = this.StationManager.AddStation(new Vector3(2, 2, 8f));
+        var to = this.StationManager.AddStation(new Vector3(10, 6, 8f));
+        var edge1 = this.Board.AddEdge(from, to, EdgeCost.Type.Train);
+        var edge2 = this.Board.AddEdge(to, from, EdgeCost.Type.Train);
+
+        // 電車を追加
+        GameObject trainObject = Instantiate(this.train, Vector3.zero, Quaternion.identity);
+        var train = trainObject.GetComponent<Train>();
+        var path = new Path(new List<BoardElements.Edge>() { edge1, edge2 });
+        train.Initialize(path);
     }
 
     public void AlterPauseStatus()
