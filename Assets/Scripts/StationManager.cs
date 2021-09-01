@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BoardElements;
 
 public class StationManager : MonoBehaviour
 {
     private bool buildMode;
     private bool buttonClicked;
-    private List<Station> stations;
+    private List<BoardNode> stations = new List<BoardNode>();
     [SerializeField] private GameObject prefab;
 
     // Start is called before the first frame update
@@ -28,8 +29,7 @@ public class StationManager : MonoBehaviour
         {
             Vector3 mousePosition = Input.mousePosition;
             mousePosition.z = 8f;
-            GameObject newStation = Instantiate(prefab, Camera.main.ScreenToWorldPoint(mousePosition), Quaternion.identity);
-            stations.Add(newStation.GetComponent<Station>());
+            AddStation(Camera.main.ScreenToWorldPoint(mousePosition));
         }
     }
 
@@ -38,5 +38,17 @@ public class StationManager : MonoBehaviour
         buttonClicked = true;
         buildMode = !buildMode;
         Board.Instance.Test();
+    }
+
+    public BoardNode AddStation(Vector3 vec)
+    {
+        int index = stations.Count;
+        var node = Board.Instance.AddNode(vec.x, vec.y);
+
+        GameObject newStation = Instantiate(prefab, vec, Quaternion.identity);
+        var station = newStation.GetComponent<Station>();
+        station.SetNode(node);
+
+        return node;
     }
 }

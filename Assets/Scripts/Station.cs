@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BoardElements;
 
 public class Station : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Station : MonoBehaviour
     */
     private LinkedList<IPerson> people = new LinkedList<IPerson>();
     public int ID;
+    private BoardNode node = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +43,18 @@ public class Station : MonoBehaviour
                 people.Remove(p);
             }
             p = next;
+        }
+    }
+    public void SetNode(BoardNode node)
+    {
+        if (this.node == null)
+        {
+            this.node = node;
+        }
+        else
+        {
+            // 例外投げるのはあんまよくないかも
+            throw new System.Exception("Stationのノードへの再代入");
         }
     }
 }
