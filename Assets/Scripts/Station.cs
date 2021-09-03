@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
@@ -37,9 +37,14 @@ public class Station : MonoBehaviour
         {
             // TODO: 乗り物が満員のときは乗れない
             var next = p.Next;
-            if (p.Value.DecideToRide(vehicle))
+            var person = p.Value;
+
+            if (person.DecideToRide(vehicle))
             {
-                p.Value.Ride(vehicle);
+                // 乗り物に人を乗せる
+                person.Ride(vehicle);
+
+                // 駅から人を取り除く
                 people.Remove(p);
             }
             p = next;

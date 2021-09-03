@@ -7,7 +7,7 @@ public class StationManager : MonoBehaviour
 {
     private bool buildMode;
     private bool buttonClicked;
-    private List<BoardNode> stations = new List<BoardNode>();
+    private List<Station> stations = new List<Station>();
     [SerializeField] private GameObject prefab;
 
     // Start is called before the first frame update
@@ -49,6 +49,13 @@ public class StationManager : MonoBehaviour
         var station = newStation.GetComponent<Station>();
         station.SetNode(node);
 
+        stations.Add(station);
+
         return node;
+    }
+
+    public Station GetStation(int stationId)
+    {
+        return this.stations[stationId];
     }
 }
