@@ -142,8 +142,16 @@ public class Board: Singleton<Board>
             else return new Node(position.X, Mathf.Floor(position.Y));
         }
 
-        Node getIntersection(Node position) { // ある点がそこから一番近い交差点に出るための関数
-            return new Node(Mathf.Round(position.X), Mathf.Round(position.Y));
+        Node getIntersection(Node position) { // ある点が目的地から一番近い交差点に出るための関数
+            if (position.X == (int)position.X && position.Y != (int)position.Y) {
+                if (position.Y >= destination.Y) return new Node(position.X, Mathf.Floor(position.Y));
+                else return new Node(position.X, Mathf.Ceil(position.Y));
+            } else if (position.X != (int)position.X && position.Y == (int)position.Y) {
+                if (position.X >= destination.X) return new Node(Mathf.Ceil(position.X), position.Y);
+                else return new Node(Mathf.Floor(position.X), position.Y);
+            } else {
+                return new Node(position.X, position.Y);
+            }
         }
         
         Node originToRoad = getRoad(origin), destinationToRoad = getRoad(destination); // origin, destination から道に出た時のそれぞれの座標
