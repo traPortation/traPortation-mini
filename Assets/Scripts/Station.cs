@@ -50,6 +50,11 @@ public class Station : MonoBehaviour
             p = next;
         }
     }
+    /// <summary>
+    /// BoardNodeを割り当てる
+    /// Instantiate時に一度だけ呼ぶ
+    /// </summary>
+    /// <param name="node"></param>
     public void SetNode(BoardNode node)
     {
         if (this.node == null)

@@ -40,6 +40,11 @@ public class StationManager : MonoBehaviour
         Board.Instance.Test();
     }
 
+    /// <summary>
+    /// 指定した場所にstationを追加する
+    /// </summary>
+    /// <param name="vec"></param>
+    /// <returns></returns>
     public BoardNode AddStation(Vector3 vec)
     {
         int index = stations.Count;
@@ -54,6 +59,11 @@ public class StationManager : MonoBehaviour
         return node;
     }
 
+    /// <summary>
+    /// 指定したindexのstationを取得
+    /// </summary>
+    /// <param name="stationId"></param>
+    /// <returns></returns>
     public Station GetStation(int stationId)
     {
         return this.stations[stationId];

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Const;
@@ -12,9 +12,10 @@ public class Person : MovingObject
     {
         this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (this.manager == null) throw new System.Exception("GameManager not found");
+
         var path = this.getRandomPath();
         this.Initialize(path);
-        if (this.path == null) throw new System.Exception("path not found");
+
         this.velocity = Velocity.Person;
     }
 
@@ -26,18 +27,18 @@ public class Person : MovingObject
 
     protected override void Arrive(BoardElements.Node node)
     {
+        // 目的地に到達した場合は次の目的地を設定する
         if (this.path.Finished)
         {
             var path = this.getRandomPath();
             this.Initialize(path);
         }
 
+        // 着いた先が駅の場合は駅に自分自身を追加する
         if (node is BoardNode)
         {
             this.velocity = 0;
-
             var station = this.manager.StationManager.GetStation((node as BoardNode).Index);
-
             station.AddPerson(this);
         }
     }
@@ -51,35 +52,53 @@ public class Person : MovingObject
         return this.manager.Board.GetPath(start, goal);
     }
 
+    /// <summary>
+    /// 駅で待っているときに呼ばれる
+    /// 来た乗り物に乗るかどうかを判断する
+    /// </summary>
+    /// <param name="vehicle"></param>
+    /// <returns></returns>
     public bool DecideToRide(Vehicle vehicle)
     {
         if (this.path.NextNode == vehicle.NextNode) return true;
         else return false;
     }
 
+    /// <summary>
+    /// 乗り物に乗る処理
+    /// </summary>
+    /// <param name="vehicle"></param>
     public void Ride(Vehicle vehicle)
     {
         // 人を見えなくする 動きを止める
         gameObject.SetActive(false);
 
+        // これ駅とかでやるべきかも？
         vehicle.AddPerson(this);
     }
 
+    /// <summary>
+    /// 乗り物に乗っているときに呼ばれる
+    /// 到着した駅で降りるかどうかを判断する
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
     public bool DecideToGetOff(BoardNode node)
     {
-        // 後で直す
-        // 最後の駅で降りる
         if (this.path.NextNode == node) return false;
         else return true;
     }
 
     public void GetOff(BoardNode node)
     {
-        // TODO: 次が電車の場合と徒歩の場合で分ける
         gameObject.SetActive(true);
         this.velocity = Velocity.Person;
     }
 
+    /// <summary>
+    /// pathを次のnodeまで進める
+    /// </summary>
+    /// <returns></returns>
     public Node Next()
     {
         return this.path.Next();
