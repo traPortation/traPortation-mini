@@ -9,7 +9,7 @@ public class Station : MonoBehaviour
         LinkedList: 連結リスト
         要素の追加、削除がO(1)
     */
-    private LinkedList<IPerson> people = new LinkedList<IPerson>();
+    private LinkedList<Person> people = new LinkedList<Person>();
     public int ID;
     private BoardNode node = null;
     // Start is called before the first frame update
@@ -22,7 +22,7 @@ public class Station : MonoBehaviour
     /// 駅に人を追加する
     /// </summary>
     /// <param name="person"></param>
-    public void AddPerson(IPerson person)
+    public void AddPerson(Person person)
     {
         people.AddLast(person);
     }

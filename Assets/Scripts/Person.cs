@@ -1,10 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Const;
 using System.Linq;
 using BoardElements;
-public class Person : MovingObject, IPerson
+public class Person : MovingObject
 {
     private GameManager manager;
     // Start is called before the first frame update
