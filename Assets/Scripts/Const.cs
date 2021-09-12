@@ -44,14 +44,14 @@ namespace Const
         }
         public static int Get(Type type)
         {
-            return (int) type;
+            return (int)type;
         }
     }
 
-    public static class Trains{
+    public static class Trains
+    {
         public const int Capacity = 4;
         public const int Wage = 100;
-        public const float TrainVelocity = 0.03f;
         public const float StopStationTime = 1f;
     }
 
@@ -61,6 +61,14 @@ namespace Const
     public static class Count
     {
         public static readonly int Person = 10;
+    }
+    /// <summary>
+    /// 速度に関する定数
+    /// </summary>
+    public static class Velocity
+    {
+        public const float Person = 0.01f;
+        public const float Train = 0.03f;
     }
 
     /// <summary>

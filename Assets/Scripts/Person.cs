@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Const;
@@ -15,7 +15,7 @@ public class Person : MovingObject, IPerson
         var path = this.getRandomPath();
         this.Initialize(path);
         if (this.path == null) throw new System.Exception("path not found");
-        this.velocity = 0.01f;
+        this.velocity = Velocity.Person;
     }
 
     // Update is called once per frame
@@ -77,7 +77,7 @@ public class Person : MovingObject, IPerson
     {
         // TODO: 次が電車の場合と徒歩の場合で分ける
         gameObject.SetActive(true);
-        this.velocity = 0.1f;
+        this.velocity = Velocity.Person;
     }
 
     public Node Next()

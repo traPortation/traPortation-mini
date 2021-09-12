@@ -15,7 +15,7 @@ public class Train : Vehicle
 
         this.Capacity = Trains.Capacity;
         this.Wage = Trains.Wage;
-        this.velocity = Trains.TrainVelocity;
+        this.velocity = Velocity.Train;
         this.Initialize(this.path);
     }
 
