@@ -56,6 +56,17 @@ namespace Const
     }
 
     /// <summary>
+    /// バス及びその移動に関する定数
+    /// </summary>
+    public static class Buses
+    {
+        public const int Capacity = 2;
+        public const int Wage = 50;
+        public const float BusVelocity = 0.03f;
+        public const float StopStationTime = 0.6f;
+    }
+
+    /// <summary>
     /// 数に関する定数
     /// </summary>
     public static class Count
