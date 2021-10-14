@@ -128,7 +128,7 @@ public class Board: Singleton<Board>
     /// <param name="destination"></param>
     /// <returns></returns>
     private MultiEdge multiPathBetweenNodes(Node origin, Node destination) {
-        Node getRoad(Node position) { // ある点がそこから一番近い道にでるための関数、ある点が道上ならそのまま返す
+        Node getRoad(Node position) { // ある点がそこから一番近い道にでるための関数、ある点が道上ならそのまま返す（引数：任意の点）
             float leftSideRoad = position.X % 1;
             float downSideRoad = position.Y % 1;
             float rightSideRoad = 1f - leftSideRoad;
@@ -142,15 +142,15 @@ public class Board: Singleton<Board>
             else return new Node(position.X, Mathf.Floor(position.Y));
         }
 
-        Node getIntersection(Node position) { // ある点が目的地から一番近い交差点に出るための関数
-            if (position.X == (int)position.X && position.Y != (int)position.Y) {
+        Node getIntersection(Node position) { // ある点が目的地から一番近い交差点に出るための関数(引数:道上の点)
+            if (position.X == (int)position.X && position.Y != (int)position.Y) { // x座標整数なら
                 if (position.Y >= destination.Y) return new Node(position.X, Mathf.Floor(position.Y));
                 else return new Node(position.X, Mathf.Ceil(position.Y));
-            } else if (position.X != (int)position.X && position.Y == (int)position.Y) {
-                if (position.X >= destination.X) return new Node(Mathf.Ceil(position.X), position.Y);
-                else return new Node(Mathf.Floor(position.X), position.Y);
-            } else {
-                return new Node(position.X, position.Y);
+            } else if (position.X != (int)position.X && position.Y == (int)position.Y) { // y座標整数なら
+                if (position.X >= destination.X) return new Node(Mathf.Floor(position.X), position.Y);
+                else return new Node(Mathf.Ceil(position.X), position.Y);
+            } else { // 交差点上（or道上じゃないとき）
+                return new Node((int)position.X, (int)position.Y);
             }
         }
         
