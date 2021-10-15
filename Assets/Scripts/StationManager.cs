@@ -27,9 +27,7 @@ public class StationManager : MonoBehaviour
         else if (Input.GetMouseButtonUp(0) && buildMode)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log(mousePosition.x);
-            Debug.Log(mousePosition.y);
-            if (Mathf.Abs(mousePosition.x - Mathf.Round(mousePosition.x)) < 0.1 && Mathf.Abs(mousePosition.y - Mathf.Round(mousePosition.y)) < 0.1)
+            if (Mathf.Abs(mousePosition.x - Mathf.Round(mousePosition.x)) < 0.1 || Mathf.Abs(mousePosition.y - Mathf.Round(mousePosition.y)) < 0.1)
             {
                 mousePosition.z = 8f;
                 GameObject newStation = Instantiate(prefab, mousePosition, Quaternion.identity);
