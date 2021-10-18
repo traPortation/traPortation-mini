@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BoardElements;
 
 public class StationManager : MonoBehaviour
 {
@@ -41,5 +42,34 @@ public class StationManager : MonoBehaviour
         buttonClicked = true;
         buildMode = !buildMode;
         Board.Instance.Test();
+    }
+
+    /// <summary>
+    /// 指定した場所にstationを追加する
+    /// </summary>
+    /// <param name="vec"></param>
+    /// <returns></returns>
+    public BoardNode AddStation(Vector3 vec)
+    {
+        int index = stations.Count;
+        var node = Board.Instance.AddNode(vec.x, vec.y);
+
+        GameObject newStation = Instantiate(prefab, vec, Quaternion.identity);
+        var station = newStation.GetComponent<Station>();
+        station.SetNode(node);
+
+        stations.Add(station);
+
+        return node;
+    }
+
+    /// <summary>
+    /// 指定したindexのstationを取得
+    /// </summary>
+    /// <param name="stationId"></param>
+    /// <returns></returns>
+    public Station GetStation(int stationId)
+    {
+        return this.stations[stationId];
     }
 }

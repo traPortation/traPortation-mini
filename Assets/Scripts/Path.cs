@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
@@ -22,6 +22,7 @@ public class Path
     /// 移動が終了しているかどうか
     /// </summary>
     public bool Finished => index == this.edges.Count;
+    public Node NextNode => edges[index].To;
 
     public Path(List<Edge> edges)
     {
@@ -56,7 +57,21 @@ public class Path
         }
     }
     
-    public void InitializeEdge(){   
+    public Node Next()
+    {
+        if (this.Finished) return null;
+        else
+        {
+            this.index++;
+            if (this.Finished) return null;
+            this.X = this.edges[this.index].From.X;
+            this.Y = this.edges[this.index].From.Y;
+            return this.edges[this.index].From;
+        }
+    }
+
+    public void InitializeEdge()
+    {
         this.index = 0;
         this.X = edges[0].From.X;
         this.Y = edges[0].From.Y;

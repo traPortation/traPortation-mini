@@ -1,6 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BoardElements;
 
 public class Station : MonoBehaviour
 {
@@ -8,8 +9,11 @@ public class Station : MonoBehaviour
         LinkedList: 連結リスト
         要素の追加、削除がO(1)
     */
-    private LinkedList<IPerson> people = new LinkedList<IPerson>();
+
+    private LinkedList<Person> people = new LinkedList<Person>();
     public int ID;
+    private BoardNode node = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +24,7 @@ public class Station : MonoBehaviour
     /// 駅に人を追加する
     /// </summary>
     /// <param name="person"></param>
-    public void AddPerson(IPerson person)
+    public void AddPerson(Person person)
     {
         people.AddLast(person);
     }
@@ -35,12 +39,34 @@ public class Station : MonoBehaviour
         {
             // TODO: 乗り物が満員のときは乗れない
             var next = p.Next;
-            if (p.Value.DecideToRide(vehicle))
+            var person = p.Value;
+
+            if (person.DecideToRide(vehicle))
             {
-                p.Value.Ride(vehicle);
+                // 乗り物に人を乗せる
+                person.Ride(vehicle);
+
+                // 駅から人を取り除く
                 people.Remove(p);
             }
             p = next;
+        }
+    }
+    /// <summary>
+    /// BoardNodeを割り当てる
+    /// Instantiate時に一度だけ呼ぶ
+    /// </summary>
+    /// <param name="node"></param>
+    public void SetNode(BoardNode node)
+    {
+        if (this.node == null)
+        {
+            this.node = node;
+        }
+        else
+        {
+            // 例外投げるのはあんまよくないかも
+            throw new System.Exception("Stationのノードへの再代入");
         }
     }
 }
