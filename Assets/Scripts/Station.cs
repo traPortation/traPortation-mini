@@ -4,41 +4,43 @@ using UnityEngine;
 
 public class Station : MonoBehaviour
 {
-    private Queue<Person> queue = new Queue<Person>();
-    public int stationId;
+    /*
+        LinkedList: 連結リスト
+        要素の追加、削除がO(1)
+    */
+    private LinkedList<IPerson> people = new LinkedList<IPerson>();
+    public int ID;
     // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    /* 
-    private void OnTriggerEnter2D(Collider2D collision)
+    /// <summary>
+    /// 駅に人を追加する
+    /// </summary>
+    /// <param name="person"></param>
+    public void AddPerson(IPerson person)
     {
-        if (collision.gameObject.CompareTag("Person")) //タグで衝突した物体を判定（要設定：Personのプレハブのタグとコライダー）
-        {   
-            Person passenger = collision.gameObject.GetComponent<Person>();
-            if (passenger.moving.GetOnId == this.stationId && passenger.moving.HowToMove == Const.Move.Walking) { // 人が持つ目的地駅IDと駅IDが等しい時、駅に入れる
-                queue.Enqueue(passenger);
-                Debug.Log(queue.Count);
-            }
-        }
-        // 乗り物への人の乗り降りに必要なpassengers配列をVehicleクラスに実装が必要
-        if (collision.gameObject.CompareTag("Transport")) // 乗り物が駅に着いた時
+        people.AddLast(person);
+    }
+
+    /// <summary>
+    /// 駅から乗り物に人を追加する
+    /// </summary>
+    /// <param name="vehicle"></param>
+    public void AddPersonToTrain(Vehicle vehicle)
+    {
+        for (var p = people.First; p != null;)
         {
-            Vehicle transport = collision.gameObject.GetComponent<Vehicle>();
-            for (int i = 0; i < transport.passengers.Count; i++) { // 人が乗り物から降りる操作
-                if (transport.passengers[i].moving.GetOffId == this.stationId) { // 目的地駅IDと駅IDが等しいときに人を降ろす
-                    queue.Enqueue(transport.passengers[i]);
-                    transport.passengers.Remove(i);
-                    i--;
-                }
+            // TODO: 乗り物が満員のときは乗れない
+            var next = p.Next;
+            if (p.Value.DecideToRide(vehicle))
+            {
+                p.Value.Ride(vehicle);
+                people.Remove(p);
             }
-            while (transport.capacity >= transport.passengers.Count && queue.Count > 0) { // passengers配列の要素数が定員を超えない間、人を乗せる
-                Person passenger = queue.Dequeue();
-                transport.passengers.Add(passenger);
-            }
+            p = next;
         }
     }
-    */
 }
