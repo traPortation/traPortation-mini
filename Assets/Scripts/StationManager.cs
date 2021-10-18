@@ -6,7 +6,7 @@ public class StationManager : MonoBehaviour
 {
     private bool buildMode;
     private bool buttonClicked;
-    private List<Station> stations;
+    [SerializeField] private List<Station> stations;
     [SerializeField] private GameObject prefab;
 
     // Start is called before the first frame update
@@ -26,10 +26,13 @@ public class StationManager : MonoBehaviour
         //それ以外の場合はbuildModeを判定し、駅を追加する
         else if (Input.GetMouseButtonUp(0) && buildMode)
         {
-            Vector3 mousePosition = Input.mousePosition;
-            mousePosition.z = 8f;
-            GameObject newStation = Instantiate(prefab, Camera.main.ScreenToWorldPoint(mousePosition), Quaternion.identity);
-            stations.Add(newStation.GetComponent<Station>());
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (Mathf.Abs(mousePosition.x - Mathf.Round(mousePosition.x)) < 0.1 || Mathf.Abs(mousePosition.y - Mathf.Round(mousePosition.y)) < 0.1)
+            {
+                mousePosition.z = 8f;
+                GameObject newStation = Instantiate(prefab, mousePosition, Quaternion.identity);
+                stations.Add(newStation.GetComponent<Station>());
+            }
         }
     }
 
