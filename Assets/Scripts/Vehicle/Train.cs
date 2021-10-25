@@ -26,14 +26,14 @@ public class Train : Vehicle
             this.Move(this.velocity);
         }
     }
-    protected override void Arrive(Node node)
+    protected override void Arrive(INode node)
     {
         if (this.path.Finished)
         {
             this.path.InitializeEdge();
             Initialize(this.path);
         }
-        if (node is BoardNode)
+        if (node is StationNode)
         {
             // 乗っている人を移動させる
             foreach (var person in this.people)
@@ -47,10 +47,10 @@ public class Train : Vehicle
                 }
             }
 
-            var station = this.manager.StationManager.GetStation((node as BoardNode).Index);
+            var station = this.manager.StationManager.GetStation((node as StationNode).Index);
 
             // 降ろす処理
-            this.RemovePerson(node as BoardNode);
+            this.RemovePerson(node as StationNode);
 
             // 乗せる処理
             // 発車直前に乗せたほうが自然かも

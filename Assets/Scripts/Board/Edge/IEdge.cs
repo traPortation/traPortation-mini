@@ -6,8 +6,8 @@ namespace BoardElements
 {
     public interface IEdge
     {
-        Node From { get; }
-        Node To { get; }
+        INode From { get; }
+        INode To { get; }
         float Cost { get; }
     }
 }

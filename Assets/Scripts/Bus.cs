@@ -23,7 +23,7 @@ public class Bus : Vehicle
             this.Move(this.velocity);
         }
     }
-    protected override void Arrive(BoardElements.Node node)
+    protected override void Arrive(BoardElements.INode node)
     {
         if (this.path.Finished)
         {

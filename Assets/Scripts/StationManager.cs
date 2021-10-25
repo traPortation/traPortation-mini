@@ -49,7 +49,7 @@ public class StationManager : MonoBehaviour
     /// </summary>
     /// <param name="vec"></param>
     /// <returns></returns>
-    public BoardNode AddStation(Vector3 vec)
+    public StationNode AddStation(Vector3 vec)
     {
         int index = stations.Count;
         var node = Board.Instance.AddNode(vec.x, vec.y);

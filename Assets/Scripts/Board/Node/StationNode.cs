@@ -1,30 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BoardElements;
 
 namespace BoardElements
 {
     /// <summary>
-    /// ただのNode
-    /// 将来的に必要なくなるかも
+    /// 駅付きのNode
     /// </summary>
-    class Node : INode
+    public class StationNode : INode
     {
         public float X { get; }
         public float Y { get; }
         public int Index { get; }
-        List<IEdge> edges { get; }
+        List<Edge> edges { get; }
         public IReadOnlyList<IEdge> Edges => this.edges;
-        public Node(float x, float y)
-        {
 
+        public readonly Station Station;
+        public StationNode(float x, float y, int index)
+        {
             this.X = x;
             this.Y = y;
-            this.edges = new List<IEdge>();
+            this.Index = index;
+            this.edges = new List<Edge>();
         }
         public void AddEdge(IEdge edge)
         {
-            this.edges.Add(edge);
+            if (edge is Edge) this.edges.Add(edge as Edge);
         }
     }
 }
+
