@@ -11,14 +11,14 @@ using Const;
 /// </summary>
 public class Board : Singleton<Board>
 {
-    private List<INode> nodes;
-    public IReadOnlyList<INode> Nodes
+    private List<IIndexedNode> nodes;
+    public IReadOnlyList<IIndexedNode> Nodes
     {
         get { return this.nodes; }
     }
     public Board()
     {
-        this.nodes = new List<INode>();
+        this.nodes = new List<IIndexedNode>();
     }
 
     float distance(INode a, INode b)
@@ -33,10 +33,10 @@ public class Board : Singleton<Board>
     /// <param name="to"></param>
     /// <param name="type">Const.EdgeTypeから指定する</param>
     /// <returns>追加されたEdge</returns>
-    public IEdge AddEdge(INode from, INode to, EdgeCost.Type type = EdgeCost.Type.Walk)
+    public VehicleEdge AddStationEdge(StationNode from, StationNode to, EdgeCost.Type type = EdgeCost.Type.Walk)
     {
         float cost = EdgeCost.Get(type) * this.distance(from, to);
-        var edge = new Edge(from, to, cost, type);
+        var edge = new VehicleEdge(from, to, cost);
         if (edge == null) throw new System.Exception("edge is null");
         if (edge.From == null || edge.To == null) throw new System.Exception("node is null");
         from.AddEdge(edge);
@@ -73,7 +73,7 @@ public class Board : Singleton<Board>
             toGoal.Add(multiPathBetweenNodes(node, goal));
         }
 
-        var from = Enumerable.Repeat<IEdge>(null, this.Nodes.Count).ToList();
+        var from = Enumerable.Repeat<IIndexedEdge>(null, this.Nodes.Count).ToList();
         var que = new PriorityQueue<(float, int)>();
 
         var dist = this.nodes.Select(node =>

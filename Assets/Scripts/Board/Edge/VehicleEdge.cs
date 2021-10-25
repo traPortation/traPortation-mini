@@ -8,17 +8,21 @@ namespace BoardElements
     /// <summary>
     /// Board上のEdgeを表す
     /// </summary>
-    public class VehicleEdge : IEdge
+    public class VehicleEdge : IIndexedEdge
     {
-        readonly StationNode from;
-        public INode From => this.from;
-        readonly StationNode to;
-        public INode To => this.to;
+        public StationNode From { get; }
+        INode IEdge.From => this.From;
+        IIndexedNode IIndexedEdge.From => this.From;
+
+        public StationNode To { get; }
+        INode IEdge.To => this.To;
+        IIndexedNode IIndexedEdge.To => this.To;
+
         public float Cost { get; }
         public VehicleEdge(StationNode from, StationNode to, float cost)
         {
-            this.from = from;
-            this.to = to;
+            this.From = from;
+            this.To = to;
             this.Cost = cost;
         }
     }

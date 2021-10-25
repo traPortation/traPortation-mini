@@ -8,13 +8,13 @@ namespace BoardElements
     /// <summary>
     /// 駅付きのNode
     /// </summary>
-    public class StationNode : INode
+    public class StationNode : IIndexedNode
     {
         public float X { get; }
         public float Y { get; }
         public int Index { get; }
-        List<Edge> edges { get; }
-        public IReadOnlyList<IEdge> Edges => this.edges;
+        List<IIndexedEdge> edges { get; }
+        public IReadOnlyList<IIndexedEdge> Edges => this.edges;
 
         public readonly Station Station;
         public StationNode(float x, float y, int index)
@@ -22,11 +22,11 @@ namespace BoardElements
             this.X = x;
             this.Y = y;
             this.Index = index;
-            this.edges = new List<Edge>();
+            this.edges = new List<IIndexedEdge>();
         }
-        public void AddEdge(IEdge edge)
+        public void AddEdge(IIndexedEdge edge)
         {
-            if (edge is Edge) this.edges.Add(edge as Edge);
+            this.edges.Add(edge);
         }
     }
 }
