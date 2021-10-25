@@ -21,7 +21,7 @@ public class Board : Singleton<Board>
         this.nodes = new List<IIndexedNode>();
     }
 
-    float distance(INode a, INode b)
+    static float nodeDistance(INode a, INode b)
     {
         return Mathf.Sqrt(Mathf.Pow(a.X - b.X, 2) + Mathf.Pow(a.Y - b.Y, 2));
     }
@@ -35,7 +35,7 @@ public class Board : Singleton<Board>
     /// <returns>追加されたEdge</returns>
     public VehicleEdge AddStationEdge(StationNode from, StationNode to, EdgeCost.Type type = EdgeCost.Type.Walk)
     {
-        float cost = EdgeCost.Get(type) * this.distance(from, to);
+        float cost = EdgeCost.Get(type) * Board.nodeDistance(from, to);
         var edge = new VehicleEdge(from, to, cost);
         if (edge == null) throw new System.Exception("edge is null");
         if (edge.From == null || edge.To == null) throw new System.Exception("node is null");
@@ -237,7 +237,7 @@ public class Board : Singleton<Board>
         {
             INode from = path[i];
             INode to = path[i + 1];
-            float cost = this.distance(from, to) * EdgeCost.Get(EdgeCost.Type.Walk);
+            float cost = Board.nodeDistance(from, to) * EdgeCost.Get(EdgeCost.Type.Walk);
             edges.Add(new Edge(from, to, cost, EdgeCost.Type.Walk));
         }
         return new MultiEdge(edges);
