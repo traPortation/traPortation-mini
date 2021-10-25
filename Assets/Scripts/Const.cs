@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace Const
 {
     /// <summary>
@@ -29,20 +30,20 @@ namespace Const
         public static readonly float Person = 8f;
         public static readonly float Camera = 10f;
     }
+    public enum EdgeType
+    {
+        Walk = 10,
+        Train = 3,
+        Finished = -1 // 使い終わったEdge
+        // Multi = ?,
+    }
 
     /// <summary>
     /// Edgeのコスト
     /// </summary>
     public static class EdgeCost
     {
-        public enum Type
-        {
-            Walk = 10,
-            Train = 3,
-            Finished = -1 // 使い終わったEdge
-            // Multi = ?,
-        }
-        public static int Get(Type type)
+        public static int Get(EdgeType type)
         {
             return (int)type;
         }

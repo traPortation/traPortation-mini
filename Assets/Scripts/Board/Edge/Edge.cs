@@ -15,7 +15,7 @@ namespace BoardElements
         public INode From { get; }
         public INode To { get; }
         public float Cost { get; }
-        public Edge(INode from, INode to, float cost, Const.EdgeCost.Type type)
+        public Edge(INode from, INode to, float cost, Const.EdgeType type)
         {
             this.From = from;
             this.To = to;

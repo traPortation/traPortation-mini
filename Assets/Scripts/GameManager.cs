@@ -64,11 +64,11 @@ public class GameManager : MonoBehaviour
 
 
         // edgeを追加 (そのうちいい感じにやるようにする)
-        var edge1 = this.Board.AddStationEdge(node1, node2, EdgeCost.Type.Train);
-        var edge2 = this.Board.AddStationEdge(node2, node1, EdgeCost.Type.Train);
+        var edge1 = this.Board.AddStationEdge(node1, node2, EdgeType.Train);
+        var edge2 = this.Board.AddStationEdge(node2, node1, EdgeType.Train);
 
-        var edge3 = this.Board.AddStationEdge(node2, node3, EdgeCost.Type.Train);
-        var edge4 = this.Board.AddStationEdge(node3, node2, EdgeCost.Type.Train);
+        var edge3 = this.Board.AddStationEdge(node2, node3, EdgeType.Train);
+        var edge4 = this.Board.AddStationEdge(node3, node2, EdgeType.Train);
 
 
         // 電車を追加

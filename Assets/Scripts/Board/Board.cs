@@ -33,7 +33,7 @@ public class Board : Singleton<Board>
     /// <param name="to"></param>
     /// <param name="type">Const.EdgeTypeから指定する</param>
     /// <returns>追加されたEdge</returns>
-    public VehicleEdge AddStationEdge(StationNode from, StationNode to, EdgeCost.Type type = EdgeCost.Type.Walk)
+    public VehicleEdge AddStationEdge(StationNode from, StationNode to, EdgeType type = EdgeType.Walk)
     {
         float cost = EdgeCost.Get(type) * Board.nodeDistance(from, to);
         var edge = new VehicleEdge(from, to, cost);
@@ -237,8 +237,8 @@ public class Board : Singleton<Board>
         {
             INode from = path[i];
             INode to = path[i + 1];
-            float cost = Board.nodeDistance(from, to) * EdgeCost.Get(EdgeCost.Type.Walk);
-            edges.Add(new Edge(from, to, cost, EdgeCost.Type.Walk));
+            float cost = Board.nodeDistance(from, to) * EdgeCost.Get(EdgeType.Walk);
+            edges.Add(new Edge(from, to, cost, EdgeType.Walk));
         }
         return new MultiEdge(edges);
     }
