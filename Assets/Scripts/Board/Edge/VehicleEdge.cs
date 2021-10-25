@@ -6,8 +6,10 @@ using BoardElements;
 namespace BoardElements
 {
     /// <summary>
-    /// Board上のEdgeを表す
+    /// 乗り物が通る辺
     /// </summary>
+
+    // 乗り物の種類が増えるのに合わせて抽象クラスにするなりInterfaceにするなりするかも
     public class VehicleEdge : IIndexedEdge
     {
         public StationNode From { get; }

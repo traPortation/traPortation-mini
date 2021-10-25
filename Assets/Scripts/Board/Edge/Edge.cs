@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
@@ -7,6 +7,7 @@ namespace BoardElements
 {
     /// <summary>
     /// シンプルなEdge
+    /// 現在は経路探索でのみ使用
     /// </summary>
     public class Edge : IEdge
     {
