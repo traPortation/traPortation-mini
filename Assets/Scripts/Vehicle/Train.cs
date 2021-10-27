@@ -1,21 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using BoardElements;
-using Const;
 public class Train : Vehicle
 {
-    private float stopStationTime = Trains.StopStationTime;
+    private float stopStationTime = Const.Train.StopStationTime;
     private bool isMoving = true;
     private GameManager manager;
     void Start()
     {
         this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        this.Capacity = Trains.Capacity;
-        this.Wage = Trains.Wage;
-        this.velocity = Velocity.Train;
+        this.Capacity = Const.Train.Capacity;
+        this.Wage = Const.Train.Wage;
+        this.velocity = Const.Velocity.Train;
         this.Initialize(this.path);
     }
 
