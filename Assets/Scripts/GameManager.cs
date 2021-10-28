@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Const;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -57,6 +58,29 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void initBoardForTest()
     {
+        // 交差点を追加
+        var nodes = Enumerable.Range(0, (int)X.Max + 1).Select(x =>
+        {
+            return Enumerable.Range(0, (int)Y.Max + 1).Select(y =>
+            {
+                return this.Board.AddIntersectionNode(x, y);
+            }).ToList();
+        }).ToList();
+
+        // 道を追加
+
+        foreach (var x in Enumerable.Range(0, (int)X.Max + 1))
+        {
+            foreach (var y in Enumerable.Range(0, (int)Y.Max + 1))
+            {
+                if (x != 0) this.Board.AddRoadEdge(nodes[x][y], nodes[x - 1][y]);
+                if (y != 0) this.Board.AddRoadEdge(nodes[x][y], nodes[x][y - 1]);
+                if (x != X.Max) this.Board.AddRoadEdge(nodes[x][y], nodes[x + 1][y]);
+                if (y != Y.Max) this.Board.AddRoadEdge(nodes[x][y], nodes[x][y + 1]);
+            }
+        }
+
+
         // 駅を追加
         var node1 = this.StationManager.AddStation(new Vector3(2, 2, 5f));
         var node2 = this.StationManager.AddStation(new Vector3(2, 6, 5f));

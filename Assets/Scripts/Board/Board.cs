@@ -27,7 +27,7 @@ public class Board : Singleton<Board>
     }
 
     /// <summary>
-    /// BoardにEdgeを追加する
+    /// BoardにVehicleEdgeを追加する
     /// </summary>
     /// <param name="from"></param>
     /// <param name="to"></param>
@@ -35,24 +35,53 @@ public class Board : Singleton<Board>
     /// <returns>追加されたEdge</returns>
     public VehicleEdge AddStationEdge(StationNode from, StationNode to, EdgeType type = EdgeType.Walk)
     {
+        if (from == null || to == null) throw new System.Exception("node is null");
+
         float cost = EdgeCost.Get(type) * Board.nodeDistance(from, to);
         var edge = new VehicleEdge(from, to, cost);
-        if (edge == null) throw new System.Exception("edge is null");
-        if (edge.From == null || edge.To == null) throw new System.Exception("node is null");
         from.AddEdge(edge);
         return edge;
     }
+
     /// <summary>
-    /// BoardにNodeを追加する
+    /// BoardにRoadEdgeを追加する
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
+    /// <returns></returns>
+    public RoadEdge AddRoadEdge(IntersectionNode from, IntersectionNode to)
+    {
+        if (from == null || to == null) throw new System.Exception("node is null");
+
+        float cost = EdgeCost.Get(EdgeType.Walk) * Board.nodeDistance(from, to);
+        var edge = new RoadEdge(from, to, cost);
+        from.AddEdge(edge);
+        return edge;
+    }
+
+    /// <summary>
+    /// BoardにStationNodeを追加する
     /// </summary>
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns>追加されたNode</returns>
-    public StationNode AddNode(float x, float y)
+    public StationNode AddStationNode(float x, float y)
     {
         var node = new StationNode(x, y, this.nodes.Count);
         this.nodes.Add(node);
-        if (node == null) throw new System.Exception("node is null");
+        return node;
+    }
+
+    /// <summary>
+    /// BoardにIntersectionNodeを追加する
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns>追加されたNode</returns>
+    public IntersectionNode AddIntersectionNode(float x, float y)
+    {
+        var node = new IntersectionNode(x, y, this.nodes.Count);
+        this.nodes.Add(node);
         return node;
     }
 

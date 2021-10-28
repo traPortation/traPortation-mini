@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
+using System.Linq;
 
 public class StationManager : MonoBehaviour
 {
@@ -52,7 +53,7 @@ public class StationManager : MonoBehaviour
     public StationNode AddStation(Vector3 vec)
     {
         int index = stations.Count;
-        var node = Board.Instance.AddNode(vec.x, vec.y);
+        var node = Board.Instance.AddStationNode(vec.x, vec.y);
 
         GameObject newStation = Instantiate(prefab, vec, Quaternion.identity);
         var station = newStation.GetComponent<Station>();
@@ -70,6 +71,7 @@ public class StationManager : MonoBehaviour
     /// <returns></returns>
     public Station GetStation(int stationId)
     {
-        return this.stations[stationId];
+        //TODO: 応急処置なのでそのうちどうにかする
+        return this.stations.Where((station) => station.Node.Index == stationId).First();
     }
 }
