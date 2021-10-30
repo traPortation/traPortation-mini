@@ -62,17 +62,19 @@ public class GameManager : MonoBehaviour
         var node2 = this.StationManager.AddStation(new Vector3(2, 6, 5f));
         var node3 = this.StationManager.AddStation(new Vector3(10, 6, 5f));
 
-        // edgeを追加 (そのうちいい感じにやるようにする)
-        var edge1 = this.Board.AddEdge(node1, node2, EdgeCost.Type.Train);
-        var edge2 = this.Board.AddEdge(node2, node1, EdgeCost.Type.Train);
 
-        var edge3 = this.Board.AddEdge(node2, node3, EdgeCost.Type.Train);
-        var edge4 = this.Board.AddEdge(node3, node2, EdgeCost.Type.Train);
+        // edgeを追加 (そのうちいい感じにやるようにする)
+        var edge1 = this.Board.AddStationEdge(node1, node2, EdgeType.Train);
+        var edge2 = this.Board.AddStationEdge(node2, node1, EdgeType.Train);
+
+        var edge3 = this.Board.AddStationEdge(node2, node3, EdgeType.Train);
+        var edge4 = this.Board.AddStationEdge(node3, node2, EdgeType.Train);
+
 
         // 電車を追加
         GameObject trainObject = Instantiate(this.train, Vector3.zero, Quaternion.identity);
         var train = trainObject.GetComponent<Train>();
-        var path = new Path(new List<BoardElements.Edge>() { edge1, edge3, edge4, edge2 });
+        var path = new Path(new List<BoardElements.IEdge>() { edge1, edge3, edge4, edge2 });
         train.Initialize(path);
     }
 

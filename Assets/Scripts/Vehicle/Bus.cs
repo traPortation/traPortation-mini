@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using BoardElements;
-using Const;
 public class Bus : Vehicle
 {
-    private float stopStationTime = Buses.StopStationTime;
+    private float stopStationTime = Const.Bus.StopStationTime;
     private bool isMoving = true;
     void Start()
     {
-        this.Capacity = Buses.Capacity;
-        this.Wage = Buses.Wage;
-        this.velocity = Buses.BusVelocity;
+        this.Capacity = Const.Bus.Capacity;
+        this.Wage = Const.Bus.Wage;
+        this.velocity = Const.Bus.BusVelocity;
         this.Initialize(this.path);
     }
 
@@ -23,7 +22,7 @@ public class Bus : Vehicle
             this.Move(this.velocity);
         }
     }
-    protected override void Arrive(BoardElements.Node node)
+    protected override void Arrive(BoardElements.INode node)
     {
         if (this.path.Finished)
         {

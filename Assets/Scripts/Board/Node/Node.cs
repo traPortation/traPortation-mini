@@ -5,9 +5,10 @@ using UnityEngine;
 namespace BoardElements
 {
     /// <summary>
-    /// 頂点
-    /// /// </summary>
-    public class Node
+    /// ただのNode
+    /// 将来的に使わなくなるかも
+    /// </summary>
+    class Node : INode
     {
         public float X { get; }
         public float Y { get; }
@@ -15,10 +16,6 @@ namespace BoardElements
         {
             this.X = x;
             this.Y = y;
-        }
-        public static float Distance(Node a, Node b)
-        {
-            return Mathf.Sqrt(Mathf.Pow(a.X - b.X, 2) + Mathf.Pow(a.Y - b.Y, 2));
         }
     }
 }

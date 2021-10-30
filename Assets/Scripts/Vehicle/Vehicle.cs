@@ -9,7 +9,7 @@ public abstract class Vehicle : MovingObject
     public int Wage { get; protected set; }
     public int Capacity { get; protected set; }
     protected LinkedList<Person> people = new LinkedList<Person>();
-    public Node NextNode => this.path.NextNode;
+    public INode NextNode => this.path.NextNode;
     public void AddPerson(Person person)
     {
         // 人数がCapacityを超えるときはあれこれする
@@ -17,7 +17,7 @@ public abstract class Vehicle : MovingObject
     }
 
     // メソッド名よくないかも
-    public void RemovePerson(BoardNode node)
+    public void RemovePerson(StationNode node)
     {
         for (var p = people.First; p != null;)
         {

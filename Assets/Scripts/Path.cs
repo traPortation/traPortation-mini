@@ -6,25 +6,18 @@ using System.Linq;
 
 public class Path
 {
-    private List<Edge> edges;
+    private List<IEdge> edges;
     private int index;
 
     public float X, Y;
 
     /// <summary>
-    /// 今いるEdgeのType
-    /// 移動が完了している場合には -1
-    /// </summary>
-    /// <value></value>
-    public Const.EdgeCost.Type Type => this.index < this.edges.Count ? this.edges[this.index].Type : Const.EdgeCost.Type.Finished;
-
-    /// <summary>
     /// 移動が終了しているかどうか
     /// </summary>
     public bool Finished => index == this.edges.Count;
-    public Node NextNode => edges[index].To;
+    public INode NextNode => edges[index].To;
 
-    public Path(List<Edge> edges)
+    public Path(List<IEdge> edges)
     {
         if (edges.Count == 0) throw new System.Exception("edges are empty");
         this.edges = edges;
@@ -37,7 +30,7 @@ public class Path
     /// </summary>
     /// <param name="delta"></param>
     /// <returns>Nodeに到達した場合はそのNode、していない場合はnull</returns>
-    public Node Move(float delta)
+    public INode Move(float delta)
     {
         if (this.Finished) return null;
         var nextV = this.edges[this.index].To;
@@ -57,7 +50,7 @@ public class Path
         }
     }
     
-    public Node Next()
+    public INode Next()
     {
         if (this.Finished) return null;
         else

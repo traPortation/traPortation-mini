@@ -1,32 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BoardElements;
 
 namespace BoardElements
 {
     /// <summary>
-    /// 片方向への辺
+    /// シンプルなEdge
+    /// 現在は経路探索でのみ使用
     /// </summary>
     public class Edge : IEdge
     {
-        // それぞれのNode
-        public Node From { get; }
-        public Node To { get; }
-
-        // edgeの種類 (Const.EdgeType が入る)
-        public Const.EdgeCost.Type Type { get; }
-
-        // 経路探索で用いるコスト
+ 
+        public INode From { get; }
+        public INode To { get; }
         public float Cost { get; }
-
-        // コンストラクタ
-        public Edge(Node from, Node to, float cost, Const.EdgeCost.Type type)
+        public Edge(INode from, INode to, float cost, Const.EdgeType type)
         {
-            if (cost < 0) throw new System.Exception("cost must not be negative number");
             this.From = from;
             this.To = to;
             this.Cost = cost;
-            this.Type = type;
         }
     }
 }

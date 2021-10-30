@@ -31,5 +31,5 @@ public abstract class MovingObject : MonoBehaviour
     /// Nodeに到着するごとに呼び出される
     /// </summary>
     /// <param name="node"></param>
-    protected abstract void Arrive(BoardElements.Node node);
+    protected abstract void Arrive(BoardElements.INode node);
 }
