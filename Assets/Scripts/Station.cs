@@ -54,7 +54,7 @@ public class Station : MonoBehaviour
         }
     }
     /// <summary>
-    /// BoardNodeを割り当てる
+    /// StationNodeを割り当てる
     /// Instantiate時に一度だけ呼ぶ
     /// </summary>
     /// <param name="node"></param>
