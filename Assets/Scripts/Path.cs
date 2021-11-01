@@ -15,8 +15,8 @@ public class Path
     /// <summary>
     /// 移動が終了しているかどうか
     /// </summary>
-    public bool Finished => index == this.edges.Count;
-    public INode NextNode => edges[index].To;
+    public bool Finished => index >= this.edges.Count;
+    public INode NextNode => !this.Finished ? this.edges[this.index].To : null;
 
     public Path(List<IIndexedEdge> edges)
     {
@@ -54,14 +54,11 @@ public class Path
     public INode Next()
     {
         if (this.Finished) return null;
-        else
-        {
-            this.index++;
-            if (this.Finished) return null;
-            this.X = this.edges[this.index].From.X;
-            this.Y = this.edges[this.index].From.Y;
-            return this.edges[this.index].From;
-        }
+        var node = this.NextNode;
+        this.X = node.X;
+        this.Y = node.Y;
+        this.index++;
+        return node;
     }
 
     public void InitializeEdge()
