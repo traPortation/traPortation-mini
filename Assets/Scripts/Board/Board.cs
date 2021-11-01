@@ -49,7 +49,7 @@ public class Board : Singleton<Board>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <returns></returns>
-    public RoadEdge AddRoadEdge(IntersectionNode from, IntersectionNode to)
+    public RoadEdge AddRoadEdge(IIndexedNode from, IIndexedNode to)
     {
         if (from == null || to == null) throw new System.Exception("node is null");
 
@@ -87,35 +87,20 @@ public class Board : Singleton<Board>
 
     /// <summary>
     /// 経路探索を行う
+    /// メモリと相談だけど出発点ごとにメモ化したほうがいいかも
     /// </summary>
     /// <param name="start"></param>
     /// <param name="goal"></param>
     /// <returns>最短経路</returns>
-    private List<IEdge> dijkstra(INode start, INode goal)
+    private List<IIndexedEdge> dijkstra(IIndexedNode start, IIndexedNode goal)
     {
-        var fromStart = new List<MultiEdge>();
-        var toGoal = new List<MultiEdge>();
-
-        foreach (var node in this.nodes)
-        {
-            fromStart.Add(multiPathBetweenNodes(start, node));
-            toGoal.Add(multiPathBetweenNodes(node, goal));
-        }
-
         var from = Enumerable.Repeat<IIndexedEdge>(null, this.Nodes.Count).ToList();
+
+        var dist = Enumerable.Repeat<float>(float.MaxValue, this.Nodes.Count).ToList();
+        dist[start.Index] = 0;
+
         var que = new PriorityQueue<(float, int)>();
-
-        var dist = this.nodes.Select(node =>
-        {
-            var edge = multiPathBetweenNodes(start, node);
-            fromStart.Add(edge);
-            que.Push((edge.Cost, node.Index));
-            return edge.Cost;
-        }).ToList();
-
-        int lastIndex = -1;
-        MultiEdge lastEdge = multiPathBetweenNodes(start, goal);
-        var goalCost = lastEdge.Cost;
+        que.Push((0, start.Index));
 
         while (que.Count != 0)
         {
@@ -130,32 +115,23 @@ public class Board : Singleton<Board>
                 from[edge.To.Index] = edge;
                 que.Push((dist[edge.To.Index], edge.To.Index));
             }
-            if (cost + toGoal[idx].Cost < goalCost)
-            {
-                lastIndex = idx;
-                lastEdge = toGoal[idx];
-                goalCost = cost + toGoal[idx].Cost;
-            }
         }
-        var edges = new List<IEdge>();
+        var edges = new List<IIndexedEdge>();
 
-        if (lastIndex != -1)
+        // startからgoalへの道がない場合は例外を投げる (仮仕様)
+        if (dist[goal.Index] == float.MaxValue)
         {
-            for (var cur = from[lastIndex]; cur != null; cur = from[cur.From.Index])
+            throw new System.Exception("path not found");
+        }
+
+        {
+            for (var cur = from[goal.Index]; cur != null; cur = from[cur.From.Index])
             {
                 edges.Add(cur);
-                if (from[cur.From.Index] == null)
-                {
-                    var bef = edges.Count;
-                    var startEdge = fromStart[cur.From.Index].Edges.AsEnumerable().Reverse();
-                    // edges.Concat(startEdge); がなんか上手くいかない
-                    foreach (var edge in startEdge) edges.Add(edge);
-                }
             }
         }
         edges.Reverse();
-        // 同上
-        foreach (var edge in lastEdge.Edges) edges.Add(edge);
+
         return edges;
     }
     /// <summary>
@@ -164,7 +140,7 @@ public class Board : Singleton<Board>
     /// <param name="start"></param>
     /// <param name="goal"></param>
     /// <returns></returns>
-    public Path GetPath(INode start, INode goal)
+    public Path GetPath(IIndexedNode start, IIndexedNode goal)
     {
         var edges = dijkstra(start, goal);
         return new Path(edges);

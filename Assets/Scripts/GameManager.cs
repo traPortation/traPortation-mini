@@ -86,6 +86,15 @@ public class GameManager : MonoBehaviour
         var node2 = this.StationManager.AddStation(new Vector3(2, 6, 5f));
         var node3 = this.StationManager.AddStation(new Vector3(10, 6, 5f));
 
+        // 駅と道をつなげる
+        // そのうち勝手にいい感じにやるようにする
+        this.Board.AddRoadEdge(nodes[2][2], node1);
+        this.Board.AddRoadEdge(node1, nodes[2][2]);
+        this.Board.AddRoadEdge(nodes[2][6], node2);
+        this.Board.AddRoadEdge(node2, nodes[2][6]);
+        this.Board.AddRoadEdge(nodes[10][6], node3);
+        this.Board.AddRoadEdge(node3, nodes[10][6]);
+
 
         // edgeを追加 (そのうちいい感じにやるようにする)
         var edge1 = this.Board.AddStationEdge(node1, node2, EdgeType.Train);
@@ -98,7 +107,7 @@ public class GameManager : MonoBehaviour
         // 電車を追加
         GameObject trainObject = Instantiate(this.train, Vector3.zero, Quaternion.identity);
         var train = trainObject.GetComponent<Train>();
-        var path = new Path(new List<BoardElements.IEdge>() { edge1, edge3, edge4, edge2 });
+        var path = new Path(new List<BoardElements.IIndexedEdge>() { edge1, edge3, edge4, edge2 });
         train.Initialize(path);
     }
 

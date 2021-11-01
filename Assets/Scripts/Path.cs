@@ -6,8 +6,9 @@ using System.Linq;
 
 public class Path
 {
-    private List<IEdge> edges;
+    private List<IIndexedEdge> edges;
     private int index;
+    public IIndexedNode LastNode => edges.Last().To;
 
     public float X, Y;
 
@@ -17,7 +18,7 @@ public class Path
     public bool Finished => index == this.edges.Count;
     public INode NextNode => edges[index].To;
 
-    public Path(List<IEdge> edges)
+    public Path(List<IIndexedEdge> edges)
     {
         if (edges.Count == 0) throw new System.Exception("edges are empty");
         this.edges = edges;
@@ -49,7 +50,7 @@ public class Path
             return nextV;
         }
     }
-    
+
     public INode Next()
     {
         if (this.Finished) return null;

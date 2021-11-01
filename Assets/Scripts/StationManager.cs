@@ -52,6 +52,8 @@ public class StationManager : MonoBehaviour
     /// <returns></returns>
     public StationNode AddStation(Vector3 vec)
     {
+        // TODO: 駅と(一番近い)道をつなげる
+
         int index = stations.Count;
         var node = Board.Instance.AddStationNode(vec.x, vec.y);
 
