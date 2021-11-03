@@ -12,7 +12,13 @@ namespace BoardElements
         new IIndexedNode From { get; }
         new IIndexedNode To { get; }
     }
-    public interface IIndexedEdge<T, U> : IEdge<T, U>
+
+    /// <summary>
+    /// 型パラメータ付きIIndexedEdge
+    /// </summary>
+    /// <typeparam name="T">出発点</typeparam>
+    /// <typeparam name="U">到着点</typeparam>
+    public interface IIndexedEdge<T, U> : IEdge<T, U>, IIndexedEdge
         where T : IIndexedNode
         where U : IIndexedNode
     { }

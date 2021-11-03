@@ -5,6 +5,11 @@ using BoardElements;
 
 namespace BoardElements
 {
+    /// <summary>
+    /// 道
+    /// </summary>
+    /// <typeparam name="T">出発点</typeparam>
+    /// <typeparam name="U">到着点</typeparam>
     public class RoadEdge<T, U> : IIndexedEdge<T, U>, IIndexedEdge
         where T : IBoardNode
         where U : IBoardNode

@@ -11,7 +11,6 @@ namespace BoardElements
     /// </summary>
     public class Edge : IEdge
     {
- 
         public INode From { get; }
         public INode To { get; }
         public float Cost { get; }

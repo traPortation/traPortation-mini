@@ -43,11 +43,12 @@ public class Board : Singleton<Board>
     }
 
     /// <summary>
-    /// BoardにRoadEdgeを追加する
+    /// RoadEdgeを作成して追加する
     /// </summary>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <returns></returns>
+    /// <param name="from">始点</param>
+    /// <param name="to">終点</param>
+    /// <typeparam name="T">始点の型</typeparam>
+    /// <returns>作成したRoadEdge</returns>
     public RoadEdge<T, IBoardNode> AddRoadEdge<T>(T from, IBoardNode to)
         where T : IBoardNode, IRoadAddableNode<T>
     {

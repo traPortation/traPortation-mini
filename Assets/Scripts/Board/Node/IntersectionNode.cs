@@ -2,6 +2,9 @@ using System.Collections.Generic;
 
 namespace BoardElements
 {
+    /// <summary>
+    /// 交差点
+    /// </summary>
     public class IntersectionNode : IBoardNode, IRoadAddableNode<IntersectionNode>
     {
         public float X { get; }

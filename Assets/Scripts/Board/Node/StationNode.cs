@@ -16,16 +16,16 @@ namespace BoardElements
         public int Index { get; }
         List<IEdge<StationNode, IBoardNode>> roads { get; }
         // TODO: 命名を考え直す
-        List<IEdge<StationNode, StationNode>> routes { get; }
+        List<IEdge<StationNode, StationNode>> vehicleRoutes { get; }
         public IReadOnlyList<IEdge<IBoardNode, IBoardNode>> Edges
         {
             get
             {
                 var roads = this.roads as IEnumerable<IEdge<IBoardNode, IBoardNode>>;
-                var routes = this.routes as IEnumerable<IEdge<IBoardNode, IBoardNode>>;
+                var routes = this.vehicleRoutes as IEnumerable<IEdge<IBoardNode, IBoardNode>>;
 
                 // TODO: ToListが必要か考える
-                // そもそもIEnumerableで受け取れるようにする / roadsとrailsを別々に受け取るようにする など
+                // そもそもIEnumerableで受け取れるようにする / roadsとroutesを別々に受け取るようにする など
                 return roads.Concat(routes).ToList();
             }
         }
@@ -37,7 +37,7 @@ namespace BoardElements
             this.Y = y;
             this.Index = index;
             this.roads = new List<IEdge<StationNode, IBoardNode>>();
-            this.routes = new List<IEdge<StationNode, StationNode>>();
+            this.vehicleRoutes = new List<IEdge<StationNode, StationNode>>();
         }
         public RoadEdge<StationNode, IBoardNode> AddRoad(IBoardNode to, float cost)
         {
@@ -45,11 +45,10 @@ namespace BoardElements
             this.roads.Add(edge);
             return edge;
         }
-        // TODO: 命名
         public VehicleEdge AddVehicleRoute(StationNode to, float cost)
         {
             var edge = new VehicleEdge(this, to, cost);
-            this.routes.Add(edge);
+            this.vehicleRoutes.Add(edge);
             return edge;
         }
     }
