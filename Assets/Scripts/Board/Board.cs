@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
 using System.Linq;
-using Collections;
 using Const;
 
 /// <summary>
@@ -21,11 +20,6 @@ public class Board : Singleton<Board>
         this.nodes = new List<IBoardNode>();
     }
 
-    static float nodeDistance(INode a, INode b)
-    {
-        return Mathf.Sqrt(Mathf.Pow(a.X - b.X, 2) + Mathf.Pow(a.Y - b.Y, 2));
-    }
-
     /// <summary>
     /// BoardにVehicleEdgeを追加する
     /// </summary>
@@ -37,7 +31,7 @@ public class Board : Singleton<Board>
     {
         if (from == null || to == null) throw new System.Exception("node is null");
 
-        float cost = EdgeCost.Get(type) * Board.nodeDistance(from, to);
+        float cost = EdgeCost.Get(type) * Utils.Node.Distance(from, to);
         var edge = from.AddVehicleRoute(to, cost);
         return edge;
     }
@@ -54,7 +48,7 @@ public class Board : Singleton<Board>
     {
         if (from == null || to == null) throw new System.Exception("node is null");
 
-        float cost = EdgeCost.Get(EdgeType.Walk) * Board.nodeDistance(from, to);
+        float cost = EdgeCost.Get(EdgeType.Walk) * Utils.Node.Distance(from, to);
         var edge = from.AddRoad(to, cost);
         return edge;
     }
@@ -99,7 +93,7 @@ public class Board : Singleton<Board>
         var dist = Enumerable.Repeat<float>(float.MaxValue, this.Nodes.Count).ToList();
         dist[start.Index] = 0;
 
-        var que = new PriorityQueue<(float, int)>();
+        var que = new Utils.PriorityQueue<(float, int)>();
         que.Push((0, start.Index));
 
         while (que.Count != 0)
