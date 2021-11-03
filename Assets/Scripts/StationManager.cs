@@ -53,9 +53,8 @@ public class StationManager : MonoBehaviour
     public StationNode AddStation(Vector3 vec)
     {
         // TODO: 駅と(一番近い)道をつなげる
-
-        int index = stations.Count;
-        var node = Board.Instance.AddStationNode(vec.x, vec.y);
+        int index = this.stations.Count;
+        var node = Board.Instance.AddNode(vec.x, vec.y);
 
         GameObject newStation = Instantiate(prefab, vec, Quaternion.identity);
         var station = newStation.GetComponent<Station>();
