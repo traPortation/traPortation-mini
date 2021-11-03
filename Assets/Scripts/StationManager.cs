@@ -51,7 +51,7 @@ public class StationManager : MonoBehaviour
     /// <returns></returns>
     public StationNode AddStation(Vector3 vec)
     {
-        int index = stations.Count;
+        int index = this.stations.Count;
         var node = Board.Instance.AddNode(vec.x, vec.y);
 
         GameObject newStation = Instantiate(prefab, vec, Quaternion.identity);
