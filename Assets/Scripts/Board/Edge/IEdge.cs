@@ -13,4 +13,10 @@ namespace BoardElements
         INode To { get; }
         float Cost { get; }
     }
+    public interface IEdge<out T, out U> : IEdge where T : INode where U : INode
+    {
+        new T From { get; }
+        new U To { get; }
+    }
+
 }
