@@ -36,7 +36,13 @@ public class Train : Vehicle
             // 乗っている人を移動させる
             foreach (var person in this.people)
             {
+                // 人を今着いた駅まで進める
                 var next = person.Next();
+
+                if (next == null)
+                {
+                    throw new System.Exception("next is null");
+                }
 
                 // テスト用
                 if (node != next)
@@ -47,8 +53,15 @@ public class Train : Vehicle
 
             var station = this.manager.StationManager.GetStation((node as StationNode).Index);
 
-            // 降ろす処理
-            this.RemovePerson(node as StationNode);
+
+            if (this.path.NextNode is StationNode nextNode)
+            {
+                this.RemovePerson(nextNode);
+            }
+            else
+            {
+                throw new System.Exception();
+            }
 
             // 乗せる処理
             // 発車直前に乗せたほうが自然かも

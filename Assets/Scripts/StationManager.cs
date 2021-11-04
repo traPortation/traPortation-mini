@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
+using System.Linq;
 
 public class StationManager : MonoBehaviour
 {
@@ -51,6 +52,7 @@ public class StationManager : MonoBehaviour
     /// <returns></returns>
     public StationNode AddStation(Vector3 vec)
     {
+        // TODO: 駅と(一番近い)道をつなげる
         int index = this.stations.Count;
         var node = Board.Instance.AddNode(vec.x, vec.y);
 
@@ -70,6 +72,7 @@ public class StationManager : MonoBehaviour
     /// <returns></returns>
     public Station GetStation(int stationId)
     {
-        return this.stations[stationId];
+        //TODO: 応急処置なのでそのうちどうにかする
+        return this.stations.Where((station) => station.Node.Index == stationId).First();
     }
 }

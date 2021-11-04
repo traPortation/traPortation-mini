@@ -6,18 +6,19 @@ using System.Linq;
 
 public class Path
 {
-    private List<IEdge> edges;
+    private List<IIndexedEdge> edges;
     private int index;
+    public IIndexedNode LastNode => edges.Last().To;
 
     public float X, Y;
 
     /// <summary>
     /// 移動が終了しているかどうか
     /// </summary>
-    public bool Finished => index == this.edges.Count;
-    public INode NextNode => edges[index].To;
+    public bool Finished => index >= this.edges.Count;
+    public INode NextNode => !this.Finished ? this.edges[this.index].To : null;
 
-    public Path(List<IEdge> edges)
+    public Path(List<IIndexedEdge> edges)
     {
         if (edges.Count == 0) throw new System.Exception("edges are empty");
         this.edges = edges;
@@ -49,18 +50,15 @@ public class Path
             return nextV;
         }
     }
-    
+
     public INode Next()
     {
         if (this.Finished) return null;
-        else
-        {
-            this.index++;
-            if (this.Finished) return null;
-            this.X = this.edges[this.index].From.X;
-            this.Y = this.edges[this.index].From.Y;
-            return this.edges[this.index].From;
-        }
+        var node = this.NextNode;
+        this.X = node.X;
+        this.Y = node.Y;
+        this.index++;
+        return node;
     }
 
     public void InitializeEdge()
