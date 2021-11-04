@@ -5,18 +5,24 @@ using BoardElements;
 
 namespace BoardElements
 {
-    public class RoadEdge : IIndexedEdge
+    /// <summary>
+    /// 道
+    /// </summary>
+    /// <typeparam name="T">出発点</typeparam>
+    /// <typeparam name="U">到着点</typeparam>
+    public class RoadEdge<T, U> : IIndexedEdge<T, U>, IIndexedEdge
+        where T : IBoardNode
+        where U : IBoardNode
     {
-        public IIndexedNode From { get; }
+        public T From { get; }
+        public U To { get; }
         INode IEdge.From => this.From;
-        IIndexedNode IIndexedEdge.From => this.From;
-
-        public IIndexedNode To { get; }
         INode IEdge.To => this.To;
+        IIndexedNode IIndexedEdge.From => this.From;
         IIndexedNode IIndexedEdge.To => this.To;
 
         public float Cost { get; }
-        public RoadEdge(IIndexedNode from, IIndexedNode to, float cost)
+        public RoadEdge(T from, U to, float cost)
         {
             this.From = from;
             this.To = to;

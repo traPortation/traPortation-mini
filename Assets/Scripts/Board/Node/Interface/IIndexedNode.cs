@@ -11,7 +11,5 @@ namespace BoardElements
     public interface IIndexedNode : INode
     {
         int Index { get; }
-        IReadOnlyList<IIndexedEdge> Edges { get; }
-        void AddEdge(IIndexedEdge edge);
     }
 }

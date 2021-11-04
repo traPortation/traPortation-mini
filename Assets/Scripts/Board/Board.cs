@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
 using System.Linq;
-using Collections;
 using Const;
 
 /// <summary>
@@ -11,19 +10,14 @@ using Const;
 /// </summary>
 public class Board : Singleton<Board>
 {
-    private List<IIndexedNode> nodes;
-    public IReadOnlyList<IIndexedNode> Nodes
+    private List<IBoardNode> nodes;
+    public IReadOnlyList<IBoardNode> Nodes
     {
         get { return this.nodes; }
     }
     public Board()
     {
-        this.nodes = new List<IIndexedNode>();
-    }
-
-    static float nodeDistance(INode a, INode b)
-    {
-        return Mathf.Sqrt(Mathf.Pow(a.X - b.X, 2) + Mathf.Pow(a.Y - b.Y, 2));
+        this.nodes = new List<IBoardNode>();
     }
 
     /// <summary>
@@ -37,25 +31,25 @@ public class Board : Singleton<Board>
     {
         if (from == null || to == null) throw new System.Exception("node is null");
 
-        float cost = EdgeCost.Get(type) * Board.nodeDistance(from, to);
-        var edge = new VehicleEdge(from, to, cost);
-        from.AddEdge(edge);
+        float cost = EdgeCost.Get(type) * Utils.Node.Distance(from, to);
+        var edge = from.AddVehicleRoute(to, cost);
         return edge;
     }
 
     /// <summary>
-    /// BoardにRoadEdgeを追加する
+    /// RoadEdgeを作成して追加する
     /// </summary>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <returns></returns>
-    public RoadEdge AddRoadEdge(IIndexedNode from, IIndexedNode to)
+    /// <param name="from">始点</param>
+    /// <param name="to">終点</param>
+    /// <typeparam name="T">始点の型</typeparam>
+    /// <returns>作成したRoadEdge</returns>
+    public RoadEdge<T, IBoardNode> AddRoadEdge<T>(T from, IBoardNode to)
+        where T : IBoardNode, IRoadAddableNode<T>
     {
         if (from == null || to == null) throw new System.Exception("node is null");
 
-        float cost = EdgeCost.Get(EdgeType.Walk) * Board.nodeDistance(from, to);
-        var edge = new RoadEdge(from, to, cost);
-        from.AddEdge(edge);
+        float cost = EdgeCost.Get(EdgeType.Walk) * Utils.Node.Distance(from, to);
+        var edge = from.AddRoad(to, cost);
         return edge;
     }
 
@@ -99,7 +93,7 @@ public class Board : Singleton<Board>
         var dist = Enumerable.Repeat<float>(float.MaxValue, this.Nodes.Count).ToList();
         dist[start.Index] = 0;
 
-        var que = new PriorityQueue<(float, int)>();
+        var que = new Utils.PriorityQueue<(float, int)>();
         que.Push((0, start.Index));
 
         while (que.Count != 0)
@@ -107,13 +101,24 @@ public class Board : Singleton<Board>
             var (cost, idx) = que.Top;
             que.Pop();
             if (dist[idx] < cost) continue;
+
+
             foreach (var edge in this.Nodes[idx].Edges)
             {
                 var nextCost = cost + edge.Cost;
-                if (dist[edge.To.Index] <= nextCost) continue;
-                dist[edge.To.Index] = nextCost;
-                from[edge.To.Index] = edge;
-                que.Push((dist[edge.To.Index], edge.To.Index));
+                switch (edge)
+                {
+                    case IIndexedEdge e:
+                        if (dist[e.To.Index] <= nextCost) continue;
+                        dist[e.To.Index] = nextCost;
+                        from[e.To.Index] = e;
+                        que.Push((dist[e.To.Index], e.To.Index));
+                        break;
+                    default:
+                        // unreachableなはず
+                        throw new System.Exception();
+                }
+
             }
         }
         var edges = new List<IIndexedEdge>();
@@ -124,12 +129,12 @@ public class Board : Singleton<Board>
             throw new System.Exception("path not found");
         }
 
+
+        for (var cur = from[goal.Index]; cur != null; cur = from[cur.From.Index])
         {
-            for (var cur = from[goal.Index]; cur != null; cur = from[cur.From.Index])
-            {
-                edges.Add(cur);
-            }
+            edges.Add(cur);
         }
+
         edges.Reverse();
 
         return edges;
@@ -145,7 +150,7 @@ public class Board : Singleton<Board>
         var edges = dijkstra(start, goal);
         return new Path(edges);
     }
- 
+
     public void Test()
     {
         Debug.Log("Test");

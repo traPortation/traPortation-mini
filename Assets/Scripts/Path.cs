@@ -16,7 +16,7 @@ public class Path
     /// 移動が終了しているかどうか
     /// </summary>
     public bool Finished => index >= this.edges.Count;
-    public INode NextNode => !this.Finished ? this.edges[this.index].To : null;
+    public IIndexedNode NextNode => !this.Finished ? this.edges[this.index].To : null;
 
     public Path(List<IIndexedEdge> edges)
     {
@@ -31,7 +31,7 @@ public class Path
     /// </summary>
     /// <param name="delta"></param>
     /// <returns>Nodeに到達した場合はそのNode、していない場合はnull</returns>
-    public INode Move(float delta)
+    public IIndexedNode Move(float delta)
     {
         if (this.Finished) return null;
         var nextV = this.edges[this.index].To;
@@ -51,7 +51,7 @@ public class Path
         }
     }
 
-    public INode Next()
+    public IIndexedNode Next()
     {
         if (this.Finished) return null;
         var node = this.NextNode;
