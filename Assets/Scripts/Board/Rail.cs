@@ -28,7 +28,7 @@ public class Rail
     public void AddTrain(Train train)
     {
         this.trains.Add(train);
-        var path = new Path(edges.ToList<IEdge>());
+        var path = new Path(edges.ToList<IIndexedEdge>());
         train.Initialize(path);
     }
 }
