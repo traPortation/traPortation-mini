@@ -12,7 +12,6 @@ public class Station : MonoBehaviour
 
     private LinkedList<Person> people = new LinkedList<Person>();
     public int ID;
-
     public StationNode Node { get; private set; }
 
     // Start is called before the first frame update
@@ -54,7 +53,7 @@ public class Station : MonoBehaviour
         }
     }
     /// <summary>
-    /// BoardNodeを割り当てる
+    /// StationNodeを割り当てる
     /// Instantiate時に一度だけ呼ぶ
     /// </summary>
     /// <param name="node"></param>
