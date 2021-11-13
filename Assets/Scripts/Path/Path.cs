@@ -4,6 +4,8 @@ using UnityEngine;
 using BoardElements;
 using System.Linq;
 
+#nullable enable
+
 public class Path
 {
     private List<IIndexedEdge> edges;
@@ -17,7 +19,7 @@ public class Path
     /// 移動が終了しているかどうか
     /// </summary>
     public bool Finished => index >= this.edges.Count;
-    public IIndexedNode NextNode => !this.Finished ? this.edges[this.index].To : null;
+    public IIndexedNode? NextNode => !this.Finished ? this.edges[this.index].To : null;
 
     public Path(List<IIndexedEdge> edges)
     {
@@ -32,7 +34,7 @@ public class Path
     /// </summary>
     /// <param name="delta"></param>
     /// <returns>Nodeに到達した場合はそのNode、していない場合はnull</returns>
-    public IIndexedNode Move(float delta)
+    public IIndexedNode? Move(float delta)
     {
         if (this.Finished) return null;
         var nextV = this.edges[this.index].To;
@@ -52,13 +54,18 @@ public class Path
         }
     }
 
-    public IIndexedNode MoveNext()
+    public IIndexedNode? MoveNext()
     {
         if (this.Finished) return null;
+
         var node = this.NextNode;
-        this.X = node.X;
-        this.Y = node.Y;
-        this.index++;
+        if (node != null)
+        {
+            this.X = node.X;
+            this.Y = node.Y;
+            this.index++;
+        }
+
         return node;
     }
 
