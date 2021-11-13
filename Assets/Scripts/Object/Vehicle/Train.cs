@@ -37,7 +37,7 @@ public class Train : Vehicle
             foreach (var person in this.people)
             {
                 // 人を今着いた駅まで進める
-                var next = person.Next();
+                var next = person.MoveNext();
 
                 if (next == null)
                 {

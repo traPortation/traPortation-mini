@@ -21,7 +21,7 @@ public class Path
 
     public Path(List<IIndexedEdge> edges)
     {
-        if (edges.Count == 0) throw new System.Exception("edges are empty");
+        if (edges.Count == 0) throw new System.ArgumentException("edges are empty");
         this.edges = edges;
         this.index = 0;
         this.X = edges[0].From.X;
@@ -52,7 +52,7 @@ public class Path
         }
     }
 
-    public IIndexedNode Next()
+    public IIndexedNode MoveNext()
     {
         if (this.Finished) return null;
         var node = this.NextNode;
