@@ -9,8 +9,6 @@ public class RailManager
     /// 路線を作成する
     /// </summary>
     
-    public int Index { get; }
-
     List<Rail> rails { get; }
     public IReadOnlyList<Rail> Rails => this.rails;
 
@@ -22,8 +20,16 @@ public class RailManager
     public void AddRail(List<VehicleEdge> edges)
     {
         int index = this.rails[this.rails.Count].Index;
-        var rail = new Rail(edges, index);
+        string indexName = index.ToString();
+        var rail = new Rail(edges, index, $"Rail {indexName}");
 
         this.rails.Add(rail);
+    }
+
+    public void ChangeRailName(Rail rail)
+    {
+        if (Name.resultName != "") {
+            rail.Name = Name.resultName;
+        }
     }
 }

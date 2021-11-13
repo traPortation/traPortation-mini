@@ -12,16 +12,19 @@ public class Rail
 
     public int Index { get; }
 
+    public string Name { get; set; }
+
     List<VehicleEdge> edges { get; }
     public IReadOnlyList<VehicleEdge> Edges => this.edges;
 
     List<Train> trains { get; }
     public IReadOnlyList<Train> Trains => this.trains;
 
-    public Rail(List<VehicleEdge> edges, int index)
+    public Rail(List<VehicleEdge> edges, int index, string name)
     {
         this.edges = edges;
         this.Index = index;
+        this.Name = name;
         this.trains = new List<Train>();
     }
     
