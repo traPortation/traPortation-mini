@@ -37,20 +37,24 @@ public class Path
     public IIndexedNode? Move(float delta)
     {
         if (this.Finished) return null;
-        var nextV = this.edges[this.index].To;
-        float distance = Mathf.Sqrt(Mathf.Pow(nextV.X - this.X, 2) + Mathf.Pow(nextV.Y - this.Y, 2));
-        if (distance > delta)
+
+        var nextNode = this.edges[this.index].To;
+        float distance = Mathf.Sqrt(Mathf.Pow(nextNode.X - this.X, 2) + Mathf.Pow(nextNode.Y - this.Y, 2));
+
+        // 次のNodeに着く場合
+        if (distance <= delta)
         {
-            this.X += (nextV.X - this.X) * delta / distance;
-            this.Y += (nextV.Y - this.Y) * delta / distance;
-            return null;
+            this.X = nextNode.X;
+            this.Y = nextNode.Y;
+            this.index++;
+            return nextNode;
         }
+        // 届かない場合
         else
         {
-            this.X = nextV.X;
-            this.Y = nextV.Y;
-            this.index++;
-            return nextV;
+            this.X += (nextNode.X - this.X) * delta / distance;
+            this.Y += (nextNode.Y - this.Y) * delta / distance;
+            return null;
         }
     }
 
