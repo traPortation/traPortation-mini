@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1111175906858368527}
   - component: {fileID: 3437390259703044681}
   m_Layer: 0
-  m_Name: Person 1
+  m_Name: person
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +47,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -91,6 +92,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7779628519595083127}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cc14877b7833514494aca71f4f37a04, type: 3}
+  m_Script: {fileID: 11500000, guid: 07aaa15077002244f89ec41b66cd5158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

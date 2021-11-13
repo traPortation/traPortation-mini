@@ -99,8 +99,8 @@ public class Person : MovingObject
     /// pathを次のnodeまで進める
     /// </summary>
     /// <returns></returns>
-    public INode Next()
+    public INode MoveNext()
     {
-        return this.path.Next();
+        return this.path.MoveNext();
     }
 }
