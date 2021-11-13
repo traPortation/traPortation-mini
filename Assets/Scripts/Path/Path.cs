@@ -11,9 +11,23 @@ public class Path
     private List<IIndexedEdge> edges;
     private int index;
     public IIndexedNode LastNode => edges.Last().To;
-
-    public float X { get; private set; }
-    public float Y { get; private set; }
+    Transform transform;
+    public float X {
+        get => this.transform.position.x;
+        private set {
+            var pos = this.transform.position;
+            pos.x = value;
+            this.transform.position = pos;
+        }
+    }
+    public float Y {
+        get => this.transform.position.y;
+        private set {
+            var pos = this.transform.position;
+            pos.y = value;
+            this.transform.position = pos;
+        }
+    }
 
     /// <summary>
     /// 移動が終了しているかどうか
@@ -21,13 +35,16 @@ public class Path
     public bool Finished => index >= this.edges.Count;
     public IIndexedNode? NextNode => !this.Finished ? this.edges[this.index].To : null;
 
-    public Path(List<IIndexedEdge> edges)
+    public Path(List<IIndexedEdge> edges, Transform transform)
     {
         if (edges.Count == 0) throw new System.ArgumentException("edges are empty");
         this.edges = edges;
         this.index = 0;
+        this.transform = transform;
         this.X = edges[0].From.X;
         this.Y = edges[0].From.Y;
+
+        
     }
     /// <summary>
     /// deltaだけpath上を移動する

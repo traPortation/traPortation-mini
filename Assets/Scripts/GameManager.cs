@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         // 電車を追加
         GameObject trainObject = Instantiate(this.train, Vector3.zero, Quaternion.identity);
         var train = trainObject.GetComponent<Train>();
-        var path = new Path(new List<BoardElements.IIndexedEdge>() { edge1, edge3, edge4, edge2 });
+        var path = new Path(new List<BoardElements.IIndexedEdge>() { edge1, edge3, edge4, edge2 }, train.transform);
         train.Initialize(path);
     }
 

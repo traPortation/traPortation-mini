@@ -49,11 +49,12 @@ public class Person : MovingObject
     {
         var start = this.path != null ? this.path.LastNode : Board.Instance.Nodes[Random.Range(0, Board.Instance.Nodes.Count)];
 
-        // 始点と終点がかぶらないようにするための処理
+        // 始点と終点が被らないようにするための処理
         int goalIndex = Random.Range(0, Board.Instance.Nodes.Count - 1);
         var goal = Board.Instance.Nodes[goalIndex < start.Index ? goalIndex : goalIndex + 1];
 
-        return this.manager.Board.GetPath(start, goal);
+        var edges = this.manager.Board.GetPath(start, goal);
+        return new Path(edges, this.transform);
     }
 
     /// <summary>

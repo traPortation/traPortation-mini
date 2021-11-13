@@ -145,10 +145,9 @@ public class Board : Singleton<Board>
     /// <param name="start"></param>
     /// <param name="goal"></param>
     /// <returns></returns>
-    public Path GetPath(IIndexedNode start, IIndexedNode goal)
+    public List<IIndexedEdge> GetPath(IIndexedNode start, IIndexedNode goal)
     {
-        var edges = dijkstra(start, goal);
-        return new Path(edges);
+        return dijkstra(start, goal);
     }
 
     public void Test()

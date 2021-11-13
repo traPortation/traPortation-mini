@@ -13,7 +13,6 @@ public abstract class MovingObject : MonoBehaviour
     protected void Move(float delta)
     {
         var node = this.path.Move(delta);
-        transform.position = new Vector3(path.X, path.Y, transform.position.z);
         if (node != null) this.Arrive(node);
     }
 
