@@ -8,9 +8,9 @@ using System.Linq;
 
 public class Path
 {
-    private List<IIndexedEdge> edges;
-    private int index;
-    public IIndexedNode LastNode => edges.Last().To;
+    IReadOnlyList<IIndexedEdge> edges;
+    int index;
+    public IIndexedNode LastNode => this.edges.Last().To;
     Transform transform;
     public float X {
         get => this.transform.position.x;
@@ -32,19 +32,18 @@ public class Path
     /// <summary>
     /// 移動が終了しているかどうか
     /// </summary>
-    public bool Finished => index >= this.edges.Count;
+    public bool Finished => this.index >= this.edges.Count;
     public IIndexedNode? NextNode => !this.Finished ? this.edges[this.index].To : null;
 
-    public Path(List<IIndexedEdge> edges, Transform transform)
+    public Path(IReadOnlyList<IIndexedEdge> edges, Transform transform)
     {
         if (edges.Count == 0) throw new System.ArgumentException("edges are empty");
+
         this.edges = edges;
-        this.index = 0;
-        this.transform = transform;
         this.X = edges[0].From.X;
         this.Y = edges[0].From.Y;
-
-        
+        this.index = 0;
+        this.transform = transform;
     }
     /// <summary>
     /// deltaだけpath上を移動する
@@ -93,7 +92,7 @@ public class Path
     public void InitializeEdge()
     {
         this.index = 0;
-        this.X = edges[0].From.X;
-        this.Y = edges[0].From.Y;
+        this.X = this.edges[0].From.X;
+        this.Y = this.edges[0].From.Y;
     }
 }
