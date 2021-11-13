@@ -48,7 +48,11 @@ public class Person : MovingObject
     private Path getRandomPath()
     {
         var start = this.path != null ? this.path.LastNode : Board.Instance.Nodes[Random.Range(0, Board.Instance.Nodes.Count)];
-        var goal = Board.Instance.Nodes[Random.Range(0, Board.Instance.Nodes.Count)];
+
+        // 始点と終点がかぶらないようにするための処理
+        int goalIndex = Random.Range(0, Board.Instance.Nodes.Count - 1);
+        var goal = Board.Instance.Nodes[goalIndex < start.Index ? goalIndex : goalIndex + 1];
+
         return this.manager.Board.GetPath(start, goal);
     }
 
