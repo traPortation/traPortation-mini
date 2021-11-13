@@ -10,7 +10,8 @@ public class Path
     private int index;
     public IIndexedNode LastNode => edges.Last().To;
 
-    public float X, Y;
+    public float X { get; private set; }
+    public float Y { get; private set; }
 
     /// <summary>
     /// 移動が終了しているかどうか
