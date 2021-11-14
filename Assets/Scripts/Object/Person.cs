@@ -35,10 +35,10 @@ public class Person : MovingObject
         }
 
         // 着いた先が駅の場合は駅に自分自身を追加する
-        if (node is StationNode)
+        if (node is StationNode sNode)
         {
             this.velocity = 0;
-            var station = this.manager.StationManager.GetStation((node as StationNode).Index);
+            var station = this.manager.StationManager.GetStation(sNode .Index);
             station.AddPerson(this);
         }
     }
@@ -50,11 +50,15 @@ public class Person : MovingObject
         var start = this.path != null ? this.path.LastNode : Board.Instance.Nodes[Random.Range(0, Board.Instance.Nodes.Count)];
 
         // 始点と終点が被らないようにするための処理
-        int goalIndex = Random.Range(0, Board.Instance.Nodes.Count - 1);
-        var goal = Board.Instance.Nodes[goalIndex < start.Index ? goalIndex : goalIndex + 1];
+        IBoardNode goal;
+        do
+        {
+            goal = Board.Instance.Nodes[Random.Range(0, Board.Instance.Nodes.Count)];
+        } while (start.Index == goal.Index);
 
         var edges = this.manager.Board.GetPath(start, goal);
         return new Path(edges, this.transform);
+
     }
 
     /// <summary>

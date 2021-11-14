@@ -43,8 +43,8 @@ public class Board : Singleton<Board>
     /// <param name="to">終点</param>
     /// <typeparam name="T">始点の型</typeparam>
     /// <returns>作成したRoadEdge</returns>
-    public RoadEdge<T, IBoardNode> AddRoadEdge<T>(T from, IBoardNode to)
-        where T : IBoardNode, IRoadAddableNode<T>
+    public RoadEdge<IBoardNode> AddRoadEdge<T>(T from, IBoardNode to)
+        where T : IBoardNode, IRoadAddableNode
     {
         if (from == null || to == null) throw new System.Exception("node is null");
 
@@ -86,9 +86,9 @@ public class Board : Singleton<Board>
     /// <param name="start"></param>
     /// <param name="goal"></param>
     /// <returns>最短経路</returns>
-    private List<IIndexedEdge> dijkstra(IIndexedNode start, IIndexedNode goal)
+    private List<PathNode> dijkstra(IIndexedNode start, IIndexedNode goal)
     {
-        var from = Enumerable.Repeat<IIndexedEdge>(null, this.Nodes.Count).ToList();
+        var from = Enumerable.Repeat<(IIndexedNode, IIndexedEdge)>((null, null), this.Nodes.Count).ToList();
 
         var dist = Enumerable.Repeat<float>(float.MaxValue, this.Nodes.Count).ToList();
         dist[start.Index] = 0;
@@ -111,7 +111,7 @@ public class Board : Singleton<Board>
                     case IIndexedEdge e:
                         if (dist[e.To.Index] <= nextCost) continue;
                         dist[e.To.Index] = nextCost;
-                        from[e.To.Index] = e;
+                        from[e.To.Index] = (this.Nodes[idx], e);
                         que.Push((dist[e.To.Index], e.To.Index));
                         break;
                     default:
@@ -121,7 +121,7 @@ public class Board : Singleton<Board>
 
             }
         }
-        var edges = new List<IIndexedEdge>();
+        var edges = new List<PathNode>();
 
         // startからgoalへの道がない場合は例外を投げる (仮仕様)
         if (dist[goal.Index] == float.MaxValue)
@@ -129,10 +129,11 @@ public class Board : Singleton<Board>
             throw new System.Exception("path not found");
         }
 
-
-        for (var cur = from[goal.Index]; cur != null; cur = from[cur.From.Index])
+        edges.Add(new PathNode(goal, null));
+        for (var cur = from[goal.Index]; cur.Item1 != null; cur = from[cur.Item1.Index])
         {
-            edges.Add(cur);
+            var edge = new PathNode(cur.Item1, cur.Item2);
+            edges.Add(edge);
         }
 
         edges.Reverse();
@@ -145,7 +146,7 @@ public class Board : Singleton<Board>
     /// <param name="start"></param>
     /// <param name="goal"></param>
     /// <returns></returns>
-    public List<IIndexedEdge> GetPath(IIndexedNode start, IIndexedNode goal)
+    public List<PathNode> GetPath(IIndexedNode start, IIndexedNode goal)
     {
         return dijkstra(start, goal);
     }

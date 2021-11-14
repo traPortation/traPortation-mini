@@ -12,23 +12,24 @@ public class Rail
 
     public int Index { get; }
 
-    List<VehicleEdge> edges { get; }
-    public IReadOnlyList<VehicleEdge> Edges => this.edges;
+    // TODO: そのうちVehiclePathNodeみたいなの作ったらそれにする
+    List<PathNode> nodes { get; }
+    public IReadOnlyList<PathNode> Nodes => this.nodes;
 
     List<Train> trains { get; }
     public IReadOnlyList<Train> Trains => this.trains;
 
-    public Rail(List<VehicleEdge> edges, int index)
+    public Rail(List<PathNode> nodes, int index)
     {
-        this.edges = edges;
+        this.nodes = nodes;
         this.Index = index;
         this.trains = new List<Train>();
     }
-    
+
     public void AddTrain(Train train)
     {
         this.trains.Add(train);
-        var path = new Path(edges.ToList<IIndexedEdge>(), train.transform);
+        var path = new Path(nodes, train.transform);
         train.Initialize(path);
     }
 }

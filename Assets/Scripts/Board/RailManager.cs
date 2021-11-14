@@ -19,7 +19,7 @@ public class RailManager
         this.rails = new List<Rail>();
     }
 
-    public void AddRail(List<VehicleEdge> edges)
+    public void AddRail(List<PathNode> edges)
     {
         int index = this.rails[this.rails.Count].Index;
         var rail = new Rail(edges, index);
