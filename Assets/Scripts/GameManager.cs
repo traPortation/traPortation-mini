@@ -4,22 +4,30 @@ using UnityEngine;
 using Const;
 using System.Linq;
 
+#nullable enable
+
 public class GameManager : MonoBehaviour
 {
+    public Board Board { get; } = Board.Instance;
+
+#nullable disable
     [SerializeField] private GameObject person;
     [SerializeField] private GameObject building;
     [SerializeField] private GameObject train;
-    public Board Board { get; private set; }
+
     public StationManager StationManager { get; private set; }
+#nullable enable
 
     // Start is called before the first frame update
     void Start()
     {
         this.InstantiatePeople();
         this.InstantiateBuildings();
-        this.Board = Board.Instance;
         var gameObj = GameObject.FindGameObjectsWithTag("StationManager")[0];
         this.StationManager = gameObj.GetComponent<StationManager>();
+
+        Utils.NullChecker.Check(this.person, this.building, this.train, this.StationManager);
+
         this.initBoardForTest();
     }
 

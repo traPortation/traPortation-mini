@@ -5,6 +5,8 @@ using BoardElements;
 using System.Linq;
 using Const;
 
+#nullable enable
+
 /// <summary>
 /// 盤面 頂点 (Node) と辺 (Edge) によって構成される
 /// </summary>
@@ -88,7 +90,7 @@ public class Board : Singleton<Board>
     /// <returns>最短経路</returns>
     private List<PathNode> dijkstra(IIndexedNode start, IIndexedNode goal)
     {
-        var from = Enumerable.Repeat<(IIndexedNode, IIndexedEdge)>((null, null), this.Nodes.Count).ToList();
+        var from = Enumerable.Repeat<(IIndexedNode?, IIndexedEdge?)>((null, null), this.Nodes.Count).ToList();
 
         var dist = Enumerable.Repeat<float>(float.MaxValue, this.Nodes.Count).ToList();
         dist[start.Index] = 0;
