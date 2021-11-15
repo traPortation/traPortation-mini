@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,11 +7,11 @@ public class Name : MonoBehaviour
 {
 
     /// <summary>
-    /// –¼‘O‚Ì“ü—Í‚ğó‚¯•t‚¯‚é(InputField‚Íg‚¢‰ñ‚·)
+    /// åå‰ã®å…¥åŠ›ã‚’å—ã‘ä»˜ã‘ã‚‹(InputFieldã¯ä½¿ã„å›ã™)
     /// </summary>
 
     private InputField inputField;
-    public static string resultName;  // “ü—Í‚³‚ê‚½ƒeƒLƒXƒg
+    public static string resultName;  // å…¥åŠ›ã•ã‚ŒãŸãƒ†ã‚­ã‚¹ãƒˆ
 
     // Start is called before the first frame update
     void Start()
@@ -27,21 +27,21 @@ public class Name : MonoBehaviour
         inputField.text = "";
     }
 
-    // OnEndEdit‚ÅŒÄ‚Ño‚·
+    // OnEndEditã§å‘¼ã³å‡ºã™
     public void FinishEditName()
     {
-        if(inputField.touchScreenKeyboard.status == TouchScreenKeyboard.Status.Done && inputField.text != "")
+        if (inputField.touchScreenKeyboard.status == TouchScreenKeyboard.Status.Done && inputField.text != "")
         {
             resultName = inputField.text;
             InitializeInputField();
         }
-        // ƒLƒƒƒ“ƒZƒ‹“ü—ÍA‚Ü‚½‚ÍƒL[ƒ{[ƒh‚Å‚àInputField‚Å‚à‚È‚¢•”•ª‚ğŒëƒ^ƒbƒv‚µ‚½‚Ìˆ—
+        // ã‚­ãƒ£ãƒ³ã‚»ãƒ«å…¥åŠ›æ™‚ã€ã¾ãŸã¯ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã§ã‚‚InputFieldã§ã‚‚ãªã„éƒ¨åˆ†ã‚’èª¤ã‚¿ãƒƒãƒ—ã—ãŸæ™‚ã®å‡¦ç†
         else if (inputField.touchScreenKeyboard.status == TouchScreenKeyboard.Status.Canceled || inputField.touchScreenKeyboard.status == TouchScreenKeyboard.Status.LostFocus)
         {
             InitializeInputField();
             resultName = "";
         }
-        // ‚»‚Ì‘¼(—áŠOˆ—‚ªo‚½‚ç¢‚é‚½‚ß¡‚Ì‚Æ‚±‚ëƒLƒƒƒ“ƒZƒ‹‚Æ“¯‚¶ˆ—)
+        // ãã®ä»–(ä¾‹å¤–å‡¦ç†ãŒå‡ºãŸã‚‰å›°ã‚‹ãŸã‚ä»Šã®ã¨ã“ã‚ã‚­ãƒ£ãƒ³ã‚»ãƒ«æ™‚ã¨åŒã˜å‡¦ç†)
         else
         {
             InitializeInputField();
