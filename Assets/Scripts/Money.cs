@@ -14,13 +14,19 @@ class ManageMoney
     // 所持金を下限と上限の間になるようにするやつ
     public bool ExpenseCheck(int expense, bool allowMinus)
     {
-        if (MoneyLimit.minMoney <= nowMoney + expense && nowMoney + expense <= MoneyLimit.maxMoney) nowMoney += expense;
-        else if (nowMoney + expense > MoneyLimit.maxMoney) nowMoney = MoneyLimit.maxMoney;
+        if (MoneyLimit.minMoney <= this.nowMoney + expense && this.nowMoney + expense <= MoneyLimit.maxMoney)
+        {
+            this.nowMoney += expense;
+        }
+        else if (this.nowMoney + expense > MoneyLimit.maxMoney)
+        {
+            this.nowMoney = MoneyLimit.maxMoney;
+        }
         else
         {
             // 所持金が下限になるような場合、0円にするかそのままにするか判断するやつ
             // 所持金が0円になる方。路線維持費とかあれば
-            if (allowMinus == true) nowMoney = MoneyLimit.minMoney;
+            if (allowMinus == true) this.nowMoney = MoneyLimit.minMoney;
 
             // 所持金がそのままの方。新たな路線を買えない時用
             else return false; // false返す→エラーメッセージ呼び出し等に活用してほしい

@@ -19,7 +19,7 @@ public class Train : Vehicle
 
     void FixedUpdate()
     {
-        if (isMoving)
+        if (this.isMoving)
         {
             this.Move(this.velocity);
         }
@@ -67,13 +67,13 @@ public class Train : Vehicle
             // 発車直前に乗せたほうが自然かも
             station.AddPersonToTrain(this);
         }
-        isMoving = false;
+        this.isMoving = false;
         StartCoroutine("stopstation");
     }
     private IEnumerator stopstation()
     {
-        isMoving = false;
+        this.isMoving = false;
         yield return new WaitForSeconds(stopStationTime);
-        isMoving = true;
+        this.isMoving = true;
     }
 }

@@ -25,7 +25,7 @@ public class Person : MovingObject
         this.Move(this.velocity);
     }
 
-    protected override void Arrive(BoardElements.INode node)
+    protected override void Arrive(INode node)
     {
         // 目的地に到達した場合は次の目的地を設定する
         if (this.path.Finished)
@@ -37,8 +37,9 @@ public class Person : MovingObject
         // 着いた先が駅の場合は駅に自分自身を追加する
         if (node is StationNode sNode)
         {
+            // TODO: velocity直接いじるのよくない
             this.velocity = 0;
-            var station = this.manager.StationManager.GetStation(sNode .Index);
+            var station = this.manager.StationManager.GetStation(sNode.Index);
             station.AddPerson(this);
         }
     }
@@ -80,7 +81,7 @@ public class Person : MovingObject
     public void Ride(Vehicle vehicle)
     {
         // 人を見えなくする 動きを止める
-        gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
 
         // これ駅とかでやるべきかも？
         vehicle.AddPerson(this);
@@ -100,7 +101,7 @@ public class Person : MovingObject
 
     public void GetOff(StationNode node)
     {
-        gameObject.SetActive(true);
+        this.gameObject.SetActive(true);
         this.velocity = Velocity.Person;
     }
 
