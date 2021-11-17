@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Name : MonoBehaviour
+public class inputName : MonoBehaviour
 {
 
     /// <summary>
@@ -11,44 +11,55 @@ public class Name : MonoBehaviour
     /// </summary>
 
     private InputField inputField;
-    public static string resultName;  // 入力されたテキスト
+
+    /// <summary>
+    /// resultName = 入力されたメッセージ
+    /// </summary>
+    public string resultName { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
-        inputField = this.gameObject.GetComponent<InputField>();
+        this.inputField = this.gameObject.GetComponent<InputField>();
         InitializeInputField();
-        resultName = "";
+        this.resultName = "";
     }
-
 
     public void InitializeInputField()
     {
-        inputField.text = "";
+        this.inputField.text = "";
     }
 
     // OnEndEditで呼び出す
     public void FinishEditName()
     {
-        if(inputField.touchScreenKeyboard.status == TouchScreenKeyboard.Status.Done && inputField.text != "")
+        switch (this.inputField.touchScreenKeyboard.status)
         {
-            resultName = inputField.text;
-            InitializeInputField();
-        }
-        // キャンセル入力時、またはキーボードでもInputFieldでもない部分を誤タップした時の処理
-        else if (inputField.touchScreenKeyboard.status == TouchScreenKeyboard.Status.Canceled || inputField.touchScreenKeyboard.status == TouchScreenKeyboard.Status.LostFocus)
-        {
-            InitializeInputField();
-            resultName = "";
-        }
-        // その他(例外処理が出たら困るため今のところキャンセル時と同じ処理)
-        else
-        {
-            InitializeInputField();
-            resultName = "";
-        }
+            case TouchScreenKeyboard.Status.Done:
+                if (this.resultName != "")
+                {
+                    this.resultName = this.inputField.text;
+                }
+                InitializeInputField();
+                break;
 
+            /// <summary>
+            /// キャンセル入力時、またはキーボードでもInputFieldでもない部分を誤タップした時の処理
+            /// </summary>
+            case TouchScreenKeyboard.Status.Canceled:
+            case TouchScreenKeyboard.Status.LostFocus:
+                InitializeInputField();
+                this.resultName = "";
+                break;
+
+            /// <summary>
+            /// その他(例外処理が出たら困るため今のところキャンセル時と同じ処理)
+            /// </summary>
+            default:
+                InitializeInputField();
+                this.resultName = "";
+                break;
+        }
     }
-
 
 }

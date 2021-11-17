@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
 
-public class RailManager
+public class RailManager : Singleton<RailManager>
 {
     /// <summary>
     /// 路線を作成する
@@ -19,17 +19,12 @@ public class RailManager
 
     public void AddRail(List<VehicleEdge> edges)
     {
-        int index = this.rails[this.rails.Count].Index;
+        int index = this.rails[this.rails.Count-1].ID+1;
         string indexName = index.ToString();
         var rail = new Rail(edges, index, $"Rail {indexName}");
 
         this.rails.Add(rail);
     }
 
-    public void ChangeRailName(Rail rail)
-    {
-        if (Name.resultName != "") {
-            rail.Name = Name.resultName;
-        }
-    }
+
 }
