@@ -5,6 +5,8 @@ using BoardElements;
 using System.Linq;
 using Const;
 
+#nullable enable
+
 /// <summary>
 /// 盤面 頂点 (Node) と辺 (Edge) によって構成される
 /// </summary>
@@ -18,6 +20,33 @@ public class Board : Singleton<Board>
     public Board()
     {
         this.nodes = new List<IBoardNode>();
+    }
+
+    /// <summary>
+    /// BoardにStationNodeを追加する
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns>追加されたNode</returns>
+    public StationNode AddStationNode(float x, float y)
+    {
+        // TODO: 画面外への設置は弾く
+        var node = new StationNode(x, y, this.nodes.Count);
+        this.nodes.Add(node);
+        return node;
+    }
+
+    /// <summary>
+    /// BoardにIntersectionNodeを追加する
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns>追加されたNode</returns>
+    public IntersectionNode AddIntersectionNode(float x, float y)
+    {
+        var node = new IntersectionNode(x, y, this.nodes.Count);
+        this.nodes.Add(node);
+        return node;
     }
 
     /// <summary>
@@ -54,32 +83,6 @@ public class Board : Singleton<Board>
     }
 
     /// <summary>
-    /// BoardにStationNodeを追加する
-    /// </summary>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <returns>追加されたNode</returns>
-    public StationNode AddStationNode(float x, float y)
-    {
-        var node = new StationNode(x, y, this.nodes.Count);
-        this.nodes.Add(node);
-        return node;
-    }
-
-    /// <summary>
-    /// BoardにIntersectionNodeを追加する
-    /// </summary>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <returns>追加されたNode</returns>
-    public IntersectionNode AddIntersectionNode(float x, float y)
-    {
-        var node = new IntersectionNode(x, y, this.nodes.Count);
-        this.nodes.Add(node);
-        return node;
-    }
-
-    /// <summary>
     /// 経路探索を行う
     /// メモリと相談だけど出発点ごとにメモ化したほうがいいかも
     /// </summary>
@@ -88,7 +91,7 @@ public class Board : Singleton<Board>
     /// <returns>最短経路</returns>
     private List<IIndexedEdge> dijkstra(IIndexedNode start, IIndexedNode goal)
     {
-        var from = Enumerable.Repeat<IIndexedEdge>(null, this.Nodes.Count).ToList();
+        var from = Enumerable.Repeat<IIndexedEdge?>(null, this.Nodes.Count).ToList();
 
         var dist = Enumerable.Repeat<float>(float.MaxValue, this.Nodes.Count).ToList();
         dist[start.Index] = 0;
