@@ -26,10 +26,17 @@ class ManageMoney
         {
             // 所持金が下限になるような場合、0円にするかそのままにするか判断するやつ
             // 所持金が0円になる方。路線維持費とかあれば
-            if (allowMinus == true) this.nowMoney = MoneyLimit.minMoney;
+            if (allowMinus == true)
+            {
+                this.nowMoney = MoneyLimit.minMoney;
+            }
 
             // 所持金がそのままの方。新たな路線を買えない時用
-            else return false; // false返す→エラーメッセージ呼び出し等に活用してほしい
+            else
+            {
+                // false返す→エラーメッセージ呼び出し等に活用してほしい
+                return false;
+            }
         }
 
         return true;

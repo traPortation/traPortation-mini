@@ -4,14 +4,19 @@ using UnityEngine;
 using Const;
 using System.Linq;
 using BoardElements;
+
+#nullable enable
+
 public class Person : MovingObject
 {
+#nullable disable
     private GameManager manager;
+#nullable enable
     // Start is called before the first frame update
     void Start()
     {
         this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        if (this.manager == null) throw new System.Exception("GameManager not found");
+        Utils.NullChecker.Check(this.manager);
 
         var path = this.getRandomPath();
         this.Initialize(path);
@@ -109,7 +114,7 @@ public class Person : MovingObject
     /// pathを次のnodeまで進める
     /// </summary>
     /// <returns></returns>
-    public INode MoveNext()
+    public INode? MoveNext()
     {
         return this.path.MoveNext();
     }

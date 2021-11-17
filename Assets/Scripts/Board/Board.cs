@@ -13,10 +13,7 @@ using Const;
 public class Board : Singleton<Board>
 {
     private List<IBoardNode> nodes;
-    public IReadOnlyList<IBoardNode> Nodes
-    {
-        get { return this.nodes; }
-    }
+    public IReadOnlyList<IBoardNode> Nodes => this.nodes;
     public Board()
     {
         this.nodes = new List<IBoardNode>();
@@ -31,8 +28,6 @@ public class Board : Singleton<Board>
     /// <returns>追加されたEdge</returns>
     public VehicleEdge AddStationEdge(StationNode from, StationNode to, EdgeType type = EdgeType.Walk)
     {
-        if (from == null || to == null) throw new System.Exception("node is null");
-
         float cost = EdgeCost.Get(type) * Utils.Node.Distance(from, to);
         var edge = from.AddVehicleRoute(to, cost);
         return edge;
@@ -48,8 +43,6 @@ public class Board : Singleton<Board>
     public RoadEdge<IBoardNode> AddRoadEdge<T>(T from, IBoardNode to)
         where T : IBoardNode, IRoadAddableNode
     {
-        if (from == null || to == null) throw new System.Exception("node is null");
-
         float cost = EdgeCost.Get(EdgeType.Walk) * Utils.Node.Distance(from, to);
         var edge = from.AddRoad(to, cost);
         return edge;

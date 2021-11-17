@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
+
+#nullable enable
+
 public class Train : Vehicle
 {
     private float stopStationTime = Const.Train.StopStationTime;
     private bool isMoving = true;
+#nullable disable
     private GameManager manager;
+#nullable enable
     void Start()
     {
         this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        Utils.NullChecker.Check(this.manager);
 
         this.Capacity = Const.Train.Capacity;
         this.Wage = Const.Train.Wage;
@@ -31,7 +37,7 @@ public class Train : Vehicle
             this.path.InitializeEdge();
             Initialize(this.path);
         }
-        if (node is StationNode)
+        if (node is StationNode sNode)
         {
             // 乗っている人を移動させる
             foreach (var person in this.people)
@@ -43,15 +49,9 @@ public class Train : Vehicle
                 {
                     throw new System.Exception("next is null");
                 }
-
-                // テスト用
-                if (node != next)
-                {
-                    throw new System.Exception("なにかがおかしい");
-                }
             }
 
-            var station = this.manager.StationManager.GetStation((node as StationNode).Index);
+            var station = this.manager.StationManager.GetStation(sNode.Index);
 
 
             if (this.path.NextNode is StationNode nextNode)

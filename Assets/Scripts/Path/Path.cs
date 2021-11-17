@@ -41,8 +41,8 @@ public class Path
 
         this.nodes = nodes;
         this.transform = transform;
-        this.X = nodes[0].X;
-        this.Y = nodes[0].Y;
+        this.X = nodes[0].Node.X;
+        this.Y = nodes[0].Node.Y;
         this.index = 0;
     }
     /// <summary>
@@ -92,7 +92,7 @@ public class Path
     public void InitializeEdge()
     {
         this.index = 0;
-        this.X = this.nodes[0].X;
-        this.Y = this.nodes[0].Y;
+        this.X = this.nodes[0].Node.X;
+        this.Y = this.nodes[0].Node.Y;
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Const;
 
 // 動くもの全般 (人間、乗り物など)
 public abstract class MovingObject : MonoBehaviour
@@ -13,7 +12,10 @@ public abstract class MovingObject : MonoBehaviour
     protected void Move(float delta)
     {
         var node = this.path.Move(delta);
-        if (node != null) this.Arrive(node);
+        if (node != null)
+        {
+            this.Arrive(node);
+        }
     }
 
     /// <summary>
@@ -23,7 +25,7 @@ public abstract class MovingObject : MonoBehaviour
     public void Initialize(Path path)
     {
         this.path = path;
-        transform.position = new Vector3(path.X, path.Y, transform.position.z);
+        this.transform.position = new Vector3(path.X, path.Y, transform.position.z);
     }
 
     /// <summary>
