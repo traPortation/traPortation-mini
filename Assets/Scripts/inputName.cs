@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,14 +7,11 @@ public class inputName : MonoBehaviour
 {
 
     /// <summary>
-    /// –¼‘O‚Ì“ü—Í‚ğó‚¯•t‚¯‚é(InputField‚Íg‚¢‰ñ‚·)
+    /// åå‰ã®å…¥åŠ›ã‚’å—ã‘ä»˜ã‘ã‚‹(InputFieldã¯ä½¿ã„å›ã™)
     /// </summary>
 
     private InputField inputField;
 
-    /// <summary>
-    /// resultName = “ü—Í‚³‚ê‚½ƒƒbƒZ[ƒW
-    /// </summary>
     public string resultName { get; private set; }
 
     // Start is called before the first frame update
@@ -30,7 +27,7 @@ public class inputName : MonoBehaviour
         this.inputField.text = "";
     }
 
-    // OnEndEdit‚ÅŒÄ‚Ño‚·
+    // OnEndEditã§å‘¼ã³å‡ºã™
     public void FinishEditName()
     {
         switch (this.inputField.touchScreenKeyboard.status)
@@ -44,7 +41,7 @@ public class inputName : MonoBehaviour
                 break;
 
             /// <summary>
-            /// ƒLƒƒƒ“ƒZƒ‹“ü—ÍA‚Ü‚½‚ÍƒL[ƒ{[ƒh‚Å‚àInputField‚Å‚à‚È‚¢•”•ª‚ğŒëƒ^ƒbƒv‚µ‚½‚Ìˆ—
+            /// ã‚­ãƒ£ãƒ³ã‚»ãƒ«å…¥åŠ›æ™‚ã€ã¾ãŸã¯ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã§ã‚‚InputFieldã§ã‚‚ãªã„éƒ¨åˆ†ã‚’èª¤ã‚¿ãƒƒãƒ—ã—ãŸæ™‚ã®å‡¦ç†
             /// </summary>
             case TouchScreenKeyboard.Status.Canceled:
             case TouchScreenKeyboard.Status.LostFocus:
@@ -53,7 +50,7 @@ public class inputName : MonoBehaviour
                 break;
 
             /// <summary>
-            /// ‚»‚Ì‘¼(—áŠOˆ—‚ªo‚½‚ç¢‚é‚½‚ß¡‚Ì‚Æ‚±‚ëƒLƒƒƒ“ƒZƒ‹‚Æ“¯‚¶ˆ—)
+            /// ãã®ä»–(ä¾‹å¤–å‡¦ç†ãŒå‡ºãŸã‚‰å›°ã‚‹ãŸã‚ä»Šã®ã¨ã“ã‚ã‚­ãƒ£ãƒ³ã‚»ãƒ«æ™‚ã¨åŒã˜å‡¦ç†)
             /// </summary>
             default:
                 InitializeInputField();
