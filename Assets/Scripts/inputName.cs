@@ -30,6 +30,13 @@ public class inputName : MonoBehaviour
     // OnEndEditで呼び出す
     public void FinishEditName()
     {
+        if (this.inputField.touchScreenKeyboard == null)
+        {
+            this.resultName = this.inputField.text;
+            InitializeInputField();
+            return;
+        }
+
         switch (this.inputField.touchScreenKeyboard.status)
         {
             case TouchScreenKeyboard.Status.Done:
