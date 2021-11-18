@@ -10,7 +10,9 @@ public class Rail
     /// 線路上に車両を作成する
     /// </summary>
 
-    public int Index { get; }
+    public int ID { get; }
+
+    public string Name { get; private set; }
 
     List<VehicleEdge> edges { get; }
     public IReadOnlyList<VehicleEdge> Edges => this.edges;
@@ -18,10 +20,11 @@ public class Rail
     List<Train> trains { get; }
     public IReadOnlyList<Train> Trains => this.trains;
 
-    public Rail(List<VehicleEdge> edges, int index)
+    public Rail(List<VehicleEdge> edges, int id, string name)
     {
         this.edges = edges;
-        this.Index = index;
+        this.ID = id;
+        this.Name = name;
         this.trains = new List<Train>();
     }
     
@@ -30,5 +33,14 @@ public class Rail
         this.trains.Add(train);
         var path = new Path(edges.ToList<IIndexedEdge>());
         train.Initialize(path);
+    }
+
+    public void ChangeRailName(Rail rail)
+    {
+        var railName = new inputName();
+        if (railName.resultName != "")
+        {
+            rail.Name = railName.resultName;
+        }
     }
 }
