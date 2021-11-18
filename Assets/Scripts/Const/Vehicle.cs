@@ -4,7 +4,7 @@ namespace Const
     {
         public const int Capacity = 4;
         public const int Wage = 100;
-        public const float StopStationTime = 1f;
+        public const float StopStationTime = 0.1f;
     }
 
     /// <summary>

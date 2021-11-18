@@ -17,7 +17,7 @@ public class Bus : Vehicle
 
     void FixedUpdate()
     {
-        if (isMoving)
+        if (this.isMoving)
         {
             this.Move(this.velocity);
         }
@@ -29,13 +29,13 @@ public class Bus : Vehicle
             this.path.InitializeEdge();
             Initialize(this.path);
         }
-        isMoving = false;
+        this.isMoving = false;
         StartCoroutine("stopstation");
     }
     private IEnumerator stopstation()
     {
-        isMoving = false;
+        this.isMoving = false;
         yield return new WaitForSeconds(stopStationTime);
-        isMoving = true;
+        this.isMoving = true;
     }
 }

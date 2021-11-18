@@ -21,18 +21,18 @@ public class StationManager : MonoBehaviour
     void Update()
     {
         //buildModeを切り替えるためのボタンクリックを無視する
-        if (buttonClicked)
+        if (this.buttonClicked)
         {
-            buttonClicked = false;
+            this.buttonClicked = false;
         }
         //それ以外の場合はbuildModeを判定し、駅を追加する
-        else if (Input.GetMouseButtonUp(0) && buildMode)
+        else if (Input.GetMouseButtonUp(0) && this.buildMode)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (Mathf.Abs(mousePosition.x - Mathf.Round(mousePosition.x)) < 0.1 || Mathf.Abs(mousePosition.y - Mathf.Round(mousePosition.y)) < 0.1)
             {
                 mousePosition.z = 8f;
-                GameObject newStation = Instantiate(prefab, mousePosition, Quaternion.identity);
+                GameObject newStation = Instantiate(this.prefab, mousePosition, Quaternion.identity);
                 stations.Add(newStation.GetComponent<Station>());
             }
         }
@@ -40,8 +40,8 @@ public class StationManager : MonoBehaviour
 
     public void SetBuildMode()
     {
-        buttonClicked = true;
-        buildMode = !buildMode;
+        this.buttonClicked = true;
+        this.buildMode = !this.buildMode;
         Board.Instance.Test();
     }
 
@@ -54,14 +54,14 @@ public class StationManager : MonoBehaviour
     {
         // TODO: 駅と(一番近い)道をつなげる
 
-        int index = stations.Count;
+        int index = this.stations.Count;
         var node = Board.Instance.AddStationNode(vec.x, vec.y);
 
-        GameObject newStation = Instantiate(prefab, vec, Quaternion.identity);
+        GameObject newStation = Instantiate(this.prefab, vec, Quaternion.identity);
         var station = newStation.GetComponent<Station>();
         station.SetNode(node);
 
-        stations.Add(station);
+        this.stations.Add(station);
 
         return node;
     }
@@ -74,6 +74,6 @@ public class StationManager : MonoBehaviour
     public Station GetStation(int stationId)
     {
         //TODO: 応急処置なのでそのうちどうにかする
-        return this.stations.Where((station) => station.Node.Index == stationId).First();
+        return this.stations.Where(station => station.Node.Index == stationId).First();
     }
 }

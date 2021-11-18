@@ -14,24 +14,25 @@ public class Rail
 
     public string Name { get; private set; }
 
-    List<VehicleEdge> edges { get; }
-    public IReadOnlyList<VehicleEdge> Edges => this.edges;
+    // TODO: そのうちVehiclePathNodeみたいなの作ったらそれにする
+    List<PathNode> nodes { get; }
+    public IReadOnlyList<PathNode> Nodes => this.nodes;
 
     List<Train> trains { get; }
     public IReadOnlyList<Train> Trains => this.trains;
 
-    public Rail(List<VehicleEdge> edges, int id, string name)
+    public Rail(List<PathNode> nodes, int id, string name)
     {
-        this.edges = edges;
+        this.nodes = nodes;
         this.ID = id;
         this.Name = name;
         this.trains = new List<Train>();
     }
-    
+
     public void AddTrain(Train train)
     {
         this.trains.Add(train);
-        var path = new Path(edges.ToList<IIndexedEdge>());
+        var path = new Path(nodes, train.transform);
         train.Initialize(path);
     }
 

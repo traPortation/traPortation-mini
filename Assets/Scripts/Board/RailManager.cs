@@ -17,7 +17,7 @@ public class RailManager : Singleton<RailManager>
         this.rails = new List<Rail>();
     }
 
-    public void AddRail(List<VehicleEdge> edges)
+    public void AddRail(List<PathNode> edges)
     {
         int index = this.rails[this.rails.Count-1].ID+1;
         string indexName = index.ToString();

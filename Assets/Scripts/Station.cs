@@ -26,7 +26,7 @@ public class Station : MonoBehaviour
     /// <param name="person"></param>
     public void AddPerson(Person person)
     {
-        people.AddLast(person);
+        this.people.AddLast(person);
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ public class Station : MonoBehaviour
     /// <param name="vehicle"></param>
     public void AddPersonToTrain(Vehicle vehicle)
     {
-        for (var p = people.First; p != null;)
+        for (var p = this.people.First; p != null;)
         {
             // TODO: 乗り物が満員のときは乗れない
             var next = p.Next;
@@ -47,7 +47,7 @@ public class Station : MonoBehaviour
                 person.Ride(vehicle);
 
                 // 駅から人を取り除く
-                people.Remove(p);
+                this.people.Remove(p);
             }
             p = next;
         }

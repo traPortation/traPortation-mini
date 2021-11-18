@@ -4,14 +4,19 @@ using UnityEngine;
 using Const;
 using System.Linq;
 using BoardElements;
+
+#nullable enable
+
 public class Person : MovingObject
 {
+#nullable disable
     private GameManager manager;
+#nullable enable
     // Start is called before the first frame update
     void Start()
     {
         this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        if (this.manager == null) throw new System.Exception("GameManager not found");
+        Utils.NullChecker.Check(this.manager);
 
         var path = this.getRandomPath();
         this.Initialize(path);
@@ -25,7 +30,7 @@ public class Person : MovingObject
         this.Move(this.velocity);
     }
 
-    protected override void Arrive(BoardElements.INode node)
+    protected override void Arrive(INode node)
     {
         // 目的地に到達した場合は次の目的地を設定する
         if (this.path.Finished)
@@ -35,10 +40,11 @@ public class Person : MovingObject
         }
 
         // 着いた先が駅の場合は駅に自分自身を追加する
-        if (node is StationNode)
+        if (node is StationNode sNode)
         {
+            // TODO: velocity直接いじるのよくない
             this.velocity = 0;
-            var station = this.manager.StationManager.GetStation((node as StationNode).Index);
+            var station = this.manager.StationManager.GetStation(sNode.Index);
             station.AddPerson(this);
         }
     }
@@ -49,11 +55,16 @@ public class Person : MovingObject
     {
         var start = this.path != null ? this.path.LastNode : Board.Instance.Nodes[Random.Range(0, Board.Instance.Nodes.Count)];
 
-        // 始点と終点がかぶらないようにするための処理
-        int goalIndex = Random.Range(0, Board.Instance.Nodes.Count - 1);
-        var goal = Board.Instance.Nodes[goalIndex < start.Index ? goalIndex : goalIndex + 1];
+        // 始点と終点が被らないようにするための処理
+        IBoardNode goal;
+        do
+        {
+            goal = Board.Instance.Nodes[Random.Range(0, Board.Instance.Nodes.Count)];
+        } while (start.Index == goal.Index);
 
-        return this.manager.Board.GetPath(start, goal);
+        var edges = this.manager.Board.GetPath(start, goal);
+        return new Path(edges, this.transform);
+
     }
 
     /// <summary>
@@ -75,7 +86,7 @@ public class Person : MovingObject
     public void Ride(Vehicle vehicle)
     {
         // 人を見えなくする 動きを止める
-        gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
 
         // これ駅とかでやるべきかも？
         vehicle.AddPerson(this);
@@ -95,7 +106,7 @@ public class Person : MovingObject
 
     public void GetOff(StationNode node)
     {
-        gameObject.SetActive(true);
+        this.gameObject.SetActive(true);
         this.velocity = Velocity.Person;
     }
 
@@ -103,7 +114,7 @@ public class Person : MovingObject
     /// pathを次のnodeまで進める
     /// </summary>
     /// <returns></returns>
-    public INode MoveNext()
+    public INode? MoveNext()
     {
         return this.path.MoveNext();
     }
