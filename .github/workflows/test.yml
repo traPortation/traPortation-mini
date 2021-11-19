@@ -13,7 +13,11 @@ jobs:
       # Unity プロジェクトの中身をダウンロードしてくる
       - name: Check out my unity project.
         uses: actions/checkout@v2
-
+      - name: Cache Library
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library
       # GameCI の Test runner を利用して
       # EditMode 及び PlayMode のテストを実行する
       - name: Run EditMode and PlayMode Test
