@@ -1,6 +1,9 @@
 name: Run EditMode and PlayMode Test
 on:
-  workflow_dispatch: {}
+  push:
+    branches:
+      - 'master'
+  pull_request:
 jobs:
   test:
     name: Run EditMode and PlayMode Test
