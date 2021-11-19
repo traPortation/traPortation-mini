@@ -9,7 +9,6 @@ namespace BoardElements
     /// </summary>
     public interface IEdge
     {
-        INode From { get; }
         INode To { get; }
         float Cost { get; }
     }
@@ -17,13 +16,11 @@ namespace BoardElements
     /// <summary>
     /// 型パラメータ付きIEdge
     /// </summary>
-    /// <typeparam name="T">出発点</typeparam>
-    /// <typeparam name="U">到着点</typeparam>
-    public interface IEdge<out T, out U> : IEdge where T : INode where U : INode
+    /// <typeparam name="T">到着点</typeparam>
+    public interface IEdge<out T> : IEdge where T : INode
     {
         // newしてるのはそれしか方法が思い浮かばなかったから
-        new T From { get; }
-        new U To { get; }
+        new T To { get; }
     }
 
 }

@@ -4,22 +4,30 @@ using UnityEngine;
 using Const;
 using System.Linq;
 
+#nullable enable
+
 public class GameManager : MonoBehaviour
 {
+    public Board Board { get; } = Board.Instance;
+
+#nullable disable
     [SerializeField] private GameObject person;
     [SerializeField] private GameObject building;
     [SerializeField] private GameObject train;
-    public Board Board { get; private set; }
+
     public StationManager StationManager { get; private set; }
+#nullable enable
 
     // Start is called before the first frame update
     void Start()
     {
         this.InstantiatePeople();
         this.InstantiateBuildings();
-        this.Board = Board.Instance;
         var gameObj = GameObject.FindGameObjectsWithTag("StationManager")[0];
         this.StationManager = gameObj.GetComponent<StationManager>();
+
+        Utils.NullChecker.Check(this.person, this.building, this.train, this.StationManager);
+
         this.initBoardForTest();
     }
 
@@ -80,34 +88,31 @@ public class GameManager : MonoBehaviour
             }
         }
 
-
         // 駅を追加
-        var node1 = this.StationManager.AddStation(new Vector3(2, 2, 5f));
-        var node2 = this.StationManager.AddStation(new Vector3(2, 6, 5f));
-        var node3 = this.StationManager.AddStation(new Vector3(10, 6, 5f));
+        var snode1 = this.StationManager.AddStation(new Vector3(2, 2, 5f));
+        var snode2 = this.StationManager.AddStation(new Vector3(2, 6, 5f));
+        var snode3 = this.StationManager.AddStation(new Vector3(10, 6, 5f));
 
         // 駅と道をつなげる
         // そのうち勝手にいい感じにやるようにする
-        this.Board.AddRoadEdge(nodes[2][2], node1);
-        this.Board.AddRoadEdge(node1, nodes[2][2]);
-        this.Board.AddRoadEdge(nodes[2][6], node2);
-        this.Board.AddRoadEdge(node2, nodes[2][6]);
-        this.Board.AddRoadEdge(nodes[10][6], node3);
-        this.Board.AddRoadEdge(node3, nodes[10][6]);
-
+        this.Board.AddRoadEdge(nodes[2][2], snode1);
+        this.Board.AddRoadEdge(snode1, nodes[2][2]);
+        this.Board.AddRoadEdge(nodes[2][6], snode2);
+        this.Board.AddRoadEdge(snode2, nodes[2][6]);
+        this.Board.AddRoadEdge(nodes[10][6], snode3);
+        this.Board.AddRoadEdge(snode3, nodes[10][6]);
 
         // edgeを追加 (そのうちいい感じにやるようにする)
-        var edge1 = this.Board.AddVehicleRoute(node1, node2, EdgeType.Train);
-        var edge2 = this.Board.AddVehicleRoute(node2, node1, EdgeType.Train);
-
-        var edge3 = this.Board.AddVehicleRoute(node2, node3, EdgeType.Train);
-        var edge4 = this.Board.AddVehicleRoute(node3, node2, EdgeType.Train);
-
+        var node1 = new PathNode(snode1, this.Board.AddVehicleRoute(snode1, snode2, EdgeType.Train));
+        var node2 = new PathNode(snode2, this.Board.AddVehicleRoute(snode2, snode3, EdgeType.Train));
+        var node3 = new PathNode(snode3, this.Board.AddVehicleRoute(snode3, snode2, EdgeType.Train));
+        var node4 = new PathNode(snode2, this.Board.AddVehicleRoute(snode2, snode1, EdgeType.Train));
+        var node5 = new PathNode(snode1, null);
 
         // 電車を追加
         GameObject trainObject = Instantiate(this.train, Vector3.zero, Quaternion.identity);
         var train = trainObject.GetComponent<Train>();
-        var path = new Path(new List<BoardElements.IIndexedEdge>() { edge1, edge3, edge4, edge2 });
+        var path = new Path(new List<PathNode>() { node1, node2, node3, node4, node5 }, train.transform);
         train.Initialize(path);
     }
 

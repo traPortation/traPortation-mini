@@ -19,7 +19,7 @@ public abstract class Vehicle : MovingObject
     // メソッド名よくないかも
     public void RemovePerson(StationNode node)
     {
-        for (var p = people.First; p != null;)
+        for (var p = this.people.First; p != null;)
         {
             var next = p.Next;
             if (p.Value.DecideToGetOff(node))

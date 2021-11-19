@@ -8,37 +8,53 @@ using System.Linq;
 
 public class Path
 {
-    private List<IIndexedEdge> edges;
-    private int index;
-    public IIndexedNode LastNode => edges.Last().To;
-
-    public float X { get; private set; }
-    public float Y { get; private set; }
+    IReadOnlyList<PathNode> nodes;
+    int index;
+    public IIndexedNode LastNode => this.nodes.Last().Node;
+    Transform transform;
+    public float X {
+        get => this.transform.position.x;
+        private set {
+            var pos = this.transform.position;
+            pos.x = value;
+            this.transform.position = pos;
+        }
+    }
+    public float Y {
+        get => this.transform.position.y;
+        private set {
+            var pos = this.transform.position;
+            pos.y = value;
+            this.transform.position = pos;
+        }
+    }
 
     /// <summary>
     /// 移動が終了しているかどうか
     /// </summary>
-    public bool Finished => index >= this.edges.Count;
-    public IIndexedNode? NextNode => !this.Finished ? this.edges[this.index].To : null;
+    public bool Finished => this.index >= this.nodes.Count - 1;
+    public IIndexedNode? NextNode => !this.Finished ? this.nodes[this.index + 1].Node : null;
 
-    public Path(List<IIndexedEdge> edges)
+    public Path(IReadOnlyList<PathNode> nodes, Transform transform)
     {
-        if (edges.Count == 0) throw new System.ArgumentException("edges are empty");
-        this.edges = edges;
+        if (nodes.Count == 0) throw new System.ArgumentException("nodes are empty");
+
+        this.nodes = nodes;
+        this.transform = transform;
+        this.X = nodes[0].Node.X;
+        this.Y = nodes[0].Node.Y;
         this.index = 0;
-        this.X = edges[0].From.X;
-        this.Y = edges[0].From.Y;
     }
     /// <summary>
     /// deltaだけpath上を移動する
     /// </summary>
     /// <param name="delta"></param>
     /// <returns>Nodeに到達した場合はそのNode、していない場合はnull</returns>
-    public IIndexedNode? Move(float delta)
+    public INode? Move(float delta)
     {
-        if (this.Finished) return null;
+        var nextNode = this.NextNode;
+        if (nextNode == null) return null;
 
-        var nextNode = this.edges[this.index].To;
         float distance = Mathf.Sqrt(Mathf.Pow(nextNode.X - this.X, 2) + Mathf.Pow(nextNode.Y - this.Y, 2));
 
         // 次のNodeに着く場合
@@ -58,7 +74,7 @@ public class Path
         }
     }
 
-    public IIndexedNode? MoveNext()
+    public INode? MoveNext()
     {
         if (this.Finished) return null;
 
@@ -76,7 +92,7 @@ public class Path
     public void InitializeEdge()
     {
         this.index = 0;
-        this.X = edges[0].From.X;
-        this.Y = edges[0].From.Y;
+        this.X = this.nodes[0].Node.X;
+        this.Y = this.nodes[0].Node.Y;
     }
 }

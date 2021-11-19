@@ -5,23 +5,23 @@ namespace BoardElements
     /// <summary>
     /// 交差点
     /// </summary>
-    public class IntersectionNode : IBoardNode, IRoadAddableNode<IntersectionNode>
+    public class IntersectionNode : IBoardNode, IRoadAddableNode
     {
         public float X { get; }
         public float Y { get; }
         public int Index { get; }
-        List<RoadEdge<IntersectionNode, IBoardNode>> roads { get; }
-        public IReadOnlyList<IEdge<IBoardNode, IBoardNode>> Edges => this.roads;
+        List<RoadEdge<IBoardNode>> roads { get; }
+        public IReadOnlyList<IEdge<IBoardNode>> Edges => this.roads;
         public IntersectionNode(float x, float y, int index)
         {
             this.X = x;
             this.Y = y;
             this.Index = index;
-            this.roads = new List<RoadEdge<IntersectionNode, IBoardNode>>();
+            this.roads = new List<RoadEdge<IBoardNode>>();
         }
-        public RoadEdge<IntersectionNode, IBoardNode> AddRoad(IBoardNode toNode, float cost)
+        public RoadEdge<IBoardNode> AddRoad(IBoardNode toNode, float cost)
         {
-            var edge = new RoadEdge<IntersectionNode, IBoardNode>(this, toNode, cost);
+            var edge = new RoadEdge<IBoardNode>(toNode, cost);
             this.roads.Add(edge);
             return edge;
         }
