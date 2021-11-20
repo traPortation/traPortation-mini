@@ -10,31 +10,37 @@ public class StationManager : MonoBehaviour
     private bool buttonClicked;
     [SerializeField] private List<Station> stations;
     [SerializeField] private GameObject prefab;
+    [SerializeField] private Texture2D station;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        station.SetPixels(Enumerable.Repeat<Color>(Color.blue, station.width * station.height).ToArray());
     }
 
     // Update is called once per frame
     void Update()
     {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //buildModeを切り替えるためのボタンクリックを無視する
         if (this.buttonClicked)
         {
             this.buttonClicked = false;
         }
         //それ以外の場合はbuildModeを判定し、駅を追加する
-        else if (Input.GetMouseButtonUp(0) && this.buildMode)
+        else if (Mathf.Abs(mousePosition.x - Mathf.Round(mousePosition.x)) < 0.1 || Mathf.Abs(mousePosition.y - Mathf.Round(mousePosition.y)) < 0.1)
         {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (Mathf.Abs(mousePosition.x - Mathf.Round(mousePosition.x)) < 0.1 || Mathf.Abs(mousePosition.y - Mathf.Round(mousePosition.y)) < 0.1)
+            Cursor.SetCursor(station, new Vector2(20, 20), CursorMode.Auto);
+            if (Input.GetMouseButtonUp(0) && this.buildMode)
             {
                 mousePosition.z = 8f;
                 GameObject newStation = Instantiate(this.prefab, mousePosition, Quaternion.identity);
                 stations.Add(newStation.GetComponent<Station>());
             }
+        }
+        else
+        {
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
     }
 
