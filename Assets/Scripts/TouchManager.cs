@@ -13,7 +13,7 @@ namespace TouchState
 
     public class TouchManager
     {
-        public bool touchFrag;      // タッチ有無
+        public bool touchFlag;      // タッチ有無
         public Vector2 touchPosition;   // タッチ座標
         public TouchPhase touchPhase;   // タッチ状態
 
@@ -25,7 +25,7 @@ namespace TouchState
         /// <param name="phase"></param>
         public TouchManager(bool flag = false, Vector2? position = null, TouchPhase phase = TouchPhase.Began)
         {
-            this.touchFrag = flag;
+            this.touchFlag = flag;
             if (position == null)
             {
                 this.touchPosition = new Vector2(0, 0);
@@ -40,7 +40,7 @@ namespace TouchState
         // Update is called once per frame
         public void update()
         {
-            this.touchFrag = false;
+            this.touchFlag = false;
 
             // マウス操作
             if (Application.isEditor)
@@ -48,26 +48,26 @@ namespace TouchState
                 // 押した瞬間
                 if (Input.GetMouseButtonDown(0))
                 {
-                    this.touchFrag = true;
+                    this.touchFlag = true;
                     this.touchPhase = TouchPhase.Began;
                 }
 
                 // 離した瞬間
                 if (Input.GetMouseButtonUp(0))
                 {
-                    this.touchFrag = true;
+                    this.touchFlag = true;
                     this.touchPhase = TouchPhase.Ended;
                 }
 
                 // 押しっぱなし
                 if (Input.GetMouseButton(0))
                 {
-                    this.touchFrag = true;
+                    this.touchFlag = true;
                     this.touchPhase = TouchPhase.Moved;
                 }
 
                 // 座標取得
-                if (this.touchFrag) this.touchPosition = Input.mousePosition;
+                if (this.touchFlag) this.touchPosition = Input.mousePosition;
             }
 
             // タッチ操作
@@ -78,18 +78,9 @@ namespace TouchState
                     Touch touch = Input.GetTouch(0);
                     this.touchPosition = touch.position;
                     this.touchPhase = touch.phase;
-                    this.touchFrag = true;
+                    this.touchFlag = true;
                 }
             }
-        }
-
-        /// <summary>
-        /// タッチ状態の取得
-        /// </summary>
-        
-        public TouchManager getTouch()
-        {
-            return new TouchManager(this.touchFrag, this.touchPosition, this.touchPhase);
         }
     }
 }
