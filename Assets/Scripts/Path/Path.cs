@@ -8,7 +8,7 @@ using System.Linq;
 
 public class Path
 {
-    IReadOnlyList<PathNode> nodes;
+    List<PathNode> nodes;
     int index;
     public IIndexedNode LastNode => this.nodes.Last().Node;
     Transform transform;
@@ -35,7 +35,7 @@ public class Path
     public bool Finished => this.index >= this.nodes.Count - 1;
     public IIndexedNode? NextNode => !this.Finished ? this.nodes[this.index + 1].Node : null;
 
-    public Path(IReadOnlyList<PathNode> nodes, Transform transform)
+    public Path(List<PathNode> nodes, Transform transform)
     {
         if (nodes.Count == 0) throw new System.ArgumentException("nodes are empty");
 
@@ -45,6 +45,31 @@ public class Path
         this.Y = nodes[0].Node.Y;
         this.index = 0;
     }
+
+    /// <summary>
+    /// PathにPathNodeを前後どちらかにつける。
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="isAddTail"></param>
+    /// <returns>void</returns>
+    public void AddPathNode(IIndexedNode node, bool isAddTail=true)
+    {
+        if (this.nodes.Count <= 0) throw new System.ArgumentException("nodes are empty");
+
+        // Path末端にnodeを置くとき
+        if (isAddTail)
+        {
+            this.nodes.Add(new PathNode(node, null));
+        }
+
+        // Path先頭にnodeを置くとき
+        else 
+        {
+            this.nodes.Insert(0, new PathNode(node, new PlotEdge<IIndexedNode>(this.nodes[0].Node, 0)));
+            this.InitializeEdge();
+        }
+    }
+
     /// <summary>
     /// deltaだけpath上を移動する
     /// </summary>
@@ -94,5 +119,9 @@ public class Path
         this.index = 0;
         this.X = this.nodes[0].Node.X;
         this.Y = this.nodes[0].Node.Y;
+    }
+    public int Size()
+    {
+        return this.nodes.Count;
     }
 }

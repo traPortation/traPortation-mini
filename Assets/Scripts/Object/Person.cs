@@ -18,8 +18,11 @@ public class Person : MovingObject
         this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         Utils.NullChecker.Check(this.manager);
 
-        var path = this.getRandomPath();
-        this.Initialize(path);
+        var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+        var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+        var edges = this.manager.Board.GetPath(this.manager.Board.GetNearestNode(start), this.manager.Board.GetNearestNode(goal));
+        var path = new Path(edges, this.transform);
+        this.RandomInitialize(path, start, goal);
 
         this.velocity = Velocity.Person;
     }
@@ -35,8 +38,10 @@ public class Person : MovingObject
         // 目的地に到達した場合は次の目的地を設定する
         if (this.path.Finished)
         {
+            var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+            var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
             var path = this.getRandomPath();
-            this.Initialize(path);
+            this.RandomInitialize(path, start, goal);
         }
 
         // 着いた先が駅の場合は駅に自分自身を追加する

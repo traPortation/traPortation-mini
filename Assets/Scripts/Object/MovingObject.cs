@@ -28,6 +28,16 @@ public abstract class MovingObject : MonoBehaviour
         this.transform.position = new Vector3(path.X, path.Y, transform.position.z);
     }
 
+    public void RandomInitialize(Path path, Vector3 start, Vector3 goal)
+    {
+        this.path = path;
+        var startNode = new BoardElements.PlotNode(start.x, start.y, 0);
+        var goalNode = new BoardElements.PlotNode(goal.x, goal.y, this.path.Size()+1);
+        this.path.AddPathNode(startNode, false);
+        this.path.AddPathNode(goalNode);
+        this.transform.position = new Vector3(path.X, path.Y, transform.position.z);
+    }
+
     /// <summary>
     /// Nodeに到着するごとに呼び出される
     /// </summary>
