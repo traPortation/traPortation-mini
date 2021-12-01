@@ -28,9 +28,14 @@ public abstract class MovingObject : MonoBehaviour
         this.transform.position = new Vector3(path.X, path.Y, transform.position.z);
     }
 
-    public void RandomInitialize(Path path, Vector3 start, Vector3 goal)
+    /// <summary>
+    /// 任意の始点と終点与えるといい感じのPathを与える
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="goal"></param>
+    public void RandomInitialize(Vector3 start, Vector3 goal)
     {
-        this.path = path;
+        this.path = new Path(Board.Instance.GetPath(Board.Instance.GetNearestNode(start), Board.Instance.GetNearestNode(goal)), this.transform);
         var startNode = new BoardElements.PlotNode(start.x, start.y, 0);
         var goalNode = new BoardElements.PlotNode(goal.x, goal.y, this.path.Size()+1);
         this.path.AddPathNode(startNode, false);

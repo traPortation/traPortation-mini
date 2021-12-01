@@ -20,9 +20,7 @@ public class Person : MovingObject
 
         var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
         var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
-        var edges = this.manager.Board.GetPath(this.manager.Board.GetNearestNode(start), this.manager.Board.GetNearestNode(goal));
-        var path = new Path(edges, this.transform);
-        this.RandomInitialize(path, start, goal);
+        this.RandomInitialize(start, goal);
 
         this.velocity = Velocity.Person;
     }
@@ -40,8 +38,7 @@ public class Person : MovingObject
         {
             var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
             var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
-            var path = this.getRandomPath();
-            this.RandomInitialize(path, start, goal);
+            this.RandomInitialize(start, goal);
         }
 
         // 着いた先が駅の場合は駅に自分自身を追加する

@@ -74,6 +74,30 @@ public class Board : Singleton<Board>
         var edge = from.AddRoad(to, cost);
         return edge;
     }
+    /// <summary>
+    /// Vector3から一番近いIntersectionNodeを取得
+    /// </summary>
+    /// <param name="vec"></param>
+    /// <returns>最短のIntersectionNode</returns>
+    public IBoardNode GetNearestNode(Vector3 vec)
+    {
+        float dist = float.MaxValue;
+        int idx = 0;
+        foreach (var node in this.Nodes)
+        {
+            if (typeof(IntersectionNode) == node.GetType())
+            {
+                float update = (vec.x - node.X)*(vec.x - node.X) + (vec.y - node.Y)*(vec.y - node.Y);
+                if (dist >= update)
+                {
+                    dist = update;
+                    idx = node.Index;                   
+                }
+            }
+        }
+        IBoardNode rtn = this.Nodes[idx];
+        return rtn;
+    }
 
     /// <summary>
     /// 経路探索を行う
@@ -136,24 +160,6 @@ public class Board : Singleton<Board>
 
         return edges;
     }
-
-    public IBoardNode GetNearestNode(Vector3 vec)
-    {
-        float dist = float.MaxValue;
-        var idx = 0;
-        foreach (var node in this.Nodes)
-        {
-            if (typeof(IntersectionNode) == node.GetType())
-            {
-                float update = Mathf.Sqrt((vec.x - node.X)*(vec.x - node.X) + (vec.y - node.Y)*(vec.y - node.Y));
-                dist = dist >= update? update : dist;
-                idx = node.Index; 
-            }
-        }
-        IBoardNode rtn = this.Nodes[idx];
-        return rtn;
-    }
-
     /// <summary>
     /// 経路を取得する
     /// </summary>
