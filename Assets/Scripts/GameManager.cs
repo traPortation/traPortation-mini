@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject train;
 
     public StationManager StationManager { get; private set; }
+    public ManageMoney ManageMoney { get; private set; }
 #nullable enable
 
     // Start is called before the first frame update
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
         this.InstantiateBuildings();
         var gameObj = GameObject.FindGameObjectsWithTag("StationManager")[0];
         this.StationManager = gameObj.GetComponent<StationManager>();
+        ManageMoney = new ManageMoney();
 
         Utils.NullChecker.Check(this.person, this.building, this.train, this.StationManager);
 
