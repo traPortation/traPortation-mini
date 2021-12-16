@@ -10,31 +10,38 @@ public class StationManager : MonoBehaviour
     private bool buttonClicked;
     [SerializeField] private List<Station> stations;
     [SerializeField] private GameObject prefab;
+    [SerializeField] private GameObject stationIcon;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //buildModeを切り替えるためのボタンクリックを無視する
         if (this.buttonClicked)
         {
             this.buttonClicked = false;
         }
         //それ以外の場合はbuildModeを判定し、駅を追加する
-        else if (Input.GetMouseButtonUp(0) && this.buildMode)
+        else if ((Mathf.Abs(mousePosition.x - Mathf.Round(mousePosition.x)) < 0.1 || Mathf.Abs(mousePosition.y - Mathf.Round(mousePosition.y)) < 0.1) && this.buildMode)
         {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (Mathf.Abs(mousePosition.x - Mathf.Round(mousePosition.x)) < 0.1 || Mathf.Abs(mousePosition.y - Mathf.Round(mousePosition.y)) < 0.1)
+            mousePosition.z = 8f;
+            stationIcon.SetActive(true);
+            stationIcon.transform.position = mousePosition;
+            if (Input.GetMouseButtonUp(0))
             {
-                mousePosition.z = 8f;
                 GameObject newStation = Instantiate(this.prefab, mousePosition, Quaternion.identity);
                 stations.Add(newStation.GetComponent<Station>());
             }
+        }
+        else
+        {
+            stationIcon.SetActive(false);
         }
     }
 
