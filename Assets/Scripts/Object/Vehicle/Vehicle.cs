@@ -10,10 +10,24 @@ public abstract class Vehicle : MovingObject
     public int Capacity { get; protected set; }
     protected LinkedList<Person> people = new LinkedList<Person>();
     public INode NextNode => this.path.NextNode;
-    public void AddPerson(Person person)
+    
+    /// <summary>
+    /// 満員かどうか
+    /// </summary>
+    bool isFull => this.Capacity <= this.people.Count;
+    
+    /// <summary>
+    /// 人を追加する
+    /// </summary>
+    /// <param name="person"></param>
+    /// <returns>成功したかどうか</returns>
+    public bool AddPerson(Person person)
     {
-        // 人数がCapacityを超えるときはあれこれする
+        if (this.isFull) return false;
+
         this.people.AddLast(person);
+
+        return true;
     }
 
     // メソッド名よくないかも

@@ -37,17 +37,19 @@ public class Station : MonoBehaviour
     {
         for (var p = this.people.First; p != null;)
         {
-            // TODO: 乗り物が満員のときは乗れない
             var next = p.Next;
             var person = p.Value;
 
             if (person.DecideToRide(vehicle))
             {
                 // 乗り物に人を乗せる
-                person.Ride(vehicle);
+                bool res = person.Ride(vehicle);
 
-                // 駅から人を取り除く
-                this.people.Remove(p);
+                if (res)
+                {
+                    // 駅から人を取り除く
+                    this.people.Remove(p);
+                }
             }
             p = next;
         }
