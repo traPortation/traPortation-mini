@@ -10,12 +10,12 @@ public abstract class Vehicle : MovingObject
     public int Capacity { get; protected set; }
     protected LinkedList<Person> people = new LinkedList<Person>();
     public INode NextNode => this.path.NextNode;
-    
+
     /// <summary>
     /// 満員かどうか
     /// </summary>
     bool isFull => this.Capacity <= this.people.Count;
-    
+
     /// <summary>
     /// 人を追加する
     /// </summary>
@@ -33,15 +33,13 @@ public abstract class Vehicle : MovingObject
     // メソッド名よくないかも
     public void RemovePerson(StationNode node)
     {
-        for (var p = this.people.First; p != null;)
+        Utils.LinkedList.DeletableForEach(this.people, (person, deleteAction) =>
         {
-            var next = p.Next;
-            if (p.Value.DecideToGetOff(node))
+            if (person.DecideToGetOff(node))
             {
-                people.Remove(p);
-                p.Value.GetOff(node);
+                deleteAction();
+                person.GetOff(node);
             }
-            p = next;
-        }
+        });
     }
 }

@@ -35,11 +35,8 @@ public class Station : MonoBehaviour
     /// <param name="vehicle"></param>
     public void AddPersonToTrain(Vehicle vehicle)
     {
-        for (var p = this.people.First; p != null;)
+        Utils.LinkedList.DeletableForEach(this.people, (person, deleteAction) =>
         {
-            var next = p.Next;
-            var person = p.Value;
-
             if (person.DecideToRide(vehicle))
             {
                 // 乗り物に人を乗せる
@@ -48,11 +45,10 @@ public class Station : MonoBehaviour
                 if (res)
                 {
                     // 駅から人を取り除く
-                    this.people.Remove(p);
+                    deleteAction();
                 }
             }
-            p = next;
-        }
+        });
     }
     /// <summary>
     /// StationNodeを割り当てる
