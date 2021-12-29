@@ -85,14 +85,11 @@ public class Board : Singleton<Board>
         int idx = 0;
         foreach (var node in this.Nodes)
         {
-            if (typeof(IntersectionNode) == node.GetType())
+            float update = (vec.x - node.X)*(vec.x - node.X) + (vec.y - node.Y)*(vec.y - node.Y);
+            if (dist >= update)
             {
-                float update = (vec.x - node.X)*(vec.x - node.X) + (vec.y - node.Y)*(vec.y - node.Y);
-                if (dist >= update)
-                {
-                    dist = update;
-                    idx = node.Index;                   
-                }
+                dist = update;
+                idx = node.Index;                   
             }
         }
         IBoardNode rtn = this.Nodes[idx];
@@ -166,9 +163,14 @@ public class Board : Singleton<Board>
     /// <param name="start"></param>
     /// <param name="goal"></param>
     /// <returns></returns>
-    public List<PathNode> GetPath(IIndexedNode start, IIndexedNode goal)
+    public Path GetPath(Vector3 start, Vector3 goal, Transform transform)
     {
-        return dijkstra(start, goal);
+        var path = new Path(dijkstra(GetNearestNode(start), GetNearestNode(goal)), transform);
+        var startNode = new BoardElements.PlotNode(start.x, start.y, 0);
+        var goalNode = new BoardElements.PlotNode(goal.x, goal.y, path.Size()+1);
+        path.AddPathNode(startNode, false);
+        path.AddPathNode(goalNode);
+        return path;
     }
 
     public void Test()

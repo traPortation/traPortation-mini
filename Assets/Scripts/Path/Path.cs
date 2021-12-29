@@ -10,7 +10,7 @@ public class Path
 {
     List<PathNode> nodes;
     int index;
-    public IIndexedNode LastNode => this.nodes.Last().Node;
+    public INode LastNode => this.nodes.Last().Node;
     Transform transform;
     public float X {
         get => this.transform.position.x;
@@ -33,7 +33,7 @@ public class Path
     /// 移動が終了しているかどうか
     /// </summary>
     public bool Finished => this.index >= this.nodes.Count - 1;
-    public IIndexedNode? NextNode => !this.Finished ? this.nodes[this.index + 1].Node : null;
+    public INode? NextNode => !this.Finished ? this.nodes[this.index + 1].Node : null;
 
     public Path(List<PathNode> nodes, Transform transform)
     {
@@ -65,7 +65,7 @@ public class Path
         // Path先頭にnodeを置くとき
         else 
         {
-            this.nodes.Insert(0, new PathNode(node, new PlotEdge<IIndexedNode>(this.nodes[0].Node, 0)));
+            this.nodes.Insert(0, new PathNode(node, new PlotEdge<INode>(this.nodes[0].Node, 0)));
             this.InitializeEdge();
         }
     }
