@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject person;
     [SerializeField] private GameObject building;
     [SerializeField] private GameObject train;
+    [SerializeField] private GameObject stationManager;
 
     public StationManager StationManager { get; private set; }
 #nullable enable
@@ -21,12 +22,13 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Utils.NullChecker.Check(this.person, this.building, this.train, this.stationManager);
+
         this.InstantiatePeople();
         this.InstantiateBuildings();
-        var gameObj = GameObject.FindGameObjectsWithTag("StationManager")[0];
-        this.StationManager = gameObj.GetComponent<StationManager>();
 
-        Utils.NullChecker.Check(this.person, this.building, this.train, this.StationManager);
+        var obj = Instantiate(this.stationManager, Vector3.zero, Quaternion.identity);
+        this.StationManager = obj.GetComponent<StationManager>();
 
         this.initBoardForTest();
     }

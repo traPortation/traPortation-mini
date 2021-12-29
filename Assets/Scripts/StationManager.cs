@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
@@ -8,7 +8,7 @@ public class StationManager : MonoBehaviour
 {
     private bool buildMode;
     private bool buttonClicked;
-    [SerializeField] private List<Station> stations;
+    private List<Station> stations = new List<Station>();
     [SerializeField] private GameObject prefab;
 
     // Start is called before the first frame update
