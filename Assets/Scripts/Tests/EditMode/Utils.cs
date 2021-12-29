@@ -23,5 +23,11 @@ namespace Tests
 
             CollectionAssert.AreEqual(list, Enumerable.Range(0, 5).Select(v => v * 2));
         }
+
+        [Test]
+        public void SingletonTest()
+        {
+            Assert.IsNotNull(Board.Instance);
+        }
     }
 }
