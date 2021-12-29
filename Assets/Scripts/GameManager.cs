@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Const;
 using System.Linq;
 
@@ -15,6 +16,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject building;
     [SerializeField] private GameObject train;
     [SerializeField] private GameObject stationManager;
+    [SerializeField] private Image pauseButton;
+    [SerializeField] private Sprite[] pauseSprite = new Sprite[2];
 
     public StationManager StationManager { get; private set; }
 #nullable enable
@@ -121,6 +124,7 @@ public class GameManager : MonoBehaviour
     public void AlterPauseStatus()
     {
         Time.timeScale = 1 - Time.timeScale;
+        pauseButton.sprite = pauseSprite[(int)Time.timeScale];
         Debug.Log(Time.timeScale.ToString());
     }
 }
