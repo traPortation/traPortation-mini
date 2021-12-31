@@ -10,7 +10,7 @@ using Const;
 /// <summary>
 /// 盤面 頂点 (Node) と辺 (Edge) によって構成される
 /// </summary>
-public class Board : Singleton<Board>
+public class Board
 {
     private List<IBoardNode> nodes;
     public IReadOnlyList<IBoardNode> Nodes => this.nodes;

@@ -4,14 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using Const;
 using System.Linq;
+using Zenject;
 
 #nullable enable
 
 public class GameManager : MonoBehaviour
 {
-    public Board Board { get; } = Board.Instance;
 
 #nullable disable
+    public Board Board { get; private set; }
     [SerializeField] private GameObject person;
     [SerializeField] private GameObject building;
     [SerializeField] private GameObject train;
@@ -19,25 +20,35 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite[] pauseSprite = new Sprite[2];
 
     public StationManager StationManager { get; private set; }
+    DiContainer container;
 #nullable enable
 
     // Start is called before the first frame update
     void Start()
     {
-        this.InstantiatePeople();
-        this.InstantiateBuildings();
-        var gameObj = GameObject.FindGameObjectsWithTag("StationManager")[0];
-        this.StationManager = gameObj.GetComponent<StationManager>();
-
-        Utils.NullChecker.Check(this.person, this.building, this.train, this.StationManager);
-
-        this.initBoardForTest();
+    
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    [Inject]
+    public void Construct(Board board, DiContainer container) {
+        this.Board = board;
+        this.container = container;
+
+        var gameObj = GameObject.FindGameObjectsWithTag("StationManager")[0];
+        this.StationManager = gameObj.GetComponent<StationManager>();
+        this.StationManager.Construct(this.Board);
+
+        this.InstantiateBuildings();
+        this.initBoardForTest();
+        this.InstantiatePeople();
+
+        Utils.NullChecker.Check(this.person, this.building, this.train, this.StationManager);
     }
 
     /// <summary>
@@ -48,7 +59,8 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < Count.Person; i++)
         {
             var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
-            Instantiate(this.person, start, Quaternion.identity);
+            var obj = this.container.InstantiatePrefab(this.person);
+            obj.transform.position = start;
         }
     }
     /// <summary>

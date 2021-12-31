@@ -4,22 +4,22 @@ using UnityEngine;
 using Const;
 using System.Linq;
 using BoardElements;
+using Zenject;
 
 #nullable enable
 
 public class Person : MovingObject
 {
 #nullable disable
-    private GameManager manager;
+    GameManager manager;
+    Board board;
+
 #nullable enable
     // Start is called before the first frame update
     void Start()
     {
         this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         Utils.NullChecker.Check(this.manager);
-
-        var path = this.getRandomPath();
-        this.Initialize(path);
 
         this.velocity = Velocity.Person;
     }
@@ -28,6 +28,14 @@ public class Person : MovingObject
     void FixedUpdate()
     {
         this.Move(this.velocity);
+    }
+
+    [Inject]
+    public void Construct(Board board) {
+        this.board = board;
+
+        var path = this.getRandomPath();
+        this.Initialize(path);
     }
 
     protected override void Arrive(INode node)
@@ -53,16 +61,16 @@ public class Person : MovingObject
     /// </summary>
     private Path getRandomPath()
     {
-        var start = this.path != null ? this.path.LastNode : Board.Instance.Nodes[Random.Range(0, Board.Instance.Nodes.Count)];
+        var start = this.path != null ? this.path.LastNode : this.board.Nodes[Random.Range(0, this.board.Nodes.Count)];
 
         // 始点と終点が被らないようにするための処理
         IBoardNode goal;
         do
         {
-            goal = Board.Instance.Nodes[Random.Range(0, Board.Instance.Nodes.Count)];
+            goal = this.board.Nodes[Random.Range(0, this.board.Nodes.Count)];
         } while (start.Index == goal.Index);
 
-        var edges = this.manager.Board.GetPath(start, goal);
+        var edges = this.board.GetPath(start, goal);
         return new Path(edges, this.transform);
 
     }
