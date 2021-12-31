@@ -877,8 +877,6 @@ MonoBehaviour:
   building: {fileID: 7706427037400990607, guid: 3d4163803c84c5241ae7d153056bbcd6,
     type: 3}
   train: {fileID: 5553516055370163822, guid: 6f806955cffb8bd4a8daf3ab74329023, type: 3}
-  stationManager: {fileID: 5157342488887650589, guid: 9ff3affacedf50e4faaa3cd45b1c08ba,
-    type: 3}
   pauseButton: {fileID: 902395336}
   pauseSprite:
   - {fileID: 21300000, guid: f23f7b408e8b6fd4aa4f630b60595914, type: 3}
@@ -897,6 +895,86 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1270926821 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 185991705040669837, guid: aa0c78fefd4b98941a735e7add9f2f69,
+    type: 3}
+  m_PrefabInstance: {fileID: 1555233639}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1283494554
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1191193842249234680, guid: 9ff3affacedf50e4faaa3cd45b1c08ba,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191193842249234680, guid: 9ff3affacedf50e4faaa3cd45b1c08ba,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.002572
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191193842249234680, guid: 9ff3affacedf50e4faaa3cd45b1c08ba,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.3327012
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191193842249234680, guid: 9ff3affacedf50e4faaa3cd45b1c08ba,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -91.1084
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191193842249234680, guid: 9ff3affacedf50e4faaa3cd45b1c08ba,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191193842249234680, guid: 9ff3affacedf50e4faaa3cd45b1c08ba,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191193842249234680, guid: 9ff3affacedf50e4faaa3cd45b1c08ba,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191193842249234680, guid: 9ff3affacedf50e4faaa3cd45b1c08ba,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191193842249234680, guid: 9ff3affacedf50e4faaa3cd45b1c08ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191193842249234680, guid: 9ff3affacedf50e4faaa3cd45b1c08ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191193842249234680, guid: 9ff3affacedf50e4faaa3cd45b1c08ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3320148836581075973, guid: 9ff3affacedf50e4faaa3cd45b1c08ba,
+        type: 3}
+      propertyPath: m_Name
+      value: StationManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3677783638099098011, guid: 9ff3affacedf50e4faaa3cd45b1c08ba,
+        type: 3}
+      propertyPath: stationIcon
+      value: 
+      objectReference: {fileID: 1270926821}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9ff3affacedf50e4faaa3cd45b1c08ba, type: 3}
 --- !u!1 &1456269676
 GameObject:
   m_ObjectHideFlags: 0
