@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
+using Zenject;
 
 #nullable enable
 
@@ -14,13 +15,16 @@ public class Train : Vehicle
 #nullable enable
     void Start()
     {
-        this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        Utils.NullChecker.Check(this.manager);
 
+    }
+
+    [Inject]
+    void Construct(GameManager manager)
+    {
+        this.manager = manager;
         this.Capacity = Const.Train.Capacity;
         this.Wage = Const.Train.Wage;
         this.velocity = Const.Velocity.Train;
-        this.Initialize(this.path);
     }
 
     void FixedUpdate()

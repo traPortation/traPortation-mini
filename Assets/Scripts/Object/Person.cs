@@ -18,9 +18,6 @@ public class Person : MovingObject
     // Start is called before the first frame update
     void Start()
     {
-        this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        Utils.NullChecker.Check(this.manager);
-
         this.velocity = Velocity.Person;
     }
 
@@ -31,8 +28,9 @@ public class Person : MovingObject
     }
 
     [Inject]
-    public void Construct(Board board) {
+    public void Construct(Board board, GameManager gameManager) {
         this.board = board;
+        this.manager = gameManager;
 
         var path = this.getRandomPath();
         this.Initialize(path);

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-    
+
     }
 
     // Update is called once per frame
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
         var node5 = new PathNode(snode1, null);
 
         // 電車を追加
-        GameObject trainObject = Instantiate(this.train, Vector3.zero, Quaternion.identity);
+        GameObject trainObject = container.InstantiatePrefab(this.train);
         var train = trainObject.GetComponent<Train>();
         var path = new Path(new List<PathNode>() { node1, node2, node3, node4, node5 }, train.transform);
         train.Initialize(path);
