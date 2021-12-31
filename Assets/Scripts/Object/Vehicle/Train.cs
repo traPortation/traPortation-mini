@@ -11,7 +11,7 @@ public class Train : Vehicle
     private float stopStationTime = Const.Train.StopStationTime;
     private bool isMoving = true;
 #nullable disable
-    private GameManager manager;
+    private StationManager stationManager;
 #nullable enable
     void Start()
     {
@@ -19,9 +19,9 @@ public class Train : Vehicle
     }
 
     [Inject]
-    void Construct(GameManager manager)
+    void Construct(StationManager stationManager)
     {
-        this.manager = manager;
+        this.stationManager = stationManager;
         this.Capacity = Const.Train.Capacity;
         this.Wage = Const.Train.Wage;
         this.velocity = Const.Velocity.Train;
@@ -55,7 +55,7 @@ public class Train : Vehicle
                 }
             }
 
-            var station = this.manager.StationManager.GetStation(sNode.Index);
+            var station = this.stationManager.GetStation(sNode.Index);
 
 
             if (this.path.NextNode is StationNode nextNode)

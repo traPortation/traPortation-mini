@@ -17,7 +17,7 @@ public class StationManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -47,8 +47,9 @@ public class StationManager : MonoBehaviour
         }
     }
 
-    // 実行順の問題でGameManagerからBoardを持ってきている
-    public void Construct(Board board) {
+    // TODO: 実行順序の問題が解決したらinjectするようにする
+    public void Construct(Board board)
+    {
         this.board = board;
     }
 

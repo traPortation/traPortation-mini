@@ -11,7 +11,7 @@ using Zenject;
 public class Person : MovingObject
 {
 #nullable disable
-    GameManager manager;
+    StationManager stationManager;
     Board board;
 
 #nullable enable
@@ -28,9 +28,10 @@ public class Person : MovingObject
     }
 
     [Inject]
-    public void Construct(Board board, GameManager gameManager) {
+    public void Construct(Board board, StationManager stationManager)
+    {
         this.board = board;
-        this.manager = gameManager;
+        this.stationManager = stationManager;
 
         var path = this.getRandomPath();
         this.Initialize(path);
@@ -50,7 +51,7 @@ public class Person : MovingObject
         {
             // TODO: velocity直接いじるのよくない
             this.velocity = 0;
-            var station = this.manager.StationManager.GetStation(sNode.Index);
+            var station = this.stationManager.GetStation(sNode.Index);
             station.AddPerson(this);
         }
     }

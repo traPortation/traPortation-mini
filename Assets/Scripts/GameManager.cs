@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,14 +12,14 @@ public class GameManager : MonoBehaviour
 {
 
 #nullable disable
-    public Board Board { get; private set; }
+    Board Board;
     [SerializeField] private GameObject person;
     [SerializeField] private GameObject building;
     [SerializeField] private GameObject train;
     [SerializeField] private Image pauseButton;
     [SerializeField] private Sprite[] pauseSprite = new Sprite[2];
 
-    public StationManager StationManager { get; private set; }
+    StationManager StationManager;
     DiContainer container;
 #nullable enable
 
@@ -36,13 +36,14 @@ public class GameManager : MonoBehaviour
     }
 
     [Inject]
-    public void Construct(Board board, DiContainer container) {
+    public void Construct(Board board, DiContainer container, StationManager stationManager)
+    {
         this.Board = board;
         this.container = container;
+        this.StationManager = stationManager;
 
-        var gameObj = GameObject.FindGameObjectsWithTag("StationManager")[0];
-        this.StationManager = gameObj.GetComponent<StationManager>();
-        this.StationManager.Construct(this.Board);
+        // 実行順序の関係でここでboardを渡している
+        this.StationManager.Construct(board);
 
         this.InstantiateBuildings();
         this.initBoardForTest();
