@@ -9,14 +9,10 @@ namespace BoardElements
     /// <summary>
     /// 駅付きのNode
     /// </summary>
-    public class StationNode : IRoadAddableNode, IBoardNode
+    public class StationNode : IntersectionNode
     {
-        public float X { get; }
-        public float Y { get; }
-        public int Index { get; }
-        List<RoadEdge<IBoardNode>> roads { get; }
         List<VehicleEdge> vehicleRoutes { get; }
-        public IReadOnlyList<IEdge<IBoardNode>> Edges
+        public override IReadOnlyList<IEdge<IBoardNode>> Edges
         {
             get
             {
@@ -30,20 +26,11 @@ namespace BoardElements
         }
         // TODO: stationをsetする
         public readonly Station Station;
-        public StationNode(float x, float y, int index)
+        public StationNode(float x, float y, int index): base(x, y, index)
         {
-            this.X = x;
-            this.Y = y;
-            this.Index = index;
-            this.roads = new List<RoadEdge<IBoardNode>>();
             this.vehicleRoutes = new List<VehicleEdge>();
         }
-        public RoadEdge<IBoardNode> AddRoad(IBoardNode to, float cost)
-        {
-            var edge = new RoadEdge<IBoardNode>(to, cost);
-            this.roads.Add(edge);
-            return edge;
-        }
+
         public VehicleEdge AddVehicleRoute(StationNode to, float cost)
         {
             var edge = new VehicleEdge(to, cost);

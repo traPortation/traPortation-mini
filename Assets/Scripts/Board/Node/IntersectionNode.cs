@@ -10,8 +10,8 @@ namespace BoardElements
         public float X { get; }
         public float Y { get; }
         public int Index { get; }
-        List<RoadEdge<IBoardNode>> roads { get; }
-        public IReadOnlyList<IEdge<IBoardNode>> Edges => this.roads;
+        protected List<RoadEdge<IBoardNode>> roads { get; }
+        public virtual IReadOnlyList<IEdge<IBoardNode>> Edges => this.roads;
         public IntersectionNode(float x, float y, int index)
         {
             this.X = x;
