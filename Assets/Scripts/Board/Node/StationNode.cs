@@ -12,16 +12,14 @@ namespace BoardElements
     public class StationNode : IntersectionNode
     {
         List<VehicleEdge> vehicleRoutes { get; }
-        public override IReadOnlyList<IEdge<IBoardNode>> Edges
+        public override IEnumerable<IEdge<IBoardNode, IBoardNode>> Edges
         {
             get
             {
-                var roads = this.roads as IEnumerable<IEdge<IBoardNode>>;
-                var routes = this.vehicleRoutes as IEnumerable<IEdge<IBoardNode>>;
+                var roads = this.roads as IEnumerable<IEdge<IBoardNode, IBoardNode>>;
+                var routes = this.vehicleRoutes as IEnumerable<IEdge<IBoardNode, IBoardNode>>;
 
-                // TODO: ToListが必要か考える
-                // そもそもIEnumerableで受け取れるようにする / roadsとroutesを別々に受け取るようにする など
-                return roads.Concat(routes).ToList();
+                return roads.Concat(routes);
             }
         }
         // TODO: stationをsetする
