@@ -165,11 +165,12 @@ public class Board : Singleton<Board>
     /// <returns></returns>
     public Path GetPath(Vector3 start, Vector3 goal, Transform transform)
     {
-        var path = new Path(dijkstra(GetNearestNode(start), GetNearestNode(goal)), transform);
-        var startNode = new BoardElements.PlotNode(start.x, start.y, 0);
-        var goalNode = new BoardElements.PlotNode(goal.x, goal.y, path.Size()+1);
-        path.AddPathNode(startNode, false);
-        path.AddPathNode(goalNode);
+        var pathNodes = dijkstra(GetNearestNode(start), GetNearestNode(goal));
+        var startNode = new BoardElements.PlotNode(start.x, start.y);
+        var goalNode = new BoardElements.PlotNode(goal.x, goal.y);
+        pathNodes.Insert(0, new PathNode(startNode, new PlotEdge<INode>(pathNodes[0].Node, 0)));
+        pathNodes.Add(new PathNode(goalNode, null));
+        var path = new Path(pathNodes, transform);
         return path;
     }
 

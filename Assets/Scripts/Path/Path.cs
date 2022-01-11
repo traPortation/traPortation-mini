@@ -47,30 +47,6 @@ public class Path
     }
 
     /// <summary>
-    /// PathにPathNodeを前後どちらかにつける。
-    /// </summary>
-    /// <param name="node"></param>
-    /// <param name="isAddTail"></param>
-    /// <returns>void</returns>
-    public void AddPathNode(IIndexedNode node, bool isAddTail=true)
-    {
-        if (this.nodes.Count <= 0) throw new System.ArgumentException("nodes are empty");
-
-        // Path末端にnodeを置くとき
-        if (isAddTail)
-        {
-            this.nodes.Add(new PathNode(node, null));
-        }
-
-        // Path先頭にnodeを置くとき
-        else 
-        {
-            this.nodes.Insert(0, new PathNode(node, new PlotEdge<INode>(this.nodes[0].Node, 0)));
-            this.InitializeEdge();
-        }
-    }
-
-    /// <summary>
     /// deltaだけpath上を移動する
     /// </summary>
     /// <param name="delta"></param>

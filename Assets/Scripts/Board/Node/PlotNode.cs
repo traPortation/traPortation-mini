@@ -9,16 +9,14 @@ namespace BoardElements
     /// <summary>
     /// 土地区画のNode
     /// </summary>
-    public class PlotNode : INode, IIndexedNode
+    public class PlotNode : INode
     {
         public float X { get; }
         public float Y { get; }
-        public int Index { get; }
-        public PlotNode(float x, float y, int idx)
+        public PlotNode(float x, float y)
         {
             this.X = x;
             this.Y = y;
-            this.Index = idx;
         }
     }
 }
