@@ -19,7 +19,12 @@ public class RailManager : Singleton<RailManager>
 
     public Rail AddRail(List<PathNode> edges)
     {
-        int index = this.rails[this.rails.Count-1].ID+1;
+        int index = 0;
+        if (this.rails.Count != 0)
+        {
+            index = this.rails[this.rails.Count - 1].ID + 1;
+        }
+
         string indexName = index.ToString();
         var rail = new Rail(edges, index, $"Rail {indexName}");
 
