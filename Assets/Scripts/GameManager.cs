@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite[] pauseSprite = new Sprite[2];
 
     StationManager StationManager;
+    RailManager railManager;
     DiContainer container;
 #nullable enable
 
@@ -36,11 +37,12 @@ public class GameManager : MonoBehaviour
     }
 
     [Inject]
-    public void Construct(Board board, DiContainer container, StationManager stationManager)
+    public void Construct(Board board, DiContainer container, StationManager stationManager, RailManager railManager)
     {
         this.Board = board;
         this.container = container;
         this.StationManager = stationManager;
+        this.railManager = railManager;
 
         // 実行順序の関係でここでboardを渡している
         this.StationManager.Construct(board);
@@ -128,7 +130,12 @@ public class GameManager : MonoBehaviour
         // 電車を追加
         GameObject trainObject = container.InstantiatePrefab(this.train);
         var train = trainObject.GetComponent<Train>();
-        var path = new Path(new List<PathNode>() { node1, node2, node3, node4, node5 }, train.transform);
+        var trainNodes = new List<PathNode>() { node1, node2, node3, node4, node5 };
+        var path = new Path(trainNodes, train.transform);
+        var rail = this.railManager.AddRail(trainNodes);
+
+        rail.AddTrain(train);
+
         train.Initialize(path);
     }
 
