@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
+using Zenject;
 
-public class RailManager : Singleton<RailManager>
+public class RailManager
 {
     /// <summary>
     /// 路線を作成する
@@ -11,9 +12,12 @@ public class RailManager : Singleton<RailManager>
     
     List<Rail> rails { get; }
     public IReadOnlyList<Rail> Rails => this.rails;
+    Rail.Factory railFactory;
 
-    public RailManager()
+    [Inject]
+    public RailManager(Rail.Factory factory)
     {
+        this.railFactory = factory;
         this.rails = new List<Rail>();
     }
 
@@ -26,12 +30,11 @@ public class RailManager : Singleton<RailManager>
         }
 
         string indexName = index.ToString();
-        var rail = new Rail(edges, index, $"Rail {indexName}");
+
+        var rail = this.railFactory.Create(edges, index, $"Rail {indexName}");
 
         this.rails.Add(rail);
 
         return rail;
     }
-
-
 }

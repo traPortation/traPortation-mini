@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
 using System.Linq;
+using Zenject;
 
 public class Rail
 {
@@ -20,14 +21,21 @@ public class Rail
 
     List<Train> trains { get; }
     public IReadOnlyList<Train> Trains => this.trains;
+    Line line;
 
-    public Rail(List<PathNode> nodes, int id, string name)
+    public Rail(List<PathNode> nodes, int id, string name, Line line)
     {
         this.nodes = nodes;
         this.ID = id;
         this.Name = name;
         this.trains = new List<Train>();
+
+        this.line = line;
+        this.line.SetLine(this.nodes.Select(node => new Vector3(node.Node.X, node.Node.Y, 0)).ToArray());
+        this.line.SetColor(Color.red);
     }
+
+    public class Factory : PlaceholderFactory<List<PathNode>, int, string, Rail> { }
 
     public void AddTrain(Train train)
     {
