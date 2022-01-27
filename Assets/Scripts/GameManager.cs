@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     }
 
     [Inject]
-    public void Construct(Board board, DiContainer container, StationManager stationManager, RailManager railManager)
+    void construct(Board board, DiContainer container, StationManager stationManager, RailManager railManager)
     {
         this.Board = board;
         this.container = container;
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
         var snode3 = this.StationManager.AddStation(new Vector3(10, 6, 5f));
 
         // 駅と道をつなげる
-        // そのうち勝手にいい感じにやるようにする
+        // TODO: 勝手にいい感じにやるようにする
         this.Board.AddRoadEdge(nodes[2][2], snode1);
         this.Board.AddRoadEdge(snode1, nodes[2][2]);
         this.Board.AddRoadEdge(nodes[2][6], snode2);
@@ -120,7 +120,8 @@ public class GameManager : MonoBehaviour
         this.Board.AddRoadEdge(nodes[10][6], snode3);
         this.Board.AddRoadEdge(snode3, nodes[10][6]);
 
-        // edgeを追加 (そのうちいい感じにやるようにする)
+        // edgeを追加
+        // TODO: いい感じにやるようにする
         var node1 = new PathNode(snode1, this.Board.AddVehicleRoute(snode1, snode2, EdgeType.Train));
         var node2 = new PathNode(snode2, this.Board.AddVehicleRoute(snode2, snode3, EdgeType.Train));
         var node3 = new PathNode(snode3, this.Board.AddVehicleRoute(snode3, snode2, EdgeType.Train));
@@ -130,9 +131,11 @@ public class GameManager : MonoBehaviour
         // 電車を追加
         GameObject trainObject = container.InstantiatePrefab(this.train);
         var train = trainObject.GetComponent<Train>();
+
         var trainNodes = new List<PathNode>() { node1, node2, node3, node4, node5 };
-        var path = new Path(trainNodes, train.transform);
+
         var rail = this.railManager.AddRail(trainNodes);
+        var path = new Path(trainNodes, train.transform);
 
         rail.AddTrain(train);
 

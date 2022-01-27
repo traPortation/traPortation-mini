@@ -11,6 +11,7 @@ public class ManagerInstaller : MonoInstaller
         Container.Bind<StationManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<RailManager>().FromNew().AsSingle().NonLazy();
 
+        // 増えてきたら単独のInstallerに分ける
         Container.BindFactory<List<PathNode>, int, string, Rail, Rail.Factory>();
 
         UIInstaller.Install(Container);

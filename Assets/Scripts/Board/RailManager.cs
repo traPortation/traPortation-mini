@@ -9,13 +9,13 @@ public class RailManager
     /// <summary>
     /// 路線を作成する
     /// </summary>
-    
+
     List<Rail> rails { get; }
     public IReadOnlyList<Rail> Rails => this.rails;
     Rail.Factory railFactory;
 
     [Inject]
-    public RailManager(Rail.Factory factory)
+    RailManager(Rail.Factory factory)
     {
         this.railFactory = factory;
         this.rails = new List<Rail>();

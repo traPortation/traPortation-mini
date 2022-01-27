@@ -9,7 +9,6 @@ public class Station : MonoBehaviour
         LinkedList: 連結リスト
         要素の追加、削除がO(1)
     */
-
     private LinkedList<Person> people = new LinkedList<Person>();
     public int ID;
     public StationNode Node { get; private set; }

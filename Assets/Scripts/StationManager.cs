@@ -20,7 +20,7 @@ public class StationManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    // TODO: 別のクラスに分ける
     void Update()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

@@ -7,10 +7,6 @@ using Zenject;
 
 public class Rail
 {
-    /// <summary>
-    /// 線路上に車両を作成する
-    /// </summary>
-
     public int ID { get; }
 
     public string Name { get; private set; }
@@ -23,7 +19,7 @@ public class Rail
     public IReadOnlyList<Train> Trains => this.trains;
     Line line;
 
-    public Rail(List<PathNode> nodes, int id, string name, Line line)
+    Rail(List<PathNode> nodes, int id, string name, Line line)
     {
         this.nodes = nodes;
         this.ID = id;
@@ -32,11 +28,16 @@ public class Rail
 
         this.line = line;
         this.line.SetLine(this.nodes.Select(node => new Vector3(node.Node.X, node.Node.Y, 0)).ToArray());
+        
+        // TODO: 路線ごとに変える
         this.line.SetColor(Color.red);
     }
 
     public class Factory : PlaceholderFactory<List<PathNode>, int, string, Rail> { }
 
+    /// <summary>
+    /// 線路上に車両を作成する
+    /// </summary>
     public void AddTrain(Train train)
     {
         this.trains.Add(train);
