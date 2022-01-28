@@ -17,9 +17,9 @@ public class Rail
 
     List<Train> trains { get; }
     public IReadOnlyList<Train> Trains => this.trains;
-    Line line;
+    UI.ILine line;
 
-    Rail(List<PathNode> nodes, int id, string name, Line line)
+    Rail(List<PathNode> nodes, int id, string name, UI.ILine line)
     {
         this.nodes = nodes;
         this.ID = id;
