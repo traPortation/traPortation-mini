@@ -9,7 +9,7 @@ public class StationManager : MonoBehaviour
 {
     private bool buildMode;
     private bool buttonClicked;
-    [SerializeField] private List<Station> stations;
+    private List<Station> stations = new List<Station>();
     [SerializeField] private GameObject prefab;
     [SerializeField] private GameObject stationIcon;
     Board board;
@@ -65,7 +65,7 @@ public class StationManager : MonoBehaviour
     /// </summary>
     /// <param name="vec"></param>
     /// <returns></returns>
-    public StationNode AddStation(Vector3 vec)
+    public Station AddStation(Vector3 vec)
     {
         // TODO: 駅と(一番近い)道をつなげる
 
@@ -78,7 +78,7 @@ public class StationManager : MonoBehaviour
 
         this.stations.Add(station);
 
-        return node;
+        return station;
     }
 
     /// <summary>

@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -107,9 +106,9 @@ public class GameManager : MonoBehaviour
         }
 
         // 駅を追加
-        var snode1 = this.StationManager.AddStation(new Vector3(2, 2, 5f));
-        var snode2 = this.StationManager.AddStation(new Vector3(2, 6, 5f));
-        var snode3 = this.StationManager.AddStation(new Vector3(10, 6, 5f));
+        var snode1 = this.StationManager.AddStation(new Vector3(2, 2, 5f)).Node;
+        var snode2 = this.StationManager.AddStation(new Vector3(2, 6, 5f)).Node;
+        var snode3 = this.StationManager.AddStation(new Vector3(10, 6, 5f)).Node;
 
         // 駅と道をつなげる
         // TODO: 勝手にいい感じにやるようにする

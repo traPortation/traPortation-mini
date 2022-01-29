@@ -90,13 +90,16 @@ public class Person : MovingObject
     /// 乗り物に乗る処理
     /// </summary>
     /// <param name="vehicle"></param>
-    public void Ride(Vehicle vehicle)
+    /// <returns>成功したかどうか</returns>
+    public bool Ride(Vehicle vehicle)
     {
         // 人を見えなくする 動きを止める
         this.gameObject.SetActive(false);
 
         // これ駅とかでやるべきかも？
-        vehicle.AddPerson(this);
+        bool res = vehicle.AddPerson(this);
+
+        return res;
     }
 
     /// <summary>

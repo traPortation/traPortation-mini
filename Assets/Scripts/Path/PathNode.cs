@@ -9,8 +9,8 @@ using BoardElements;
 public class PathNode
 {
     public IIndexedNode Node { get; }
-    public IEdge? Edge { get; }
-    public PathNode(IIndexedNode node, IEdge? edge)
+    public IEdge<INode, INode>? Edge { get; }
+    public PathNode(IIndexedNode node, IEdge<INode, INode>? edge)
     {
         this.Node = node;
         this.Edge = edge;
