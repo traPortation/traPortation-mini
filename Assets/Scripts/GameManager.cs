@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     StationManager StationManager;
     RailManager railManager;
+    // TODO: 消す
     DiContainer container;
 #nullable enable
 
@@ -44,7 +45,7 @@ public class GameManager : MonoBehaviour
         this.railManager = railManager;
 
         // 実行順序の関係でここでboardを渡している
-        this.StationManager.Construct(board);
+        this.StationManager.Construct(board, container);
 
         this.InstantiateBuildings();
         this.initBoardForTest();

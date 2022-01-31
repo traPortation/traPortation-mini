@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
 using Zenject;
+using MessagePipe;
 
 #nullable enable
 
@@ -11,7 +12,8 @@ public class Train : Vehicle
     private float stopStationTime = Const.Train.StopStationTime;
     private bool isMoving = true;
 #nullable disable
-    private StationManager stationManager;
+    StationManager stationManager;
+    IPublisher<VehicleArrivedEvent> publisher;
 #nullable enable
     void Start()
     {
@@ -19,12 +21,13 @@ public class Train : Vehicle
     }
 
     [Inject]
-    void Construct(StationManager stationManager)
+    void Construct(StationManager stationManager, IPublisher<VehicleArrivedEvent> publisher)
     {
         this.stationManager = stationManager;
         this.Capacity = Const.Train.Capacity;
         this.Wage = Const.Train.Wage;
         this.velocity = Const.Velocity.Train;
+        this.publisher = publisher;
     }
 
     void FixedUpdate()
@@ -55,9 +58,6 @@ public class Train : Vehicle
                 }
             }
 
-            var station = this.stationManager.GetStation(sNode.Index);
-
-
             if (this.path.NextNode is StationNode nextNode)
             {
                 this.RemovePerson(nextNode);
@@ -67,9 +67,8 @@ public class Train : Vehicle
                 throw new System.Exception();
             }
 
-            // 乗せる処理
-            // 発車直前に乗せたほうが自然かも
-            station.AddPersonToTrain(this);
+            // 駅に到着したイベントを送信
+            this.publisher.Publish(new VehicleArrivedEvent(sNode.Index, this));
         }
         this.isMoving = false;
         StartCoroutine("stopstation");

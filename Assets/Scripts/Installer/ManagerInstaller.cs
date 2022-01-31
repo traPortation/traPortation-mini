@@ -15,5 +15,6 @@ public class ManagerInstaller : MonoInstaller
         Container.BindFactory<List<PathNode>, int, string, Rail, Rail.Factory>();
 
         UIInstaller.Install(Container);
+        MessagePipeInstaller.Install(Container);
     }
 }

@@ -13,6 +13,8 @@ public class StationManager : MonoBehaviour
     [SerializeField] private GameObject prefab;
     [SerializeField] private GameObject stationIcon;
     Board board;
+    // TODO: 消す
+    DiContainer container;
 
     // Start is called before the first frame update
     void Start()
@@ -48,9 +50,10 @@ public class StationManager : MonoBehaviour
     }
 
     // TODO: 実行順序の問題が解決したらinjectするようにする
-    public void Construct(Board board)
+    public void Construct(Board board, DiContainer container)
     {
         this.board = board;
+        this.container = container;
     }
 
     public void SetBuildMode()
@@ -72,7 +75,8 @@ public class StationManager : MonoBehaviour
         int index = this.stations.Count;
         var node = this.board.AddStationNode(vec.x, vec.y);
 
-        GameObject newStation = Instantiate(this.prefab, vec, Quaternion.identity);
+        GameObject newStation = this.container.InstantiatePrefab(this.prefab);
+        newStation.transform.position = vec;
         var station = newStation.GetComponent<Station>();
         station.SetNode(node);
 

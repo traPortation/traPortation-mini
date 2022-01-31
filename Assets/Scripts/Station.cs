@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
+using MessagePipe;
+using Zenject;
 
 public class Station : MonoBehaviour
 {
@@ -12,11 +15,29 @@ public class Station : MonoBehaviour
     private LinkedList<Person> people = new LinkedList<Person>();
     public int ID;
     public StationNode Node { get; private set; }
+    ISubscriber<VehicleArrivedEvent> subscriber;
+    IDisposable disposable;
 
-    // Start is called before the first frame update
-    void Start()
+    [Inject]
+    void construct(ISubscriber<VehicleArrivedEvent> subscriber) {
+        this.subscriber = subscriber;
+
+        var d = DisposableBag.CreateBuilder();
+
+        this.subscriber.Subscribe(e =>
+        {
+            if (e.StationId == this.ID)
+            {
+                this.AddPersonToTrain(e.Vehicle);
+            }
+        }).AddTo(d);
+
+        this.disposable = d.Build();
+    }
+
+    void OnDestory()
     {
-
+        this.disposable.Dispose();
     }
 
     /// <summary>
@@ -59,6 +80,7 @@ public class Station : MonoBehaviour
         if (this.Node == null)
         {
             this.Node = node;
+            this.ID = this.Node.Index;
         }
         else
         {
