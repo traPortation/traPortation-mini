@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Traffic.Edge;
 
-namespace BoardElements
+namespace Traffic.Node
 {
     /// <summary>
     /// 交差点

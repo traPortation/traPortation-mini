@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using BoardElements;
+using Traffic.Node;
 
-namespace BoardElements
+namespace Traffic.Edge
 {
     /// <summary>
     /// 道
     /// </summary>
-    /// <typeparam name="T">到着点</typeparam>
     public class RoadEdge : IEdge<IBoardNode, IBoardNode>
     {
         public IBoardNode From { get; }

@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
+using Traffic.Edge;
 
-namespace BoardElements
+namespace Traffic.Node
 {
     /// <summary>
     /// Board上のNode

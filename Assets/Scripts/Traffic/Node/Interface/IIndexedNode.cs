@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace BoardElements
+﻿namespace Traffic.Node
 {
     /// <summary>
     /// インデックス付き頂点 (駅や交差点など)

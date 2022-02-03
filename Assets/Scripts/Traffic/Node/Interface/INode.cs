@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace BoardElements
+﻿namespace Traffic.Node
 {
     /// <summary>
     /// 頂点

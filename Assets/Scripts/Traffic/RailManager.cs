@@ -1,15 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using BoardElements;
 using Zenject;
 
 public class RailManager
 {
-    /// <summary>
-    /// 路線を作成する
-    /// </summary>
-
     List<Rail> rails { get; }
     public IReadOnlyList<Rail> Rails => this.rails;
     Rail.Factory railFactory;
@@ -21,6 +15,9 @@ public class RailManager
         this.rails = new List<Rail>();
     }
 
+    /// <summary>
+    /// 路線を作成する
+    /// </summary>
     public Rail AddRail(List<PathNode> edges)
     {
         int index = 0;

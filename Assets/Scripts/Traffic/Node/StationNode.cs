@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using BoardElements;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Traffic.Edge;
 
-namespace BoardElements
+namespace Traffic.Node
 {
     /// <summary>
     /// 駅付きのNode
@@ -24,7 +22,7 @@ namespace BoardElements
         }
         // TODO: stationをsetする
         public readonly Station Station;
-        public StationNode(float x, float y, int index): base(x, y, index)
+        public StationNode(float x, float y, int index) : base(x, y, index)
         {
             this.vehicleRoutes = new List<VehicleEdge>();
         }

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BoardElements;
+using Traffic.Node;
 using MessagePipe;
 using Zenject;
 
@@ -19,7 +19,8 @@ public class Station : MonoBehaviour
     IDisposable disposable;
 
     [Inject]
-    void construct(ISubscriber<VehicleArrivedEvent> subscriber) {
+    void construct(ISubscriber<VehicleArrivedEvent> subscriber)
+    {
         this.subscriber = subscriber;
 
         var d = DisposableBag.CreateBuilder();

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BoardElements;
 using System.Linq;
 using Zenject;
 
@@ -28,7 +27,7 @@ public class Rail
 
         this.line = line;
         this.line.SetLine(this.nodes.Select(node => new Vector3(node.Node.X, node.Node.Y, 0)).ToArray());
-        
+
         // TODO: 路線ごとに変える
         this.line.SetColor(Color.red);
     }

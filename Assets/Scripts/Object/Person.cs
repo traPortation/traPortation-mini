@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Const;
-using System.Linq;
-using BoardElements;
+using Traffic;
+using Traffic.Node;
 using Zenject;
 
 #nullable enable

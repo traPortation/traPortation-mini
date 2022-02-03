@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BoardElements;
+using Traffic.Node;
 using System.Linq;
 
 #nullable enable
@@ -12,17 +12,21 @@ public class Path
     int index;
     public IIndexedNode LastNode => this.nodes.Last().Node;
     Transform transform;
-    public float X {
+    public float X
+    {
         get => this.transform.position.x;
-        private set {
+        private set
+        {
             var pos = this.transform.position;
             pos.x = value;
             this.transform.position = pos;
         }
     }
-    public float Y {
+    public float Y
+    {
         get => this.transform.position.y;
-        private set {
+        private set
+        {
             var pos = this.transform.position;
             pos.y = value;
             this.transform.position = pos;

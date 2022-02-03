@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using BoardElements;
+﻿using Traffic.Node;
 
-namespace BoardElements
+namespace Traffic.Edge
 {
     /// <summary>
     /// 乗り物が通る辺

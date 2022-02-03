@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Traffic.Node;
 
 // 動くもの全般 (人間、乗り物など)
 public abstract class MovingObject : MonoBehaviour
@@ -32,5 +33,5 @@ public abstract class MovingObject : MonoBehaviour
     /// Nodeに到着するごとに呼び出される
     /// </summary>
     /// <param name="node"></param>
-    protected abstract void Arrive(BoardElements.INode node);
+    protected abstract void Arrive(INode node);
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using BoardElements;
+using Traffic.Node;
 public class Bus : Vehicle
 {
     private float stopStationTime = Const.Bus.StopStationTime;
@@ -22,7 +22,7 @@ public class Bus : Vehicle
             this.Move(this.velocity);
         }
     }
-    protected override void Arrive(BoardElements.INode node)
+    protected override void Arrive(INode node)
     {
         if (this.path.Finished)
         {

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BoardElements;
+using Traffic.Node;
 using Const;
 
 public abstract class Vehicle : MovingObject

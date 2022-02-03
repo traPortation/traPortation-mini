@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using Assert = UnityEngine.Assertions.Assert;
-using BoardElements;
+using Traffic;
+using Traffic.Node;
 using System.Linq;
 
 #nullable enable
@@ -90,7 +91,7 @@ namespace Tests
 
                 Assert.AreEqual(edges, node1.Edges.Last());
                 Assert.AreEqual(edges.To, node2);
-                
+
             }
         }
     }
