@@ -13,7 +13,7 @@ public class Train : Vehicle
     private bool isMoving = true;
 #nullable disable
     StationManager stationManager;
-    IPublisher<VehicleArrivedEvent> publisher;
+    IPublisher<int, VehicleArrivedEvent> publisher;
 #nullable enable
     void Start()
     {
@@ -21,7 +21,7 @@ public class Train : Vehicle
     }
 
     [Inject]
-    void Construct(StationManager stationManager, IPublisher<VehicleArrivedEvent> publisher)
+    void Construct(StationManager stationManager, IPublisher<int, VehicleArrivedEvent> publisher)
     {
         this.stationManager = stationManager;
         this.Capacity = Const.Train.Capacity;
@@ -61,14 +61,17 @@ public class Train : Vehicle
             if (this.path.NextNode is StationNode nextNode)
             {
                 this.RemovePerson(nextNode);
+
+                var nextStation = this.stationManager.GetStation(nextNode.Index);
+                // 駅に到着したイベントを送信
+                this.publisher.Publish(sNode.Index, new VehicleArrivedEvent(this, nextStation));
             }
             else
             {
                 throw new System.Exception();
             }
 
-            // 駅に到着したイベントを送信
-            this.publisher.Publish(new VehicleArrivedEvent(sNode.Index, this));
+            
         }
         this.isMoving = false;
         StartCoroutine("stopstation");

@@ -7,12 +7,11 @@ using UnityEngine;
 /// </summary>
 public class VehicleArrivedEvent
 {
-    public int StationId { get; }
-    // TODO: Vehicleをそのまま渡さないようにする
-    public Vehicle Vehicle { get; }
-    public VehicleArrivedEvent(int stationId, Vehicle vehicle)
+    public readonly Vehicle Vehicle;
+    public readonly Station NextStation;
+    public VehicleArrivedEvent(Vehicle vehicle, Station nextStation)
     {
-        this.StationId = stationId;
         this.Vehicle = vehicle;
+        this.NextStation = nextStation;
     }
 }

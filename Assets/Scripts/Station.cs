@@ -15,25 +15,13 @@ public class Station : MonoBehaviour
     private LinkedList<Person> people = new LinkedList<Person>();
     public int ID;
     public StationNode Node { get; private set; }
-    ISubscriber<VehicleArrivedEvent> subscriber;
+    ISubscriber<int, VehicleArrivedEvent> subscriber;
     IDisposable disposable;
 
     [Inject]
-    void construct(ISubscriber<VehicleArrivedEvent> subscriber)
+    void construct(ISubscriber<int, VehicleArrivedEvent> subscriber)
     {
         this.subscriber = subscriber;
-
-        var d = DisposableBag.CreateBuilder();
-
-        this.subscriber.Subscribe(e =>
-        {
-            if (e.StationId == this.ID)
-            {
-                this.AddPersonToTrain(e.Vehicle);
-            }
-        }).AddTo(d);
-
-        this.disposable = d.Build();
     }
 
     void OnDestory()
@@ -82,6 +70,15 @@ public class Station : MonoBehaviour
         {
             this.Node = node;
             this.ID = this.Node.Index;
+
+            var d = DisposableBag.CreateBuilder();
+
+            this.subscriber.Subscribe(this.ID, e =>
+            {
+                this.AddPersonToTrain(e.Vehicle);
+            }).AddTo(d);
+
+            this.disposable = d.Build();
         }
         else
         {
