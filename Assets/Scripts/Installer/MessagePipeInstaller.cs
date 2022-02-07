@@ -9,5 +9,6 @@ public class MessagePipeInstaller : Installer<MessagePipeInstaller>
         var option = Container.BindMessagePipe();
 
         Container.BindMessageBroker<int, StationArrivedEvent>(option);
+        Container.BindMessageBroker<int, VehicleArrivedEvent>(option);
     }
 }

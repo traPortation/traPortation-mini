@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using Zenject;
 using MessagePipe;
 using Const;
@@ -13,7 +14,8 @@ public class Person : MovingObject
 #nullable disable
     StationManager stationManager;
     Board board;
-    ISubscriber<int, StationArrivedEvent> subscriber;
+    ISubscriber<int, StationArrivedEvent> stationSubscriber;
+    ISubscriber<int, VehicleArrivedEvent> vehicleSubscriber;
     IDisposable disposable;
 
 #nullable enable
@@ -35,11 +37,12 @@ public class Person : MovingObject
     }
 
     [Inject]
-    public void Construct(Board board, StationManager stationManager, ISubscriber<int, StationArrivedEvent> subscriber)
+    void construct(Board board, StationManager stationManager, ISubscriber<int, StationArrivedEvent> stationSubscriber, ISubscriber<int, VehicleArrivedEvent> vehicleSubscriber)
     {
         this.board = board;
         this.stationManager = stationManager;
-        this.subscriber = subscriber;
+        this.stationSubscriber = stationSubscriber;
+        this.vehicleSubscriber = vehicleSubscriber;
 
         var path = this.getRandomPath();
         this.Initialize(path);
@@ -63,19 +66,35 @@ public class Person : MovingObject
 
             var d = DisposableBag.CreateBuilder();
 
-            this.subscriber.Subscribe(station.ID, e =>
+            this.stationSubscriber.Subscribe(station.ID, e =>
             {
-                if (this.path.NextNode == e.Vehicle.NextNode)
+                if (this.path.NextNode is StationNode sNode && this.stationManager.GetStation(sNode.Index) == e.NextStation)
                 {
-                    // これ駅とかでやるべきかも？
-                    bool res = e.Vehicle.AddPerson(this);
+                    // TODO: 乗れるかのチェック
 
-                    if (res)
+                    // 人を見えなくする 動きを止める
+                    this.gameObject.SetActive(false);
+
+                    this.disposable.Dispose();
+
+                    this.vehicleSubscriber.Subscribe(e.Vehicle.ID, e =>
                     {
-                        // 人を見えなくする 動きを止める
-                        this.gameObject.SetActive(false);
-                        this.disposable.Dispose();
-                    }
+                        this.path.MoveNext();
+
+                        // 次の目的の駅が同じ場合は降りない
+                        if (this.path.NextNode is StationNode sNode && this.stationManager.GetStation(sNode.Index) == e.NextStation)
+                        {
+                        }
+                        else
+                        {
+                            this.disposable.Dispose();
+
+                            this.gameObject.SetActive(true);
+                            this.velocity = Velocity.Person;
+                        }
+                    }).AddTo(d);
+                    this.disposable = d.Build();
+
                 }
             }).AddTo(d);
 
@@ -99,32 +118,5 @@ public class Person : MovingObject
         var edges = this.board.GetPath(start, goal);
         return new Path(edges, this.transform);
 
-    }
-
-    /// <summary>
-    /// 乗り物に乗っているときに呼ばれる
-    /// 到着した駅で降りるかどうかを判断する
-    /// </summary>
-    /// <param name="node"></param>
-    /// <returns></returns>
-    public bool DecideToGetOff(StationNode node)
-    {
-        if (this.path.NextNode == node) return false;
-        else return true;
-    }
-
-    public void GetOff(StationNode node)
-    {
-        this.gameObject.SetActive(true);
-        this.velocity = Velocity.Person;
-    }
-
-    /// <summary>
-    /// pathを次のnodeまで進める
-    /// </summary>
-    /// <returns></returns>
-    public INode? MoveNext()
-    {
-        return this.path.MoveNext();
     }
 }

@@ -13,21 +13,19 @@ public class Train : Vehicle
     private bool isMoving = true;
 #nullable disable
     StationManager stationManager;
-    IPublisher<int, StationArrivedEvent> publisher;
+    IPublisher<int, StationArrivedEvent> stationPublisher;
+    IPublisher<int, VehicleArrivedEvent> vehiclePublisher;
 #nullable enable
-    void Start()
-    {
-
-    }
 
     [Inject]
-    void Construct(StationManager stationManager, IPublisher<int, StationArrivedEvent> publisher)
+    void Construct(StationManager stationManager, IPublisher<int, StationArrivedEvent> stationPublisher, IPublisher<int, VehicleArrivedEvent> vehiclePublisher)
     {
         this.stationManager = stationManager;
         this.Capacity = Const.Train.Capacity;
         this.Wage = Const.Train.Wage;
         this.velocity = Const.Velocity.Train;
-        this.publisher = publisher;
+        this.stationPublisher = stationPublisher;
+        this.vehiclePublisher = vehiclePublisher;
     }
 
     void FixedUpdate()
@@ -46,25 +44,15 @@ public class Train : Vehicle
         }
         if (node is StationNode sNode)
         {
-            // 乗っている人を移動させる
-            foreach (var person in this.people)
-            {
-                // 人を今着いた駅まで進める
-                var next = person.MoveNext();
-
-                if (next == null)
-                {
-                    throw new System.Exception("next is null");
-                }
-            }
-
             if (this.path.NextNode is StationNode nextNode)
             {
-                this.RemovePerson(nextNode);
-
+                var station = this.stationManager.GetStation(sNode.Index);
                 var nextStation = this.stationManager.GetStation(nextNode.Index);
+                // 乗客に到着したイベントを送信
+                this.vehiclePublisher.Publish(this.ID, new VehicleArrivedEvent(station, nextStation));
+
                 // 駅に到着したイベントを送信
-                this.publisher.Publish(sNode.Index, new StationArrivedEvent(this, nextStation));
+                this.stationPublisher.Publish(sNode.Index, new StationArrivedEvent(this, nextStation));
             }
             else
             {
