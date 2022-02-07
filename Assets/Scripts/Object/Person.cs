@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using Const;
 using Traffic;
 using Traffic.Node;
 using Zenject;
+using MessagePipe;
 
 #nullable enable
 
@@ -13,6 +13,8 @@ public class Person : MovingObject
 #nullable disable
     StationManager stationManager;
     Board board;
+    ISubscriber<int, VehicleArrivedEvent> subscriber;
+    IDisposable disposable;
 
 #nullable enable
     // Start is called before the first frame update
@@ -27,11 +29,17 @@ public class Person : MovingObject
         this.Move(this.velocity);
     }
 
+    void OnDestory()
+    {
+        this.disposable?.Dispose();
+    }
+
     [Inject]
-    public void Construct(Board board, StationManager stationManager)
+    public void Construct(Board board, StationManager stationManager, ISubscriber<int, VehicleArrivedEvent> subscriber)
     {
         this.board = board;
         this.stationManager = stationManager;
+        this.subscriber = subscriber;
 
         var path = this.getRandomPath();
         this.Initialize(path);
@@ -52,7 +60,26 @@ public class Person : MovingObject
             // TODO: velocity直接いじるのよくない
             this.velocity = 0;
             var station = this.stationManager.GetStation(sNode.Index);
-            station.AddPerson(this);
+
+            var d = DisposableBag.CreateBuilder();
+
+            this.subscriber.Subscribe(station.ID, e =>
+            {
+                if (this.path.NextNode == e.Vehicle.NextNode)
+                {
+                    // これ駅とかでやるべきかも？
+                    bool res = e.Vehicle.AddPerson(this);
+
+                    if (res)
+                    {
+                        // 人を見えなくする 動きを止める
+                        this.gameObject.SetActive(false);
+                        this.disposable.Dispose();
+                    }
+                }
+            }).AddTo(d);
+
+            this.disposable = d.Build();
         }
     }
     /// <summary>
@@ -60,46 +87,18 @@ public class Person : MovingObject
     /// </summary>
     private Path getRandomPath()
     {
-        var start = this.path != null ? this.path.LastNode : this.board.Nodes[Random.Range(0, this.board.Nodes.Count)];
+        var start = this.path != null ? this.path.LastNode : this.board.Nodes[UnityEngine.Random.Range(0, this.board.Nodes.Count)];
 
         // 始点と終点が被らないようにするための処理
         IBoardNode goal;
         do
         {
-            goal = this.board.Nodes[Random.Range(0, this.board.Nodes.Count)];
+            goal = this.board.Nodes[UnityEngine.Random.Range(0, this.board.Nodes.Count)];
         } while (start.Index == goal.Index);
 
         var edges = this.board.GetPath(start, goal);
         return new Path(edges, this.transform);
 
-    }
-
-    /// <summary>
-    /// 駅で待っているときに呼ばれる
-    /// 来た乗り物に乗るかどうかを判断する
-    /// </summary>
-    /// <param name="vehicle"></param>
-    /// <returns></returns>
-    public bool DecideToRide(Vehicle vehicle)
-    {
-        if (this.path.NextNode == vehicle.NextNode) return true;
-        else return false;
-    }
-
-    /// <summary>
-    /// 乗り物に乗る処理
-    /// </summary>
-    /// <param name="vehicle"></param>
-    /// <returns>成功したかどうか</returns>
-    public bool Ride(Vehicle vehicle)
-    {
-        // 人を見えなくする 動きを止める
-        this.gameObject.SetActive(false);
-
-        // これ駅とかでやるべきかも？
-        bool res = vehicle.AddPerson(this);
-
-        return res;
     }
 
     /// <summary>
