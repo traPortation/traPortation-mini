@@ -1,10 +1,10 @@
 ﻿using System;
-using UnityEngine;
+using Zenject;
+using MessagePipe;
 using Const;
 using Traffic;
 using Traffic.Node;
-using Zenject;
-using MessagePipe;
+using Event;
 
 #nullable enable
 
@@ -13,7 +13,7 @@ public class Person : MovingObject
 #nullable disable
     StationManager stationManager;
     Board board;
-    ISubscriber<int, VehicleArrivedEvent> subscriber;
+    ISubscriber<int, StationArrivedEvent> subscriber;
     IDisposable disposable;
 
 #nullable enable
@@ -35,7 +35,7 @@ public class Person : MovingObject
     }
 
     [Inject]
-    public void Construct(Board board, StationManager stationManager, ISubscriber<int, VehicleArrivedEvent> subscriber)
+    public void Construct(Board board, StationManager stationManager, ISubscriber<int, StationArrivedEvent> subscriber)
     {
         this.board = board;
         this.stationManager = stationManager;

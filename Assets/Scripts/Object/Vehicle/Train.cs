@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Traffic.Node;
 using Zenject;
 using MessagePipe;
+using Traffic.Node;
+using Event;
 
 #nullable enable
 
@@ -13,7 +13,7 @@ public class Train : Vehicle
     private bool isMoving = true;
 #nullable disable
     StationManager stationManager;
-    IPublisher<int, VehicleArrivedEvent> publisher;
+    IPublisher<int, StationArrivedEvent> publisher;
 #nullable enable
     void Start()
     {
@@ -21,7 +21,7 @@ public class Train : Vehicle
     }
 
     [Inject]
-    void Construct(StationManager stationManager, IPublisher<int, VehicleArrivedEvent> publisher)
+    void Construct(StationManager stationManager, IPublisher<int, StationArrivedEvent> publisher)
     {
         this.stationManager = stationManager;
         this.Capacity = Const.Train.Capacity;
@@ -64,7 +64,7 @@ public class Train : Vehicle
 
                 var nextStation = this.stationManager.GetStation(nextNode.Index);
                 // 駅に到着したイベントを送信
-                this.publisher.Publish(sNode.Index, new VehicleArrivedEvent(this, nextStation));
+                this.publisher.Publish(sNode.Index, new StationArrivedEvent(this, nextStation));
             }
             else
             {
