@@ -40,7 +40,7 @@ public class Rail
     public void AddTrain(Train train)
     {
         this.trains.Add(train);
-        var path = new Path(nodes, train.transform);
+        var path = new Path(nodes);
         train.Initialize(path);
     }
 

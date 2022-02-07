@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
         var trainNodes = new List<PathNode>() { node1, node2, node3, node4, node5 };
 
         var rail = this.railManager.AddRail(trainNodes);
-        var path = new Path(trainNodes, train.transform);
+        var path = new Path(trainNodes);
 
         rail.AddTrain(train);
 

@@ -11,27 +11,8 @@ public class Path
     IReadOnlyList<PathNode> nodes;
     int index;
     public IIndexedNode LastNode => this.nodes.Last().Node;
-    Transform transform;
-    public float X
-    {
-        get => this.transform.position.x;
-        private set
-        {
-            var pos = this.transform.position;
-            pos.x = value;
-            this.transform.position = pos;
-        }
-    }
-    public float Y
-    {
-        get => this.transform.position.y;
-        private set
-        {
-            var pos = this.transform.position;
-            pos.y = value;
-            this.transform.position = pos;
-        }
-    }
+    public float X { get; private set; }
+    public float Y { get; private set; }
 
     /// <summary>
     /// 移動が終了しているかどうか
@@ -39,12 +20,11 @@ public class Path
     public bool Finished => this.index >= this.nodes.Count - 1;
     public IIndexedNode? NextNode => !this.Finished ? this.nodes[this.index + 1].Node : null;
 
-    public Path(IReadOnlyList<PathNode> nodes, Transform transform)
+    public Path(IReadOnlyList<PathNode> nodes)
     {
         if (nodes.Count == 0) throw new System.ArgumentException("nodes are empty");
 
         this.nodes = nodes;
-        this.transform = transform;
         this.X = nodes[0].Node.X;
         this.Y = nodes[0].Node.Y;
         this.index = 0;

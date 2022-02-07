@@ -17,7 +17,6 @@ public class Person : MovingObject
     ISubscriber<int, StationArrivedEvent> stationSubscriber;
     ISubscriber<int, VehicleArrivedEvent> vehicleSubscriber;
     IDisposable disposable;
-
 #nullable enable
     // Start is called before the first frame update
     void Start()
@@ -116,7 +115,7 @@ public class Person : MovingObject
         } while (start.Index == goal.Index);
 
         var edges = this.board.GetPath(start, goal);
-        return new Path(edges, this.transform);
+        return new Path(edges);
 
     }
 }
