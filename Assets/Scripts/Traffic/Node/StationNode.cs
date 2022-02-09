@@ -2,6 +2,8 @@
 using System.Linq;
 using Traffic.Edge;
 
+#nullable enable
+
 namespace Traffic.Node
 {
     /// <summary>
@@ -20,8 +22,6 @@ namespace Traffic.Node
                 return roads.Concat(routes);
             }
         }
-        // TODO: stationをsetする
-        public readonly Station Station;
         public StationNode(float x, float y, int index) : base(x, y, index)
         {
             this.vehicleRoutes = new List<VehicleEdge>();

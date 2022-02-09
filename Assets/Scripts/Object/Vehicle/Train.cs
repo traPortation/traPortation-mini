@@ -46,8 +46,8 @@ public class Train : Vehicle
         {
             if (this.path.NextNode is StationNode nextNode)
             {
-                var station = this.stationManager.GetStation(sNode.Index);
-                var nextStation = this.stationManager.GetStation(nextNode.Index);
+                var station = this.stationManager.GetStation(sNode);
+                var nextStation = this.stationManager.GetStation(nextNode);
                 // 乗客に到着したイベントを送信
                 this.vehiclePublisher.Publish(this.ID, new VehicleArrivedEvent(station, nextStation));
 

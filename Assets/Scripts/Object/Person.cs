@@ -61,13 +61,13 @@ public class Person : MovingObject
         {
             // TODO: velocity直接いじるのよくない
             this.velocity = 0;
-            var station = this.stationManager.GetStation(sNode.Index);
+            var station = this.stationManager.GetStation(sNode);
 
             var d = DisposableBag.CreateBuilder();
 
             this.stationSubscriber.Subscribe(station.ID, e =>
             {
-                if (this.path.NextNode is StationNode sNode && this.stationManager.GetStation(sNode.Index) == e.NextStation)
+                if (this.path.NextNode is StationNode sNode && this.stationManager.GetStation(sNode) == e.NextStation)
                 {
                     // TODO: 乗れるかのチェック
 
@@ -81,7 +81,7 @@ public class Person : MovingObject
                         this.path.MoveNext();
 
                         // 次の目的の駅が同じ場合は降りない
-                        if (this.path.NextNode is StationNode sNode && this.stationManager.GetStation(sNode.Index) == e.NextStation)
+                        if (this.path.NextNode is StationNode sNode && this.stationManager.GetStation(sNode) == e.NextStation)
                         {
                         }
                         else
