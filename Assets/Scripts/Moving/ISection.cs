@@ -1,9 +1,12 @@
 using System;
 
-public interface ISection: IDisposable
+namespace Moving
 {
-    SectionStatus Status { get; }
-    Position Position { get; }
-    void Start();
-    void Move(float delta);
+    public interface ISection : IDisposable
+    {
+        SectionStatus Status { get; }
+        Position Position { get; }
+        void Start();
+        void Move(float delta);
+    }
 }

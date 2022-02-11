@@ -1,17 +1,20 @@
 using Traffic.Node;
 
-public struct Position : INode
+namespace Moving
 {
-    public float X { get; set; }
-    public float Y { get; set; }
-    public Position(INode node)
+    public struct Position : INode
     {
-        this.X = node.X;
-        this.Y = node.Y;
-    }
-    public Position(float x, float y)
-    {
-        this.X = x;
-        this.Y = y;
+        public float X { get; set; }
+        public float Y { get; set; }
+        public Position(INode node)
+        {
+            this.X = node.X;
+            this.Y = node.Y;
+        }
+        public Position(float x, float y)
+        {
+            this.X = x;
+            this.Y = y;
+        }
     }
 }

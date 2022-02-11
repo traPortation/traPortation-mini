@@ -4,6 +4,7 @@ using UnityEngine;
 using Assert = UnityEngine.Assertions.Assert;
 using Zenject;
 using Moq;
+using Moving;
 
 namespace Tests
 {

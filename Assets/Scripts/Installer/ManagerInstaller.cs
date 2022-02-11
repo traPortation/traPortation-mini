@@ -1,7 +1,7 @@
-using UnityEngine;
 using System.Collections.Generic;
 using Zenject;
 using Traffic;
+using Moving;
 
 public class ManagerInstaller : MonoInstaller
 {

@@ -1,12 +1,15 @@
-public enum SectionStatus
+namespace Moving
 {
-    NotStarted,
-    Finished,
+    public enum SectionStatus
+    {
+        NotStarted,
+        Finished,
 
-    // WalkStatus
-    Walking,
+        // WalkStatus
+        Walking,
 
-    // TrainStatus
-    OnStation,
-    OnTrain
+        // TrainStatus
+        OnStation,
+        OnTrain
+    }
 }

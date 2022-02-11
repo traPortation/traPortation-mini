@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Traffic.Node;
+using Moving;
 
 // 動くもの全般 (人間、乗り物など)
 public abstract class MovingObject : MonoBehaviour

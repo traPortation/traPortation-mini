@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Zenject;
+using Moving;
 
 public class Rail
 {
