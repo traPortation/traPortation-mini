@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 using MessagePipe;
@@ -9,13 +10,16 @@ using Event;
 
 #nullable enable
 
-public class Person : MovingObject
+public class Person: MonoBehaviour
 {
+    float velocity;
 #nullable disable
+    PersonPath path;
     StationManager stationManager;
     Board board;
     ISubscriber<int, StationArrivedEvent> stationSubscriber;
     ISubscriber<int, VehicleArrivedEvent> vehicleSubscriber;
+    PathFactory factory;
     IDisposable disposable;
 #nullable enable
     // Start is called before the first frame update
@@ -28,6 +32,12 @@ public class Person : MovingObject
     void FixedUpdate()
     {
         this.Move(this.velocity);
+
+        if (this.path.Status == SectionStatus.Finished)
+        {
+            var path = this.getRandomPath();
+            this.Initialize(path);
+        }
     }
 
     void OnDestory()
@@ -36,76 +46,36 @@ public class Person : MovingObject
     }
 
     [Inject]
-    void construct(Board board, StationManager stationManager, ISubscriber<int, StationArrivedEvent> stationSubscriber, ISubscriber<int, VehicleArrivedEvent> vehicleSubscriber)
+    void construct(Board board, StationManager stationManager, ISubscriber<int, StationArrivedEvent> stationSubscriber, ISubscriber<int, VehicleArrivedEvent> vehicleSubscriber, PathFactory factory)
     {
         this.board = board;
         this.stationManager = stationManager;
         this.stationSubscriber = stationSubscriber;
         this.vehicleSubscriber = vehicleSubscriber;
+        this.factory = factory;
 
         var path = this.getRandomPath();
         this.Initialize(path);
     }
 
-    protected override void Arrive(INode node)
+    void Initialize(PersonPath path)
     {
-        // 目的地に到達した場合は次の目的地を設定する
-        if (this.path.Finished)
-        {
-            var path = this.getRandomPath();
-            this.Initialize(path);
-        }
-
-        // 着いた先が駅の場合は駅に自分自身を追加する
-        if (node is StationNode sNode)
-        {
-            // TODO: velocity直接いじるのよくない
-            this.velocity = 0;
-            var station = this.stationManager.GetStation(sNode);
-
-            var d = DisposableBag.CreateBuilder();
-
-            this.stationSubscriber.Subscribe(station.ID, e =>
-            {
-                if (this.path.NextNode is StationNode sNode && this.stationManager.GetStation(sNode) == e.NextStation)
-                {
-                    // TODO: 乗れるかのチェック
-
-                    // 人を見えなくする 動きを止める
-                    this.gameObject.SetActive(false);
-
-                    this.disposable.Dispose();
-
-                    this.vehicleSubscriber.Subscribe(e.Vehicle.ID, e =>
-                    {
-                        this.path.MoveNext();
-
-                        // 次の目的の駅が同じ場合は降りない
-                        if (this.path.NextNode is StationNode sNode && this.stationManager.GetStation(sNode) == e.NextStation)
-                        {
-                        }
-                        else
-                        {
-                            this.disposable.Dispose();
-
-                            this.gameObject.SetActive(true);
-                            this.velocity = Velocity.Person;
-                        }
-                    }).AddTo(d);
-                    this.disposable = d.Build();
-
-                }
-            }).AddTo(d);
-
-            this.disposable = d.Build();
-        }
+        this.path = path;
+        this.transform.position = new Vector3(path.Position.X, path.Position.Y, this.transform.position.z);
     }
+
+    void Move(float delta)
+    {
+        this.path.Move(delta);
+        this.transform.position = new Vector3(path.Position.X, path.Position.Y, this.transform.position.z);
+    }    
+
     /// <summary>
     /// ランダムにゴールを設定し、そこまでの経路をセットする
     /// </summary>
-    private Path getRandomPath()
+    private PersonPath getRandomPath()
     {
-        var start = this.path != null ? this.path.LastNode : this.board.Nodes[UnityEngine.Random.Range(0, this.board.Nodes.Count)];
+        var start = this.path != null && this.path.LastNode is IIndexedNode iNode ? iNode : this.board.Nodes[UnityEngine.Random.Range(0, this.board.Nodes.Count)];
 
         // 始点と終点が被らないようにするための処理
         IBoardNode goal;
@@ -115,7 +85,9 @@ public class Person : MovingObject
         } while (start.Index == goal.Index);
 
         var edges = this.board.GetPath(start, goal);
-        return new Path(edges);
 
+        var nodes = edges.Select(edge => edge.Node).ToList();
+
+        return this.factory.Create(nodes);
     }
 }

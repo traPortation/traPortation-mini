@@ -17,5 +17,6 @@ public class ManagerInstaller : MonoInstaller
 
         UIInstaller.Install(Container);
         MessagePipeInstaller.Install(Container);
+        PathInstaller.Install(Container);
     }
 }
