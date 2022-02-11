@@ -8,10 +8,11 @@ namespace Moving
 {
     public class PersonPath
     {
+        public Position Position => this.nowSection.Position;
+        public SectionStatus Status => this.nowSection.Status;
         readonly IReadOnlyList<ISection> sections;
         int index;
-        public Position Position => this.sections[this.index].Position;
-        public SectionStatus Status => this.sections[this.index].Status;
+        ISection nowSection => this.sections[this.index];
         bool finished => this.sections.Last().Status == SectionStatus.Finished;
         // あとで消す
         public readonly INode LastNode;
@@ -24,17 +25,15 @@ namespace Moving
         {
             if (this.finished) return;
 
-            var section = this.sections[this.index];
-
-            if (section.Status == SectionStatus.NotStarted)
+            if (this.nowSection.Status == SectionStatus.NotStarted)
             {
-                section.Start();
+                this.nowSection.Start();
             }
 
-            section.Move(delta);
-            if (section.Status == SectionStatus.Finished)
+            this.nowSection.Move(delta);
+            if (this.nowSection.Status == SectionStatus.Finished)
             {
-                this.sections[this.index].Dispose();
+                this.nowSection.Dispose();
                 if (!this.finished) this.index++;
             }
         }

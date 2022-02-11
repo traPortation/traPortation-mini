@@ -2,13 +2,14 @@ namespace Moving
 {
     public enum SectionStatus
     {
+        // 共通
         NotStarted,
         Finished,
 
-        // WalkStatus
+        // WalkSection用
         Walking,
 
-        // TrainStatus
+        // TrainUsingSection用
         OnStation,
         OnTrain
     }

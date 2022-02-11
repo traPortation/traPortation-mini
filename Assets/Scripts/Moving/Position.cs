@@ -1,8 +1,9 @@
+using UnityEngine;
 using Traffic.Node;
 
 namespace Moving
 {
-    public struct Position : INode
+    public struct Position
     {
         public float X { get; set; }
         public float Y { get; set; }
@@ -15,6 +16,11 @@ namespace Moving
         {
             this.X = x;
             this.Y = y;
+        }
+
+        static public float Distance(Position a, Position b)
+        {
+            return Mathf.Sqrt(Mathf.Pow(a.X - b.X, 2) + Mathf.Pow(a.Y - b.Y, 2));
         }
     }
 }

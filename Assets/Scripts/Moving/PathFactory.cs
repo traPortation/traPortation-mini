@@ -34,9 +34,9 @@ namespace Moving
                     var station = this.stationManager.GetStation(sNode);
                     stations.Add(station);
 
-                    // WalkSectionを作って追加
                     if (walkSectionNodes.Count != 0)
                     {
+                        // WalkSectionを追加
                         walkSectionNodes.Add(node);
                         var positions = walkSectionNodes.Select(n => new Position(n)).ToList();
                         sections.Add(new WalkSection(positions));
@@ -46,16 +46,18 @@ namespace Moving
                 }
                 else
                 {
-                    // TrainSectionを作って追加
                     walkSectionNodes.Add(node);
+
                     if (stations.Count != 0)
                     {
+                        // TrainSectionを追加
                         sections.Add(this.trainFactory.Create(stations));
                         stations = new List<Station>();
                     }
                 }
             }
 
+            // 最後のSectionを作成
             if (walkSectionNodes.Count != 0)
             {
                 var positions = walkSectionNodes.Select(n => new Position(n)).ToList();

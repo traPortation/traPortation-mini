@@ -50,43 +50,43 @@ namespace Moving.Section.Person
 
         void waitOnStation()
         {
+            // 今あるイベント購読を解除 (再帰的に呼ばれることがあるため)
             this.Dispose();
 
-            this.Status = SectionStatus.OnStation;
-            var stationId = this.stations[this.index].ID;
             if (this.index >= this.stations.Count - 1)
             {
                 this.Status = SectionStatus.Finished;
                 return;
             }
 
+            this.Status = SectionStatus.OnStation;
+            var stationId = this.stations[this.index].ID;
+
+            // 駅で電車を待つ
             this.stationSubscriber.Subscribe(stationId, se =>
             {
+                // 来た電車について次の駅が同じかを確認
                 if (this.Status != SectionStatus.OnStation || se.NextStation != this.stations[this.index + 1]) return;
 
                 // TODO: 乗れない場合を考慮する
 
                 this.Status = SectionStatus.OnTrain;
 
+                // 電車に乗る
                 this.vehicleSubscriber.Subscribe(se.Vehicle.ID, ve =>
                 {
                     this.index++;
 
-                    // 終わりの場合
+                    // 移動が終わりの場合
                     if (this.index >= this.stations.Count - 1)
                     {
                         this.Status = SectionStatus.Finished;
                     }
+                    // 移動は続くが電車からは降りる場合
                     else if (this.stations[this.index + 1] != ve.NextStation)
                     {
                         this.waitOnStation();
                     }
-                    else
-                    {
-
-                    }
-
-
                 }).AddTo(this.disposableBag);
 
             }).AddTo(this.disposableBag);

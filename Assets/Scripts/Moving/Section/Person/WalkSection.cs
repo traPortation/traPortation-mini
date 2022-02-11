@@ -19,7 +19,7 @@ namespace Moving.Section.Person
             this.nodes = nodes;
 
             this.Status = SectionStatus.NotStarted;
-            this.Position = new Position(nodes.First());
+            this.Position = nodes.First();
         }
 
         public void Start()
@@ -30,25 +30,23 @@ namespace Moving.Section.Person
         {
             if (this.Status != SectionStatus.Walking) return;
 
-            if (this.index >= this.nodes.Count - 1)
-            {
-                this.Status = SectionStatus.Finished;
-                return;
-            }
+            
 
             var dest = this.nodes[this.index + 1];
-            var distance = Node.Distance(this.Position, dest);
+            var distance = Position.Distance(this.Position, dest);
 
+            // 次の目的地に着く場合
             if (distance <= delta)
             {
                 this.Position = dest;
                 this.index++;
 
-                if (this.nodes.Count == this.index + 1)
+                if (this.index == this.nodes.Count - 1)
                 {
                     this.Status = SectionStatus.Finished;
                 }
             }
+            // 着かない場合
             else
             {
                 var ratio = delta / distance;
