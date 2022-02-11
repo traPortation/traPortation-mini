@@ -5,7 +5,7 @@ using Utils;
 
 #nullable enable
 
-namespace Moving.Section
+namespace Moving.Section.Person
 {
     public class WalkSection : ISection
     {

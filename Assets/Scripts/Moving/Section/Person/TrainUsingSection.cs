@@ -6,9 +6,9 @@ using Event;
 
 #nullable enable
 
-namespace Moving.Section
+namespace Moving.Section.Person
 {
-    public class TrainSection : ISection
+    public class TrainUsingSection : ISection
     {
         public SectionStatus Status { get; private set; }
         public Position Position { get; }
@@ -19,7 +19,7 @@ namespace Moving.Section
         readonly DisposableBagBuilder disposableBag;
 
         [Inject]
-        TrainSection(IReadOnlyList<Station> stations, ISubscriber<int, StationArrivedEvent> stationSubscriber, ISubscriber<int, VehicleArrivedEvent> vehicleSubscriber)
+        TrainUsingSection(IReadOnlyList<Station> stations, ISubscriber<int, StationArrivedEvent> stationSubscriber, ISubscriber<int, VehicleArrivedEvent> vehicleSubscriber)
         {
             this.Status = SectionStatus.NotStarted;
             this.Position = new Position(stations.First().Node);
@@ -29,7 +29,7 @@ namespace Moving.Section
             this.disposableBag = DisposableBag.CreateBuilder();
         }
 
-        public class Factory : PlaceholderFactory<IReadOnlyList<Station>, TrainSection> { }
+        public class Factory : PlaceholderFactory<IReadOnlyList<Station>, TrainUsingSection> { }
 
         public void Start()
         {

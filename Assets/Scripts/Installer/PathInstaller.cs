@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Zenject;
 using Moving;
-using Moving.Section;
+using Moving.Section.Person;
 
 public class PathInstaller : Installer<PathInstaller>
 {
@@ -9,6 +9,6 @@ public class PathInstaller : Installer<PathInstaller>
     {
         Container.Bind<PathFactory>().AsSingle();
 
-        Container.BindFactory<IReadOnlyList<Station>, TrainSection, TrainSection.Factory>().AsSingle();
+        Container.BindFactory<IReadOnlyList<Station>, TrainUsingSection, TrainUsingSection.Factory>().AsSingle();
     }
 }

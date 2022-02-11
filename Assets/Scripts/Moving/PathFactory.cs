@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Zenject;
 using Traffic.Node;
-using Moving.Section;
+using Moving.Section.Person;
 
 #nullable enable
 
@@ -10,11 +10,11 @@ namespace Moving
 {
     public class PathFactory
     {
-        readonly TrainSection.Factory trainFactory;
+        readonly TrainUsingSection.Factory trainFactory;
         readonly StationManager stationManager;
 
         [Inject]
-        PathFactory(TrainSection.Factory trainFactory, StationManager stationManager)
+        PathFactory(TrainUsingSection.Factory trainFactory, StationManager stationManager)
         {
             this.trainFactory = trainFactory;
             this.stationManager = stationManager;
