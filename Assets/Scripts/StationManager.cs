@@ -4,7 +4,6 @@ using UnityEngine;
 using Traffic;
 using Traffic.Node;
 using System.Linq;
-using Zenject;
 
 public class StationManager : MonoBehaviour
 {
@@ -14,8 +13,6 @@ public class StationManager : MonoBehaviour
     [SerializeField] private GameObject prefab;
     [SerializeField] private GameObject stationIcon;
     Board board;
-    // TODO: 消す
-    DiContainer container;
 
     // Start is called before the first frame update
     void Start()
@@ -51,10 +48,9 @@ public class StationManager : MonoBehaviour
     }
 
     // TODO: 実行順序の問題が解決したらinjectするようにする
-    public void Construct(Board board, DiContainer container)
+    public void Construct(Board board)
     {
         this.board = board;
-        this.container = container;
     }
 
     public void SetBuildMode()
@@ -76,10 +72,9 @@ public class StationManager : MonoBehaviour
         int index = this.stations.Count;
         var node = this.board.AddStationNode(vec.x, vec.y);
 
-        GameObject newStation = this.container.InstantiatePrefab(this.prefab);
+        GameObject newStation = Instantiate(this.prefab);
         newStation.transform.position = vec;
-        var station = newStation.GetComponent<Station>();
-        station.SetNode(node);
+        var station = new Station(node);
 
         this.stations.Add(station);
 

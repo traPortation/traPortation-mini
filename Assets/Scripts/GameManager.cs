@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         this.railManager = railManager;
 
         // 実行順序の関係でここでboardを渡している
-        this.StationManager.Construct(board, container);
+        this.StationManager.Construct(board);
 
         this.InstantiateBuildings();
         this.initBoardForTest();
