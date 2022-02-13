@@ -11,6 +11,9 @@ namespace Moving
 
         // TrainUsingSection用
         OnStation,
-        OnTrain
+        OnTrain,
+
+        // TrainSection用
+        TrainMoving
     }
 }
