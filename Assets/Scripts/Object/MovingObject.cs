@@ -13,14 +13,8 @@ public abstract class MovingObject : MonoBehaviour
 
     protected void Move(float delta)
     {
-        var node = this.path.Move(delta);
-
-        this.transform.position = new Vector3(this.path.X, this.path.Y, this.transform.position.z);
-
-        if (node != null)
-        {
-            this.Arrive(node);
-        }
+        this.path.Move(delta);
+        this.transform.position = new Vector3(this.path.Position.X, this.path.Position.Y, this.transform.position.z);
     }
 
     /// <summary>
@@ -30,12 +24,6 @@ public abstract class MovingObject : MonoBehaviour
     public void Initialize(Path path)
     {
         this.path = path;
-        this.transform.position = new Vector3(path.X, path.Y, transform.position.z);
+        this.transform.position = new Vector3(path.Position.X, path.Position.Y, transform.position.z);
     }
-
-    /// <summary>
-    /// Nodeに到着するごとに呼び出される
-    /// </summary>
-    /// <param name="node"></param>
-    protected abstract void Arrive(INode node);
 }

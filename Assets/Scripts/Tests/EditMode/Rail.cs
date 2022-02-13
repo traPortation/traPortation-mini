@@ -5,6 +5,7 @@ using Assert = UnityEngine.Assertions.Assert;
 using Zenject;
 using Moq;
 using Moving;
+using Moving.Section.Train;
 
 namespace Tests
 {
@@ -16,7 +17,8 @@ namespace Tests
         [SetUp]
         public void CommonInstall()
         {
-            Container.BindFactory<List<PathNode>, int, string, Rail, Rail.Factory>();
+            Container.BindFactory<List<Station>, int, string, Rail, Rail.Factory>();
+            Container.BindFactory<IReadOnlyList<Station>, int, TrainSection, TrainSection.Factory>();
 
             var lineMock = new Mock<UI.ILine>();
             Container.BindInstance(lineMock.Object);
@@ -29,7 +31,7 @@ namespace Tests
         {
             int id = 1;
             string name = "name";
-            var rail = this.factory.Create(new List<PathNode>(), id, name);
+            var rail = this.factory.Create(new List<Station>(), id, name);
             
             Assert.AreEqual(rail.ID, id);
             Assert.AreEqual(rail.Name, name);

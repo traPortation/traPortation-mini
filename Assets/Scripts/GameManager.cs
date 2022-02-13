@@ -109,39 +109,34 @@ public class GameManager : MonoBehaviour
         }
 
         // 駅を追加
-        var snode1 = this.StationManager.AddStation(new Vector3(2, 2, 5f)).Node;
-        var snode2 = this.StationManager.AddStation(new Vector3(2, 6, 5f)).Node;
-        var snode3 = this.StationManager.AddStation(new Vector3(10, 6, 5f)).Node;
+        var station1 = this.StationManager.AddStation(new Vector3(2, 2, 5f));
+        var station2 = this.StationManager.AddStation(new Vector3(2, 6, 5f));
+        var station3 = this.StationManager.AddStation(new Vector3(10, 6, 5f));
 
         // 駅と道をつなげる
         // TODO: 勝手にいい感じにやるようにする
-        this.Board.AddRoadEdge(nodes[2][2], snode1);
-        this.Board.AddRoadEdge(snode1, nodes[2][2]);
-        this.Board.AddRoadEdge(nodes[2][6], snode2);
-        this.Board.AddRoadEdge(snode2, nodes[2][6]);
-        this.Board.AddRoadEdge(nodes[10][6], snode3);
-        this.Board.AddRoadEdge(snode3, nodes[10][6]);
+        this.Board.AddRoadEdge(nodes[2][2], station1.Node);
+        this.Board.AddRoadEdge(station1.Node, nodes[2][2]);
+        this.Board.AddRoadEdge(nodes[2][6], station2.Node);
+        this.Board.AddRoadEdge(station2.Node, nodes[2][6]);
+        this.Board.AddRoadEdge(nodes[10][6], station3.Node);
+        this.Board.AddRoadEdge(station3.Node, nodes[10][6]);
 
-        // edgeを追加
-        // TODO: いい感じにやるようにする
-        var node1 = new PathNode(snode1, this.Board.AddVehicleRoute(snode1, snode2, EdgeType.Train));
-        var node2 = new PathNode(snode2, this.Board.AddVehicleRoute(snode2, snode3, EdgeType.Train));
-        var node3 = new PathNode(snode3, this.Board.AddVehicleRoute(snode3, snode2, EdgeType.Train));
-        var node4 = new PathNode(snode2, this.Board.AddVehicleRoute(snode2, snode1, EdgeType.Train));
-        var node5 = new PathNode(snode1, null);
+        // 駅同士を繋げる
+        this.Board.AddVehicleRoute(station1.Node, station2.Node, EdgeType.Train);
+        this.Board.AddVehicleRoute(station2.Node, station1.Node, EdgeType.Train);
+        this.Board.AddVehicleRoute(station2.Node, station3.Node, EdgeType.Train);
+        this.Board.AddVehicleRoute(station3.Node, station2.Node, EdgeType.Train);
 
         // 電車を追加
         GameObject trainObject = container.InstantiatePrefab(this.train);
         var train = trainObject.GetComponent<Train>();
 
-        var trainNodes = new List<PathNode>() { node1, node2, node3, node4, node5 };
+        var stations = new List<Station>() { station1, station2, station3 };
 
-        var rail = this.railManager.AddRail(trainNodes);
-        var path = new Path(trainNodes);
+        var rail = this.railManager.AddRail(stations);
 
         rail.AddTrain(train);
-
-        train.Initialize(path);
     }
 
     public void AlterPauseStatus()

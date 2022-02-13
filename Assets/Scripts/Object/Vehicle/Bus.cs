@@ -5,7 +5,6 @@ using System.Linq;
 using Traffic.Node;
 public class Bus : Vehicle
 {
-    private float stopStationTime = Const.Bus.StopStationTime;
     private bool isMoving = true;
     void Start()
     {
@@ -21,21 +20,5 @@ public class Bus : Vehicle
         {
             this.Move(this.velocity);
         }
-    }
-    protected override void Arrive(INode node)
-    {
-        if (this.path.Finished)
-        {
-            this.path.InitializeEdge();
-            Initialize(this.path);
-        }
-        this.isMoving = false;
-        StartCoroutine("stopstation");
-    }
-    private IEnumerator stopstation()
-    {
-        this.isMoving = false;
-        yield return new WaitForSeconds(stopStationTime);
-        this.isMoving = true;
     }
 }

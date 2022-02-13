@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using Zenject;
 using Moving;
+using Moving.Section.Train;
 
 public class Rail
 {
@@ -11,29 +12,31 @@ public class Rail
 
     public string Name { get; private set; }
 
-    // TODO: そのうちVehiclePathNodeみたいなの作ったらそれにする
-    List<PathNode> nodes { get; }
-    public IReadOnlyList<PathNode> Nodes => this.nodes;
+    List<Station> stations { get; }
+    public IReadOnlyList<Station> Stations => this.stations;
 
     List<Train> trains { get; }
     public IReadOnlyList<Train> Trains => this.trains;
     UI.ILine line;
+    TrainSection.Factory factory;
 
-    Rail(List<PathNode> nodes, int id, string name, UI.ILine line)
+    Rail(List<Station> stations, int id, string name, UI.ILine line, TrainSection.Factory factory)
     {
-        this.nodes = nodes;
+        this.stations = stations;
         this.ID = id;
         this.Name = name;
         this.trains = new List<Train>();
 
         this.line = line;
-        this.line.SetLine(this.nodes.Select(node => new Vector3(node.Node.X, node.Node.Y, 0)).ToArray());
+        this.line.SetLine(this.stations.Select(node => new Vector3(node.Node.X, node.Node.Y, 0)).ToArray());
 
         // TODO: 路線ごとに変える
         this.line.SetColor(Color.red);
+
+        this.factory = factory;
     }
 
-    public class Factory : PlaceholderFactory<List<PathNode>, int, string, Rail> { }
+    public class Factory : PlaceholderFactory<List<Station>, int, string, Rail> { }
 
     /// <summary>
     /// 線路上に車両を作成する
@@ -41,7 +44,11 @@ public class Rail
     public void AddTrain(Train train)
     {
         this.trains.Add(train);
-        var path = new Path(nodes);
+
+        var sections = new List<ISection>();
+        sections.Add(factory.Create(this.stations, train.ID));
+        var path = new Path(sections, this.stations.Last().Node);
+
         train.Initialize(path);
     }
 

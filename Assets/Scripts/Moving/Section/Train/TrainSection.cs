@@ -47,6 +47,7 @@ namespace Moving.Section.Train
         public void Start()
         {
             this.Status = SectionStatus.TrainMoving;
+            
         }
 
         public void Move(float delta)
@@ -59,6 +60,8 @@ namespace Moving.Section.Train
             // 次の駅に着く場合
             if (distance <= delta)
             {
+				this.Position = nextStationPos;
+
                 if (this.direction)
                 {
                     this.index++;
@@ -86,8 +89,8 @@ namespace Moving.Section.Train
             else
             {
                 var ratio = delta / distance;
-                var x = (nextStationPos.X - this.Position.X) * ratio;
-                var y = (nextStationPos.Y - this.Position.Y) * ratio;
+                var x = this.Position.X + (nextStationPos.X - this.Position.X) * ratio;
+                var y = this.Position.Y + (nextStationPos.Y - this.Position.Y) * ratio;
 
                 this.Position = new Position(x, y);
             }

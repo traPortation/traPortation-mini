@@ -20,7 +20,7 @@ namespace Moving
             this.stationManager = stationManager;
         }
 
-        public PersonPath Create(IReadOnlyList<INode> nodes)
+        public Path Create(IReadOnlyList<INode> nodes)
         {
             var sections = new List<ISection>();
 
@@ -68,7 +68,7 @@ namespace Moving
                 sections.Add(this.trainFactory.Create(stations));
             }
 
-            return new PersonPath(sections, nodes.Last());
+            return new Path(sections, nodes.Last());
         }
     }
 }

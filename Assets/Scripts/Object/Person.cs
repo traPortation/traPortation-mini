@@ -8,11 +8,9 @@ using Moving;
 
 #nullable enable
 
-public class Person : MonoBehaviour
+public class Person : MovingObject
 {
-    float velocity;
 #nullable disable
-    PersonPath path;
     Board board;
     PathFactory factory;
     SpriteRenderer spriteRenderer;
@@ -34,6 +32,15 @@ public class Person : MonoBehaviour
             var path = this.getRandomPath();
             this.Initialize(path);
         }
+
+        if (this.path.Status == SectionStatus.OnTrain)
+        {
+            this.spriteRenderer.enabled = false;
+        }
+        else
+        {
+            this.spriteRenderer.enabled = true;
+        }
     }
 
     [Inject]
@@ -46,31 +53,10 @@ public class Person : MonoBehaviour
         this.Initialize(path);
     }
 
-    void Initialize(PersonPath path)
-    {
-        this.path = path;
-        this.transform.position = new Vector3(path.Position.X, path.Position.Y, this.transform.position.z);
-    }
-
-    void Move(float delta)
-    {
-        this.path.Move(delta);
-        this.transform.position = new Vector3(path.Position.X, path.Position.Y, this.transform.position.z);
-
-        if (this.path.Status == SectionStatus.OnTrain)
-        {
-            this.spriteRenderer.enabled = false;
-        }
-        else
-        {
-            this.spriteRenderer.enabled = true;
-        }
-    }
-
     /// <summary>
     /// ランダムにゴールを設定し、そこまでの経路をセットする
     /// </summary>
-    private PersonPath getRandomPath()
+    private Path getRandomPath()
     {
         var start = this.path != null && this.path.LastNode is IIndexedNode iNode ? iNode : this.board.Nodes[UnityEngine.Random.Range(0, this.board.Nodes.Count)];
 

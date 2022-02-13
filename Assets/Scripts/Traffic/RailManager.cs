@@ -19,7 +19,7 @@ public class RailManager
     /// <summary>
     /// 路線を作成する
     /// </summary>
-    public Rail AddRail(List<PathNode> edges)
+    public Rail AddRail(List<Station> stations)
     {
         int index = 0;
         if (this.rails.Count != 0)
@@ -29,7 +29,7 @@ public class RailManager
 
         string indexName = index.ToString();
 
-        var rail = this.railFactory.Create(edges, index, $"Rail {indexName}");
+        var rail = this.railFactory.Create(stations, index, $"Rail {indexName}");
 
         this.rails.Add(rail);
 
