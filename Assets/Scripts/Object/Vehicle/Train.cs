@@ -52,7 +52,7 @@ public class Train : Vehicle
                 this.vehiclePublisher.Publish(this.ID, new VehicleArrivedEvent(station, nextStation));
 
                 // 駅に到着したイベントを送信
-                this.stationPublisher.Publish(sNode.Index, new StationArrivedEvent(this, nextStation));
+                this.stationPublisher.Publish(sNode.Index, new StationArrivedEvent(this.ID, nextStation));
             }
             else
             {

@@ -5,11 +5,11 @@ namespace Event
     /// </summary>
     public class StationArrivedEvent
     {
-        public readonly Vehicle Vehicle;
+        public readonly int VehicleId;
         public readonly Station NextStation;
-        public StationArrivedEvent(Vehicle vehicle, Station nextStation)
+        public StationArrivedEvent(int vehicleId, Station nextStation)
         {
-            this.Vehicle = vehicle;
+            this.VehicleId = vehicleId;
             this.NextStation = nextStation;
         }
     }

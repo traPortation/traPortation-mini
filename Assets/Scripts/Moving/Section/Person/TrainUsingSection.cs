@@ -73,7 +73,7 @@ namespace Moving.Section.Person
                 this.Status = SectionStatus.OnTrain;
 
                 // 電車に乗る
-                this.vehicleSubscriber.Subscribe(se.Vehicle.ID, ve =>
+                this.vehicleSubscriber.Subscribe(se.VehicleId, ve =>
                 {
                     this.index++;
 
