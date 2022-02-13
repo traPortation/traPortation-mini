@@ -5,7 +5,6 @@ using System.Linq;
 using Traffic.Node;
 public class Bus : Vehicle
 {
-    private bool isMoving = true;
     void Start()
     {
         this.Capacity = Const.Bus.Capacity;
@@ -16,9 +15,6 @@ public class Bus : Vehicle
 
     void FixedUpdate()
     {
-        if (this.isMoving)
-        {
-            this.Move(this.velocity);
-        }
+        this.Move(this.velocity);
     }
 }

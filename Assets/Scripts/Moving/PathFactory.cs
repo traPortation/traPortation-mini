@@ -14,7 +14,7 @@ namespace Moving
         readonly StationManager stationManager;
 
         [Inject]
-        PathFactory(TrainUsingSection.Factory trainFactory, StationManager stationManager)
+        public PathFactory(TrainUsingSection.Factory trainFactory, StationManager stationManager)
         {
             this.trainFactory = trainFactory;
             this.stationManager = stationManager;

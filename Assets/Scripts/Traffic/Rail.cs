@@ -20,7 +20,7 @@ public class Rail
     UI.ILine line;
     TrainSection.Factory factory;
 
-    Rail(List<Station> stations, int id, string name, UI.ILine line, TrainSection.Factory factory)
+    public Rail(List<Station> stations, int id, string name, UI.ILine line, TrainSection.Factory factory)
     {
         this.stations = stations;
         this.ID = id;

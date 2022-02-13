@@ -15,6 +15,16 @@ public class Person : MovingObject
     PathFactory factory;
     SpriteRenderer spriteRenderer;
 #nullable enable
+    [Inject]
+    public void Construct(Board board, PathFactory factory)
+    {
+        this.board = board;
+        this.factory = factory;
+
+        var path = this.getRandomPath();
+        this.Initialize(path);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,20 +53,10 @@ public class Person : MovingObject
         }
     }
 
-    [Inject]
-    void construct(Board board, PathFactory factory)
-    {
-        this.board = board;
-        this.factory = factory;
-
-        var path = this.getRandomPath();
-        this.Initialize(path);
-    }
-
     /// <summary>
     /// ランダムにゴールを設定し、そこまでの経路をセットする
     /// </summary>
-    private Path getRandomPath()
+    Path getRandomPath()
     {
         var start = this.path != null && this.path.LastNode is IIndexedNode iNode ? iNode : this.board.Nodes[UnityEngine.Random.Range(0, this.board.Nodes.Count)];
 

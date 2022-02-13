@@ -24,8 +24,7 @@ namespace Moving.Section.Train
         IPublisher<int, TrainEvent> trainPublisher;
         IPublisher<int, StationEvent> stationPublisher;
 
-        [Inject]
-        TrainSection(IReadOnlyList<Station> stations, int trainId, IPublisher<int, TrainEvent> trainPublisher, IPublisher<int, StationEvent> stationPublisher)
+        public TrainSection(IReadOnlyList<Station> stations, int trainId, IPublisher<int, TrainEvent> trainPublisher, IPublisher<int, StationEvent> stationPublisher)
         {
             this.Status = SectionStatus.NotStarted;
             this.Position = new Position(stations.First().Node);
@@ -47,7 +46,6 @@ namespace Moving.Section.Train
         public void Start()
         {
             this.Status = SectionStatus.TrainMoving;
-            
         }
 
         public void Move(float delta)

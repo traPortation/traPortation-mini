@@ -18,8 +18,7 @@ namespace Moving.Section.Person
         readonly ISubscriber<int, TrainEvent> trainSubscriber;
         readonly DisposableBagBuilder disposableBag;
 
-        [Inject]
-        TrainUsingSection(IReadOnlyList<Station> stations, ISubscriber<int, StationEvent> stationSubscriber, ISubscriber<int, TrainEvent> trainSubscriber)
+        public TrainUsingSection(IReadOnlyList<Station> stations, ISubscriber<int, StationEvent> stationSubscriber, ISubscriber<int, TrainEvent> trainSubscriber)
         {
             this.Status = SectionStatus.NotStarted;
             this.Position = new Position(stations.First().Node);

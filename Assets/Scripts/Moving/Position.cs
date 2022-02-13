@@ -22,5 +22,10 @@ namespace Moving
         {
             return Mathf.Sqrt(Mathf.Pow(a.X - b.X, 2) + Mathf.Pow(a.Y - b.Y, 2));
         }
+
+        public Vector3 ToVector3(float z)
+        {
+            return new Vector3(this.X, this.Y, z);
+        }
     }
 }

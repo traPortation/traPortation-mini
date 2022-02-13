@@ -16,7 +16,7 @@ namespace UI
 
         // Startに書くと実行順序の問題でSetLineが先に実行されてしまうためここで初期化している
         [Inject]
-        void construct()
+        public void Construct()
         {
             this.lineRenderer = this.gameObject.AddComponent<LineRenderer>();
         }

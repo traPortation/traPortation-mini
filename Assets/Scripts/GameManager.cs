@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     }
 
     [Inject]
-    void construct(Board board, DiContainer container, StationManager stationManager, RailManager railManager)
+    public void Construct(Board board, DiContainer container, StationManager stationManager, RailManager railManager)
     {
         this.Board = board;
         this.container = container;

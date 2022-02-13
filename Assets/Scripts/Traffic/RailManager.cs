@@ -10,7 +10,7 @@ public class RailManager
     Rail.Factory railFactory;
 
     [Inject]
-    RailManager(Rail.Factory factory)
+    public RailManager(Rail.Factory factory)
     {
         this.railFactory = factory;
         this.rails = new List<Rail>();
