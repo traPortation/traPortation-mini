@@ -1,32 +1,27 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 using Zenject;
-using MessagePipe;
 using Const;
 using Traffic;
 using Traffic.Node;
-using Event;
 using Moving;
 
 #nullable enable
 
-public class Person: MonoBehaviour
+public class Person : MonoBehaviour
 {
     float velocity;
 #nullable disable
     PersonPath path;
-    StationManager stationManager;
     Board board;
-    ISubscriber<int, StationArrivedEvent> stationSubscriber;
-    ISubscriber<int, VehicleArrivedEvent> vehicleSubscriber;
     PathFactory factory;
-    IDisposable disposable;
+    SpriteRenderer spriteRenderer;
 #nullable enable
     // Start is called before the first frame update
     void Start()
     {
         this.velocity = Velocity.Person;
+        this.spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -41,18 +36,10 @@ public class Person: MonoBehaviour
         }
     }
 
-    void OnDestory()
-    {
-        this.disposable?.Dispose();
-    }
-
     [Inject]
-    void construct(Board board, StationManager stationManager, ISubscriber<int, StationArrivedEvent> stationSubscriber, ISubscriber<int, VehicleArrivedEvent> vehicleSubscriber, PathFactory factory)
+    void construct(Board board, PathFactory factory)
     {
         this.board = board;
-        this.stationManager = stationManager;
-        this.stationSubscriber = stationSubscriber;
-        this.vehicleSubscriber = vehicleSubscriber;
         this.factory = factory;
 
         var path = this.getRandomPath();
@@ -69,7 +56,16 @@ public class Person: MonoBehaviour
     {
         this.path.Move(delta);
         this.transform.position = new Vector3(path.Position.X, path.Position.Y, this.transform.position.z);
-    }    
+
+        if (this.path.Status == SectionStatus.OnTrain)
+        {
+            this.spriteRenderer.enabled = false;
+        }
+        else
+        {
+            this.spriteRenderer.enabled = true;
+        }
+    }
 
     /// <summary>
     /// ランダムにゴールを設定し、そこまでの経路をセットする
