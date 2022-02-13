@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Zenject;
 using MessagePipe;
-using Event;
+using Event.Train;
 
 #nullable enable
 
@@ -14,18 +14,18 @@ namespace Moving.Section.Person
         public Position Position { get; }
         readonly IReadOnlyList<Station> stations;
         int index;
-        readonly ISubscriber<int, StationArrivedEvent> stationSubscriber;
-        readonly ISubscriber<int, VehicleArrivedEvent> vehicleSubscriber;
+        readonly ISubscriber<int, StationEvent> stationSubscriber;
+        readonly ISubscriber<int, TrainEvent> trainSubscriber;
         readonly DisposableBagBuilder disposableBag;
 
         [Inject]
-        TrainUsingSection(IReadOnlyList<Station> stations, ISubscriber<int, StationArrivedEvent> stationSubscriber, ISubscriber<int, VehicleArrivedEvent> vehicleSubscriber)
+        TrainUsingSection(IReadOnlyList<Station> stations, ISubscriber<int, StationEvent> stationSubscriber, ISubscriber<int, TrainEvent> trainSubscriber)
         {
             this.Status = SectionStatus.NotStarted;
             this.Position = new Position(stations.First().Node);
             this.stations = stations;
             this.stationSubscriber = stationSubscriber;
-            this.vehicleSubscriber = vehicleSubscriber;
+            this.trainSubscriber = trainSubscriber;
             this.disposableBag = DisposableBag.CreateBuilder();
 
             if (this.stations.Count <= 1)
@@ -66,7 +66,7 @@ namespace Moving.Section.Person
                 this.Status = SectionStatus.OnTrain;
 
                 // 電車に乗る
-                this.vehicleSubscriber.Subscribe(se.VehicleId, ve =>
+                this.trainSubscriber.Subscribe(se.TrainId, ve =>
                 {
                     this.index++;
 

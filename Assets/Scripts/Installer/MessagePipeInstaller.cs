@@ -1,6 +1,6 @@
 using Zenject;
 using MessagePipe;
-using Event;
+using Event.Train;
 
 public class MessagePipeInstaller : Installer<MessagePipeInstaller>
 {
@@ -8,7 +8,7 @@ public class MessagePipeInstaller : Installer<MessagePipeInstaller>
     {
         var option = Container.BindMessagePipe();
 
-        Container.BindMessageBroker<int, StationArrivedEvent>(option);
-        Container.BindMessageBroker<int, VehicleArrivedEvent>(option);
+        Container.BindMessageBroker<int, StationEvent>(option);
+        Container.BindMessageBroker<int, TrainEvent>(option);
     }
 }

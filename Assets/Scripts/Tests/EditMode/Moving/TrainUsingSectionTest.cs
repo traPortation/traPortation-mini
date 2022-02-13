@@ -8,7 +8,7 @@ using MessagePipe;
 using Moving;
 using Moving.Section.Person;
 using Traffic.Node;
-using Event;
+using Event.Train;
 
 namespace Tests
 {
@@ -17,9 +17,9 @@ namespace Tests
         [Inject]
         TrainUsingSection.Factory factory;
         [Inject]
-        IPublisher<int, VehicleArrivedEvent> vehiclePub;
+        IPublisher<int, TrainEvent> trainPub;
         [Inject]
-        IPublisher<int, StationArrivedEvent> stationPub;
+        IPublisher<int, StationEvent> stationPub;
 
         List<Station> stations;
         TrainUsingSection section;
@@ -30,8 +30,8 @@ namespace Tests
             var option = Container.BindMessagePipe();
 
             Container.BindFactory<IReadOnlyList<Station>, TrainUsingSection, TrainUsingSection.Factory>();
-            Container.BindMessageBroker<int, VehicleArrivedEvent>(option);
-            Container.BindMessageBroker<int, StationArrivedEvent>(option);
+            Container.BindMessageBroker<int, TrainEvent>(option);
+            Container.BindMessageBroker<int, StationEvent>(option);
 
             Container.Inject(this);
 
@@ -62,7 +62,7 @@ namespace Tests
         {
             section.Start();
 
-            stationPub.Publish(1, new StationArrivedEvent(0, stations[0]));
+            stationPub.Publish(1, new StationEvent(0, stations[0]));
             Assert.AreEqual(section.Status, SectionStatus.OnStation);
         }
 
@@ -71,7 +71,7 @@ namespace Tests
         {
             section.Start();
 
-            stationPub.Publish(0, new StationArrivedEvent(0, stations[2]));
+            stationPub.Publish(0, new StationEvent(0, stations[2]));
             Assert.AreEqual(section.Status, SectionStatus.OnStation);
         }
 
@@ -80,15 +80,15 @@ namespace Tests
         {
             section.Start();
 
-            stationPub.Publish(0, new StationArrivedEvent(0, stations[1]));
+            stationPub.Publish(0, new StationEvent(0, stations[1]));
             Assert.AreEqual(section.Status, SectionStatus.OnTrain);
 
             // 乗り続ける
-            vehiclePub.Publish(0, new VehicleArrivedEvent(stations[1], stations[2]));
+            trainPub.Publish(0, new TrainEvent(stations[1], stations[2]));
             Assert.AreEqual(section.Status, SectionStatus.OnTrain);
 
             // 降りる
-            vehiclePub.Publish(0, new VehicleArrivedEvent(stations[2], stations[1]));
+            trainPub.Publish(0, new TrainEvent(stations[2], stations[1]));
             Assert.AreEqual(section.Status, SectionStatus.Finished);
         }
 
@@ -97,19 +97,19 @@ namespace Tests
         {
             section.Start();
 
-            stationPub.Publish(0, new StationArrivedEvent(0, stations[1]));
+            stationPub.Publish(0, new StationEvent(0, stations[1]));
             Assert.AreEqual(section.Status, SectionStatus.OnTrain);
 
             // 次の駅が違うので降りる
-            vehiclePub.Publish(0, new VehicleArrivedEvent(stations[1], stations[0]));
+            trainPub.Publish(0, new TrainEvent(stations[1], stations[0]));
             Assert.AreEqual(section.Status, SectionStatus.OnStation);
 
             // 電車が来たら乗る
-            stationPub.Publish(1, new StationArrivedEvent(0, stations[2]));
+            stationPub.Publish(1, new StationEvent(0, stations[2]));
             Assert.AreEqual(section.Status, SectionStatus.OnTrain);
 
             // 降りる
-            vehiclePub.Publish(0, new VehicleArrivedEvent(stations[2], stations[1]));
+            trainPub.Publish(0, new TrainEvent(stations[2], stations[1]));
             Assert.AreEqual(section.Status, SectionStatus.Finished);
         }
     }

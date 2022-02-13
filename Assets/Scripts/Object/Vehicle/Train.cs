@@ -3,7 +3,7 @@ using UnityEngine;
 using Zenject;
 using MessagePipe;
 using Traffic.Node;
-using Event;
+using Event.Train;
 
 #nullable enable
 
@@ -13,19 +13,19 @@ public class Train : Vehicle
     private bool isMoving = true;
 #nullable disable
     StationManager stationManager;
-    IPublisher<int, StationArrivedEvent> stationPublisher;
-    IPublisher<int, VehicleArrivedEvent> vehiclePublisher;
+    IPublisher<int, StationEvent> stationPublisher;
+    IPublisher<int, TrainEvent> trainPublisher;
 #nullable enable
 
     [Inject]
-    void Construct(StationManager stationManager, IPublisher<int, StationArrivedEvent> stationPublisher, IPublisher<int, VehicleArrivedEvent> vehiclePublisher)
+    void Construct(StationManager stationManager, IPublisher<int, StationEvent> stationPublisher, IPublisher<int, TrainEvent> trainPublisher)
     {
         this.stationManager = stationManager;
         this.Capacity = Const.Train.Capacity;
         this.Wage = Const.Train.Wage;
         this.velocity = Const.Velocity.Train;
         this.stationPublisher = stationPublisher;
-        this.vehiclePublisher = vehiclePublisher;
+        this.trainPublisher = trainPublisher;
     }
 
     void FixedUpdate()
@@ -49,10 +49,10 @@ public class Train : Vehicle
                 var station = this.stationManager.GetStation(sNode);
                 var nextStation = this.stationManager.GetStation(nextNode);
                 // 乗客に到着したイベントを送信
-                this.vehiclePublisher.Publish(this.ID, new VehicleArrivedEvent(station, nextStation));
+                this.trainPublisher.Publish(this.ID, new TrainEvent(station, nextStation));
 
                 // 駅に到着したイベントを送信
-                this.stationPublisher.Publish(sNode.Index, new StationArrivedEvent(this.ID, nextStation));
+                this.stationPublisher.Publish(sNode.Index, new StationEvent(this.ID, nextStation));
             }
             else
             {
