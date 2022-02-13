@@ -85,7 +85,7 @@ namespace Traffic
         /// <param name="start"></param>
         /// <param name="goal"></param>
         /// <returns>最短経路</returns>
-        private List<PathNode> dijkstra(IIndexedNode start, IIndexedNode goal)
+        private List<INode> dijkstra(IIndexedNode start, IIndexedNode goal)
         {
             var from = Enumerable.Repeat<(IIndexedNode?, IEdge<IBoardNode, IBoardNode>?)>((null, null), this.Nodes.Count).ToList();
 
@@ -120,7 +120,7 @@ namespace Traffic
 
                 }
             }
-            var edges = new List<PathNode>();
+            var nodes = new List<INode>();
 
             // startからgoalへの道がない場合は例外を投げる (仮仕様)
             if (dist[goal.Index] == float.MaxValue)
@@ -128,16 +128,15 @@ namespace Traffic
                 throw new System.Exception("path not found");
             }
 
-            edges.Add(new PathNode(goal, null));
+            nodes.Add(goal);
             for (var cur = from[goal.Index]; cur.Item1 != null; cur = from[cur.Item1.Index])
             {
-                var edge = new PathNode(cur.Item1, cur.Item2);
-                edges.Add(edge);
+                nodes.Add(cur.Item1);
             }
 
-            edges.Reverse();
+            nodes.Reverse();
 
-            return edges;
+            return nodes;
         }
         /// <summary>
         /// 経路を取得する
@@ -145,7 +144,7 @@ namespace Traffic
         /// <param name="start"></param>
         /// <param name="goal"></param>
         /// <returns></returns>
-        public List<PathNode> GetPath(IIndexedNode start, IIndexedNode goal)
+        public List<INode> GetPath(IIndexedNode start, IIndexedNode goal)
         {
             return dijkstra(start, goal);
         }

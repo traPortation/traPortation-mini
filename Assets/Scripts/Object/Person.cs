@@ -67,9 +67,7 @@ public class Person : MovingObject
             goal = this.board.Nodes[UnityEngine.Random.Range(0, this.board.Nodes.Count)];
         } while (start.Index == goal.Index);
 
-        var edges = this.board.GetPath(start, goal);
-
-        var nodes = edges.Select(edge => edge.Node).ToList();
+        var nodes = this.board.GetPath(start, goal);
 
         return this.factory.Create(nodes);
     }
