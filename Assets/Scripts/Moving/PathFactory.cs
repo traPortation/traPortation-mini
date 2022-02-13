@@ -48,7 +48,7 @@ namespace Moving
                 {
                     walkSectionNodes.Add(node);
 
-                    if (stations.Count != 0)
+                    if (stations.Count > 1)
                     {
                         // TrainSectionを追加
                         sections.Add(this.trainFactory.Create(stations));
