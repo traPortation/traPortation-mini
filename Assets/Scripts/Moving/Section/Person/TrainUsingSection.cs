@@ -27,6 +27,11 @@ namespace Moving.Section.Person
             this.stationSubscriber = stationSubscriber;
             this.vehicleSubscriber = vehicleSubscriber;
             this.disposableBag = DisposableBag.CreateBuilder();
+
+            if (this.stations.Count <= 1)
+            {
+                throw new System.ArgumentException();
+            }
         }
 
         public class Factory : PlaceholderFactory<IReadOnlyList<Station>, TrainUsingSection> { }
@@ -35,12 +40,6 @@ namespace Moving.Section.Person
         {
             this.Status = SectionStatus.OnStation;
             this.index = 0;
-
-            if (this.stations.Count <= 1)
-            {
-                this.Status = SectionStatus.Finished;
-                return;
-            }
 
             this.waitOnStation();
         }
@@ -52,12 +51,6 @@ namespace Moving.Section.Person
         {
             // 今あるイベント購読を解除 (再帰的に呼ばれることがあるため)
             this.Dispose();
-
-            if (this.index >= this.stations.Count - 1)
-            {
-                this.Status = SectionStatus.Finished;
-                return;
-            }
 
             this.Status = SectionStatus.OnStation;
             var stationId = this.stations[this.index].ID;

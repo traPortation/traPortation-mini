@@ -58,19 +58,14 @@ namespace Moving
             }
 
             // 最後のSectionを作成
-            if (walkSectionNodes.Count != 0)
+            if (walkSectionNodes.Count > 1)
             {
                 var positions = walkSectionNodes.Select(n => new Position(n)).ToList();
                 sections.Add(new WalkSection(positions));
             }
-            else if (stations.Count != 0)
+            else if (stations.Count > 1)
             {
                 sections.Add(this.trainFactory.Create(stations));
-            }
-            else
-            {
-                // 仮
-                throw new System.Exception();
             }
 
             return new PersonPath(sections, nodes.Last());

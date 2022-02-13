@@ -18,6 +18,11 @@ namespace Moving.Section.Person
         {
             this.nodes = nodes;
 
+            if (this.nodes.Count <= 1)
+            {
+                throw new System.ArgumentException();
+            }
+
             this.Status = SectionStatus.NotStarted;
             this.Position = nodes.First();
         }
@@ -29,8 +34,6 @@ namespace Moving.Section.Person
         public void Move(float delta)
         {
             if (this.Status != SectionStatus.Walking) return;
-
-            
 
             var dest = this.nodes[this.index + 1];
             var distance = Position.Distance(this.Position, dest);
