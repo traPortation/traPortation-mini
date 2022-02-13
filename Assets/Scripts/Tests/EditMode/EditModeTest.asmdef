@@ -6,7 +6,9 @@
         "UnityEditor.TestRunner",
         "Scripts",
         "Zenject",
-        "Zenject-TestFramework"
+        "Zenject-TestFramework",
+        "MessagePipe",
+        "MessagePipe.Zenject"
     ],
     "includePlatforms": [
         "Editor"
