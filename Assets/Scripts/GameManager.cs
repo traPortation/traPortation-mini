@@ -113,15 +113,6 @@ public class GameManager : MonoBehaviour
         var station2 = this.StationManager.AddStation(new Vector3(2, 6, 5f));
         var station3 = this.StationManager.AddStation(new Vector3(10, 6, 5f));
 
-        // 駅と道をつなげる
-        // TODO: 勝手にいい感じにやるようにする
-        this.Board.AddRoadEdge(nodes[2][2], station1.Node);
-        this.Board.AddRoadEdge(station1.Node, nodes[2][2]);
-        this.Board.AddRoadEdge(nodes[2][6], station2.Node);
-        this.Board.AddRoadEdge(station2.Node, nodes[2][6]);
-        this.Board.AddRoadEdge(nodes[10][6], station3.Node);
-        this.Board.AddRoadEdge(station3.Node, nodes[10][6]);
-
         // 駅同士を繋げる
         this.Board.AddVehicleRoute(station1.Node, station2.Node, EdgeType.Train);
         this.Board.AddVehicleRoute(station2.Node, station1.Node, EdgeType.Train);

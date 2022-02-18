@@ -15,11 +15,11 @@ namespace Traffic
     /// </summary>
     public class Board
     {
-        private List<IBoardNode> nodes;
-        public IReadOnlyList<IBoardNode> Nodes => this.nodes;
+        private List<IntersectionNode> nodes;
+        public IReadOnlyList<IntersectionNode> Nodes => this.nodes;
         public Board()
         {
-            this.nodes = new List<IBoardNode>();
+            this.nodes = new List<IntersectionNode>();
         }
 
         /// <summary>
@@ -147,6 +147,11 @@ namespace Traffic
         public List<INode> GetPath(IIndexedNode start, IIndexedNode goal)
         {
             return dijkstra(start, goal);
+        }
+
+        public IntersectionNode GetNearestNode(Vector3 vec)
+        {
+            return this.nodes.OrderBy(node => Mathf.Pow(node.X - vec.x, 2) + Mathf.Pow(node.Y - vec.y, 2)).First();
         }
 
         public void Test()

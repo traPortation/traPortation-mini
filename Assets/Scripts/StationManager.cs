@@ -67,10 +67,12 @@ public class StationManager : MonoBehaviour
     /// <returns></returns>
     public Station AddStation(Vector3 vec)
     {
-        // TODO: 駅と(一番近い)道をつなげる
-
         int index = this.stations.Count;
         var node = this.board.AddStationNode(vec.x, vec.y);
+
+        var nearestNode = this.board.GetNearestNode(vec);
+        this.board.AddRoadEdge(nearestNode, node);
+        this.board.AddRoadEdge(node, nearestNode);
 
         GameObject newStation = Instantiate(this.prefab);
         newStation.transform.position = vec;
