@@ -46,7 +46,7 @@ public class Rail
         this.trains.Add(train);
 
         var sections = new List<ISection>();
-        sections.Add(factory.Create(this.stations, train.ID));
+        sections.Add(factory.Create(this.stations, train.ID, Const.Train.StopStationTime));
         var path = new Path(sections, this.stations.Last().Node);
 
         train.Initialize(path);

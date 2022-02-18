@@ -16,6 +16,7 @@ namespace Moving.Section.Train
         public Position Position { get; private set; }
         int trainId;
         int index;
+        int stopMiliSecond;
         bool direction;
         bool isMoving;
         Station station => this.stations[this.index];
@@ -24,11 +25,12 @@ namespace Moving.Section.Train
         IPublisher<int, TrainEvent> trainPublisher;
         IPublisher<int, StationEvent> stationPublisher;
 
-        public TrainSection(IReadOnlyList<Station> stations, int trainId, IPublisher<int, TrainEvent> trainPublisher, IPublisher<int, StationEvent> stationPublisher)
+        public TrainSection(IReadOnlyList<Station> stations, int trainId, float stopSecond, IPublisher<int, TrainEvent> trainPublisher, IPublisher<int, StationEvent> stationPublisher)
         {
             this.Status = SectionStatus.NotStarted;
             this.Position = new Position(stations.First().Node);
             this.trainId = trainId;
+            this.stopMiliSecond = (int)(stopSecond * 1000);
             this.index = 0;
             this.direction = true;
             this.isMoving = true;
@@ -41,7 +43,7 @@ namespace Moving.Section.Train
                 throw new ArgumentException();
             }
         }
-        public class Factory : PlaceholderFactory<IReadOnlyList<Station>, int, TrainSection> { }
+        public class Factory : PlaceholderFactory<IReadOnlyList<Station>, int, float, TrainSection> { }
 
         public void Start()
         {
@@ -58,7 +60,7 @@ namespace Moving.Section.Train
             // 次の駅に着く場合
             if (distance <= delta)
             {
-				this.Position = nextStationPos;
+                this.Position = nextStationPos;
 
                 if (this.direction)
                 {
@@ -97,7 +99,7 @@ namespace Moving.Section.Train
         async void stopOnStation()
         {
             this.isMoving = false;
-            await UniTask.Delay((int)(Const.Train.StopStationTime * 1000));
+            await UniTask.Delay(this.stopMiliSecond);
             this.isMoving = true;
         }
 

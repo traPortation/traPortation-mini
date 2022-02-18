@@ -18,7 +18,7 @@ namespace Tests
         public void CommonInstall()
         {
             Container.BindFactory<List<Station>, int, string, Rail, Rail.Factory>();
-            Container.BindFactory<IReadOnlyList<Station>, int, TrainSection, TrainSection.Factory>();
+            Container.BindFactory<IReadOnlyList<Station>, int, float, TrainSection, TrainSection.Factory>();
 
             var lineMock = new Mock<UI.ILine>();
             Container.BindInstance(lineMock.Object);
@@ -32,7 +32,7 @@ namespace Tests
             int id = 1;
             string name = "name";
             var rail = this.factory.Create(new List<Station>(), id, name);
-            
+
             Assert.AreEqual(rail.ID, id);
             Assert.AreEqual(rail.Name, name);
         }

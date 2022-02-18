@@ -8,7 +8,8 @@
         "Zenject",
         "Zenject-TestFramework",
         "MessagePipe",
-        "MessagePipe.Zenject"
+        "MessagePipe.Zenject",
+        "UniTask"
     ],
     "includePlatforms": [
         "Editor"

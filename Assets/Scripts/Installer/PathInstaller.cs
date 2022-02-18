@@ -11,6 +11,6 @@ public class PathInstaller : Installer<PathInstaller>
         Container.Bind<PathFactory>().AsSingle();
 
         Container.BindFactory<IReadOnlyList<Station>, TrainUsingSection, TrainUsingSection.Factory>().AsSingle();
-        Container.BindFactory<IReadOnlyList<Station>, int, TrainSection, TrainSection.Factory>().AsSingle();
+        Container.BindFactory<IReadOnlyList<Station>, int, float, TrainSection, TrainSection.Factory>().AsSingle();
     }
 }
