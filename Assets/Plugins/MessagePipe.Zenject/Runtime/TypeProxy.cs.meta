@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Plugins/MessagePipe.Zenject/Runtime/TypeProxy.cs.meta
 guid: ec86b2e104a27c94c945a5db8d6e3da0
+=======
+guid: 142fc83023b0a9c46ac1a1cdf171fcaa
+>>>>>>> origin:Assets/Scripts/Traffic/Edge/PlotEdge.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

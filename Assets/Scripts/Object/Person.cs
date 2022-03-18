@@ -28,6 +28,11 @@ public class Person : MovingObject
     // Start is called before the first frame update
     void Start()
     {
+
+        var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+        var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+        this.Initialize(this.board.GetPath(start, goal, this.transform));
+
         this.velocity = Velocity.Person;
         this.spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
     }
@@ -39,8 +44,10 @@ public class Person : MovingObject
 
         if (this.path.Status == SectionStatus.Finished)
         {
-            var path = this.getRandomPath();
-            this.Initialize(path);
+            var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+            var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+
+            this.Initialize(this.board.GetPath(start, goal, this.transform));
         }
 
         if (this.path.Status == SectionStatus.OnTrain)
