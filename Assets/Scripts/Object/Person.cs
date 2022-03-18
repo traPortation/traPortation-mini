@@ -18,8 +18,9 @@ public class Person : MovingObject
         this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         Utils.NullChecker.Check(this.manager);
 
-        var path = this.getRandomPath();
-        this.Initialize(path);
+        var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+        var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+        this.Initialize(manager.Board.GetPath(start, goal, this.transform));
 
         this.velocity = Velocity.Person;
     }
@@ -35,8 +36,9 @@ public class Person : MovingObject
         // 目的地に到達した場合は次の目的地を設定する
         if (this.path.Finished)
         {
-            var path = this.getRandomPath();
-            this.Initialize(path);
+            var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+            var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+            this.Initialize(manager.Board.GetPath(start, goal, this.transform));
         }
 
         // 着いた先が駅の場合は駅に自分自身を追加する
@@ -60,10 +62,10 @@ public class Person : MovingObject
         do
         {
             goal = Board.Instance.Nodes[Random.Range(0, Board.Instance.Nodes.Count)];
-        } while (start.Index == goal.Index);
+        } while (start.X == goal.X && start.Y == goal.Y);
 
-        var edges = this.manager.Board.GetPath(start, goal);
-        return new Path(edges, this.transform);
+        var path = this.manager.Board.GetPath(new Vector3(start.X, start.Y, Z.Person), new Vector3(goal.X, goal.Y, Z.Person), this.transform);
+        return path;
 
     }
 
