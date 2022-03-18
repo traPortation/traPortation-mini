@@ -60,7 +60,7 @@ namespace Tests
             }
         }
 
-
+        [Test]
         public void AddVehicleEdgeTest()
         {
             var nodes = new List<StationNode>();

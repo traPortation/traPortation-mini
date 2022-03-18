@@ -10,11 +10,10 @@ namespace BoardElements
     /// </summary>
 
     // 乗り物の種類が増えるのに合わせて抽象クラスにするなりInterfaceにするなりするかも
-    public class VehicleEdge : IIndexedEdge<StationNode>, IIndexedEdge
+    public class VehicleEdge : IEdge<StationNode, StationNode>
     {
+        public StationNode From { get; }
         public StationNode To { get; }
-        INode IEdge.To => this.To;
-        IIndexedNode IIndexedEdge.To => this.To;
         public float Cost { get; }
         public VehicleEdge(StationNode to, float cost)
         {

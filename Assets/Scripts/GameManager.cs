@@ -24,12 +24,13 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Utils.NullChecker.Check(this.person, this.building, this.train);
+
         this.InstantiatePeople();
         this.InstantiateBuildings();
-        var gameObj = GameObject.FindGameObjectsWithTag("StationManager")[0];
-        this.StationManager = gameObj.GetComponent<StationManager>();
 
-        Utils.NullChecker.Check(this.person, this.building, this.train, this.StationManager);
+        var obj = GameObject.FindGameObjectsWithTag("StationManager")[0];
+        this.StationManager = obj.GetComponent<StationManager>();
 
         this.initBoardForTest();
     }
@@ -92,9 +93,9 @@ public class GameManager : MonoBehaviour
         }
 
         // 駅を追加
-        var snode1 = this.StationManager.AddStation(new Vector3(2, 2, 5f));
-        var snode2 = this.StationManager.AddStation(new Vector3(2, 6, 5f));
-        var snode3 = this.StationManager.AddStation(new Vector3(10, 6, 5f));
+        var snode1 = this.StationManager.AddStation(new Vector3(2, 2, 5f)).Node;
+        var snode2 = this.StationManager.AddStation(new Vector3(2, 6, 5f)).Node;
+        var snode3 = this.StationManager.AddStation(new Vector3(10, 6, 5f)).Node;
 
         // 駅と道をつなげる
         // そのうち勝手にいい感じにやるようにする
