@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
+using Zenject;
 
 #nullable enable
 
@@ -10,17 +11,20 @@ public class Train : Vehicle
     private float stopStationTime = Const.Train.StopStationTime;
     private bool isMoving = true;
 #nullable disable
-    private GameManager manager;
+    private StationManager stationManager;
 #nullable enable
     void Start()
     {
-        this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        Utils.NullChecker.Check(this.manager);
 
+    }
+
+    [Inject]
+    void Construct(StationManager stationManager)
+    {
+        this.stationManager = stationManager;
         this.Capacity = Const.Train.Capacity;
         this.Wage = Const.Train.Wage;
         this.velocity = Const.Velocity.Train;
-        this.Initialize(this.path);
     }
 
     void FixedUpdate()
@@ -51,7 +55,7 @@ public class Train : Vehicle
                 }
             }
 
-            var station = this.manager.StationManager.GetStation(sNode.Index);
+            var station = this.stationManager.GetStation(sNode.Index);
 
 
             if (this.path.NextNode is StationNode nextNode)

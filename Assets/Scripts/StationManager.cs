@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BoardElements;
 using System.Linq;
+using Zenject;
 
 public class StationManager : MonoBehaviour
 {
@@ -11,11 +12,12 @@ public class StationManager : MonoBehaviour
     private List<Station> stations = new List<Station>();
     [SerializeField] private GameObject prefab;
     [SerializeField] private GameObject stationIcon;
+    Board board;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -45,11 +47,17 @@ public class StationManager : MonoBehaviour
         }
     }
 
+    // TODO: 実行順序の問題が解決したらinjectするようにする
+    public void Construct(Board board)
+    {
+        this.board = board;
+    }
+
     public void SetBuildMode()
     {
         this.buttonClicked = true;
         this.buildMode = !this.buildMode;
-        Board.Instance.Test();
+        this.board.Test();
     }
 
     /// <summary>
@@ -62,7 +70,7 @@ public class StationManager : MonoBehaviour
         // TODO: 駅と(一番近い)道をつなげる
 
         int index = this.stations.Count;
-        var node = Board.Instance.AddStationNode(vec.x, vec.y);
+        var node = this.board.AddStationNode(vec.x, vec.y);
 
         GameObject newStation = Instantiate(this.prefab, vec, Quaternion.identity);
         var station = newStation.GetComponent<Station>();

@@ -4,41 +4,52 @@ using UnityEngine;
 using UnityEngine.UI;
 using Const;
 using System.Linq;
+using Zenject;
 
 #nullable enable
 
 public class GameManager : MonoBehaviour
 {
-    public Board Board { get; } = Board.Instance;
 
 #nullable disable
+    Board Board;
     [SerializeField] private GameObject person;
     [SerializeField] private GameObject building;
     [SerializeField] private GameObject train;
     [SerializeField] private Image pauseButton;
     [SerializeField] private Sprite[] pauseSprite = new Sprite[2];
 
-    public StationManager StationManager { get; private set; }
+    StationManager StationManager;
+    DiContainer container;
 #nullable enable
 
     // Start is called before the first frame update
     void Start()
     {
-        Utils.NullChecker.Check(this.person, this.building, this.train);
 
-        this.InstantiatePeople();
-        this.InstantiateBuildings();
-
-        var obj = GameObject.FindGameObjectsWithTag("StationManager")[0];
-        this.StationManager = obj.GetComponent<StationManager>();
-
-        this.initBoardForTest();
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    [Inject]
+    public void Construct(Board board, DiContainer container, StationManager stationManager)
+    {
+        this.Board = board;
+        this.container = container;
+        this.StationManager = stationManager;
+
+        // 実行順序の関係でここでboardを渡している
+        this.StationManager.Construct(board);
+
+        this.InstantiateBuildings();
+        this.initBoardForTest();
+        this.InstantiatePeople();
+
+        Utils.NullChecker.Check(this.person, this.building, this.train, this.StationManager);
     }
 
     /// <summary>
@@ -49,7 +60,8 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < Count.Person; i++)
         {
             var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
-            Instantiate(this.person, start, Quaternion.identity);
+            var obj = this.container.InstantiatePrefab(this.person);
+            obj.transform.position = start;
         }
     }
     /// <summary>
@@ -114,7 +126,7 @@ public class GameManager : MonoBehaviour
         var node5 = new PathNode(snode1, null);
 
         // 電車を追加
-        GameObject trainObject = Instantiate(this.train, Vector3.zero, Quaternion.identity);
+        GameObject trainObject = container.InstantiatePrefab(this.train);
         var train = trainObject.GetComponent<Train>();
         var path = new Path(new List<PathNode>() { node1, node2, node3, node4, node5 }, train.transform);
         train.Initialize(path);

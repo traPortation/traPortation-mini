@@ -25,8 +25,6 @@ namespace Const
         }
     }
 
-
-
     /// <summary>
     /// 数に関する定数
     /// </summary>

@@ -4,23 +4,24 @@ using UnityEngine;
 using Const;
 using System.Linq;
 using BoardElements;
+using Zenject;
 
 #nullable enable
 
 public class Person : MovingObject
 {
 #nullable disable
-    private GameManager manager;
+    StationManager stationManager;
+    Board board;
+
 #nullable enable
     // Start is called before the first frame update
     void Start()
     {
-        this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        Utils.NullChecker.Check(this.manager);
 
         var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
         var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
-        this.Initialize(manager.Board.GetPath(start, goal, this.transform));
+        this.Initialize(this.board.GetPath(start, goal, this.transform));
 
         this.velocity = Velocity.Person;
     }
@@ -31,6 +32,16 @@ public class Person : MovingObject
         this.Move(this.velocity);
     }
 
+    [Inject]
+    public void Construct(Board board, StationManager stationManager)
+    {
+        this.board = board;
+        this.stationManager = stationManager;
+
+        var path = this.getRandomPath();
+        this.Initialize(path);
+    }
+
     protected override void Arrive(INode node)
     {
         // 目的地に到達した場合は次の目的地を設定する
@@ -38,7 +49,8 @@ public class Person : MovingObject
         {
             var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
             var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
-            this.Initialize(manager.Board.GetPath(start, goal, this.transform));
+
+            this.Initialize(this.board.GetPath(start, goal, this.transform));
         }
 
         // 着いた先が駅の場合は駅に自分自身を追加する
@@ -46,7 +58,7 @@ public class Person : MovingObject
         {
             // TODO: velocity直接いじるのよくない
             this.velocity = 0;
-            var station = this.manager.StationManager.GetStation(sNode.Index);
+            var station = this.stationManager.GetStation(sNode.Index);
             station.AddPerson(this);
         }
     }
@@ -55,18 +67,17 @@ public class Person : MovingObject
     /// </summary>
     private Path getRandomPath()
     {
-        var start = this.path != null ? this.path.LastNode : Board.Instance.Nodes[Random.Range(0, Board.Instance.Nodes.Count)];
+        var start = this.path != null ? this.path.LastNode : this.board.Nodes[Random.Range(0, this.board.Nodes.Count)];
 
         // 始点と終点が被らないようにするための処理
         IBoardNode goal;
         do
         {
-            goal = Board.Instance.Nodes[Random.Range(0, Board.Instance.Nodes.Count)];
-        } while (start.X == goal.X && start.Y == goal.Y);
+            goal = this.board.Nodes[Random.Range(0, this.board.Nodes.Count)];
+        } while (start == goal);
 
-        var path = this.manager.Board.GetPath(new Vector3(start.X, start.Y, Z.Person), new Vector3(goal.X, goal.Y, Z.Person), this.transform);
+        var path = this.board.GetPath(new Vector3(start.X, start.Y, Z.Person), new Vector3(goal.X, goal.Y, Z.Person), this.transform);
         return path;
-
     }
 
     /// <summary>
