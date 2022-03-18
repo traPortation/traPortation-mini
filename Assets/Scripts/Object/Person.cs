@@ -18,6 +18,7 @@ public class Person : MovingObject
     // Start is called before the first frame update
     void Start()
     {
+
         var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
         var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
         this.Initialize(this.board.GetPath(start, goal, this.transform));
@@ -48,6 +49,7 @@ public class Person : MovingObject
         {
             var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
             var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+
             this.Initialize(this.board.GetPath(start, goal, this.transform));
         }
 
