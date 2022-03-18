@@ -168,7 +168,7 @@ public class Board
         var pathNodes = dijkstra(GetNearestNode(start), GetNearestNode(goal));
         var startNode = new BoardElements.PlotNode(start.x, start.y);
         var goalNode = new BoardElements.PlotNode(goal.x, goal.y);
-        pathNodes.Insert(0, new PathNode(startNode, new PlotEdge<INode>(pathNodes[0].Node, 0)));
+        pathNodes.Insert(0, new PathNode(startNode, new PlotEdge<INode, INode>(startNode, pathNodes[0].Node, 0)));
         pathNodes.Add(new PathNode(goalNode, null));
         var path = new Path(pathNodes, transform);
         return path;

@@ -9,13 +9,13 @@ namespace BoardElements
     /// 区画に出入りするための辺
     /// </summary>
     /// <typeparam name="T">到着点</typeparam>
-    public class PlotEdge<T> : IEdge where T : INode
+    public class PlotEdge<T, U> : IEdge<T, U> where T : INode where U: INode
     {
-        public T To { get; }
-        INode IEdge.To => this.To;
+        public T From { get; }
+        public U To { get; }
 
         public float Cost { get; }
-        public PlotEdge(T to, float cost)
+        public PlotEdge(T from, U to, float cost)
         {
             this.To = to;
             this.Cost = cost;

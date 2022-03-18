@@ -18,12 +18,9 @@ public class Person : MovingObject
     // Start is called before the first frame update
     void Start()
     {
-        this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        Utils.NullChecker.Check(this.manager);
-
         var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
         var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
-        this.Initialize(manager.Board.GetPath(start, goal, this.transform));
+        this.Initialize(this.board.GetPath(start, goal, this.transform));
 
         this.velocity = Velocity.Person;
     }
@@ -51,7 +48,7 @@ public class Person : MovingObject
         {
             var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
             var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
-            this.Initialize(manager.Board.GetPath(start, goal, this.transform));
+            this.Initialize(this.board.GetPath(start, goal, this.transform));
         }
 
         // 着いた先が駅の場合は駅に自分自身を追加する
@@ -75,9 +72,9 @@ public class Person : MovingObject
         do
         {
             goal = this.board.Nodes[Random.Range(0, this.board.Nodes.Count)];
-        } while (start.Index == goal.Index);
+        } while (start == goal);
 
-        var path = this.manager.Board.GetPath(new Vector3(start.X, start.Y, Z.Person), new Vector3(goal.X, goal.Y, Z.Person), this.transform);
+        var path = this.board.GetPath(new Vector3(start.X, start.Y, Z.Person), new Vector3(goal.X, goal.Y, Z.Person), this.transform);
         return path;
     }
 
