@@ -67,12 +67,33 @@ public class Board
     /// <param name="to">終点</param>
     /// <typeparam name="T">始点の型</typeparam>
     /// <returns>作成したRoadEdge</returns>
-    public RoadEdge<IBoardNode> AddRoadEdge<T>(T from, IBoardNode to)
-        where T : IBoardNode, IRoadAddableNode
+    public RoadEdge AddRoadEdge<T>(T from, IBoardNode to)
+        where T : IntersectionNode
     {
         float cost = EdgeCost.Get(EdgeType.Walk) * Utils.Node.Distance(from, to);
         var edge = from.AddRoad(to, cost);
         return edge;
+    }
+    /// <summary>
+    /// Vector3から一番近いIntersectionNodeを取得
+    /// </summary>
+    /// <param name="vec"></param>
+    /// <returns>最短のIntersectionNode</returns>
+    public IBoardNode GetNearestNode(Vector3 vec)
+    {
+        float dist = float.MaxValue;
+        int idx = 0;
+        foreach (var node in this.Nodes)
+        {
+            float update = (vec.x - node.X)*(vec.x - node.X) + (vec.y - node.Y)*(vec.y - node.Y);
+            if (dist >= update)
+            {
+                dist = update;
+                idx = node.Index;                   
+            }
+        }
+        IBoardNode rtn = this.Nodes[idx];
+        return rtn;
     }
 
     /// <summary>
@@ -84,7 +105,7 @@ public class Board
     /// <returns>最短経路</returns>
     private List<PathNode> dijkstra(IIndexedNode start, IIndexedNode goal)
     {
-        var from = Enumerable.Repeat<(IIndexedNode?, IIndexedEdge?)>((null, null), this.Nodes.Count).ToList();
+        var from = Enumerable.Repeat<(IIndexedNode?, IEdge<IBoardNode, IBoardNode>?)>((null, null), this.Nodes.Count).ToList();
 
         var dist = Enumerable.Repeat<float>(float.MaxValue, this.Nodes.Count).ToList();
         dist[start.Index] = 0;
@@ -104,7 +125,7 @@ public class Board
                 var nextCost = cost + edge.Cost;
                 switch (edge)
                 {
-                    case IIndexedEdge e:
+                    case IEdge<IBoardNode, IBoardNode> e:
                         if (dist[e.To.Index] <= nextCost) continue;
                         dist[e.To.Index] = nextCost;
                         from[e.To.Index] = (this.Nodes[idx], e);
@@ -142,9 +163,15 @@ public class Board
     /// <param name="start"></param>
     /// <param name="goal"></param>
     /// <returns></returns>
-    public List<PathNode> GetPath(IIndexedNode start, IIndexedNode goal)
+    public Path GetPath(Vector3 start, Vector3 goal, Transform transform)
     {
-        return dijkstra(start, goal);
+        var pathNodes = dijkstra(GetNearestNode(start), GetNearestNode(goal));
+        var startNode = new BoardElements.PlotNode(start.x, start.y);
+        var goalNode = new BoardElements.PlotNode(goal.x, goal.y);
+        pathNodes.Insert(0, new PathNode(startNode, new PlotEdge<INode>(pathNodes[0].Node, 0)));
+        pathNodes.Add(new PathNode(goalNode, null));
+        var path = new Path(pathNodes, transform);
+        return path;
     }
 
     public void Test()

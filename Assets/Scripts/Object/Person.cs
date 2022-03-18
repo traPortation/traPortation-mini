@@ -18,6 +18,13 @@ public class Person : MovingObject
     // Start is called before the first frame update
     void Start()
     {
+        this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        Utils.NullChecker.Check(this.manager);
+
+        var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+        var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+        this.Initialize(manager.Board.GetPath(start, goal, this.transform));
+
         this.velocity = Velocity.Person;
     }
 
@@ -42,8 +49,9 @@ public class Person : MovingObject
         // 目的地に到達した場合は次の目的地を設定する
         if (this.path.Finished)
         {
-            var path = this.getRandomPath();
-            this.Initialize(path);
+            var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+            var goal = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+            this.Initialize(manager.Board.GetPath(start, goal, this.transform));
         }
 
         // 着いた先が駅の場合は駅に自分自身を追加する
@@ -69,9 +77,8 @@ public class Person : MovingObject
             goal = this.board.Nodes[Random.Range(0, this.board.Nodes.Count)];
         } while (start.Index == goal.Index);
 
-        var edges = this.board.GetPath(start, goal);
-        return new Path(edges, this.transform);
-
+        var path = this.manager.Board.GetPath(new Vector3(start.X, start.Y, Z.Person), new Vector3(goal.X, goal.Y, Z.Person), this.transform);
+        return path;
     }
 
     /// <summary>
@@ -90,13 +97,16 @@ public class Person : MovingObject
     /// 乗り物に乗る処理
     /// </summary>
     /// <param name="vehicle"></param>
-    public void Ride(Vehicle vehicle)
+    /// <returns>成功したかどうか</returns>
+    public bool Ride(Vehicle vehicle)
     {
         // 人を見えなくする 動きを止める
         this.gameObject.SetActive(false);
 
         // これ駅とかでやるべきかも？
-        vehicle.AddPerson(this);
+        bool res = vehicle.AddPerson(this);
+
+        return res;
     }
 
     /// <summary>

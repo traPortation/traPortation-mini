@@ -6,17 +6,17 @@ using BoardElements;
 namespace BoardElements
 {
     /// <summary>
-    /// 道
+    /// 区画に出入りするための辺
     /// </summary>
     /// <typeparam name="T">到着点</typeparam>
-    public class RoadEdge : IEdge<IBoardNode, IBoardNode>
+    public class PlotEdge<T> : IEdge where T : INode
     {
-        public IBoardNode From { get; }
-        public IBoardNode To { get; }
+        public T To { get; }
+        INode IEdge.To => this.To;
+
         public float Cost { get; }
-        public RoadEdge(IBoardNode from, IBoardNode to, float cost)
+        public PlotEdge(T to, float cost)
         {
-            this.From = from;
             this.To = to;
             this.Cost = cost;
         }

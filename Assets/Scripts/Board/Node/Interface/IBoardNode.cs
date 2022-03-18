@@ -9,6 +9,6 @@ namespace BoardElements
     /// </summary>
     public interface IBoardNode : IIndexedNode
     {
-        IReadOnlyList<IEdge<IBoardNode>> Edges { get; }
+        IEnumerable<IEdge<IBoardNode, IBoardNode>> Edges { get; }
     }
 }
