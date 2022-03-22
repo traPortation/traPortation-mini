@@ -114,7 +114,7 @@ namespace Tests
             {
                 var x = Random.Range(0f, 10f);
                 var y = Random.Range(0f, 10f);
-                var node = this.board.GetNearestNode(new Vector3(x, y, Const.Z.Person));
+                var node = this.board.GetNearestNode(x, y);
 
                 Assert.IsTrue(node is IBoardNode);
                 float minDistance = (x - node.X) * (x - node.X) + (y - node.Y) * (y - node.Y);

@@ -70,7 +70,7 @@ public class StationManager : MonoBehaviour
         int index = this.stations.Count;
         var node = this.board.AddStationNode(vec.x, vec.y);
 
-        var nearestNode = this.board.GetNearestNode(vec);
+        var nearestNode = this.board.GetNearestNode(vec.x, vec.y);
         this.board.AddRoadEdge(nearestNode, node);
         this.board.AddRoadEdge(node, nearestNode);
 

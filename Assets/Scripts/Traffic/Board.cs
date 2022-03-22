@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Const;
@@ -149,9 +149,9 @@ namespace Traffic
             return dijkstra(start, goal);
         }
 
-        public IntersectionNode GetNearestNode(Vector3 vec)
+        public IntersectionNode GetNearestNode(float x, float y)
         {
-            return this.nodes.OrderBy(node => Mathf.Pow(node.X - vec.x, 2) + Mathf.Pow(node.Y - vec.y, 2)).First();
+            return this.nodes.OrderBy(node => Mathf.Pow(node.X - x, 2) + Mathf.Pow(node.Y - y, 2)).First();
         }
 
         public void Test()
