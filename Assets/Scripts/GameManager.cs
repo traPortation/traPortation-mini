@@ -51,7 +51,6 @@ public class GameManager : MonoBehaviour
         // 実行順序の関係でここでboardを渡している
         this.StationManager.Construct(board);
 
-        this.InstantiateBuildings();
         this.initBoardForTest();
         this.InstantiatePeople();
 
@@ -70,19 +69,7 @@ public class GameManager : MonoBehaviour
             obj.transform.position = start;
         }
     }
-    /// <summary>
-    /// Prefabから建物をインスタンス化する
-    /// </summary>
-    private void InstantiateBuildings()
-    {
-        for (float x = 0.5f; x < X.Max; x++)
-        {
-            for (float y = 0.5f; y < Y.Max; y++)
-            {
-                Instantiate(this.building, new Vector3(x, y, Z.Building), Quaternion.identity);
-            }
-        }
-    }
+
     /// <summary>
     /// 動作確認用に色々置いてるだけ
     /// </summary>
