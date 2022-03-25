@@ -19,6 +19,7 @@ namespace UI
         public void Construct()
         {
             this.lineRenderer = this.gameObject.AddComponent<LineRenderer>();
+            this.lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         }
 
         /// <summary>
