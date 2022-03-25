@@ -1,10 +1,9 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Const;
 using Traffic.Edge;
 using Traffic.Node;
-using Moving;
 
 #nullable enable
 
@@ -15,7 +14,7 @@ namespace Traffic
     /// </summary>
     public class Board
     {
-        private List<IntersectionNode> nodes;
+        List<IntersectionNode> nodes;
         public IReadOnlyList<IntersectionNode> Nodes => this.nodes;
         public Board()
         {
@@ -85,7 +84,7 @@ namespace Traffic
         /// <param name="start"></param>
         /// <param name="goal"></param>
         /// <returns>最短経路</returns>
-        private List<INode> dijkstra(IIndexedNode start, IIndexedNode goal)
+        private List<INode> searchPath(IIndexedNode start, IIndexedNode goal)
         {
             var from = Enumerable.Repeat<(IIndexedNode?, IEdge<IBoardNode, IBoardNode>?)>((null, null), this.Nodes.Count).ToList();
 
@@ -144,14 +143,31 @@ namespace Traffic
         /// <param name="start"></param>
         /// <param name="goal"></param>
         /// <returns></returns>
-        public List<INode> GetPath(IIndexedNode start, IIndexedNode goal)
+        public IReadOnlyList<INode> GetPath(INode start, INode goal)
         {
-            return dijkstra(start, goal);
+            var startIntersection = this.GetNearestNode(start.X, start.Y);
+            var goalIntersection = this.GetNearestNode(goal.X, goal.Y);
+
+            var searchedNodes = searchPath(startIntersection, goalIntersection);
+
+            // TODO: 効率がよくないので改善する
+            searchedNodes.Insert(0, start);
+            searchedNodes.Add(goal);
+
+            return searchedNodes;
         }
 
         public IntersectionNode GetNearestNode(float x, float y)
         {
             return this.nodes.OrderBy(node => Mathf.Pow(node.X - x, 2) + Mathf.Pow(node.Y - y, 2)).First();
+        }
+
+        public TemporaryNode GetRandomPoint()
+        {
+            var x = Random.Range(X.Min, X.Max);
+            var y = Random.Range(Y.Min, Y.Max);
+
+            return new TemporaryNode(x, y);
         }
 
         public void Test()

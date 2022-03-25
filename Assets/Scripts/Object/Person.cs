@@ -3,7 +3,6 @@ using UnityEngine;
 using Zenject;
 using Const;
 using Traffic;
-using Traffic.Node;
 using Moving;
 
 #nullable enable
@@ -58,17 +57,10 @@ public class Person : MovingObject
     /// </summary>
     Path getRandomPath()
     {
-        var start = this.path != null && this.path.LastNode is IIndexedNode iNode ? iNode : this.board.Nodes[UnityEngine.Random.Range(0, this.board.Nodes.Count)];
-
-        // 始点と終点が被らないようにするための処理
-        IBoardNode goal;
-        do
-        {
-            goal = this.board.Nodes[UnityEngine.Random.Range(0, this.board.Nodes.Count)];
-        } while (start.Index == goal.Index);
+        var start = this.path?.LastNode ?? this.board.GetRandomPoint();
+        var goal = this.board.GetRandomPoint();
 
         var nodes = this.board.GetPath(start, goal);
-
         return this.factory.Create(nodes);
     }
 }
