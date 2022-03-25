@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     StationManager StationManager;
     RailManager railManager;
+    Road.Factory roadFactory;
     // TODO: 消す
     DiContainer container;
 #nullable enable
@@ -39,12 +40,13 @@ public class GameManager : MonoBehaviour
     }
 
     [Inject]
-    public void Construct(Board board, DiContainer container, StationManager stationManager, RailManager railManager)
+    public void Construct(Board board, DiContainer container, StationManager stationManager, RailManager railManager, Road.Factory roadFactory)
     {
         this.Board = board;
         this.container = container;
         this.StationManager = stationManager;
         this.railManager = railManager;
+        this.roadFactory = roadFactory;
 
         // 実行順序の関係でここでboardを渡している
         this.StationManager.Construct(board);
@@ -96,15 +98,12 @@ public class GameManager : MonoBehaviour
         }).ToList();
 
         // 道を追加
-
         foreach (var x in Enumerable.Range(0, (int)X.Max + 1))
         {
             foreach (var y in Enumerable.Range(0, (int)Y.Max + 1))
             {
-                if (x != 0) this.Board.AddRoadEdge(nodes[x][y], nodes[x - 1][y]);
-                if (y != 0) this.Board.AddRoadEdge(nodes[x][y], nodes[x][y - 1]);
-                if (x != X.Max) this.Board.AddRoadEdge(nodes[x][y], nodes[x + 1][y]);
-                if (y != Y.Max) this.Board.AddRoadEdge(nodes[x][y], nodes[x][y + 1]);
+                if (x != X.Max) roadFactory.Create(nodes[x][y], nodes[x + 1][y]);
+                if (y != Y.Max) roadFactory.Create(nodes[x][y], nodes[x][y + 1]);
             }
         }
 

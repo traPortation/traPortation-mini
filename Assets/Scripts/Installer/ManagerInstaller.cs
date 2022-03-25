@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Zenject;
 using Traffic;
+using Traffic.Node;
 using Moving;
 
 public class ManagerInstaller : MonoInstaller
@@ -14,6 +15,7 @@ public class ManagerInstaller : MonoInstaller
 
         // 増えてきたら単独のInstallerに分ける
         Container.BindFactory<List<Station>, int, string, Rail, Rail.Factory>();
+        Container.BindFactory<IntersectionNode, IntersectionNode, Road, Road.Factory>();
 
         UIInstaller.Install(Container);
         MessagePipeInstaller.Install(Container);

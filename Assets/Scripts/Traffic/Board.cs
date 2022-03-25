@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Zenject;
 using Const;
 using Traffic.Edge;
 using Traffic.Node;
@@ -16,6 +17,8 @@ namespace Traffic
     {
         List<IntersectionNode> nodes;
         public IReadOnlyList<IntersectionNode> Nodes => this.nodes;
+
+        [Inject]
         public Board()
         {
             this.nodes = new List<IntersectionNode>();
