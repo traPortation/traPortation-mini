@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     StationManager StationManager;
     DiContainer container;
+    public bool paused { get; set; } = false;
 #nullable enable
 
     // Start is called before the first frame update
@@ -132,10 +133,14 @@ public class GameManager : MonoBehaviour
         train.Initialize(path);
     }
 
-    public void AlterPauseStatus()
+    public void ChangeTimeScale()
     {
         Time.timeScale = 1 - Time.timeScale;
+    }
+
+    public void ChangePauseStatus()
+    {
         pauseButton.sprite = pauseSprite[(int)Time.timeScale];
-        Debug.Log(Time.timeScale.ToString());
+        paused = !paused;
     }
 }

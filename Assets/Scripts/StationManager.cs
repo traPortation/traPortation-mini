@@ -12,6 +12,7 @@ public class StationManager : MonoBehaviour
     private List<Station> stations = new List<Station>();
     [SerializeField] private GameObject prefab;
     [SerializeField] private GameObject stationIcon;
+    [SerializeField] private GameObject gameManager;
     Board board;
 
     // Start is called before the first frame update
@@ -57,6 +58,10 @@ public class StationManager : MonoBehaviour
     {
         this.buttonClicked = true;
         this.buildMode = !this.buildMode;
+        if (!gameManager.GetComponent<GameManager>().paused)
+        {
+            gameManager.GetComponent<GameManager>().ChangeTimeScale();
+        }
         this.board.Test();
     }
 

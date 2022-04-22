@@ -534,18 +534,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1121038818}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: AlterPauseStatus
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &654632129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -668,8 +656,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1121038818}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: AlterPauseStatus
+        m_TargetAssemblyTypeName: GameManager, Scripts
+        m_MethodName: ChangeTimeScale
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1121038818}
+        m_TargetAssemblyTypeName: GameManager, Scripts
+        m_MethodName: ChangePauseStatus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -809,6 +809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 185991705040669837, guid: aa0c78fefd4b98941a735e7add9f2f69, type: 3}
   stationIcon: {fileID: 1270926821}
+  gameManager: {fileID: 1121038817}
 --- !u!4 &968625180
 Transform:
   m_ObjectHideFlags: 0
@@ -959,14 +960,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1555233639}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1142360662}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.002572, y: 3.3327012, z: -91.1084}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1332850750
 GameObject:
   m_ObjectHideFlags: 0
