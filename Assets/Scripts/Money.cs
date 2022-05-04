@@ -1,7 +1,7 @@
 ﻿using System;
 using Const;
 
-class ManageMoney
+public class ManageMoney
 {
     private int nowMoney = 0;  // 所持金
     // const.cs内のnamespace Const class MoneyLimitにある
@@ -9,7 +9,9 @@ class ManageMoney
     // private static const int maxMoney = 999999999; // 上限
 
     // 現在の所持金を返すだけの関数
-    public int money { get; private set; }
+    public int money { 
+        get => this.nowMoney;
+    }
 
     // 所持金を下限と上限の間になるようにするやつ
     public bool ExpenseCheck(int expense, bool allowMinus)
@@ -38,7 +40,6 @@ class ManageMoney
                 return false;
             }
         }
-
         return true;
 
     }

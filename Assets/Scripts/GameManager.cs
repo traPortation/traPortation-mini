@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject person;
     [SerializeField] private GameObject building;
     [SerializeField] private GameObject train;
+
+    public ManageMoney ManageMoney { get; private set; }
     [SerializeField] private Image pauseButton;
     [SerializeField] private Sprite[] pauseSprite = new Sprite[2];
 
@@ -47,6 +49,8 @@ public class GameManager : MonoBehaviour
         this.StationManager = stationManager;
         this.railManager = railManager;
         this.roadFactory = roadFactory;
+
+        this.ManageMoney = new ManageMoney();
 
         // 実行順序の関係でここでboardを渡している
         this.StationManager.Construct(board);
