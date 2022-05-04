@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using Assert = UnityEngine.Assertions.Assert;
-using BoardElements;
+using Traffic;
+using Traffic.Node;
 using System.Linq;
 
 #nullable enable
@@ -90,10 +91,10 @@ namespace Tests
 
                 Assert.AreEqual(edges, node1.Edges.Last());
                 Assert.AreEqual(edges.To, node2);
-                
+
             }
         }
-        
+
         [Test]
         public void GetNearestNodeTest()
         {
@@ -113,13 +114,13 @@ namespace Tests
             {
                 var x = Random.Range(0f, 10f);
                 var y = Random.Range(0f, 10f);
-                var node = this.board.GetNearestNode(new Vector3(x, y, Const.Z.Person));
-            
+                var node = this.board.GetNearestNode(x, y);
+
                 Assert.IsTrue(node is IBoardNode);
-                float minDistance = (x - node.X)*(x - node.X) + (y - node.Y)*(y- node.Y);
+                float minDistance = (x - node.X) * (x - node.X) + (y - node.Y) * (y - node.Y);
                 foreach (var boardNode in this.board.Nodes)
                 {
-                    float dist = (x - boardNode.X)*(x - boardNode.X) + (y - boardNode.Y)*(y - boardNode.Y);
+                    float dist = (x - boardNode.X) * (x - boardNode.X) + (y - boardNode.Y) * (y - boardNode.Y);
                     Assert.IsTrue(minDistance <= dist);
                 }
             }

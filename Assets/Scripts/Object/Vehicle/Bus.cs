@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using BoardElements;
+using Traffic.Node;
 public class Bus : Vehicle
 {
-    private float stopStationTime = Const.Bus.StopStationTime;
-    private bool isMoving = true;
     void Start()
     {
         this.Capacity = Const.Bus.Capacity;
@@ -17,25 +15,6 @@ public class Bus : Vehicle
 
     void FixedUpdate()
     {
-        if (this.isMoving)
-        {
-            this.Move(this.velocity);
-        }
-    }
-    protected override void Arrive(BoardElements.INode node)
-    {
-        if (this.path.Finished)
-        {
-            this.path.InitializeEdge();
-            Initialize(this.path);
-        }
-        this.isMoving = false;
-        StartCoroutine("stopstation");
-    }
-    private IEnumerator stopstation()
-    {
-        this.isMoving = false;
-        yield return new WaitForSeconds(stopStationTime);
-        this.isMoving = true;
+        this.Move(this.velocity);
     }
 }

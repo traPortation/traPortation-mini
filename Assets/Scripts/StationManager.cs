@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BoardElements;
+using Traffic;
+using Traffic.Node;
 using System.Linq;
-using Zenject;
 
 public class StationManager : MonoBehaviour
 {
@@ -20,7 +20,7 @@ public class StationManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    // TODO: 別のクラスに分ける
     void Update()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -67,14 +67,16 @@ public class StationManager : MonoBehaviour
     /// <returns></returns>
     public Station AddStation(Vector3 vec)
     {
-        // TODO: 駅と(一番近い)道をつなげる
-
         int index = this.stations.Count;
         var node = this.board.AddStationNode(vec.x, vec.y);
 
-        GameObject newStation = Instantiate(this.prefab, vec, Quaternion.identity);
-        var station = newStation.GetComponent<Station>();
-        station.SetNode(node);
+        var nearestNode = this.board.GetNearestNode(vec.x, vec.y);
+        this.board.AddRoadEdge(nearestNode, node);
+        this.board.AddRoadEdge(node, nearestNode);
+
+        GameObject newStation = Instantiate(this.prefab);
+        newStation.transform.position = vec;
+        var station = new Station(node);
 
         this.stations.Add(station);
 
@@ -82,13 +84,23 @@ public class StationManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 指定したindexのstationを取得
+    /// 指定したIDのstationを取得
     /// </summary>
     /// <param name="stationId"></param>
     /// <returns></returns>
     public Station GetStation(int stationId)
     {
         //TODO: 応急処置なのでそのうちどうにかする
-        return this.stations.Where(station => station.Node.Index == stationId).First();
+        return this.stations.Where(station => station.ID == stationId).First();
+    }
+
+    /// <summary>
+    /// 指定したStationNodeを持つstationを取得 
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public Station GetStation(StationNode node)
+    {
+        return this.stations.Where(station => station.Node.Index == node.Index).First();
     }
 }

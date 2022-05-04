@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
-using UnityEngine;
 using Assert = UnityEngine.Assertions.Assert;
-using BoardElements;
 using System.Linq;
 
 #nullable enable
