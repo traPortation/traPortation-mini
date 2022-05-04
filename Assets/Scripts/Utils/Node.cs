@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BoardElements;
+using Traffic.Node;
+// NOTE: UtilsがTrafficに依存してるのあんまよくないかも
 
 namespace Utils
 {

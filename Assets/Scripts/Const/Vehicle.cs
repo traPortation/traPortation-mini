@@ -2,7 +2,7 @@ namespace Const
 {
     public static class Train
     {
-        public const int Capacity = 4;
+        public const int Capacity = 10;
         public const int Wage = 100;
         public const float StopStationTime = 0.1f;
     }
