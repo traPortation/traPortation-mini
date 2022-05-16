@@ -25,17 +25,21 @@ public class StationManager : MonoBehaviour
     void Update()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 8f;
+        stationIcon.transform.position = mousePosition;
+        Color stationColor = stationIcon.GetComponent<SpriteRenderer>().color;
         //buildModeを切り替えるためのボタンクリックを無視する
         if (this.buttonClicked)
         {
             this.buttonClicked = false;
+            stationIcon.SetActive(false);
         }
         //それ以外の場合はbuildModeを判定し、駅を追加する
         else if ((Mathf.Abs(mousePosition.x - Mathf.Round(mousePosition.x)) < 0.1 || Mathf.Abs(mousePosition.y - Mathf.Round(mousePosition.y)) < 0.1) && this.buildMode)
         {
-            mousePosition.z = 8f;
             stationIcon.SetActive(true);
-            stationIcon.transform.position = mousePosition;
+            stationColor.a = 1f;
+            stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
             if (Input.GetMouseButtonUp(0))
             {
                 GameObject newStation = Instantiate(this.prefab, mousePosition, Quaternion.identity);
@@ -44,7 +48,8 @@ public class StationManager : MonoBehaviour
         }
         else
         {
-            stationIcon.SetActive(false);
+            stationColor.a = 0.5f;
+            stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
         }
     }
 
