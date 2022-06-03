@@ -3,6 +3,7 @@ using Zenject;
 using Traffic;
 using Traffic.Node;
 using Moving;
+using UI;
 
 public class ManagerInstaller : MonoInstaller
 {
@@ -12,6 +13,7 @@ public class ManagerInstaller : MonoInstaller
         Container.Bind<GameManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<StationManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<RailManager>().FromNew().AsSingle().NonLazy();
+        Container.Bind<LineManager>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
 
         // 増えてきたら単独のInstallerに分ける
         Container.BindFactory<List<Station>, int, string, Rail, Rail.Factory>();

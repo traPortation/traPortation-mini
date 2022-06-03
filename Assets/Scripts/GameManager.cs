@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
         this.ManageMoney = new ManageMoney();
 
         // 実行順序の関係でここでboardを渡している
-        this.StationManager.Construct(board);
+        this.StationManager.Construct(board, container);
 
         this.initBoardForTest();
         this.InstantiatePeople();

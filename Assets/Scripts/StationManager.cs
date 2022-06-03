@@ -4,6 +4,7 @@ using UnityEngine;
 using Traffic;
 using Traffic.Node;
 using System.Linq;
+using Zenject;
 
 public class StationManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class StationManager : MonoBehaviour
     [SerializeField] private GameObject stationIcon;
     [SerializeField] private GameObject gameManager;
     Board board;
+    DiContainer container;
 
     // Start is called before the first frame update
     void Start()
@@ -54,9 +56,10 @@ public class StationManager : MonoBehaviour
     }
 
     // TODO: 実行順序の問題が解決したらinjectするようにする
-    public void Construct(Board board)
+    public void Construct(Board board, DiContainer container)
     {
         this.board = board;
+        this.container = container;
     }
 
     public void SetBuildMode()
@@ -84,7 +87,7 @@ public class StationManager : MonoBehaviour
         this.board.AddRoadEdge(nearestNode, node);
         this.board.AddRoadEdge(node, nearestNode);
 
-        GameObject newStation = Instantiate(this.prefab);
+        GameObject newStation = container.InstantiatePrefab(this.prefab);
         newStation.transform.position = vec;
         var station = new Station(node);
 
