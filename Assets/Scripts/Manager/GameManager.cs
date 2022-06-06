@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TraPortation.Const;
+using TraPortation.Game;
 using TraPortation.Moving;
 using TraPortation.Traffic;
 using UnityEngine;
@@ -28,8 +29,8 @@ public class GameManager : MonoBehaviour
     Road.Factory roadFactory;
     // TODO: 消す
     DiContainer container;
-    public bool paused { get; set; } = false;
 #nullable enable
+    public GameStatus status { get; private set; } = GameStatus.Normal;
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +55,7 @@ public class GameManager : MonoBehaviour
         this.ManageMoney = new ManageMoney();
 
         // 実行順序の関係でここでboardを渡している
-        this.StationManager.Construct(board, container);
+        this.StationManager.Construct(this, board, container);
 
         this.initBoardForTest();
         this.InstantiatePeople();
@@ -129,6 +130,10 @@ public class GameManager : MonoBehaviour
     public void ChangePauseStatus()
     {
         pauseButton.sprite = pauseSprite[(int)Time.timeScale];
-        paused = !paused;
+        this.status = this.status switch
+        {
+            GameStatus.Pause => GameStatus.Normal,
+            _ => GameStatus.Pause
+        };
     }
 }

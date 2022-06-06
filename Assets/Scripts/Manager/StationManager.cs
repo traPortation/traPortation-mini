@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TraPortation.Game;
 using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class StationManager : MonoBehaviour
     private List<Station> stations = new List<Station>();
     [SerializeField] private GameObject prefab;
     [SerializeField] private GameObject stationIcon;
-    [SerializeField] private GameObject gameManager;
+    GameManager gameManager;
     Board board;
     DiContainer container;
 
@@ -55,8 +56,7 @@ public class StationManager : MonoBehaviour
         }
     }
 
-    // TODO: 実行順序の問題が解決したらinjectするようにする
-    public void Construct(Board board, DiContainer container)
+    public void Construct(GameManager gameManager, Board board, DiContainer container)
     {
         this.board = board;
         this.container = container;
@@ -66,9 +66,9 @@ public class StationManager : MonoBehaviour
     {
         this.buttonClicked = true;
         this.buildMode = !this.buildMode;
-        if (!gameManager.GetComponent<GameManager>().paused)
+        if (this.gameManager.status != GameStatus.Pause)
         {
-            gameManager.GetComponent<GameManager>().ChangeTimeScale();
+            this.gameManager.ChangeTimeScale();
         }
         this.board.Test();
     }
