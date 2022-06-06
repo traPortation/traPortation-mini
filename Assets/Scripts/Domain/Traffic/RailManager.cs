@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TraPortation.Moving;
 using Zenject;
-using Moving;
 
 public class RailManager
 {

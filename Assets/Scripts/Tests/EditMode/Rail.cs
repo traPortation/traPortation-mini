@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using NUnit.Framework;
-using UnityEngine;
-using Assert = UnityEngine.Assertions.Assert;
-using Zenject;
 using Moq;
-using Moving;
-using Moving.Section.Train;
+using NUnit.Framework;
+using TraPortation.Moving;
+using TraPortation.Moving.Section.Train;
+using UnityEngine;
+using Zenject;
+using Assert = UnityEngine.Assertions.Assert;
 
 namespace Tests
 {

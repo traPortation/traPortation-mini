@@ -1,4 +1,4 @@
-namespace Const
+namespace TraPortation.Const
 {
     /// <summary>
     /// X座標に関する定数

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Traffic.Edge;
+using TraPortation.Traffic.Edge;
 
-namespace Traffic.Node
+namespace TraPortation.Traffic.Node
 {
     /// <summary>
     /// 交差点

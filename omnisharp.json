@@ -1,0 +1,9 @@
+{
+  "FormattingOptions": {
+    "OrganizeImports": true
+  },
+  "RoslynExtensionsOptions": {
+    "EnableAnalyzersSupport": true,
+    "LocationPaths": ["./NuGet"]
+  }
+}

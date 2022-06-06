@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Traffic.Node;
+using TraPortation.Traffic.Node;
 
 #nullable enable
 
-namespace Moving
+namespace TraPortation.Moving
 {
     public class Path
     {

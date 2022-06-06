@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Event
+namespace TraPortation.Event
 {
     public class StationClickedEvent
     {

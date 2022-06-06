@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Zenject;
-using Moving;
-using Moving.Section.Person;
-using Moving.Section.Train;
+using TraPortation.Moving;
+using TraPortation.Moving.Section.Person;
+using TraPortation.Moving.Section.Train;
 
 public class PathInstaller : Installer<PathInstaller>
 {

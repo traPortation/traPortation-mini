@@ -1,4 +1,4 @@
-namespace Event.Train
+namespace TraPortation.Event.Train
 {
     /// <summary>
     /// 電車が駅に着いたときに駅ごとに発行されるイベント 

@@ -1,4 +1,4 @@
-namespace Const
+namespace TraPortation.Const
 {
     public static class Train
     {

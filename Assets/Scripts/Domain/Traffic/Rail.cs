@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using TraPortation.Moving;
+using TraPortation.Moving.Section.Train;
+using UnityEngine;
 using Zenject;
-using Moving;
-using Moving.Section.Train;
 
 public class Rail
 {
@@ -46,7 +46,7 @@ public class Rail
         this.trains.Add(train);
 
         var sections = new List<ISection>();
-        sections.Add(factory.Create(this.stations, train.ID, Const.Train.StopStationTime));
+        sections.Add(factory.Create(this.stations, train.ID, TraPortation.Const.Train.StopStationTime));
         var path = new Path(sections, this.stations.Last().Node);
 
         train.Initialize(path);

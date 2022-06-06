@@ -1,5 +1,5 @@
 ﻿using System;
-using Const;
+using TraPortation.Const;
 
 public class ManageMoney
 {
@@ -9,7 +9,8 @@ public class ManageMoney
     // private static const int maxMoney = 999999999; // 上限
 
     // 現在の所持金を返すだけの関数
-    public int money { 
+    public int money
+    {
         get => this.nowMoney;
     }
 

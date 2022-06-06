@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using TraPortation.Const;
+using TraPortation.Traffic.Edge;
+using TraPortation.Traffic.Node;
+using UnityEngine;
 using Zenject;
-using Const;
-using Traffic.Edge;
-using Traffic.Node;
 
 #nullable enable
 
-namespace Traffic
+namespace TraPortation.Traffic
 {
     /// <summary>
     /// 盤面 頂点 (Node) と辺 (Edge) によって構成される

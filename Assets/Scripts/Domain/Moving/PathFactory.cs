@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+using TraPortation.Moving.Section.Person;
+using TraPortation.Traffic.Node;
 using Zenject;
-using Traffic.Node;
-using Moving.Section.Person;
 
 #nullable enable
 
-namespace Moving
+namespace TraPortation.Moving
 {
     public class PathFactory
     {

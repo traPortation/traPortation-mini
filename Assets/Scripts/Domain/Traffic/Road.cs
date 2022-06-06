@@ -1,9 +1,9 @@
+using TraPortation.Traffic.Node;
+using UI;
 using UnityEngine;
 using Zenject;
-using Traffic.Node;
-using UI;
 
-namespace Traffic
+namespace TraPortation.Traffic
 {
     public class Road
     {

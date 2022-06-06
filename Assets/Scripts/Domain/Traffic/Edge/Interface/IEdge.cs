@@ -1,6 +1,6 @@
-﻿using Traffic.Node;
+﻿using TraPortation.Traffic.Node;
 
-namespace Traffic.Edge
+namespace TraPortation.Traffic.Edge
 {
     /// <summary>
     /// 辺

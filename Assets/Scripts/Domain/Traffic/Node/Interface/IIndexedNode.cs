@@ -1,4 +1,4 @@
-﻿namespace Traffic.Node
+﻿namespace TraPortation.Traffic.Node
 {
     /// <summary>
     /// インデックス付き頂点 (駅や交差点など)

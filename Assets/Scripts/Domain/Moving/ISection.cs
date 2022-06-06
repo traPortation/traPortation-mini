@@ -1,6 +1,6 @@
 using System;
 
-namespace Moving
+namespace TraPortation.Moving
 {
     public interface ISection : IDisposable
     {

@@ -3,7 +3,7 @@ using System.Linq;
 
 #nullable enable
 
-namespace Moving.Section.Person
+namespace TraPortation.Moving.Section.Person
 {
     public class WalkSection : ISection
     {

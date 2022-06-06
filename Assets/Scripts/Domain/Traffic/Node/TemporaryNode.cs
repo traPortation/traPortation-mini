@@ -1,4 +1,4 @@
-namespace Traffic.Node
+namespace TraPortation.Traffic.Node
 {
     public class TemporaryNode : INode
     {

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Traffic.Edge;
+using TraPortation.Traffic.Edge;
 
 #nullable enable
 
-namespace Traffic.Node
+namespace TraPortation.Traffic.Node
 {
     /// <summary>
     /// 駅付きのNode
