@@ -6,7 +6,7 @@ using TraPortation.Game;
 using UnityEngine;
 using Zenject;
 
-namespace UI
+namespace TraPortation.UI
 {
     public class LineManager : MonoBehaviour
     {

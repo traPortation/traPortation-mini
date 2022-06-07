@@ -19,6 +19,7 @@ namespace TraPortation.UI.Button
 
         void IPointerClickHandler.OnPointerClick(PointerEventData e)
         {
+            // TODO: 修正
             this.sManager.SetBuildMode();
         }
     }

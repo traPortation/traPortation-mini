@@ -17,7 +17,11 @@ namespace TraPortation.UI.Button
 
         void IPointerClickHandler.OnPointerClick(PointerEventData e)
         {
-            this.manager.SetStatus(GameStatus.SetRail);
+
+            this.manager.SetStatus(this.manager.Status switch {
+                GameStatus.SetRail => GameStatus.Normal,
+                _ => GameStatus.SetRail,
+            });
         }
     }
 }

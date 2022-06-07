@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace UI
+namespace TraPortation.UI
 {
     // TODO: 名前を変える
     public class Clickable : MonoBehaviour, IPointerClickHandler

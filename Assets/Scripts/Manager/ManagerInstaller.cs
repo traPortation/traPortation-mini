@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using TraPortation.Moving;
 using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
-using UI;
+using TraPortation.UI;
 using Zenject;
 
 public class ManagerInstaller : MonoInstaller

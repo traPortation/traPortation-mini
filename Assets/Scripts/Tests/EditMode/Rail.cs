@@ -3,6 +3,7 @@ using Moq;
 using NUnit.Framework;
 using TraPortation.Moving;
 using TraPortation.Moving.Section.Train;
+using TraPortation.UI;
 using UnityEngine;
 using Zenject;
 using Assert = UnityEngine.Assertions.Assert;
@@ -20,7 +21,7 @@ namespace Tests
             Container.BindFactory<List<Station>, int, string, Rail, Rail.Factory>();
             Container.BindFactory<IReadOnlyList<Station>, int, float, TrainSection, TrainSection.Factory>();
 
-            var lineMock = new Mock<UI.ILine>();
+            var lineMock = new Mock<ILine>();
             Container.BindInstance(lineMock.Object);
 
             Container.Inject(this);

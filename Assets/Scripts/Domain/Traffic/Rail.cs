@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TraPortation.Moving;
 using TraPortation.Moving.Section.Train;
+using TraPortation.UI;
 using UnityEngine;
 using Zenject;
 
@@ -17,10 +18,10 @@ public class Rail
 
     List<Train> trains { get; }
     public IReadOnlyList<Train> Trains => this.trains;
-    UI.ILine line;
+    ILine line;
     TrainSection.Factory factory;
 
-    public Rail(List<Station> stations, int id, string name, UI.ILine line, TrainSection.Factory factory)
+    public Rail(List<Station> stations, int id, string name, ILine line, TrainSection.Factory factory)
     {
         this.stations = stations;
         this.ID = id;

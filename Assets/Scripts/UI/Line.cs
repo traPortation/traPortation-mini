@@ -7,25 +7,22 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace UI
+namespace TraPortation.UI
 {
     // TODO: RoadViewとかにする
 
     /// <summary>
     /// UI上で直線を表示する
     /// </summary>
-    public class Line : MonoBehaviour, ILine, IPointerClickHandler
+    public class Line : MonoBehaviour, ILine
     {
         LineRenderer lineRenderer;
         BoxCollider2D boxCollider;
-        IPublisher<ClickTarget, ClickedEvent> publisher;
 
         // Startに書くと実行順序の問題でSetLineが先に実行されてしまうためここで初期化している
         [Inject]
-        public void Construct(IPublisher<ClickTarget, ClickedEvent> publisher)
+        public void Construct()
         {
-            this.publisher = publisher;
-
             this.lineRenderer = this.gameObject.AddComponent<LineRenderer>();
             this.lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
 
@@ -60,11 +57,6 @@ namespace UI
         {
             this.lineRenderer.startColor = color;
             this.lineRenderer.endColor = color;
-        }
-
-        void IPointerClickHandler.OnPointerClick(PointerEventData e)
-        {
-            this.publisher.Publish(ClickTarget.Road, new ClickedEvent(e.pointerCurrentRaycast.worldPosition));
         }
     }
 }
