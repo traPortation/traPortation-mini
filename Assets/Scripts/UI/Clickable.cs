@@ -9,10 +9,10 @@ namespace UI
     // TODO: 名前を変える
     public class Clickable : MonoBehaviour, IPointerClickHandler
     {
-        IPublisher<StationClickedEvent> publisher;
+        IPublisher<ClickTarget, ClickedEvent> publisher;
 
         [Inject]
-        public void Construct(IPublisher<StationClickedEvent> publisher)
+        public void Construct(IPublisher<ClickTarget, ClickedEvent> publisher)
         {
             this.publisher = publisher;
         }
@@ -20,7 +20,7 @@ namespace UI
         // NOTE: クリックしないでも発火してよさそう (スマホゲーなので)
         public void OnPointerClick(PointerEventData e)
         {
-            this.publisher.Publish(new StationClickedEvent(e.pointerCurrentRaycast.worldPosition));
+            this.publisher.Publish(ClickTarget.Station, new ClickedEvent(e.pointerCurrentRaycast.worldPosition));
         }
     }
 }

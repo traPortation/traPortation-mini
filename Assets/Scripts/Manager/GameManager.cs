@@ -91,6 +91,8 @@ public class GameManager : MonoBehaviour
         }).ToList();
 
         // 道を追加
+        roadFactory.Create(nodes[0][0], nodes[1][1]);
+
         foreach (var x in Enumerable.Range(0, (int)X.Max + 1))
         {
             foreach (var y in Enumerable.Range(0, (int)Y.Max + 1))

@@ -12,10 +12,10 @@ namespace UI
         ILine mainLine;
         ILine currentLine;
         List<Vector3> positions = new List<Vector3>();
-        ISubscriber<StationClickedEvent> stationSubscriber;
+        ISubscriber<ClickTarget, ClickedEvent> stationSubscriber;
 
         [Inject]
-        public void Construct(ILine mainLine, ILine currentLine, ISubscriber<StationClickedEvent> stationSubscriber)
+        public void Construct(ILine mainLine, ILine currentLine, ISubscriber<ClickTarget, ClickedEvent> stationSubscriber)
         {
             this.mainLine = mainLine;
             this.currentLine = currentLine;
@@ -24,7 +24,7 @@ namespace UI
             this.mainLine.SetColor(Color.blue);
             this.currentLine.SetColor(Color.blue);
 
-            this.stationSubscriber.Subscribe(e =>
+            this.stationSubscriber.Subscribe(ClickTarget.Station, e =>
             {
                 Debug.Log("subscribed");
                 Debug.Log(e.Position.x);
