@@ -1,18 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TraPortation.Game;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     private GameManager manager;
-    public Text timeLimitText;
     private float timeLimit = 300f;
-    public Text moneyText;
-    private int money;
-    public Text scoreText;
     private int score = 0;
+    private int money;
+    public Text timeLimitText;
+    public Text moneyText;
+    public Text scoreText;
+    public Text statusText;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,16 @@ public class UIManager : MonoBehaviour
         timeLimitText.text = string.Format("{0:#.#} 秒", timeLimit);
         moneyText.text = string.Format("{0} 円", money);
         scoreText.text = string.Format("{0} 点", score);
+        statusText.text = manager.Status switch
+        {
+            GameStatus.Normal => "Normal",
+            GameStatus.Pause => "Pause",
+            GameStatus.SetTrain => "SetTrain",
+            GameStatus.SetRail => "SetRail",
+            GameStatus.SetStation => "SetStation",
+            _ => throw new InvalidOperationException(),
+        };
+
     }
 
 }
