@@ -19,7 +19,6 @@ namespace TraPortation.UI.Button
 
         void IPointerClickHandler.OnPointerClick(PointerEventData e)
         {
-            this.manager.SetStatus(GameStatus.SetStation);
             this.sManager.SetBuildMode();
         }
     }

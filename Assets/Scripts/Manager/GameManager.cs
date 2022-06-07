@@ -143,5 +143,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Status Changed");
         this.Status = status;
+
+        Time.timeScale = status switch
+        {
+            GameStatus.Normal => 1,
+            _ => 0
+        };
     }
 }

@@ -11,9 +11,7 @@ using Zenject;
 
 public class StationManager : MonoBehaviour
 {
-    private bool buildMode;
-    private bool buttonClicked;
-    private List<Station> stations = new List<Station>();
+    List<Station> stations = new List<Station>();
     [SerializeField] private GameObject prefab;
     [SerializeField] private GameObject stationIcon;
     GameManager gameManager;
@@ -29,17 +27,19 @@ public class StationManager : MonoBehaviour
     // TODO: 別のクラスに分ける
     void Update()
     {
+        if (this.gameManager.Status != GameStatus.SetStation)
+        {
+            return;
+        }
+
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 8f;
         stationIcon.transform.position = mousePosition;
         Color stationColor = stationIcon.GetComponent<SpriteRenderer>().color;
-        //buildModeを切り替えるためのボタンクリックを無視する
-        if (this.buttonClicked)
-        {
-            this.buttonClicked = false;
-        }
+
         //それ以外の場合はbuildModeを判定し、駅を追加する
-        else if ((Mathf.Abs(mousePosition.x - Mathf.Round(mousePosition.x)) < 0.1 || Mathf.Abs(mousePosition.y - Mathf.Round(mousePosition.y)) < 0.1) && this.buildMode)
+        // TODO: 道の形を考慮
+        if ((Mathf.Abs(mousePosition.x - Mathf.Round(mousePosition.x)) < 0.1 || Mathf.Abs(mousePosition.y - Mathf.Round(mousePosition.y)) < 0.1))
         {
             stationColor.a = 1f;
             stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
@@ -63,6 +63,11 @@ public class StationManager : MonoBehaviour
     {
         subscriber.Subscribe(ClickTarget.Road, e =>
         {
+            if (this.gameManager.Status != GameStatus.SetStation)
+            {
+                return;
+            }
+
             var pos = new Vector3(e.Position.x, e.Position.y, 8f);
 
             GameObject newStation = Instantiate(this.prefab, pos, Quaternion.identity);
@@ -72,14 +77,13 @@ public class StationManager : MonoBehaviour
 
     public void SetBuildMode()
     {
-        this.buttonClicked = true;
-        this.buildMode = !this.buildMode;
-        if (this.gameManager.Status != GameStatus.Pause)
+        this.gameManager.SetStatus(this.gameManager.Status switch
         {
-            this.gameManager.ChangeTimeScale();
-        }
+            GameStatus.SetStation => GameStatus.Normal,
+            _ => GameStatus.SetStation
+        });
 
-        stationIcon.SetActive(this.buildMode);
+        stationIcon.SetActive(this.gameManager.Status == GameStatus.SetStation);
     }
 
     /// <summary>
