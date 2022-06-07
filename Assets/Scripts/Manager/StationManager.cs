@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using MessagePipe;
+using TraPortation.Event;
 using TraPortation.Game;
 using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
@@ -35,19 +37,12 @@ public class StationManager : MonoBehaviour
         if (this.buttonClicked)
         {
             this.buttonClicked = false;
-            stationIcon.SetActive(false);
         }
         //それ以外の場合はbuildModeを判定し、駅を追加する
         else if ((Mathf.Abs(mousePosition.x - Mathf.Round(mousePosition.x)) < 0.1 || Mathf.Abs(mousePosition.y - Mathf.Round(mousePosition.y)) < 0.1) && this.buildMode)
         {
-            stationIcon.SetActive(true);
             stationColor.a = 1f;
             stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
-            if (Input.GetMouseButtonUp(0))
-            {
-                GameObject newStation = Instantiate(this.prefab, mousePosition, Quaternion.identity);
-                stations.Add(newStation.GetComponent<Station>());
-            }
         }
         else
         {
@@ -58,8 +53,21 @@ public class StationManager : MonoBehaviour
 
     public void Construct(GameManager gameManager, Board board, DiContainer container)
     {
+        this.gameManager = gameManager;
         this.board = board;
         this.container = container;
+    }
+
+    [Inject]
+    public void Construct2(ISubscriber<ClickTarget, ClickedEvent> subscriber)
+    {
+        subscriber.Subscribe(ClickTarget.Road, e =>
+        {
+            var pos = new Vector3(e.Position.x, e.Position.y, 8f);
+
+            GameObject newStation = Instantiate(this.prefab, pos, Quaternion.identity);
+            this.AddStation(pos);
+        });
     }
 
     public void SetBuildMode()
@@ -70,6 +78,8 @@ public class StationManager : MonoBehaviour
         {
             this.gameManager.ChangeTimeScale();
         }
+
+        stationIcon.SetActive(this.buildMode);
     }
 
     /// <summary>
