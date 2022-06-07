@@ -16,32 +16,17 @@ public class GameManager : MonoBehaviour
 
 #nullable disable
     Board Board;
-    [SerializeField] private GameObject person;
-    [SerializeField] private GameObject building;
-    [SerializeField] private GameObject train;
-
-    public ManageMoney ManageMoney { get; private set; }
-    [SerializeField] private Image pauseButton;
-    [SerializeField] private Sprite[] pauseSprite = new Sprite[2];
-
+    [SerializeField] GameObject person;
+    [SerializeField] GameObject building;
+    [SerializeField] GameObject train;
     StationManager StationManager;
     RailManager railManager;
     Road.Factory roadFactory;
     // TODO: 消す
     DiContainer container;
+    public ManageMoney ManageMoney { get; private set; }
 #nullable enable
     public GameStatus Status { get; private set; } = GameStatus.Normal;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     [Inject]
     public void Construct(Board board, DiContainer container, StationManager stationManager, RailManager railManager, Road.Factory roadFactory)
@@ -122,21 +107,6 @@ public class GameManager : MonoBehaviour
         var rail = this.railManager.AddRail(stations);
 
         rail.AddTrain(train);
-    }
-
-    public void ChangeTimeScale()
-    {
-        Time.timeScale = 1 - Time.timeScale;
-    }
-
-    public void ChangePauseStatus()
-    {
-        pauseButton.sprite = pauseSprite[(int)Time.timeScale];
-        this.Status = this.Status switch
-        {
-            GameStatus.Pause => GameStatus.Normal,
-            _ => GameStatus.Pause
-        };
     }
 
     public void SetStatus(GameStatus status)
