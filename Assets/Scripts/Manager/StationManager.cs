@@ -66,7 +66,7 @@ public class StationManager : MonoBehaviour
     {
         this.buttonClicked = true;
         this.buildMode = !this.buildMode;
-        if (this.gameManager.status != GameStatus.Pause)
+        if (this.gameManager.Status != GameStatus.Pause)
         {
             this.gameManager.ChangeTimeScale();
         }

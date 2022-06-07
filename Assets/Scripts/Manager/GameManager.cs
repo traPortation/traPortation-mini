@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     // TODO: 消す
     DiContainer container;
 #nullable enable
-    public GameStatus status { get; private set; } = GameStatus.Normal;
+    public GameStatus Status { get; private set; } = GameStatus.Normal;
 
     // Start is called before the first frame update
     void Start()
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
     public void ChangePauseStatus()
     {
         pauseButton.sprite = pauseSprite[(int)Time.timeScale];
-        this.status = this.status switch
+        this.Status = this.Status switch
         {
             GameStatus.Pause => GameStatus.Normal,
             _ => GameStatus.Pause
@@ -142,6 +142,6 @@ public class GameManager : MonoBehaviour
     public void SetStatus(GameStatus status)
     {
         Debug.Log("Status Changed");
-        this.status = status;
+        this.Status = status;
     }
 }

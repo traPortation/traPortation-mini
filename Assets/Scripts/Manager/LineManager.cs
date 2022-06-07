@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MessagePipe;
 using TraPortation.Event;
+using TraPortation.Game;
 using UnityEngine;
 using Zenject;
 
@@ -9,14 +10,16 @@ namespace UI
 {
     public class LineManager : MonoBehaviour
     {
+        GameManager manager;
         ILine mainLine;
         ILine currentLine;
         List<Vector3> positions = new List<Vector3>();
         ISubscriber<ClickTarget, ClickedEvent> stationSubscriber;
 
         [Inject]
-        public void Construct(ILine mainLine, ILine currentLine, ISubscriber<ClickTarget, ClickedEvent> stationSubscriber)
+        public void Construct(GameManager manager, ILine mainLine, ILine currentLine, ISubscriber<ClickTarget, ClickedEvent> stationSubscriber)
         {
+            this.manager = manager;
             this.mainLine = mainLine;
             this.currentLine = currentLine;
             this.stationSubscriber = stationSubscriber;
@@ -26,6 +29,11 @@ namespace UI
 
             this.stationSubscriber.Subscribe(ClickTarget.Station, e =>
             {
+                if (this.manager.Status != GameStatus.SetRail)
+                {
+                    return;
+                }
+
                 Debug.Log("subscribed");
                 Debug.Log(e.Position.x);
                 this.positions.Add(new Vector3(e.Position.x, e.Position.y, 9));
@@ -35,6 +43,10 @@ namespace UI
 
         void Update()
         {
+            if (this.manager.Status != GameStatus.SetRail)
+            {
+                return;
+            }
             if (this.positions.Count != 0)
             {
                 var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
