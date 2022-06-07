@@ -70,7 +70,6 @@ public class StationManager : MonoBehaviour
         {
             this.gameManager.ChangeTimeScale();
         }
-        this.board.Test();
     }
 
     /// <summary>

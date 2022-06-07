@@ -138,4 +138,10 @@ public class GameManager : MonoBehaviour
             _ => GameStatus.Pause
         };
     }
+
+    public void SetStatus(GameStatus status)
+    {
+        Debug.Log("Status Changed");
+        this.status = status;
+    }
 }
