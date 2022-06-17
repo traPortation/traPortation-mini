@@ -1003,7 +1003,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: SetRail
 --- !u!222 &1006193715
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1611,7 +1611,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -3195825801403236080, guid: aa0c78fefd4b98941a735e7add9f2f69, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: aa0c78fefd4b98941a735e7add9f2f69, type: 3}
 --- !u!1 &1679074807
 GameObject:

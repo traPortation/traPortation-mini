@@ -1,16 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using MessagePipe;
-using TraPortation.Event;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Zenject;
 
 namespace TraPortation.UI
 {
-    // TODO: RoadViewとかにする
-
     /// <summary>
     /// UI上で直線を表示する
     /// </summary>
@@ -37,7 +32,8 @@ namespace TraPortation.UI
             this.lineRenderer.positionCount = positions.Count();
             this.lineRenderer.SetPositions(positions);
 
-            if (positions.Count() == 0) {
+            if (positions.Count() == 0)
+            {
                 return;
             }
 
