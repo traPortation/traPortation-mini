@@ -37,6 +37,10 @@ namespace TraPortation.UI
             this.lineRenderer.positionCount = positions.Count();
             this.lineRenderer.SetPositions(positions);
 
+            if (positions.Count() == 0) {
+                return;
+            }
+
             // TODO: Constに置く / メソッドから変更可能にする
             this.lineRenderer.startWidth = 0.1f;
             this.lineRenderer.endWidth = 0.1f;

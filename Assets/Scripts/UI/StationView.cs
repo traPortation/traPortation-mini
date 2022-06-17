@@ -6,10 +6,10 @@ using Zenject;
 
 namespace TraPortation.UI
 {
-    // TODO: 名前を変える
-    public class Clickable : MonoBehaviour, IPointerClickHandler
+    public class StationView : MonoBehaviour, IPointerClickHandler
     {
         IPublisher<ClickTarget, ClickedEvent> publisher;
+        Station station;
 
         [Inject]
         public void Construct(IPublisher<ClickTarget, ClickedEvent> publisher)
@@ -17,10 +17,15 @@ namespace TraPortation.UI
             this.publisher = publisher;
         }
 
+        public void SetStation(Station station)
+        {
+            this.station = station;
+        }
+
         // NOTE: クリックしないでも発火してよさそう (スマホゲーなので)
         public void OnPointerClick(PointerEventData e)
         {
-            this.publisher.Publish(ClickTarget.Station, new ClickedEvent(e.pointerCurrentRaycast.worldPosition));
+            this.publisher.Publish(ClickTarget.Station, new ClickedEvent(new Vector2(this.transform.position.x, this.transform.position.y)));
         }
     }
 }

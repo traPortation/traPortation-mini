@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MessagePipe;
@@ -34,8 +35,6 @@ namespace TraPortation.UI
                     return;
                 }
 
-                Debug.Log("subscribed");
-                Debug.Log(e.Position.x);
                 this.positions.Add(new Vector3(e.Position.x, e.Position.y, 9));
                 this.mainLine.SetLine(this.positions.ToArray());
             });
@@ -45,6 +44,13 @@ namespace TraPortation.UI
         {
             if (this.manager.Status != GameStatus.SetRail)
             {
+                if (this.positions.Count != 0)
+                {
+                    this.positions = new List<Vector3>();
+                    this.mainLine.SetLine(Array.Empty<Vector3>());
+                    this.currentLine.SetLine(Array.Empty<Vector3>());
+                }
+
                 return;
             }
             if (this.positions.Count != 0)
