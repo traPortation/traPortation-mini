@@ -41,7 +41,7 @@ jobs:
 
           # Unity プロジェクトのバージョンを指定する
           # ProjectSettings/ProjectVersion.txt に記載されているバージョンを入力すれば OK
-          unityVersion: 2020.3.21f1
+          unityVersion: 2021.3.41f1
           customParameters: -debugCodeOptimization -enableCodeCoverage -coverageResultsPath ./coverage-results -coverageOptions generateAdditionalMetrics;assemblyFilters:+Scripts
 
           # 実行したいテストの種類を指定できる
