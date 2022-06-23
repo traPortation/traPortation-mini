@@ -12,15 +12,18 @@ namespace TraPortation.UI
     public class LineManager : MonoBehaviour
     {
         GameManager manager;
+        RailManager railManager;
         ILine mainLine;
         ILine currentLine;
         List<Vector3> positions = new List<Vector3>();
-        ISubscriber<ClickTarget, ClickedEvent> stationSubscriber;
+        List<Station> stations = new List<Station>();
+        ISubscriber<StationClickedEvent> stationSubscriber;
 
         [Inject]
-        public void Construct(GameManager manager, ILine mainLine, ILine currentLine, ISubscriber<ClickTarget, ClickedEvent> stationSubscriber)
+        public void Construct(GameManager manager, ILine mainLine, ILine currentLine, RailManager railManager, ISubscriber<StationClickedEvent> stationSubscriber)
         {
             this.manager = manager;
+            this.railManager = railManager;
             this.mainLine = mainLine;
             this.currentLine = currentLine;
             this.stationSubscriber = stationSubscriber;
@@ -28,35 +31,38 @@ namespace TraPortation.UI
             this.mainLine.SetColor(Color.blue);
             this.currentLine.SetColor(Color.blue);
 
-            this.stationSubscriber.Subscribe(ClickTarget.Station, e =>
+            this.stationSubscriber.Subscribe(e =>
             {
-                if (this.manager.Status != GameStatus.SetRail)
+                if (this.manager.Status == GameStatus.SetRail)
                 {
-                    return;
+                    if (e.Station is null) {
+                        return;
+                    }
+                    this.positions.Add(new Vector3(e.Position.x, e.Position.y, 9));
+                    this.stations.Add(e.Station);
+                    this.mainLine.SetLine(this.positions.ToArray());
                 }
-
-                this.positions.Add(new Vector3(e.Position.x, e.Position.y, 9));
-                this.mainLine.SetLine(this.positions.ToArray());
             });
         }
 
         void Update()
         {
-            if (this.manager.Status != GameStatus.SetRail)
+            if (this.positions.Count == 0)
             {
-                if (this.positions.Count != 0)
-                {
-                    this.positions = new List<Vector3>();
-                    this.mainLine.SetLine(Array.Empty<Vector3>());
-                    this.currentLine.SetLine(Array.Empty<Vector3>());
-                }
-
                 return;
             }
-            if (this.positions.Count != 0)
+
+            if (this.manager.Status != GameStatus.SetRail)
+            {
+                this.railManager.AddRail(this.stations);
+
+                this.positions = new List<Vector3>();
+                this.mainLine.SetLine(Array.Empty<Vector3>());
+                this.currentLine.SetLine(Array.Empty<Vector3>());
+            }
+            else
             {
                 var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
                 this.currentLine.SetLine(new Vector3[2] { this.positions.Last(), new Vector3(mousePos.x, mousePos.y, 9) });
             }
         }

@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: 0
-    y: 43
-    width: 1280
-    height: 709
+    x: -1536
+    y: 43.2
+    width: 1536
+    height: 772.8
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Inspector
   m_RootView: {fileID: 8}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -39,10 +39,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 603
+    x: 719.2
     y: 0
-    width: 303
-    height: 265
+    width: 359.2
+    height: 268.4
   m_MinSize: {x: 102, y: 121}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 14}
@@ -68,13 +68,13 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 394
-    width: 906
-    height: 265
+    y: 454.4
+    width: 1078.4
+    height: 268.4
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 254
+  controlID: 123
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -94,12 +94,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
-    width: 1280
-    height: 659
+    width: 1536
+    height: 722.8
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 130
+  controlID: 117
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -115,10 +115,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 906
+    x: 1078.4
     y: 0
-    width: 374
-    height: 659
+    width: 457.59998
+    height: 722.8
   m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 17}
@@ -143,8 +143,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 223
-    height: 394
+    width: 335.2
+    height: 454.4
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 18}
@@ -169,8 +169,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 603
-    height: 265
+    width: 719.2
+    height: 268.4
   m_MinSize: {x: 231, y: 271}
   m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 16}
@@ -199,8 +199,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1280
-    height: 709
+    width: 1536
+    height: 772.8
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
@@ -224,7 +224,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1280
+    width: 1536
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -245,8 +245,8 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 689
-    width: 1280
+    y: 752.8
+    width: 1536
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -269,12 +269,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 906
-    height: 659
+    width: 1078.4
+    height: 722.8
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 107
+  controlID: 41
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -294,12 +294,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 906
-    height: 394
+    width: 1078.4
+    height: 454.4
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 108
+  controlID: 42
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -315,10 +315,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 223
+    x: 335.2
     y: 0
-    width: 683
-    height: 394
+    width: 743.2
+    height: 454.4
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 20}
@@ -348,20 +348,20 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 603
-    y: 467
-    width: 301
-    height: 244
+    x: -816.8
+    y: 528
+    width: 357.2
+    height: 247.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_Spl:
-    ID: 135
+    ID: 149
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
-    - 130
+    - 132.8
     - 44
     relativeSizes:
     - 0.75
@@ -372,7 +372,7 @@ MonoBehaviour:
     maxSizes:
     - 0
     - 0
-    lastTotalSize: 174
+    lastTotalSize: 176.8
     splitSize: 6
     xOffset: 0
     m_Version: 1
@@ -435,456 +435,6 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1026
-      uniqueId: '[EditModeTest.dll][suite]'
-      name: EditModeTest.dll
-      fullName: C:/Users/K.Adachi/Documents/GitHub/traPortation-mini/Library/ScriptAssemblies/EditModeTest.dll
-      resultStatus: 1
-      duration: 0.6160655
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1000
-      parentUniqueId: '[traPortation-mini][suite]'
-    - id: 1027
-      uniqueId: EditModeTest.dll/[EditModeTest][Tests][suite]
-      name: Tests
-      fullName: Tests
-      resultStatus: 1
-      duration: 0.6016744
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1026
-      parentUniqueId: '[EditModeTest.dll][suite]'
-    - id: 1001
-      uniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.BoardTest][suite]
-      name: BoardTest
-      fullName: Tests.BoardTest
-      resultStatus: 1
-      duration: 0.0421807
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1027
-      parentUniqueId: EditModeTest.dll/[EditModeTest][Tests][suite]
-    - id: 1004
-      uniqueId: EditModeTest.dll/Tests/BoardTest/[EditModeTest][Tests.BoardTest.AddIntersectionNodeTest]
-      name: AddIntersectionNodeTest
-      fullName: Tests.BoardTest.AddIntersectionNodeTest
-      resultStatus: 1
-      duration: 0.0120112
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.BoardTest][suite]
-    - id: 1003
-      uniqueId: EditModeTest.dll/Tests/BoardTest/[EditModeTest][Tests.BoardTest.AddStationNodeTest]
-      name: AddStationNodeTest
-      fullName: Tests.BoardTest.AddStationNodeTest
-      resultStatus: 1
-      duration: 0.0006282
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.BoardTest][suite]
-    - id: 1005
-      uniqueId: EditModeTest.dll/Tests/BoardTest/[EditModeTest][Tests.BoardTest.AddVehicleEdgeTest]
-      name: AddVehicleEdgeTest
-      fullName: Tests.BoardTest.AddVehicleEdgeTest
-      resultStatus: 1
-      duration: 0.0016079
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.BoardTest][suite]
-    - id: 1006
-      uniqueId: EditModeTest.dll/Tests/BoardTest/[EditModeTest][Tests.BoardTest.GetNearestNodeTest]
-      name: GetNearestNodeTest
-      fullName: Tests.BoardTest.GetNearestNodeTest
-      resultStatus: 1
-      duration: 0.0031667
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.BoardTest][suite]
-    - id: 1002
-      uniqueId: EditModeTest.dll/Tests/BoardTest/[EditModeTest][Tests.BoardTest.InitializeTest]
-      name: InitializeTest
-      fullName: Tests.BoardTest.InitializeTest
-      resultStatus: 1
-      duration: 0.000198
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.BoardTest][suite]
-    - id: 1007
-      uniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.Example][suite]
-      name: Example
-      fullName: Tests.Example
-      resultStatus: 1
-      duration: 0.0137142
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1027
-      parentUniqueId: EditModeTest.dll/[EditModeTest][Tests][suite]
-    - id: 1008
-      uniqueId: EditModeTest.dll/Tests/Example/[EditModeTest][Tests.Example.ExampleTest]
-      name: ExampleTest
-      fullName: Tests.Example.ExampleTest
-      resultStatus: 1
-      duration: 0.004427
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1007
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.Example][suite]
-    - id: 1024
-      uniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.LinkedListTest][suite]
-      name: LinkedListTest
-      fullName: Tests.LinkedListTest
-      resultStatus: 1
-      duration: 0.0186742
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1027
-      parentUniqueId: EditModeTest.dll/[EditModeTest][Tests][suite]
-    - id: 1025
-      uniqueId: EditModeTest.dll/Tests/LinkedListTest/[EditModeTest][Tests.LinkedListTest.DeletableForEachTest]
-      name: DeletableForEachTest
-      fullName: Tests.LinkedListTest.DeletableForEachTest
-      resultStatus: 1
-      duration: 0.0109686
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1024
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.LinkedListTest][suite]
-    - id: 1022
-      uniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.RailTest][suite]
-      name: RailTest
-      fullName: Tests.RailTest
-      resultStatus: 1
-      duration: 0.1363379
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1027
-      parentUniqueId: EditModeTest.dll/[EditModeTest][Tests][suite]
-    - id: 1023
-      uniqueId: EditModeTest.dll/Tests/RailTest/[EditModeTest][Tests.RailTest.FactoryTest]
-      name: FactoryTest
-      fullName: Tests.RailTest.FactoryTest
-      resultStatus: 1
-      duration: 0.1286822
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1022
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.RailTest][suite]
-    - id: 1009
-      uniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.TrainSectionTest][suite]
-      name: TrainSectionTest
-      fullName: Tests.TrainSectionTest
-      resultStatus: 1
-      duration: 0.3608832
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1027
-      parentUniqueId: EditModeTest.dll/[EditModeTest][Tests][suite]
-    - id: 1011
-      uniqueId: EditModeTest.dll/Tests/TrainSectionTest/[EditModeTest][Tests.TrainSectionTest.MoveTest]
-      name: MoveTest
-      fullName: Tests.TrainSectionTest.MoveTest
-      resultStatus: 1
-      duration: 0.3161277
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1009
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.TrainSectionTest][suite]
-    - id: 1010
-      uniqueId: EditModeTest.dll/Tests/TrainSectionTest/[EditModeTest][Tests.TrainSectionTest.StartTest]
-      name: StartTest
-      fullName: Tests.TrainSectionTest.StartTest
-      resultStatus: 1
-      duration: 0.002489
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1009
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.TrainSectionTest][suite]
-    - id: 1012
-      uniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.TrainUsingSectionTest][suite]
-      name: TrainUsingSectionTest
-      fullName: Tests.TrainUsingSectionTest
-      resultStatus: 1
-      duration: 0.0135195
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1027
-      parentUniqueId: EditModeTest.dll/[EditModeTest][Tests][suite]
-    - id: 1015
-      uniqueId: EditModeTest.dll/Tests/TrainUsingSectionTest/[EditModeTest][Tests.TrainUsingSectionTest.AnotherNextStationTest]
-      name: AnotherNextStationTest
-      fullName: Tests.TrainUsingSectionTest.AnotherNextStationTest
-      resultStatus: 1
-      duration: 0.0021367
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1012
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.TrainUsingSectionTest][suite]
-    - id: 1014
-      uniqueId: EditModeTest.dll/Tests/TrainUsingSectionTest/[EditModeTest][Tests.TrainUsingSectionTest.AnotherStationTest]
-      name: AnotherStationTest
-      fullName: Tests.TrainUsingSectionTest.AnotherStationTest
-      resultStatus: 1
-      duration: 0.0010649
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1012
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.TrainUsingSectionTest][suite]
-    - id: 1016
-      uniqueId: EditModeTest.dll/Tests/TrainUsingSectionTest/[EditModeTest][Tests.TrainUsingSectionTest.RideOnTest]
-      name: RideOnTest
-      fullName: Tests.TrainUsingSectionTest.RideOnTest
-      resultStatus: 1
-      duration: 0.0011096
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1012
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.TrainUsingSectionTest][suite]
-    - id: 1017
-      uniqueId: EditModeTest.dll/Tests/TrainUsingSectionTest/[EditModeTest][Tests.TrainUsingSectionTest.RideOnTest2]
-      name: RideOnTest2
-      fullName: Tests.TrainUsingSectionTest.RideOnTest2
-      resultStatus: 1
-      duration: 0.0010329
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1012
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.TrainUsingSectionTest][suite]
-    - id: 1013
-      uniqueId: EditModeTest.dll/Tests/TrainUsingSectionTest/[EditModeTest][Tests.TrainUsingSectionTest.StartTest]
-      name: StartTest
-      fullName: Tests.TrainUsingSectionTest.StartTest
-      resultStatus: 1
-      duration: 0.0010562
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1012
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.TrainUsingSectionTest][suite]
-    - id: 1018
-      uniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.WalkSectionTest][suite]
-      name: WalkSectionTest
-      fullName: Tests.WalkSectionTest
-      resultStatus: 1
-      duration: 0.0087364
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1027
-      parentUniqueId: EditModeTest.dll/[EditModeTest][Tests][suite]
-    - id: 1019
-      uniqueId: EditModeTest.dll/Tests/WalkSectionTest/[EditModeTest][Tests.WalkSectionTest.ConstructTest]
-      name: ConstructTest
-      fullName: Tests.WalkSectionTest.ConstructTest
-      resultStatus: 1
-      duration: 0.0009265
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1018
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.WalkSectionTest][suite]
-    - id: 1021
-      uniqueId: EditModeTest.dll/Tests/WalkSectionTest/[EditModeTest][Tests.WalkSectionTest.MoveTest]
-      name: MoveTest
-      fullName: Tests.WalkSectionTest.MoveTest
-      resultStatus: 1
-      duration: 0.0004271
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1018
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.WalkSectionTest][suite]
-    - id: 1020
-      uniqueId: EditModeTest.dll/Tests/WalkSectionTest/[EditModeTest][Tests.WalkSectionTest.StartTest]
-      name: StartTest
-      fullName: Tests.WalkSectionTest.StartTest
-      resultStatus: 1
-      duration: 0.0002654
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1018
-      parentUniqueId: EditModeTest.dll/Tests/[EditModeTest][Tests.WalkSectionTest][suite]
     - id: 1035
       uniqueId: '[Zenject-TestFramework.dll][suite]'
       name: Zenject-TestFramework.dll
@@ -986,7 +536,7 @@ MonoBehaviour:
     m_ResultText: 
     m_ResultStacktrace: 
     m_TestListState:
-      scrollPos: {x: 0, y: 418}
+      scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
       m_ExpandedIDs: 3a84bb87786b7089444d2e8db978738f9d1c309566e03db2ab6cabd829a1d0e37a218001ebd8b003e1775d0bdc51b211f2f6d93e7cce8043ffffff7f
@@ -1065,10 +615,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 467
-    width: 602
-    height: 244
+    x: -1536
+    y: 528
+    width: 718.2
+    height: 247.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1099,9 +649,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 70610000
-    m_LastClickedID: 24944
-    m_ExpandedIDs: 00000000fa5a0000ffffff7f
+    m_SelectedIDs: fe5a0000
+    m_LastClickedID: 23294
+    m_ExpandedIDs: 00000000ec5a0000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1129,7 +679,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000fa5a0000
+    m_ExpandedIDs: 00000000ec5a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1156,7 +706,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1201,15 +751,15 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Inspector
-    m_Image: {fileID: -2667387946076563598, guid: 0000000000000000d000000000000000,
+    m_Image: {fileID: -440750813802333266, guid: 0000000000000000d000000000000000,
       type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 906
-    y: 73
-    width: 373
-    height: 638
+    x: -457.59998
+    y: 73.6
+    width: 456.59998
+    height: 701.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1248,10 +798,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 73
-    width: 222
-    height: 373
+    x: -1536
+    y: 73.6
+    width: 334.2
+    height: 433.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1261,7 +811,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 2efbffff
+      m_ExpandedIDs: 04fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1306,10 +856,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 223
-    y: 73
-    width: 681
-    height: 373
+    x: -1199.2
+    y: 73.6
+    width: 748.39996
+    height: 434.2
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1320,7 +870,7 @@ MonoBehaviour:
       collapsed: 0
       displayed: 1
       snapOffset: {x: 0, y: 0}
-      snapOffsetDelta: {x: -101, y: -26}
+      snapOffsetDelta: {x: -100, y: -25.600006}
       snapCorner: 3
       id: Tool Settings
       index: 0
@@ -1634,10 +1184,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 223
-    y: 73
-    width: 681
-    height: 373
+    x: -1200.8
+    y: 73.6
+    width: 741.2
+    height: 433.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1648,7 +1198,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 626, y: 352}
+  m_TargetSize: {x: 733, y: 412.4}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1663,10 +1213,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -313
-    m_HBaseRangeMax: 313
-    m_VBaseRangeMin: -176
-    m_VBaseRangeMax: 176
+    m_HBaseRangeMin: -293.2
+    m_HBaseRangeMax: 293.2
+    m_VBaseRangeMin: -164.96
+    m_VBaseRangeMax: 164.96
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -1684,23 +1234,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 681
-      height: 352
-    m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 340.5, y: 176}
+      width: 741.2
+      height: 412.4
+    m_Scale: {x: 1.1940521, y: 1.1940521}
+    m_Translation: {x: 370.60004, y: 206.2}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -340.5
-      y: -176
-      width: 681
-      height: 352
+      x: -310.37173
+      y: -172.68929
+      width: 620.74347
+      height: 345.37857
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 681, y: 373}
+  m_LastWindowPixelSize: {x: 926.5, y: 541.75}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000

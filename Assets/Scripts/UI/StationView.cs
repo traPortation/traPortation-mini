@@ -8,11 +8,11 @@ namespace TraPortation.UI
 {
     public class StationView : MonoBehaviour, IPointerClickHandler
     {
-        IPublisher<ClickTarget, ClickedEvent> publisher;
+        IPublisher<StationClickedEvent> publisher;
         Station station;
 
         [Inject]
-        public void Construct(IPublisher<ClickTarget, ClickedEvent> publisher)
+        public void Construct(IPublisher<StationClickedEvent> publisher)
         {
             this.publisher = publisher;
         }
@@ -25,7 +25,7 @@ namespace TraPortation.UI
         // NOTE: クリックしないでも発火してよさそう (スマホゲーなので)
         public void OnPointerClick(PointerEventData e)
         {
-            this.publisher.Publish(ClickTarget.Station, new ClickedEvent(new Vector2(this.transform.position.x, this.transform.position.y)));
+            this.publisher.Publish(new StationClickedEvent(new Vector2(this.transform.position.x, this.transform.position.y), this.station));
         }
     }
 }

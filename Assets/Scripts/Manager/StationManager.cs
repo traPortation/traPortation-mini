@@ -6,6 +6,7 @@ using TraPortation.Event;
 using TraPortation.Game;
 using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
+using TraPortation.UI;
 using UnityEngine;
 using Zenject;
 
@@ -103,6 +104,8 @@ public class StationManager : MonoBehaviour
         GameObject newStation = container.InstantiatePrefab(this.prefab);
         newStation.transform.position = vec;
         var station = new Station(node);
+        var view = newStation.GetComponent<StationView>();
+        view.SetStation(station);
 
         this.stations.Add(station);
 

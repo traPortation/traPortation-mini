@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TraPortation.Moving;
 using Zenject;
 
 public class RailManager
@@ -27,10 +26,9 @@ public class RailManager
             index = this.rails[this.rails.Count - 1].ID + 1;
         }
 
-        string indexName = index.ToString();
+        string defaultName = $"Rail {index.ToString()}";
 
-        var rail = this.railFactory.Create(stations, index, $"Rail {indexName}");
-
+        var rail = this.railFactory.Create(stations, index, defaultName);
         this.rails.Add(rail);
 
         return rail;
