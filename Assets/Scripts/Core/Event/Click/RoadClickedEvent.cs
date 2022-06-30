@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace TraPortation.Event
 {
-    public class ClickedEvent
+    public class RoadClickedEvent
     {
         public readonly Vector2 Position;
-        public ClickedEvent(Vector2 position)
+        public RoadClickedEvent(Vector2 position)
         {
             this.Position = position;
         }

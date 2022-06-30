@@ -7,17 +7,17 @@ namespace TraPortation.UI
 {
     public class RoadView : Line, IPointerClickHandler, IRoadView
     {
-        IPublisher<ClickTarget, ClickedEvent> publisher;
+        IPublisher<RoadClickedEvent> publisher;
 
         [Inject]
-        public void Construct(IPublisher<ClickTarget, ClickedEvent> publisher)
+        public void Construct(IPublisher<RoadClickedEvent> publisher)
         {
             this.publisher = publisher;
         }
 
         void IPointerClickHandler.OnPointerClick(PointerEventData e)
         {
-            this.publisher.Publish(ClickTarget.Road, new ClickedEvent(e.pointerCurrentRaycast.worldPosition));
+            this.publisher.Publish(new RoadClickedEvent(e.pointerCurrentRaycast.worldPosition));
         }
     }
 }

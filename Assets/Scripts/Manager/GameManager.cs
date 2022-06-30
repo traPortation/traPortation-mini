@@ -25,8 +25,16 @@ public class GameManager : MonoBehaviour
     // TODO: 消す
     DiContainer container;
     public ManageMoney ManageMoney { get; private set; }
+    public GameStatus Status { get; private set; }
 #nullable enable
-    public GameStatus Status { get; private set; } = GameStatus.Normal;
+
+    void Start()
+    {
+        this.SetStatus(GameStatus.Normal);
+
+        this.initBoardForTest();
+        this.InstantiatePeople();
+    }
 
     [Inject]
     public void Construct(Board board, DiContainer container, StationManager stationManager, RailManager railManager, Road.Factory roadFactory)
@@ -38,12 +46,6 @@ public class GameManager : MonoBehaviour
         this.roadFactory = roadFactory;
 
         this.ManageMoney = new ManageMoney();
-
-        // 実行順序の関係でここでboardを渡している
-        this.StationManager.Construct(this, board, container);
-
-        this.initBoardForTest();
-        this.InstantiatePeople();
 
         Utils.NullChecker.Check(this.person, this.building, this.train, this.StationManager);
     }

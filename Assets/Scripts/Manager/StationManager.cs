@@ -13,17 +13,11 @@ using Zenject;
 public class StationManager : MonoBehaviour
 {
     List<Station> stations = new List<Station>();
-    [SerializeField] private GameObject prefab;
-    [SerializeField] private GameObject stationIcon;
+    [SerializeField] GameObject prefab;
+    [SerializeField] GameObject stationIcon;
     GameManager gameManager;
     Board board;
     DiContainer container;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // TODO: 別のクラスに分ける
     void Update()
@@ -52,17 +46,15 @@ public class StationManager : MonoBehaviour
         }
     }
 
-    public void Construct(GameManager gameManager, Board board, DiContainer container)
+    [Inject]
+    public void Construct(GameManager gameManager, Board board, DiContainer container, ISubscriber<RoadClickedEvent> subscriber)
     {
         this.gameManager = gameManager;
         this.board = board;
         this.container = container;
-    }
 
-    [Inject]
-    public void Construct2(ISubscriber<ClickTarget, ClickedEvent> subscriber)
-    {
-        subscriber.Subscribe(ClickTarget.Road, e =>
+        // TODO: dispose
+        subscriber.Subscribe(e =>
         {
             if (this.gameManager.Status != GameStatus.SetStation)
             {
