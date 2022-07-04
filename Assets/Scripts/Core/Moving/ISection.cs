@@ -7,6 +7,6 @@ namespace TraPortation.Moving
         SectionStatus Status { get; }
         Position Position { get; }
         void Start();
-        void Move(float delta);
+        void Move(float distance);
     }
 }

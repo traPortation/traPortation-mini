@@ -29,15 +29,15 @@ namespace TraPortation.Moving.Section.Person
         {
             this.Status = SectionStatus.Walking;
         }
-        public void Move(float delta)
+        public void Move(float distance)
         {
             if (this.Status != SectionStatus.Walking) return;
 
             var dest = this.nodes[this.index + 1];
-            var distance = Position.Distance(this.Position, dest);
+            var goalDistance = Position.Distance(this.Position, dest);
 
             // 次の目的地に着く場合
-            if (distance <= delta)
+            if (goalDistance <= distance)
             {
                 this.Position = dest;
                 this.index++;
@@ -50,7 +50,7 @@ namespace TraPortation.Moving.Section.Person
             // 着かない場合
             else
             {
-                var ratio = delta / distance;
+                var ratio = distance / goalDistance;
                 var x = this.Position.X + (dest.X - this.Position.X) * ratio;
                 var y = this.Position.Y + (dest.Y - this.Position.Y) * ratio;
                 this.Position = new Position(x, y);

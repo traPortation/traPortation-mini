@@ -18,7 +18,7 @@ namespace TraPortation.Moving.Section.Train
         int index;
         int stopMiliSecond;
         bool direction;
-        bool isMoving;
+        bool stopping;
         Station station => this.stations[this.index];
         Station nextStation => this.direction ? this.stations[this.index + 1] : this.stations[this.index - 1];
         IReadOnlyList<Station> stations;
@@ -33,7 +33,7 @@ namespace TraPortation.Moving.Section.Train
             this.stopMiliSecond = (int)(stopSecond * 1000);
             this.index = 0;
             this.direction = true;
-            this.isMoving = true;
+            this.stopping = false;
             this.stations = stations;
             this.trainPublisher = trainPublisher;
             this.stationPublisher = stationPublisher;
@@ -50,15 +50,15 @@ namespace TraPortation.Moving.Section.Train
             this.Status = SectionStatus.TrainMoving;
         }
 
-        public void Move(float delta)
+        public void Move(float distance)
         {
-            if (this.Status != SectionStatus.TrainMoving || !this.isMoving) return;
+            if (this.Status != SectionStatus.TrainMoving || this.stopping) return;
 
             var nextStationPos = new Position(this.nextStation.Node);
+            var goalDistance = Position.Distance(this.Position, nextStationPos);
 
-            var distance = Position.Distance(this.Position, nextStationPos);
             // 次の駅に着く場合
-            if (distance <= delta)
+            if (goalDistance <= distance)
             {
                 this.Position = nextStationPos;
 
@@ -88,7 +88,7 @@ namespace TraPortation.Moving.Section.Train
             }
             else
             {
-                var ratio = delta / distance;
+                var ratio = distance / goalDistance;
                 var x = this.Position.X + (nextStationPos.X - this.Position.X) * ratio;
                 var y = this.Position.Y + (nextStationPos.Y - this.Position.Y) * ratio;
 
@@ -98,9 +98,9 @@ namespace TraPortation.Moving.Section.Train
 
         async void stopOnStation()
         {
-            this.isMoving = false;
+            this.stopping = true;
             await UniTask.Delay(this.stopMiliSecond);
-            this.isMoving = true;
+            this.stopping = false;
         }
 
         public void Dispose()

@@ -40,22 +40,21 @@ namespace TraPortation.Moving.Section.Person
             this.Status = SectionStatus.OnStation;
             this.index = 0;
 
-            this.waitOnStation();
+            this.waitOnStation(this.stations[0]);
         }
-        public void Move(float pos)
+        public void Move(float distance)
         {
         }
 
-        void waitOnStation()
+        void waitOnStation(Station station)
         {
             // 今あるイベント購読を解除 (再帰的に呼ばれることがあるため)
             this.Dispose();
 
             this.Status = SectionStatus.OnStation;
-            var stationId = this.stations[this.index].ID;
 
             // 駅で電車を待つ
-            this.stationSubscriber.Subscribe(stationId, se =>
+            this.stationSubscriber.Subscribe(station.ID, se =>
             {
                 // 来た電車について次の駅が同じかを確認
                 if (this.Status != SectionStatus.OnStation || se.NextStation != this.stations[this.index + 1]) return;
@@ -77,7 +76,7 @@ namespace TraPortation.Moving.Section.Person
                     // 移動は続くが電車からは降りる場合
                     else if (this.stations[this.index + 1] != ve.NextStation)
                     {
-                        this.waitOnStation();
+                        this.waitOnStation(this.stations[this.index]);
                     }
                 }).AddTo(this.disposableBag);
 
