@@ -11,115 +11,118 @@ using Zenject;
 
 #nullable enable
 
-public class GameManager : MonoBehaviour
+namespace TraPortation
 {
+    public class GameManager : MonoBehaviour
+    {
 
 #nullable disable
-    Board Board;
-    [SerializeField] GameObject person;
-    [SerializeField] GameObject building;
-    [SerializeField] GameObject train;
-    StationManager StationManager;
-    RailManager railManager;
-    Road.Factory roadFactory;
-    // TODO: 消す
-    DiContainer container;
-    public ManageMoney ManageMoney { get; private set; }
-    public GameStatus Status { get; private set; }
+        Board Board;
+        [SerializeField] GameObject person;
+        [SerializeField] GameObject building;
+        [SerializeField] GameObject train;
+        StationManager StationManager;
+        RailManager railManager;
+        Road.Factory roadFactory;
+        // TODO: 消す
+        DiContainer container;
+        public ManageMoney ManageMoney { get; private set; }
+        public GameStatus Status { get; private set; }
 #nullable enable
 
-    void Start()
-    {
-        this.SetStatus(GameStatus.Normal);
-
-        this.initBoardForTest();
-        this.InstantiatePeople();
-    }
-
-    [Inject]
-    public void Construct(Board board, DiContainer container, StationManager stationManager, RailManager railManager, Road.Factory roadFactory)
-    {
-        this.Board = board;
-        this.container = container;
-        this.StationManager = stationManager;
-        this.railManager = railManager;
-        this.roadFactory = roadFactory;
-
-        this.ManageMoney = new ManageMoney();
-
-        Utils.NullChecker.Check(this.person, this.building, this.train, this.StationManager);
-    }
-
-    /// <summary>
-    /// Prefabから人をインスタンス化する
-    /// </summary>
-    private void InstantiatePeople()
-    {
-        for (int i = 0; i < Count.Person; i++)
+        void Start()
         {
-            var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
-            var obj = this.container.InstantiatePrefab(this.person);
-            obj.transform.position = start;
+            this.SetStatus(GameStatus.Normal);
+
+            this.initBoardForTest();
+            this.InstantiatePeople();
         }
-    }
 
-    /// <summary>
-    /// 動作確認用に色々置いてるだけ
-    /// </summary>
-    private void initBoardForTest()
-    {
-        // 交差点を追加
-        var nodes = Enumerable.Range(0, (int)X.Max + 1).Select(x =>
+        [Inject]
+        public void Construct(Board board, DiContainer container, StationManager stationManager, RailManager railManager, Road.Factory roadFactory)
         {
-            return Enumerable.Range(0, (int)Y.Max + 1).Select(y =>
-            {
-                return this.Board.AddIntersectionNode(x, y);
-            }).ToList();
-        }).ToList();
+            this.Board = board;
+            this.container = container;
+            this.StationManager = stationManager;
+            this.railManager = railManager;
+            this.roadFactory = roadFactory;
 
-        // 道を追加
-        roadFactory.Create(nodes[0][0], nodes[1][1]);
+            this.ManageMoney = new ManageMoney();
 
-        foreach (var x in Enumerable.Range(0, (int)X.Max + 1))
+            Utils.NullChecker.Check(this.person, this.building, this.train, this.StationManager);
+        }
+
+        /// <summary>
+        /// Prefabから人をインスタンス化する
+        /// </summary>
+        private void InstantiatePeople()
         {
-            foreach (var y in Enumerable.Range(0, (int)Y.Max + 1))
+            for (int i = 0; i < Count.Person; i++)
             {
-                if (x != X.Max) roadFactory.Create(nodes[x][y], nodes[x + 1][y]);
-                if (y != Y.Max) roadFactory.Create(nodes[x][y], nodes[x][y + 1]);
+                var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+                var obj = this.container.InstantiatePrefab(this.person);
+                obj.transform.position = start;
             }
         }
 
-        // 駅を追加
-        var station1 = this.StationManager.AddStation(new Vector3(2, 2, 5f));
-        var station2 = this.StationManager.AddStation(new Vector3(2, 6, 5f));
-        var station3 = this.StationManager.AddStation(new Vector3(10, 6, 5f));
-
-        // 駅同士を繋げる
-        this.Board.AddVehicleRoute(station1.Node, station2.Node, EdgeType.Train);
-        this.Board.AddVehicleRoute(station2.Node, station1.Node, EdgeType.Train);
-        this.Board.AddVehicleRoute(station2.Node, station3.Node, EdgeType.Train);
-        this.Board.AddVehicleRoute(station3.Node, station2.Node, EdgeType.Train);
-
-        // 電車を追加
-        GameObject trainObject = container.InstantiatePrefab(this.train);
-        var train = trainObject.GetComponent<Train>();
-
-        var stations = new List<Station>() { station1, station2, station3 };
-
-        var rail = this.railManager.AddRail(stations);
-
-        rail.AddTrain(train);
-    }
-
-    public void SetStatus(GameStatus status)
-    {
-        Debug.Log("Status Changed");
-        this.Status = status;
-
-        Time.timeScale = status switch
+        /// <summary>
+        /// 動作確認用に色々置いてるだけ
+        /// </summary>
+        private void initBoardForTest()
         {
-            GameStatus.Normal => 1,
-            _ => 0
-        };
+            // 交差点を追加
+            var nodes = Enumerable.Range(0, (int)X.Max + 1).Select(x =>
+            {
+                return Enumerable.Range(0, (int)Y.Max + 1).Select(y =>
+                {
+                    return this.Board.AddIntersectionNode(x, y);
+                }).ToList();
+            }).ToList();
+
+            // 道を追加
+            roadFactory.Create(nodes[0][0], nodes[1][1]);
+
+            foreach (var x in Enumerable.Range(0, (int)X.Max + 1))
+            {
+                foreach (var y in Enumerable.Range(0, (int)Y.Max + 1))
+                {
+                    if (x != X.Max) roadFactory.Create(nodes[x][y], nodes[x + 1][y]);
+                    if (y != Y.Max) roadFactory.Create(nodes[x][y], nodes[x][y + 1]);
+                }
+            }
+
+            // 駅を追加
+            var station1 = this.StationManager.AddStation(new Vector3(2, 2, 5f));
+            var station2 = this.StationManager.AddStation(new Vector3(2, 6, 5f));
+            var station3 = this.StationManager.AddStation(new Vector3(10, 6, 5f));
+
+            // 駅同士を繋げる
+            this.Board.AddVehicleRoute(station1.Node, station2.Node, EdgeType.Train);
+            this.Board.AddVehicleRoute(station2.Node, station1.Node, EdgeType.Train);
+            this.Board.AddVehicleRoute(station2.Node, station3.Node, EdgeType.Train);
+            this.Board.AddVehicleRoute(station3.Node, station2.Node, EdgeType.Train);
+
+            // 電車を追加
+            GameObject trainObject = container.InstantiatePrefab(this.train);
+            var train = trainObject.GetComponent<Train>();
+
+            var stations = new List<Station>() { station1, station2, station3 };
+
+            var rail = this.railManager.AddRail(stations);
+
+            rail.AddTrain(train);
+        }
+
+        public void SetStatus(GameStatus status)
+        {
+            Debug.Log("Status Changed");
+            this.Status = status;
+
+            Time.timeScale = status switch
+            {
+                GameStatus.Normal => 1,
+                _ => 0
+            };
+        }
     }
 }

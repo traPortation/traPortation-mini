@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
+using TraPortation.Traffic;
 using TraPortation.Moving;
 using TraPortation.Moving.Section.Train;
 using TraPortation.UI;

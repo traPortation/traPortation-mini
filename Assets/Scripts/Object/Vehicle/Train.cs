@@ -3,17 +3,20 @@ using UnityEngine;
 
 #nullable enable
 
-public class Train : Vehicle
+namespace TraPortation
 {
-    void Start()
+    public class Train : Vehicle
     {
-        this.Capacity = TraPortation.Const.Train.Capacity;
-        this.Wage = TraPortation.Const.Train.Wage;
-        this.velocity = TraPortation.Const.Velocity.Train;
-    }
+        void Start()
+        {
+            this.Capacity = Const.Train.Capacity;
+            this.Wage = Const.Train.Wage;
+            this.velocity = Const.Velocity.Train;
+        }
 
-    void FixedUpdate()
-    {
-        this.Move(this.velocity);
+        void FixedUpdate()
+        {
+            this.Move(this.velocity);
+        }
     }
 }

@@ -1,36 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Zenject;
+using TraPortation.Traffic;
 
-public class RailManager
+namespace TraPortation
 {
-    List<Rail> rails { get; }
-    public IReadOnlyList<Rail> Rails => this.rails;
-    Rail.Factory railFactory;
-
-    [Inject]
-    public RailManager(Rail.Factory factory)
+    public class RailManager
     {
-        this.railFactory = factory;
-        this.rails = new List<Rail>();
-    }
+        List<Rail> rails { get; }
+        public IReadOnlyList<Rail> Rails => this.rails;
+        Rail.Factory railFactory;
 
-    /// <summary>
-    /// 路線を作成する
-    /// </summary>
-    public Rail AddRail(List<Station> stations)
-    {
-        int index = 0;
-        if (this.rails.Count != 0)
+        [Inject]
+        public RailManager(Rail.Factory factory)
         {
-            index = this.rails[this.rails.Count - 1].ID + 1;
+            this.railFactory = factory;
+            this.rails = new List<Rail>();
         }
 
-        string defaultName = $"Rail {index.ToString()}";
+        /// <summary>
+        /// 路線を作成する
+        /// </summary>
+        public Rail AddRail(List<Station> stations)
+        {
+            int index = 0;
+            if (this.rails.Count != 0)
+            {
+                index = this.rails[this.rails.Count - 1].ID + 1;
+            }
 
-        var rail = this.railFactory.Create(stations, index, defaultName);
-        this.rails.Add(rail);
+            string defaultName = $"Rail {index.ToString()}";
 
-        return rail;
+            var rail = this.railFactory.Create(stations, index, defaultName);
+            this.rails.Add(rail);
+
+            return rail;
+        }
     }
 }
