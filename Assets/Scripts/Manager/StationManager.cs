@@ -62,8 +62,6 @@ public class StationManager : MonoBehaviour
             }
 
             var pos = new Vector3(e.Position.x, e.Position.y, 8f);
-
-            GameObject newStation = Instantiate(this.prefab, pos, Quaternion.identity);
             this.AddStation(pos);
         });
     }
