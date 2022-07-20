@@ -18,10 +18,8 @@ public class AudioSwitcher : MonoBehaviour {
     }
 
     private void Update () {
-        int i = -1;
-        foreach (var audio in audios) {
-            i++;
-            if (i == bgmNum) {
+        foreach (var (audio, index) in audios.Indexed()) {
+            if (index == bgmNum) {
                 audio.volume = Mathf.Min(audio.volume + 0.01f, masterVolume);
             } else {
                 audio.volume = Mathf.Max(audio.volume - 0.01f, 0);
