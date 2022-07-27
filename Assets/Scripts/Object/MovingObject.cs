@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TraPortation.Moving;
 using UnityEngine;
-using Moving;
 
 // 動くもの全般 (人間、乗り物など)
 public abstract class MovingObject : MonoBehaviour

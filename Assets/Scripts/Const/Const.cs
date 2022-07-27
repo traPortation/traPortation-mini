@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Const
+namespace TraPortation.Const
 {
 
     public enum EdgeType
