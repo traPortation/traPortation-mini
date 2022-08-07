@@ -33,10 +33,12 @@ namespace TraPortation
             mousePosition.z = 8f;
             stationIcon.transform.position = mousePosition;
             Color stationColor = stationIcon.GetComponent<SpriteRenderer>().color;
+            
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity);
 
             //それ以外の場合はbuildModeを判定し、駅を追加する
-            // TODO: 道の形を考慮
-            if ((Mathf.Abs(mousePosition.x - Mathf.Round(mousePosition.x)) < 0.1 || Mathf.Abs(mousePosition.y - Mathf.Round(mousePosition.y)) < 0.1))
+            if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "RoadView")
             {
                 stationColor.a = 1f;
                 stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
