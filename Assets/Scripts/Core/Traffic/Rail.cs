@@ -4,7 +4,6 @@ using System.Linq;
 using TraPortation.Moving;
 using TraPortation.Moving.Section.Train;
 using TraPortation.UI;
-using TraPortation.Const;
 using UnityEngine;
 using Zenject;
 
