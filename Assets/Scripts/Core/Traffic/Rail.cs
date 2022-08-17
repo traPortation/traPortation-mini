@@ -20,10 +20,10 @@ namespace TraPortation.Traffic
 
         List<Train> trains { get; }
         public IReadOnlyList<Train> Trains => this.trains;
-        ILine line;
+        IRailView line;
         TrainSection.Factory factory;
 
-        public Rail(List<Station> stations, int id, string name, ILine line, TrainSection.Factory factory)
+        public Rail(List<Station> stations, int id, string name, IRailView line, TrainSection.Factory factory)
         {
             this.stations = stations;
             this.ID = id;
