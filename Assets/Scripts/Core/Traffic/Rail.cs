@@ -31,7 +31,8 @@ namespace TraPortation.Traffic
             this.trains = new List<Train>();
 
             this.line = line;
-            this.line.SetLine(this.stations.Select(node => new Vector3(node.Node.X, node.Node.Y, 0)).ToArray());
+            this.line.SetRail(this);
+            this.line.SetLine(this.stations.Select(node => new Vector3(node.Node.X, node.Node.Y, 5)).ToArray());
 
             // TODO: 路線ごとに変える
             this.line.SetColor(Color.red);
