@@ -25,13 +25,32 @@ namespace TraPortation.UI.Button
             if (this.manager.Status == GameStatus.Pause)
             {
                 this.manager.SetStatus(GameStatus.Normal);
-                this.image.sprite = this.pauseSprite[0];
             }
             else
             {
                 this.manager.SetStatus(GameStatus.Pause);
+            }
+        }
+        void Update()
+        {
+            if (this.manager.Status == GameStatus.Pause ||
+                this.manager.Status == GameStatus.SetRail ||
+                this.manager.Status == GameStatus.SetTrain ||
+                this.manager.Status == GameStatus.SetStation)
+            {
                 this.image.sprite = this.pauseSprite[1];
+            }
+            else
+            {
+                this.image.sprite = this.pauseSprite[0];
             }
         }
     }
 }
+
+/*
+||
+this.manager.Status == GameStatus.SetRail ||
+this.manager.Status == GameStatus.SetTrain ||
+this.manager.Status == GameStatus.SetStation
+*/
