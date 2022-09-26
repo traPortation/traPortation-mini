@@ -23,6 +23,29 @@ namespace TraPortation.Traffic
         IRailView line;
         TrainSection.Factory factory;
 
+        List<Color> railColors = new List<Color>() {
+            new Color(1, 0, 0, 1),
+            new Color(0, 1, 0, 1),
+            new Color(0, 0, 1, 1),
+            new Color(1, 1, 0, 1),
+            new Color(1, 0, 1, 1),
+            new Color(0, 1, 1, 1),
+            new Color(0.5f, 0, 0, 1),
+            new Color(0, 0.5f, 0, 1),
+            new Color(0, 0, 0.5f, 1),
+            new Color(0.5f, 0.5f, 0, 1),
+            new Color(0.5f, 0, 0.5f, 1),
+            new Color(0, 0.5f, 0.5f, 1),
+            new Color(0.5f, 0.5f, 0.5f, 1),
+            new Color(1, 0.5f, 1, 1),
+            new Color(1f, 0.7f, 0.5f, 1f),
+            new Color(1f, 0.9f, 0.3f, 1f),
+            new Color(0.3f, 0.3f, 0.3f, 1f),
+            new Color(1, 0.4f, 0.2f, 1f),
+            new Color(0.7f, 0.3f, 0.4f, 1f),
+            new Color(0.2f, 0.6f, 0.3f, 1f),
+        };
+
         public Rail(List<Station> stations, int id, string name, IRailView line, TrainSection.Factory factory)
         {
             this.stations = stations;
@@ -34,8 +57,7 @@ namespace TraPortation.Traffic
             this.line.SetRail(this);
             this.line.SetLine(this.stations.Select(node => new Vector3(node.Node.X, node.Node.Y, 5)).ToArray());
 
-            // TODO: 路線ごとに変える
-            this.line.SetColor(Color.red);
+            this.line.SetColor(railColors[id % railColors.Count]);
 
             this.factory = factory;
         }
