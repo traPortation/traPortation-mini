@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
-using TraPortation.Traffic;
 using TraPortation.Moving;
 using TraPortation.Moving.Section.Train;
+using TraPortation.Traffic;
 using TraPortation.UI;
 using UnityEngine;
 using Zenject;
@@ -24,6 +24,8 @@ namespace Tests
 
             var lineMock = new Mock<ILine>();
             Container.BindInstance(lineMock.Object);
+            var viewMock = new Mock<IRailView>();
+            Container.BindInstance(viewMock.Object);
 
             Container.Inject(this);
         }
