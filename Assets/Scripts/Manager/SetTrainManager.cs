@@ -61,6 +61,7 @@ namespace TraPortation
                     var train = trainObj.GetComponent<Train>();
                     var rail = hitInfo.collider.gameObject.GetComponent<RailLine>().Rail;
                     rail.AddTrain(train);
+                    train.GoTo(mousePosition);
                 }
             }
             else

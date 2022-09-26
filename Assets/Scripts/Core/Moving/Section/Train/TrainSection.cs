@@ -4,6 +4,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using TraPortation.Event.Train;
+using UnityEngine;
 using Zenject;
 
 #nullable enable
@@ -101,6 +102,37 @@ namespace TraPortation.Moving.Section.Train
             this.stopping = true;
             await UniTask.Delay(this.stopMiliSecond);
             this.stopping = false;
+        }
+
+        public void GoTo(Vector3 vec)
+        {
+            var v = new Position(vec.x, vec.y);
+            var mindist = float.MaxValue;
+            var minindex = 0;
+            Position a, b;
+            for (int i = 0; i < this.stations.Count - 1; i++)
+            {
+                a = new Position(this.stations[i].Node);
+                b = new Position(this.stations[i + 1].Node);
+
+                var dist = v.DistanceToLine(a, b);
+                if (mindist > dist)
+                {
+                    mindist = dist;
+                    minindex = i;
+                }
+            }
+
+            this.index = minindex;
+            a = new Position(this.stations[this.index].Node);
+            b = new Position(this.stations[this.index + 1].Node);
+
+            var t = ((v.X - a.X) * (b.X - a.X) + (v.Y - a.Y) * (b.Y - a.Y)) / Position.Distance(a, b);
+            var x = a.X + (b.X - a.X) * t / Position.Distance(a, b);
+            var y = a.Y + (b.Y - a.Y) * t / Position.Distance(a, b);
+
+            this.Position = new Position(x, y);
+            Debug.Log(Position.Distance(this.Position, v));
         }
 
         public void Dispose()

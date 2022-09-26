@@ -18,5 +18,11 @@ namespace TraPortation
         {
             this.Move(this.velocity);
         }
+
+        public void GoTo(Vector3 vec)
+        {
+            this.path.GoTo(vec);
+            this.transform.position = new Vector3(this.path.Position.X, this.path.Position.Y, this.transform.position.z);
+        }
     }
 }
