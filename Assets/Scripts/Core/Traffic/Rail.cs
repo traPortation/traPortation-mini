@@ -20,7 +20,7 @@ namespace TraPortation.Traffic
 
         List<Train> trains { get; }
         public IReadOnlyList<Train> Trains => this.trains;
-        ILine line;
+        IRailView line;
         TrainSection.Factory factory;
 
         List<Color> railColors = new List<Color>() {
@@ -46,7 +46,7 @@ namespace TraPortation.Traffic
             new Color(0.2f, 0.6f, 0.3f, 1f),
         };
 
-        public Rail(List<Station> stations, int id, string name, ILine line, TrainSection.Factory factory)
+        public Rail(List<Station> stations, int id, string name, IRailView line, TrainSection.Factory factory)
         {
             this.stations = stations;
             this.ID = id;
@@ -54,7 +54,9 @@ namespace TraPortation.Traffic
             this.trains = new List<Train>();
 
             this.line = line;
-            this.line.SetLine(this.stations.Select(node => new Vector3(node.Node.X, node.Node.Y, 0)).ToArray());
+            this.line.SetRail(this);
+            this.line.SetLine(this.stations.Select(node => new Vector3(node.Node.X, node.Node.Y, 5)).ToArray());
+
             this.line.SetColor(railColors[id % railColors.Count]);
 
             this.factory = factory;

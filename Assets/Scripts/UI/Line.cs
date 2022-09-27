@@ -58,5 +58,10 @@ namespace TraPortation.UI
             this.lineRenderer.startColor = color;
             this.lineRenderer.endColor = color;
         }
+
+        public void SetZ(float z)
+        {
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, z);
+        }
     }
 }

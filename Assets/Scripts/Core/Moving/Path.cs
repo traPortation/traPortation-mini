@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TraPortation.Traffic.Node;
+using UnityEngine;
 
 #nullable enable
 
@@ -42,6 +43,17 @@ namespace TraPortation.Moving
             {
                 this.nowSection.Dispose();
                 if (!this.finished) this.index++;
+            }
+        }
+
+        public void GoTo(Vector3 vec)
+        {
+            switch (this.sections[0]) {
+                case Section.Train.TrainSection trainSection:
+                    trainSection.GoTo(vec);
+                    break;
+                default:
+                    throw new System.NotImplementedException();
             }
         }
     }

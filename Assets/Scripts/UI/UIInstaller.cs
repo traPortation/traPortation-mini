@@ -8,5 +8,6 @@ public class UIInstaller : Installer<UIInstaller>
     {
         Container.Bind<ILine>().To<Line>().FromNewComponentOnNewGameObject().AsTransient();
         Container.Bind<IRoadView>().To<RoadView>().FromNewComponentOnNewGameObject().AsTransient();
+        Container.Bind<IRailView>().To<RailView>().FromNew().AsTransient();
     }
 }

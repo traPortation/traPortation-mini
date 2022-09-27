@@ -1,5 +1,5 @@
-using UnityEngine;
 using TraPortation.Traffic.Node;
+using UnityEngine;
 
 namespace TraPortation.Moving
 {
@@ -26,6 +26,12 @@ namespace TraPortation.Moving
         public Vector3 ToVector3(float z)
         {
             return new Vector3(this.X, this.Y, z);
+        }
+
+        // a, bを通る直線との距離
+        public float DistanceToLine(Position a, Position b)
+        {
+            return Mathf.Abs((b.Y - a.Y) * this.X - (b.X - a.X) * this.Y + b.X * a.Y - b.Y * a.X) / Mathf.Sqrt(Mathf.Pow(b.X - a.X, 2) + Mathf.Pow(a.Y - b.Y, 2));
         }
     }
 }

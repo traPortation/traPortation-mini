@@ -50,7 +50,7 @@ namespace TraPortation.Moving
 
                     if (stations.Count > 1)
                     {
-                        // TrainSectionを追加
+                        // TrainUsingSectionを追加
                         sections.Add(this.trainFactory.Create(stations));
                         stations = new List<Station>();
                     }
