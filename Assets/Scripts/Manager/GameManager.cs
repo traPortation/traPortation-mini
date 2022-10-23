@@ -70,6 +70,16 @@ namespace TraPortation
         /// </summary>
         private void initBoardForTest()
         {
+            var generator = new RoadGenerator.RoadGenerator();
+            generator.GenerateRoads();
+
+            foreach (var road in generator.roads) {
+                var start = this.Board.AddIntersectionNode(road.start.x, road.start.y);
+                var end = this.Board.AddIntersectionNode(road.end.x, road.end.y);
+                roadFactory.Create(start, end);
+            }
+
+            /*
             // 交差点を追加
             var nodes = Enumerable.Range(0, (int)X.Max + 1).Select(x =>
             {
@@ -111,6 +121,7 @@ namespace TraPortation
             var rail = this.railManager.AddRail(stations);
 
             rail.AddTrain(train);
+            */
         }
 
         public void SetStatus(GameStatus status)
