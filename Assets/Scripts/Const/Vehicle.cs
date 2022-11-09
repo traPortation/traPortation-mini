@@ -5,6 +5,8 @@ namespace TraPortation.Const
         public const int Capacity = 10;
         public const int Wage = 100;
         public const float StopStationTime = 0.1f;
+        public const int VehicleCost = -1000;
+        public const int StationCost = -3000;
     }
 
     /// <summary>
@@ -16,5 +18,7 @@ namespace TraPortation.Const
         public const int Wage = 50;
         public const float BusVelocity = 0.03f;
         public const float StopStationTime = 0.6f;
+        public const int VehicleCost = -100;
+        public const int StationCost = -50;
     }
 }
