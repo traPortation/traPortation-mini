@@ -21,6 +21,7 @@ namespace TraPortation.Core.RoadGen
                 float nearestDist = float.MaxValue;
                 Vector2 start, end;
 
+                // 一番近い道路を探す
                 foreach (var road in this.roads)
                 {
                     var (collide, point) = road.line.CollideToHalfLine(p, angle);
@@ -37,11 +38,7 @@ namespace TraPortation.Core.RoadGen
 
                 if (startNearestRoad != null)
                 {
-                    if (nearestDist < 0.5)
-                    {
-                        continue;
-                    }
-                    if (Mathf.Abs(startNearestRoad.line.Angle() - angle) < 0.5)
+                    if (Mathf.Abs(startNearestRoad.line.Angle() - angle) < 1.0)
                     {
                         continue;
                     }
@@ -72,11 +69,7 @@ namespace TraPortation.Core.RoadGen
 
                 if (endNearestRoad != null)
                 {
-                    if (nearestDist < 0.5)
-                    {
-                        continue;
-                    }
-                    if (Mathf.Abs(endNearestRoad.line.Angle() - angleRev) < 0.5)
+                    if (Mathf.Abs(endNearestRoad.line.Angle() - angleRev) < 1.0)
                     {
                         continue;
                     }
