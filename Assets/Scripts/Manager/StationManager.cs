@@ -38,7 +38,7 @@ namespace TraPortation
             RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity);
 
             //それ以外の場合はbuildModeを判定し、駅を追加する
-            if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "RoadView")
+            if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "RoadView" && this.gameManager.ManageMoney.ExpenseCheck(Const.Train.StationCost))
             {
                 stationColor.a = 1f;
                 stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
@@ -64,9 +64,11 @@ namespace TraPortation
                 {
                     return;
                 }
-
-                var pos = new Vector3(e.Position.x, e.Position.y, 8f);
-                this.AddStation(pos);
+                if(this.gameManager.ManageMoney.ExpenseMoney(Const.Train.StationCost, false))
+                {
+                    var pos = new Vector3(e.Position.x, e.Position.y, 8f);
+                    this.AddStation(pos);
+                }
             });
         }
 
