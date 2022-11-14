@@ -17,6 +17,7 @@ namespace TraPortation
             Container.Bind<RailManager>().FromNew().AsSingle().NonLazy();
             Container.Bind<LineManager>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
             Container.Bind<SetTrainManager>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.Bind<BusStationManager>().FromComponentInHierarchy().AsSingle().NonLazy();
 
             // 増えてきたら単独のInstallerに分ける
             Container.BindFactory<List<Station>, int, string, Rail, Rail.Factory>();

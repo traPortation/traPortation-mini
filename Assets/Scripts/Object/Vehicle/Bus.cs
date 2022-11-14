@@ -1,21 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TraPortation.Traffic.Node;
 using UnityEngine;
 
-public class Bus : Vehicle
+namespace TraPortation
 {
-    void Start()
+    public class Bus : Vehicle
     {
-        this.Capacity = TraPortation.Const.Bus.Capacity;
-        this.Wage = TraPortation.Const.Bus.Wage;
-        this.velocity = TraPortation.Const.Bus.BusVelocity;
-        this.Initialize(this.path);
-    }
+        void Start()
+        {
+            this.Capacity = Const.Bus.Capacity;
+            this.Wage = Const.Bus.Wage;
+            this.velocity = Const.Bus.BusVelocity;
+        }
 
-    void FixedUpdate()
-    {
-        this.Move(this.velocity);
+        void FixedUpdate()
+        {
+            this.Move(this.velocity);
+        }
     }
 }
