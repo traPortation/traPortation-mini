@@ -8,7 +8,7 @@ namespace TraPortation.Moving.Section
         public Position Position { get; private set; }
         IReadOnlyList<Position> positions;
         int index;
-        public SimpleSection(List<Position> positions)
+        public SimpleSection(IReadOnlyList<Position> positions)
         {
             this.Status = SectionStatus.NotStarted;
             this.Position = positions[0];
