@@ -6,7 +6,6 @@ using MessagePipe;
 using NUnit.Framework;
 using TraPortation.Event.Train;
 using TraPortation.Moving;
-using TraPortation.Moving.Section.Train;
 using TraPortation.Traffic.Node;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -15,17 +14,17 @@ using Assert = UnityEngine.Assertions.Assert;
 
 namespace Tests
 {
-    public class TrainSectionTest : ZenjectUnitTestFixture
+    public class TrainPathTest : ZenjectUnitTestFixture
     {
         [Inject]
-        TrainSection.Factory factory;
+        TrainPath.Factory factory;
         [Inject]
         ISubscriber<int, TrainEvent> trainSub;
         [Inject]
         ISubscriber<int, StationEvent> stationSub;
 
         List<Station> stations;
-        TrainSection section;
+        TrainPath path;
 
         [SetUp]
         public void SetUp()
@@ -34,7 +33,7 @@ namespace Tests
             Container.BindMessageBroker<int, TrainEvent>(option);
             Container.BindMessageBroker<int, StationEvent>(option);
 
-            Container.BindFactory<IReadOnlyList<Station>, int, float, TrainSection, TrainSection.Factory>();
+            Container.BindFactory<int, IReadOnlyList<Station>, TrainPath, TrainPath.Factory>();
 
             Container.Inject(this);
 
@@ -45,57 +44,56 @@ namespace Tests
 
             this.stations = nodes.Select(n => new Station(n)).ToList();
 
-            this.section = this.factory.Create(stations, 1, 0.01f);
+            this.path = this.factory.Create(1, stations);
+            this.path.StopMilliseconds = 10;
         }
 
         [Test]
         public void StartTest()
         {
-            Assert.AreEqual(this.section.Status, SectionStatus.NotStarted);
+            Assert.AreEqual(this.path.Status, SectionStatus.NotStarted);
 
-            this.section.Start();
-            Assert.AreEqual(this.section.Status, SectionStatus.TrainMoving);
-            Assert.AreEqual(this.section.Position, new Position(0, 0));
+            this.path.Move(0);
+            Assert.AreEqual(this.path.Status, SectionStatus.Moving);
+            Assert.AreEqual(this.path.Position, new Position(0, 0));
         }
 
         [UnityTest]
         public IEnumerator MoveTest() => UniTask.ToCoroutine(async () =>
         {
-            this.section.Start();
-
             // 次の駅まで着かない場合
-            this.section.Move(0.5f);
-            Assert.AreEqual(this.section.Position, new Position(0, 0.5f));
+            this.path.Move(0.5f);
+            Assert.AreEqual(this.path.Position, new Position(0, 0.5f));
 
             // 次の駅に着く場合はそこで止まる
-            this.section.Move(10);
-            Assert.AreEqual(this.section.Position, new Position(0, 1));
+            this.path.Move(10);
+            Assert.AreEqual(this.path.Position, new Position(0, 1));
 
             // 止まっている間は動かない
-            this.section.Move(10);
-            Assert.AreEqual(this.section.Position, new Position(0, 1));
+            this.path.Move(10);
+            Assert.AreEqual(this.path.Position, new Position(0, 1));
 
             await UniTask.Delay(20);
 
-            this.section.Move(10);
-            Assert.AreEqual(this.section.Position, new Position(2, 2));
+            this.path.Move(10);
+            Assert.AreEqual(this.path.Position, new Position(2, 2));
 
             await UniTask.Delay(200);
 
             // 折り返し
-            this.section.Move(10);
-            Assert.AreEqual(this.section.Position, new Position(0, 1));
+            this.path.Move(10);
+            Assert.AreEqual(this.path.Position, new Position(0, 1));
 
             await UniTask.Delay(20);
 
-            this.section.Move(10);
-            Assert.AreEqual(this.section.Position, new Position(0, 0));
+            this.path.Move(10);
+            Assert.AreEqual(this.path.Position, new Position(0, 0));
 
             await UniTask.Delay(20);
 
             // 折り返し
-            this.section.Move(10);
-            Assert.AreEqual(this.section.Position, new Position(0, 1));
+            this.path.Move(10);
+            Assert.AreEqual(this.path.Position, new Position(0, 1));
         });
     }
 }

@@ -2,15 +2,15 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using TraPortation.Moving;
-using TraPortation.Moving.Section.Person;
+using TraPortation.Moving.Section;
 using UnityEngine;
 using Assert = UnityEngine.Assertions.Assert;
 
 namespace Tests
 {
-    public class WalkSectionTest
+    public class SimpleSectionTest
     {
-        WalkSection section;
+        SimpleSection section;
 
         [SetUp]
         public void SetUp()
@@ -19,7 +19,7 @@ namespace Tests
             pos.Add(new Position(0, 0));
             pos.Add(new Position(0, 1));
             pos.Add(new Position(1, 1));
-            this.section = new WalkSection(pos);
+            this.section = new SimpleSection(pos);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Tests
         {
             this.section.Start();
 
-            Assert.AreEqual(this.section.Status, SectionStatus.Walking);
+            Assert.AreEqual(this.section.Status, SectionStatus.Moving);
             Assert.AreEqual(this.section.Position, new Position(0, 0));
         }
 
@@ -46,11 +46,11 @@ namespace Tests
             this.section.Move(0.5f);
 
             Assert.AreEqual(this.section.Position, new Position(0, 0.5f));
-            Assert.AreEqual(this.section.Status, SectionStatus.Walking);
+            Assert.AreEqual(this.section.Status, SectionStatus.Moving);
 
             this.section.Move(2);
             Assert.AreEqual(this.section.Position, new Position(0, 1));
-            Assert.AreEqual(this.section.Status, SectionStatus.Walking);
+            Assert.AreEqual(this.section.Status, SectionStatus.Moving);
 
             this.section.Move(2);
             Assert.AreEqual(this.section.Position, new Position(1, 1));

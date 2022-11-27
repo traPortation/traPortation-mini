@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TraPortation.Moving.Section;
 using TraPortation.Moving.Section.Person;
 using TraPortation.Traffic.Node;
 using Zenject;
@@ -8,19 +9,19 @@ using Zenject;
 
 namespace TraPortation.Moving
 {
-    public class PathFactory
+    public class PersonPathFactory
     {
         readonly TrainUsingSection.Factory trainFactory;
         readonly StationManager stationManager;
 
         [Inject]
-        public PathFactory(TrainUsingSection.Factory trainFactory, StationManager stationManager)
+        public PersonPathFactory(TrainUsingSection.Factory trainFactory, StationManager stationManager)
         {
             this.trainFactory = trainFactory;
             this.stationManager = stationManager;
         }
 
-        public Path Create(IReadOnlyList<INode> nodes)
+        public PersonPath Create(IReadOnlyList<INode> nodes)
         {
             var sections = new List<ISection>();
 
@@ -39,7 +40,7 @@ namespace TraPortation.Moving
                         // WalkSectionを追加
                         walkSectionNodes.Add(node);
                         var positions = walkSectionNodes.Select(n => new Position(n)).ToList();
-                        sections.Add(new WalkSection(positions));
+                        sections.Add(new SimpleSection(positions));
 
                         walkSectionNodes = new List<INode>();
                     }
@@ -61,14 +62,14 @@ namespace TraPortation.Moving
             if (walkSectionNodes.Count > 1)
             {
                 var positions = walkSectionNodes.Select(n => new Position(n)).ToList();
-                sections.Add(new WalkSection(positions));
+                sections.Add(new SimpleSection(positions));
             }
             else if (stations.Count > 1)
             {
                 sections.Add(this.trainFactory.Create(stations));
             }
 
-            return new Path(sections, nodes.Last());
+            return new PersonPath(sections);
         }
     }
 }

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using TraPortation.Moving;
-using TraPortation.Moving.Section.Train;
 using TraPortation.Traffic;
 using TraPortation.UI;
 using UnityEngine;
@@ -20,7 +19,7 @@ namespace Tests
         public void CommonInstall()
         {
             Container.BindFactory<List<Station>, int, string, Rail, Rail.Factory>();
-            Container.BindFactory<IReadOnlyList<Station>, int, float, TrainSection, TrainSection.Factory>();
+            Container.BindFactory<int, IReadOnlyList<Station>, TrainPath, TrainPath.Factory>();
 
             var lineMock = new Mock<ILine>();
             Container.BindInstance(lineMock.Object);
