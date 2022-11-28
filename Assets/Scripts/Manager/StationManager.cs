@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using MessagePipe;
-using TraPortation.Event;
 using TraPortation.Game;
 using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
@@ -26,7 +24,16 @@ namespace TraPortation
         {
             if (this.gameManager.Status != GameStatus.SetStation)
             {
+                if (stationIcon.activeSelf)
+                {
+                    stationIcon.SetActive(false);
+                }
                 return;
+            }
+
+            if (!stationIcon.activeSelf)
+            {
+                stationIcon.SetActive(true);
             }
 
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -41,6 +48,11 @@ namespace TraPortation
             {
                 stationColor.a = 1f;
                 stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    this.AddStation(mousePosition);
+                }
             }
             else
             {
@@ -50,34 +62,11 @@ namespace TraPortation
         }
 
         [Inject]
-        public void Construct(GameManager gameManager, Board board, DiContainer container, ISubscriber<RoadClickedEvent> subscriber)
+        public void Construct(GameManager gameManager, Board board, DiContainer container)
         {
             this.gameManager = gameManager;
             this.board = board;
             this.container = container;
-
-            // TODO: dispose
-            subscriber.Subscribe(e =>
-            {
-                if (this.gameManager.Status != GameStatus.SetStation)
-                {
-                    return;
-                }
-
-                var pos = new Vector3(e.Position.x, e.Position.y, 8f);
-                this.AddStation(pos);
-            });
-        }
-
-        public void SetBuildMode()
-        {
-            this.gameManager.SetStatus(this.gameManager.Status switch
-            {
-                GameStatus.SetStation => GameStatus.Normal,
-                _ => GameStatus.SetStation
-            });
-
-            stationIcon.SetActive(this.gameManager.Status == GameStatus.SetStation);
         }
 
         /// <summary>

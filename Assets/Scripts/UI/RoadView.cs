@@ -5,19 +5,7 @@ using Zenject;
 
 namespace TraPortation.UI
 {
-    public class RoadView : Line, IPointerClickHandler, IRoadView
+    public class RoadView : Line, IRoadView
     {
-        IPublisher<RoadClickedEvent> publisher;
-
-        [Inject]
-        public void Construct(IPublisher<RoadClickedEvent> publisher)
-        {
-            this.publisher = publisher;
-        }
-
-        void IPointerClickHandler.OnPointerClick(PointerEventData e)
-        {
-            this.publisher.Publish(new RoadClickedEvent(e.pointerCurrentRaycast.worldPosition));
-        }
     }
 }

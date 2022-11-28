@@ -12,6 +12,5 @@ public class MessagePipeInstaller : Installer<MessagePipeInstaller>
         Container.BindMessageBroker<int, StationEvent>(option);
         Container.BindMessageBroker<int, TrainEvent>(option);
         Container.BindMessageBroker<StationClickedEvent>(option);
-        Container.BindMessageBroker<RoadClickedEvent>(option);
     }
 }
