@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TraPortation.Game;
 using TraPortation.Traffic;
 using TraPortation.UI;
 using UnityEngine;
@@ -12,13 +13,57 @@ namespace TraPortation
         List<BusStation> busStations = new List<BusStation>();
         Board board;
         [SerializeField] GameObject prefab;
+        [SerializeField] GameObject stationIcon;
         DiContainer container;
+        GameManager gameManager;
 
         [Inject]
-        public void Construct(Board board, DiContainer container)
+        public void Construct(Board board, DiContainer container, GameManager gameManager)
         {
             this.board = board;
             this.container = container;
+            this.gameManager = gameManager;
+        }
+
+        void Update()
+        {
+            if (this.gameManager.Status != GameStatus.SetBusStation)
+            {
+                if (stationIcon.activeSelf)
+                {
+                    stationIcon.SetActive(false);
+                }
+                return;
+            }
+
+            if (!stationIcon.activeSelf)
+            {
+                stationIcon.SetActive(true);
+            }
+
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 8f;
+            stationIcon.transform.position = mousePosition;
+            Color stationColor = stationIcon.GetComponent<SpriteRenderer>().color;
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity);
+
+            if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "RoadView")
+            {
+                stationColor.a = 1f;
+                stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    this.AddBusStation(mousePosition);
+                }
+            }
+            else
+            {
+                stationColor.a = 0.5f;
+                stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
+            }
         }
 
         public BusStation AddBusStation(Vector3 vec)

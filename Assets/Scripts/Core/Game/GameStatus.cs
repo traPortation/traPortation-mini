@@ -6,6 +6,7 @@ namespace TraPortation.Game
         Pause,
         SetTrain,
         SetRail,
-        SetStation
+        SetStation,
+        SetBusStation,
     }
 }

@@ -141,9 +141,6 @@ namespace TraPortation
                     this.roadFactory.Create(before, node);
                 }
             }
-
-            busStationManager.AddBusStation(new Vector3(2, 2, 3));
-            busStationManager.AddBusStation(new Vector3(4, 4, 3));
         }
 
         public void SetStatus(GameStatus status)
