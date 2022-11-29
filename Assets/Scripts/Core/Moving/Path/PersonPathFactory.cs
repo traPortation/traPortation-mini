@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TraPortation.Moving.Section;
 using TraPortation.Moving.Section.Person;
+using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
 using Zenject;
 
@@ -30,7 +31,7 @@ namespace TraPortation.Moving
 
             foreach (var node in nodes)
             {
-                if (node is StationNode sNode)
+                if (node is StationNode sNode && sNode.Kind == StationKind.Train)
                 {
                     var station = this.stationManager.GetStation(sNode);
                     stations.Add(station);

@@ -35,7 +35,7 @@ namespace Tests
                 var x = Random.Range(0f, 10f);
                 var y = Random.Range(0f, 10f);
 
-                var node = this.board.AddStationNode(x, y);
+                var node = this.board.AddStationNode(x, y, StationKind.Train);
 
                 Assert.IsTrue(node is StationNode);
                 Assert.AreEqual(this.board.Nodes.Count, i);
@@ -71,7 +71,7 @@ namespace Tests
                 var x = Random.Range(0f, 10f);
                 var y = Random.Range(0f, 10f);
 
-                var node = this.board.AddStationNode(x, y);
+                var node = this.board.AddStationNode(x, y, StationKind.Train);
                 nodes.Add(node);
             }
 
@@ -108,7 +108,7 @@ namespace Tests
             {
                 var x = Random.Range(0f, 10f);
                 var y = Random.Range(0f, 10f);
-                var node = this.board.AddStationNode(x, y);
+                var node = this.board.AddStationNode(x, y, StationKind.Train);
             }
             for (int i = 1; i <= 100; i++)
             {

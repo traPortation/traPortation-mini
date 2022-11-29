@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TraPortation.Game;
 using TraPortation.Traffic;
+using TraPortation.Traffic.Node;
 using TraPortation.UI;
 using UnityEngine;
 using Zenject;
@@ -68,20 +69,27 @@ namespace TraPortation
 
         public BusStation AddBusStation(Vector3 vec)
         {
-            var node = this.board.AddStationNode(vec.x, vec.y);
-
-            var nearestNode = this.board.GetNearestNode(vec.x, vec.y);
-            this.board.AddRoadEdge(nearestNode, node);
-            this.board.AddRoadEdge(node, nearestNode);
+            var (road, _) = this.board.GetNearestRoad(new Vector2(vec.x, vec.y));
+            var node = this.board.AddStationNode(vec.x, vec.y, StationKind.Bus);
+            this.board.AddRoadEdge(road.From, node);
+            this.board.AddRoadEdge(node, road.From);
+            this.board.AddRoadEdge(road.To, node);
+            this.board.AddRoadEdge(node, road.To);
 
             var newStation = container.InstantiatePrefab(this.prefab);
             newStation.transform.position = vec;
-            var station = new BusStation();
+            var station = new BusStation(node);
             var view = newStation.GetComponent<BusStationView>();
+            view.SetBusStation(station);
 
             this.busStations.Add(station);
 
             return station;
+        }
+
+        public BusStation GetBusStation(StationNode node)
+        {
+            return this.busStations.Find(s => s.Node.Index == node.Index);
         }
     }
 }

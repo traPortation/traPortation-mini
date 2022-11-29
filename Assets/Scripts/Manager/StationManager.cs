@@ -77,9 +77,9 @@ namespace TraPortation
         public Station AddStation(Vector3 vec)
         {
             int index = this.stations.Count;
-            var node = this.board.AddStationNode(vec.x, vec.y);
 
             var nearestNode = this.board.GetNearestNode(vec.x, vec.y);
+            var node = this.board.AddStationNode(vec.x, vec.y, StationKind.Train);
             this.board.AddRoadEdge(nearestNode, node);
             this.board.AddRoadEdge(node, nearestNode);
 
@@ -92,17 +92,6 @@ namespace TraPortation
             this.stations.Add(station);
 
             return station;
-        }
-
-        /// <summary>
-        /// 指定したIDのstationを取得
-        /// </summary>
-        /// <param name="stationId"></param>
-        /// <returns></returns>
-        public Station GetStation(int stationId)
-        {
-            //TODO: 応急処置なのでそのうちどうにかする
-            return this.stations.Where(station => station.ID == stationId).First();
         }
 
         /// <summary>

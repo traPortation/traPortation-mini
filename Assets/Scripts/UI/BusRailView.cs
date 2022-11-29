@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace TraPortation.UI
 {
-	// NOTE: 実装の省略のためにRailViewをそのまま使っている
-    public class BusRailView : RailView
+    // NOTE: 実装の省略のためにRailViewをそのまま使っている
+    public class BusRailView : RailView, IBusRailView
     {
         public BusRailView() : base() { }
     }

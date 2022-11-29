@@ -22,9 +22,11 @@ namespace TraPortation.Traffic.Node
                 return roads.Concat(routes);
             }
         }
-        public StationNode(float x, float y, int index) : base(x, y, index)
+        public readonly StationKind Kind;
+        public StationNode(float x, float y, int index, StationKind kind) : base(x, y, index)
         {
             this.vehicleRoutes = new List<VehicleEdge>();
+            this.Kind = kind;
         }
 
         public VehicleEdge AddVehicleRoute(StationNode to, float cost)

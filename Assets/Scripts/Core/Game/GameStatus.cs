@@ -8,5 +8,6 @@ namespace TraPortation.Game
         SetRail,
         SetStation,
         SetBusStation,
+        SetBusRail,
     }
 }
