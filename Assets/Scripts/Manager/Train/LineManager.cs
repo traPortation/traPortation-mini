@@ -9,6 +9,7 @@ using Zenject;
 
 namespace TraPortation.UI
 {
+    // TODO: RailManagerと合わせる
     public class LineManager : MonoBehaviour
     {
         GameManager manager;

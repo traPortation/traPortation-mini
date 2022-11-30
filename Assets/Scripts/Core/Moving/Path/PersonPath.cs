@@ -18,9 +18,10 @@ namespace TraPortation.Moving
         public PersonPath(IReadOnlyList<ISection> sections)
         {
             this.sections = sections;
+            this.index = 0;
         }
 
-        public void Move(float delta)
+        public void Move(float distance)
         {
             if (this.finished) return;
 
@@ -31,7 +32,7 @@ namespace TraPortation.Moving
             }
 
             // Section内を移動する
-            this.curSection.Move(delta);
+            this.curSection.Move(distance);
 
             // Sectionが終わったら次のSectionに移る
             if (this.curSection.Status == SectionStatus.Finished)

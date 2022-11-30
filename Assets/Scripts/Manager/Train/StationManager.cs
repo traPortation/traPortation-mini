@@ -76,8 +76,6 @@ namespace TraPortation
         /// <returns></returns>
         public Station AddStation(Vector3 vec)
         {
-            int index = this.stations.Count;
-
             var nearestNode = this.board.GetNearestNode(vec.x, vec.y);
             var node = this.board.AddStationNode(vec.x, vec.y, StationKind.Train);
             this.board.AddRoadEdge(nearestNode, node);

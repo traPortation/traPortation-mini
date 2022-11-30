@@ -9,7 +9,7 @@ namespace TraPortation.Const
     public enum EdgeType
     {
         Walk = 10,
-        Train = 3,
+        Train = 1,
         Finished = -1 // 使い終わったEdge
         // Multi = ?,
     }

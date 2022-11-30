@@ -149,7 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 50850068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48b57f648e6f9604db935b93e7417e0a, type: 3}
+  m_Script: {fileID: 11500000, guid: 141c610a6aee63b4f89dd0969cd4a470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   trainIcon: {fileID: 7801748868781013149}
@@ -1890,7 +1890,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 968625178}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2191610d881262499621da70bc40d2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 03d56d1e18d7d8c4e8bec8b57eab7817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 185991705040669837, guid: aa0c78fefd4b98941a735e7add9f2f69, type: 3}
@@ -2415,7 +2415,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1249177737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51da4ba3a9fce3d47a7cf37a5e2cc243, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c6558eb83d2106489a4769ba5e80b53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 2130097187112271302, guid: 08b3bcca273477f4687a0ff17b834763, type: 3}

@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Zenject;
 using TraPortation.Traffic;
+using Zenject;
+
+#nullable enable
 
 namespace TraPortation
 {
@@ -10,12 +12,14 @@ namespace TraPortation
         List<Rail> rails { get; }
         public IReadOnlyList<Rail> Rails => this.rails;
         Rail.Factory railFactory;
+        Board board;
 
         [Inject]
-        public RailManager(Rail.Factory factory)
+        public RailManager(Rail.Factory factory, Board board)
         {
             this.railFactory = factory;
             this.rails = new List<Rail>();
+            this.board = board;
         }
 
         /// <summary>
@@ -33,6 +37,11 @@ namespace TraPortation
 
             var rail = this.railFactory.Create(stations, index, defaultName);
             this.rails.Add(rail);
+
+            for (int i = 0; i < stations.Count - 1; i++)
+            {
+                this.board.AddVehicleRoute(stations[i].Node, stations[i + 1].Node);
+            }
 
             return rail;
         }
