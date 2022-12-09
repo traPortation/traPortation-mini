@@ -3,7 +3,7 @@ using TraPortation.Const;
 
 public class ManageMoney
 {
-    private int nowMoney = 1000;  // 所持金
+    private int nowMoney = 100000;  // 所持金
     // const.cs内のnamespace Const class MoneyLimitにある
     // private static const int minMoney = 0; // 下限
     // private static const int maxMoney = 999999999; // 上限
