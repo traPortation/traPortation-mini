@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using MessagePipe;
 using TraPortation.Event.Train;
-using Zenject;
 using UnityEngine;
+using Zenject;
 
 #nullable enable
 
@@ -18,9 +18,9 @@ namespace TraPortation.Moving.Section.Person
         readonly ISubscriber<int, StationEvent> stationSubscriber;
         readonly ISubscriber<int, TrainEvent> trainSubscriber;
         readonly DisposableBagBuilder disposableBag;
+        readonly ManageMoney manager;
 
-        private GameManager manager;
-        public TrainUsingSection(IReadOnlyList<Station> stations, ISubscriber<int, StationEvent> stationSubscriber, ISubscriber<int, TrainEvent> trainSubscriber)
+        public TrainUsingSection(IReadOnlyList<Station> stations, ISubscriber<int, StationEvent> stationSubscriber, ISubscriber<int, TrainEvent> trainSubscriber, ManageMoney manager)
         {
             this.Status = SectionStatus.NotStarted;
             this.Position = new Position(stations.First().Node);
@@ -28,6 +28,7 @@ namespace TraPortation.Moving.Section.Person
             this.stationSubscriber = stationSubscriber;
             this.trainSubscriber = trainSubscriber;
             this.disposableBag = DisposableBag.CreateBuilder();
+            this.manager = manager;
 
             if (this.stations.Count <= 1)
             {
@@ -43,8 +44,6 @@ namespace TraPortation.Moving.Section.Person
             this.index = 0;
 
             this.waitOnStation(this.stations[0]);
-            this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-            Utils.NullChecker.Check(this.manager);
         }
         public void Move(float distance)
         {
@@ -68,7 +67,7 @@ namespace TraPortation.Moving.Section.Person
                 this.Status = SectionStatus.OnTrain;
 
                 // 運賃を加算して電車に乗る
-                this.manager.ManageMoney.ExpenseMoney(Const.Train.Wage);
+                this.manager.ExpenseMoney(Const.Train.Wage);
                 this.trainSubscriber.Subscribe(se.TrainId, ve =>
                 {
                     this.index++;

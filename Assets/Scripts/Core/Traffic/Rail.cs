@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using TraPortation.Moving;
-using TraPortation.Moving.Section.Train;
 using TraPortation.UI;
 using UnityEngine;
 using Zenject;
@@ -21,7 +20,7 @@ namespace TraPortation.Traffic
         List<Train> trains { get; }
         public IReadOnlyList<Train> Trains => this.trains;
         IRailView line;
-        TrainSection.Factory factory;
+        TrainPath.Factory factory;
 
         List<Color> railColors = new List<Color>() {
             new Color(1, 0, 0, 1),
@@ -46,7 +45,7 @@ namespace TraPortation.Traffic
             new Color(0.2f, 0.6f, 0.3f, 1f),
         };
 
-        public Rail(List<Station> stations, int id, string name, IRailView line, TrainSection.Factory factory)
+        public Rail(List<Station> stations, int id, string name, IRailView line, TrainPath.Factory factory)
         {
             this.stations = stations;
             this.ID = id;
@@ -67,13 +66,16 @@ namespace TraPortation.Traffic
         /// <summary>
         /// 線路上に車両を作成する
         /// </summary>
-        public void AddTrain(Train train)
+        public void AddTrain(Train train, Vector3 vec)
         {
             this.trains.Add(train);
 
-            var sections = new List<ISection>();
-            sections.Add(factory.Create(this.stations, train.ID, TraPortation.Const.Train.StopStationTime));
-            var path = new Path(sections, this.stations.Last().Node);
+            // TODO: IDを設定する
+            var path = factory.Create(train.ID, this.stations);
+
+            // 指定した位置に移動させる
+            // TODO: 向きの指定
+            path.MoveTo(vec);
 
             train.Initialize(path);
         }

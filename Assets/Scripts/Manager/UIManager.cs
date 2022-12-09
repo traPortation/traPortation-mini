@@ -40,6 +40,9 @@ namespace TraPortation.UI
                 GameStatus.SetTrain => "SetTrain",
                 GameStatus.SetRail => "SetRail",
                 GameStatus.SetStation => "SetStation",
+                GameStatus.SetBusStation => "SetBusStation",
+                GameStatus.SetBusRail => "SetBusRail",
+                GameStatus.SetBus => "SetBus",
                 _ => throw new InvalidOperationException(),
             };
         }

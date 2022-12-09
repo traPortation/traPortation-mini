@@ -23,6 +23,7 @@ namespace TraPortation
         [SerializeField] GameObject building;
         [SerializeField] GameObject train;
         StationManager StationManager;
+        BusStationManager busStationManager;
         RailManager railManager;
         Traffic.Road.Factory roadFactory;
         // TODO: 消す
@@ -40,11 +41,12 @@ namespace TraPortation
         }
 
         [Inject]
-        public void Construct(Board board, DiContainer container, StationManager stationManager, RailManager railManager, Traffic.Road.Factory roadFactory)
+        public void Construct(Board board, DiContainer container, StationManager stationManager, BusStationManager busStationManager, RailManager railManager, Traffic.Road.Factory roadFactory)
         {
             this.Board = board;
             this.container = container;
             this.StationManager = stationManager;
+            this.busStationManager = busStationManager;
             this.railManager = railManager;
             this.roadFactory = roadFactory;
 
