@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Zenject;
 
+#nullable enable
+
 namespace TraPortation.Traffic
 {
     public class BusRail
@@ -14,10 +16,14 @@ namespace TraPortation.Traffic
         List<Bus> buses;
         IReadOnlyList<BusRoute> routes;
         IBusRailView line;
-        public BusRail(IReadOnlyList<IBoardNode> nodes, IBusRailView line, BusStationManager manager)
+        BusPath.Factory factory;
+        public BusRail(IReadOnlyList<IBoardNode> nodes, IBusRailView line, BusStationManager manager, BusPath.Factory factory)
         {
-            Assert.IsNotNull(nodes.First() as StationNode);
             var start = nodes.First() as StationNode;
+            if (start == null)
+            {
+                throw new System.Exception("First node is not StationNode");
+            }
             Assert.AreEqual(start.Kind, StationKind.Bus);
 
             var positions = new List<Position>() { new Position(start) };
@@ -40,18 +46,26 @@ namespace TraPortation.Traffic
 
             this.routes = routes;
             this.line = line;
+            this.factory = factory;
+            this.buses = new List<Bus>();
 
             this.line.SetLine(nodes.Select(n => new Vector3(n.X, n.Y, 8.0f)).ToArray());
             this.line.SetColor(Color.yellow);
+            this.line.SetRail(this);
         }
 
         public class Factory : PlaceholderFactory<IReadOnlyList<IBoardNode>, BusRail> { }
 
-        public void AddBus(Bus bus)
+        public void AddBus(Bus bus, Vector3 vec)
         {
             this.buses.Add(bus);
 
-            var sections = new List<ISection>();
+            // TODO: IDを設定する
+            var path = this.factory.Create(bus.ID, this.routes);
+            path.MoveTo(vec);
+            bus.Initialize(path);
+
+
         }
     }
 }

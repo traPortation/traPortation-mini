@@ -4,6 +4,7 @@ using MessagePipe;
 using TraPortation.Event.Bus;
 using TraPortation.Moving.Section;
 using TraPortation.Traffic;
+using UnityEngine;
 using Zenject;
 
 namespace TraPortation.Moving
@@ -30,6 +31,8 @@ namespace TraPortation.Moving
             this.busPub = busPub;
             this.busStationPub = busStationPub;
         }
+
+        public class Factory : PlaceholderFactory<int, IReadOnlyList<BusRoute>, BusPath> { }
 
         public void Move(float distance)
         {
@@ -67,7 +70,37 @@ namespace TraPortation.Moving
                 // curSectionを更新
                 this.curSection = new SimpleSection(nextRoute.Positions);
             }
+        }
 
+        public void MoveTo(Vector3 vec)
+        {
+            var v = new Position(vec.x, vec.y);
+            var mindist = float.MaxValue;
+            BusRoute minRoute = null;
+            int minindex = 0;
+            Position a, b;
+            foreach (var route in this.routes)
+            {
+                for (var i = 0; i < route.Positions.Count - 1; i++)
+                {
+                    a = route.Positions[i];
+                    b = route.Positions[i + 1];
+                    var dist = v.DistanceToLine(a, b);
+                    if (dist < mindist)
+                    {
+                        mindist = dist;
+                        minRoute = route;
+                        minindex = i;
+                    }
+                }
+            }
+
+            this.curSection = new SimpleSection(minRoute.Positions);
+            for (var i = 0; i < minindex; i++)
+            {
+                this.curSection.Move(float.MaxValue);
+            }
+            this.curSection.Move(Position.Distance(minRoute.Positions[minindex], v));
         }
 
         async void stopOnStation()
