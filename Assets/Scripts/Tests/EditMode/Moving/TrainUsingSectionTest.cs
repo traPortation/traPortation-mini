@@ -11,10 +11,6 @@ using UnityEngine;
 using Zenject;
 using Assert = UnityEngine.Assertions.Assert;
 
-
-// TODO: 動くようにする
-
-/*
 namespace Tests
 {
     public class TrainUsingSectionTest : ZenjectUnitTestFixture
@@ -37,6 +33,7 @@ namespace Tests
             Container.BindFactory<IReadOnlyList<Station>, TrainUsingSection, TrainUsingSection.Factory>();
             Container.BindMessageBroker<int, TrainEvent>(option);
             Container.BindMessageBroker<int, StationEvent>(option);
+            Container.Bind<ManageMoney>().FromNew().AsSingle();
 
             Container.Inject(this);
 
@@ -119,4 +116,3 @@ namespace Tests
         }
     }
 }
-*/
