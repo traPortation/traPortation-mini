@@ -63,5 +63,11 @@ namespace TraPortation.UI
         {
             this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, z);
         }
+
+        public void SetWidth(float width)
+        {
+            this.lineRenderer.startWidth = width;
+            this.lineRenderer.endWidth = width;
+        }
     }
 }

@@ -20,7 +20,8 @@ namespace TraPortation.Traffic
             this.board.AddRoadEdge(to, from);
 
             this.view.SetLine(new Vector3[] { new Vector3(from.X, from.Y, -1), new Vector3(to.X, to.Y, -1) });
-            this.view.SetColor(Color.black);
+            this.view.SetColor(Color.white);
+            this.view.SetWidth(0.4f);
         }
 
         public class Factory : PlaceholderFactory<IntersectionNode, IntersectionNode, Road> { }
