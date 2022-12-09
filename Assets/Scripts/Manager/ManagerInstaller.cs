@@ -15,6 +15,7 @@ namespace TraPortation
             Container.Bind<GameManager>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<StationManager>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<RailManager>().FromNew().AsSingle().NonLazy();
+            Container.Bind<ManageMoney>().FromNew().AsSingle().NonLazy();
             Container.Bind<LineManager>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
             Container.Bind<SetTrainManager>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<BusStationManager>().FromComponentInHierarchy().AsSingle().NonLazy();

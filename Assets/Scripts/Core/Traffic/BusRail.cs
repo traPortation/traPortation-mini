@@ -60,7 +60,6 @@ namespace TraPortation.Traffic
         {
             this.buses.Add(bus);
 
-            // TODO: IDを設定する
             var path = this.factory.Create(bus.ID, this.routes);
             path.MoveTo(vec);
             bus.Initialize(path);

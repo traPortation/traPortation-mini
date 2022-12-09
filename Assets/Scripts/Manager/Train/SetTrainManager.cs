@@ -11,6 +11,7 @@ namespace TraPortation
         Vector3 lastMousePosition;
         [SerializeField] GameObject trainIcon;
         [SerializeField] GameObject trainPrefab;
+        int nextTrainId = 0;
 
         [Inject]
         public void Construct(GameManager gameManager)
@@ -60,6 +61,8 @@ namespace TraPortation
                     this.gameManager.ManageMoney.ExpenseMoney(Const.Train.VehicleCost);
                     var trainObj = Instantiate(trainPrefab);
                     var train = trainObj.GetComponent<Train>();
+                    train.SetId(nextTrainId);
+                    nextTrainId++;
                     var rail = hitInfo.collider.gameObject.GetComponent<RailLine>().Rail;
                     rail.AddTrain(train, mousePosition);
                 }

@@ -70,7 +70,6 @@ namespace TraPortation.Traffic
         {
             this.trains.Add(train);
 
-            // TODO: IDを設定する
             var path = factory.Create(train.ID, this.stations);
 
             // 指定した位置に移動させる

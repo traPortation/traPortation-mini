@@ -5,8 +5,11 @@ using UnityEngine;
 
 namespace TraPortation
 {
-    public class Train : Vehicle
+    public class Train : MovingObject
     {
+        public int ID { get; private set; }
+        public int Wage { get; private set; }
+        public int Capacity { get; private set; }
         void Start()
         {
             this.Capacity = Const.Train.Capacity;
@@ -17,6 +20,11 @@ namespace TraPortation
         void FixedUpdate()
         {
             this.Move(this.velocity);
+        }
+
+        public void SetId(int id)
+        {
+            this.ID = id;
         }
     }
 }

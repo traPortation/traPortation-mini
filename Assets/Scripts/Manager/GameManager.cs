@@ -41,7 +41,7 @@ namespace TraPortation
         }
 
         [Inject]
-        public void Construct(Board board, DiContainer container, StationManager stationManager, BusStationManager busStationManager, RailManager railManager, Traffic.Road.Factory roadFactory)
+        public void Construct(Board board, DiContainer container, StationManager stationManager, BusStationManager busStationManager, RailManager railManager, Traffic.Road.Factory roadFactory, ManageMoney manageMoney)
         {
             this.Board = board;
             this.container = container;
@@ -50,7 +50,7 @@ namespace TraPortation
             this.railManager = railManager;
             this.roadFactory = roadFactory;
 
-            this.ManageMoney = new ManageMoney();
+            this.ManageMoney = manageMoney;
 
             Utils.NullChecker.Check(this.person, this.building, this.train, this.StationManager);
         }

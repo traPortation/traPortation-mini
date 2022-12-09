@@ -5,7 +5,6 @@ using Zenject;
 
 namespace TraPortation.UI.Button
 {
-	// TODO: 他のボタンも置き換える
     public class ChangeStatusButton : MonoBehaviour, IPointerClickHandler
     {
         GameManager manager;
