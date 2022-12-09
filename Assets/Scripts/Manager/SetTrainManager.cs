@@ -35,7 +35,7 @@ namespace TraPortation
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity);
 
-            if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "RailView")
+            if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "RailView" && this.gameManager.ManageMoney.ExpenseCheck(Const.Train.VehicleCost))
             {
                 trainColor.a = 1f;
                 trainIcon.GetComponent<SpriteRenderer>().material.color = trainColor;
@@ -57,6 +57,7 @@ namespace TraPortation
 
                 if (Input.GetMouseButtonDown(0))
                 {
+                    this.gameManager.ManageMoney.ExpenseMoney(Const.Train.VehicleCost);
                     var trainObj = Instantiate(trainPrefab);
                     var train = trainObj.GetComponent<Train>();
                     var rail = hitInfo.collider.gameObject.GetComponent<RailLine>().Rail;
