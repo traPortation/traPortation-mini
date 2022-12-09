@@ -4,6 +4,7 @@ using MessagePipe;
 using TraPortation.Event.Train;
 using UnityEngine;
 using Zenject;
+using UnityEngine;
 
 #nullable enable
 
@@ -19,6 +20,7 @@ namespace TraPortation.Moving.Section.Person
         readonly ISubscriber<int, TrainEvent> trainSubscriber;
         readonly DisposableBagBuilder disposableBag;
 
+        private GameManager manager;
         public TrainUsingSection(IReadOnlyList<Station> stations, ISubscriber<int, StationEvent> stationSubscriber, ISubscriber<int, TrainEvent> trainSubscriber)
         {
             this.Status = SectionStatus.NotStarted;
@@ -42,6 +44,8 @@ namespace TraPortation.Moving.Section.Person
             this.index = 0;
 
             this.waitOnStation(this.stations[0]);
+            this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            Utils.NullChecker.Check(this.manager);
         }
         public void Move(float distance)
         {
@@ -64,7 +68,8 @@ namespace TraPortation.Moving.Section.Person
 
                 this.Status = SectionStatus.OnTrain;
 
-                // 電車に乗る
+                // 運賃を加算して電車に乗る
+                this.manager.ManageMoney.ExpenseMoney(Const.Train.Wage);
                 this.trainSubscriber.Subscribe(se.TrainId, ve =>
                 {
                     this.index++;
