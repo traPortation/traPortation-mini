@@ -41,6 +41,7 @@ namespace TraPortation
             for (int i = 0; i < stations.Count - 1; i++)
             {
                 this.board.AddVehicleRoute(stations[i].Node, stations[i + 1].Node);
+                this.board.AddVehicleRoute(stations[i + 1].Node, stations[i].Node);
             }
 
             return rail;

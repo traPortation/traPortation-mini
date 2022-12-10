@@ -37,7 +37,7 @@ namespace TraPortation.Const
     /// </summary>
     public static class Velocity
     {
-        public const float Person = 0.1f;
+        public const float Person = 0.05f;
         public const float Train = 0.3f;
     }
 

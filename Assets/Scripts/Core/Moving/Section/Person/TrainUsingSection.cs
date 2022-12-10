@@ -70,7 +70,12 @@ namespace TraPortation.Moving.Section.Person
                 this.manager.ExpenseMoney(Const.Train.Wage);
                 this.trainSubscriber.Subscribe(se.TrainId, ve =>
                 {
+                    // 自分が乗った駅への到着は無視する
+                    if (ve.Station == station) return;
+
                     this.index++;
+
+                    Debug.Assert(this.stations[this.index] == ve.Station);
 
                     // 移動が終わりの場合
                     if (this.index >= this.stations.Count - 1)
