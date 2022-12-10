@@ -84,6 +84,7 @@ namespace TraPortation
             while (q.Count != 0)
             {
                 var road = q.Dequeue();
+                var length = road.line.Distance();
 
                 var neigbors = road.GetNeigbors();
                 Traffic.Node.IntersectionNode? before = null;
@@ -118,7 +119,7 @@ namespace TraPortation
 
                     if (before != null)
                     {
-                        this.roadFactory.Create(before, node);
+                        this.roadFactory.Create(before, node, length);
                     }
                     before = node;
                 }
@@ -138,7 +139,7 @@ namespace TraPortation
                         dict.Add(road.line.end, node);
                     }
 
-                    this.roadFactory.Create(before, node);
+                    this.roadFactory.Create(before, node, length);
                 }
             }
         }
