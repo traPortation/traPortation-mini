@@ -66,15 +66,14 @@ namespace TraPortation.Traffic
         /// <summary>
         /// 線路上に車両を作成する
         /// </summary>
-        public void AddTrain(Train train, Vector3 vec)
+        public void AddTrain(Train train, Vector3 vec, bool direction)
         {
             this.trains.Add(train);
 
             var path = factory.Create(train.ID, this.stations);
 
             // 指定した位置に移動させる
-            // TODO: 向きの指定
-            path.MoveTo(vec);
+            path.MoveTo(vec, direction);
 
             train.Initialize(path);
         }

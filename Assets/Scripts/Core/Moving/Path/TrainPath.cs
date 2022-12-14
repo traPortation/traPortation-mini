@@ -79,7 +79,7 @@ namespace TraPortation.Moving
             }
         }
 
-        public void MoveTo(Vector3 vec)
+        public void MoveTo(Vector3 vec, bool direction)
         {
             var v = new Position(vec.x, vec.y);
             var mindist = float.MaxValue;
@@ -98,13 +98,28 @@ namespace TraPortation.Moving
                 }
             }
 
-            this.index = minindex + 1;
-            a = new Position(this.stations[this.index - 1].Node);
-            b = new Position(this.stations[this.index].Node);
-            this.curSection = new SimpleSection(new List<Position> { a, b });
+            if (direction)
+            {
+                this.index = minindex + 1;
+                a = new Position(this.stations[this.index - 1].Node);
+                b = new Position(this.stations[this.index].Node);
+                this.curSection = new SimpleSection(new List<Position> { a, b });
 
-            var t = ((v.X - a.X) * (b.X - a.X) + (v.Y - a.Y) * (b.Y - a.Y)) / Position.Distance(a, b);
-            this.curSection.Move(t);
+                var t = ((v.X - a.X) * (b.X - a.X) + (v.Y - a.Y) * (b.Y - a.Y)) / Position.Distance(a, b);
+                this.curSection.Start();
+                this.curSection.Move(t);
+            }
+            else
+            {
+                this.index = minindex;
+                a = new Position(this.stations[this.index + 1].Node);
+                b = new Position(this.stations[this.index].Node);
+                this.curSection = new SimpleSection(new List<Position> { a, b });
+
+                var t = ((v.X - a.X) * (b.X - a.X) + (v.Y - a.Y) * (b.Y - a.Y)) / Position.Distance(a, b);
+                this.curSection.Start();
+                this.curSection.Move(t);
+            }
         }
 
         async void stopOnStation()
