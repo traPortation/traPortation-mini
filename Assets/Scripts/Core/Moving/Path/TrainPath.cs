@@ -13,6 +13,7 @@ namespace TraPortation.Moving
     public class TrainPath : IPath
     {
         public Position Position => this.curSection.Position;
+        public Quaternion Rotation => this.curSection.Rotation;
         public SectionStatus Status => this.curSection.Status;
         readonly IReadOnlyList<Station> stations;
         int index;

@@ -13,6 +13,7 @@ namespace TraPortation.Moving.Section.Person
     {
         public SectionStatus Status { get; private set; }
         public Position Position { get; }
+        public Quaternion Rotation { get; } = Quaternion.identity;
         readonly IReadOnlyList<Station> stations;
         int index;
         readonly ISubscriber<int, StationEvent> stationSubscriber;

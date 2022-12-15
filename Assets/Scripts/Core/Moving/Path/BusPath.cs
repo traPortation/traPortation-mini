@@ -12,6 +12,7 @@ namespace TraPortation.Moving
     public class BusPath : IPath
     {
         public Position Position => this.curSection.Position;
+        public Quaternion Rotation => this.curSection.Rotation;
         public SectionStatus Status => this.curSection.Status;
         public int StopMilliseconds = 1000;
         ISection curSection;

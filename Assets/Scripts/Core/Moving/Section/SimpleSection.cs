@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using UnityEngine;
 
+#nullable enable
 namespace TraPortation.Moving.Section
 {
     public class SimpleSection : ISection
     {
         public SectionStatus Status { get; private set; }
         public Position Position { get; private set; }
+        public Quaternion Rotation { get; private set; }
         IReadOnlyList<Position> positions;
         int index;
         public SimpleSection(IReadOnlyList<Position> positions)
@@ -13,6 +16,7 @@ namespace TraPortation.Moving.Section
             this.Status = SectionStatus.NotStarted;
             this.Position = positions[0];
             this.positions = positions;
+            this.Rotation = Quaternion.FromToRotation(new Vector3(-1, 0, 0), this.positions[this.index + 1].ToVector3(0) - this.Position.ToVector3(0));
             this.index = 0;
         }
         public void Start()
@@ -33,6 +37,10 @@ namespace TraPortation.Moving.Section
                 if (this.index == this.positions.Count - 1)
                 {
                     this.Status = SectionStatus.Finished;
+                }
+                else
+                {
+                    this.Rotation = Quaternion.FromToRotation(new Vector3(-1, 0, 0), this.positions[this.index + 1].ToVector3(0) - this.Position.ToVector3(0));
                 }
             }
             // 着かない場合
