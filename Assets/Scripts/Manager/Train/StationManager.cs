@@ -76,10 +76,13 @@ namespace TraPortation
         /// <returns></returns>
         public Station AddStation(Vector3 vec)
         {
-            var nearestNode = this.board.GetNearestNode(vec.x, vec.y);
+            var (road, _) = this.board.GetNearestRoad(vec);
             var node = this.board.AddStationNode(vec.x, vec.y, StationKind.Train);
-            this.board.AddRoadEdge(nearestNode, node);
-            this.board.AddRoadEdge(node, nearestNode);
+
+            this.board.AddRoadEdge(road.From, node);
+            this.board.AddRoadEdge(node, road.From);
+            this.board.AddRoadEdge(road.To, node);
+            this.board.AddRoadEdge(node, road.To);
 
             GameObject newStation = container.InstantiatePrefab(this.prefab);
             newStation.transform.position = vec;
