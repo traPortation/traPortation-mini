@@ -121,7 +121,6 @@ namespace TraPortation.Traffic
                             // unreachableなはず
                             throw new System.Exception();
                     }
-
                 }
             }
             var nodes = new List<INode>();
@@ -150,13 +149,24 @@ namespace TraPortation.Traffic
         /// <returns></returns>
         public IReadOnlyList<INode> GetPath(INode start, INode goal)
         {
-            var startIntersection = this.GetNearestNode(start.X, start.Y);
-            var goalIntersection = this.GetNearestNode(goal.X, goal.Y);
+            var (startRoad, startPoint) = this.GetNearestRoad(new Vector2(start.X, start.Y));
+            var (goalRoad, goalPoint) = this.GetNearestRoad(new Vector2(goal.X, goal.Y));
+
+            if (startRoad == null || goalRoad == null)
+            {
+                throw new System.Exception("road not found");
+            }
+
+            // TODO: より近い方を選ぶようにする
+            var startIntersection = startRoad.From;
+            var goalIntersection = goalRoad.From;
 
             var searchedNodes = searchPath(startIntersection, goalIntersection);
 
             // TODO: 効率がよくないので改善する
+            searchedNodes.Insert(0, new TemporaryNode(startPoint.x, startPoint.y));
             searchedNodes.Insert(0, start);
+            searchedNodes.Add(new TemporaryNode(goalPoint.x, goalPoint.y));
             searchedNodes.Add(goal);
 
             return searchedNodes;
