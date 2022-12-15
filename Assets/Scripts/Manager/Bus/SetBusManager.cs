@@ -20,10 +20,15 @@ namespace TraPortation
         {
             if (this.manager.Status != GameStatus.SetBus)
             {
+                if (busIcon.activeSelf)
+                {
+                    busIcon.SetActive(false);
+                }
                 return;
             }
 
-            busIcon.SetActive(true);
+            if (!busIcon.activeSelf)
+                busIcon.SetActive(true);
 
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 9f;

@@ -188,7 +188,7 @@ PrefabInstance:
     - target: {fileID: 3898736184699373695, guid: a20e7b5a35d34004097de83b9eefbe7a,
         type: 3}
       propertyPath: m_Name
-      value: Bus
+      value: BusIcon
       objectReference: {fileID: 0}
     - target: {fileID: 3898736184699373695, guid: a20e7b5a35d34004097de83b9eefbe7a,
         type: 3}
@@ -960,7 +960,7 @@ PrefabInstance:
     - target: {fileID: 2130097187112271302, guid: 08b3bcca273477f4687a0ff17b834763,
         type: 3}
       propertyPath: m_Name
-      value: BusStation
+      value: BusStationIcon
       objectReference: {fileID: 0}
     - target: {fileID: 2130097187112271302, guid: 08b3bcca273477f4687a0ff17b834763,
         type: 3}
@@ -3200,7 +3200,7 @@ PrefabInstance:
     - target: {fileID: 185991705040669837, guid: aa0c78fefd4b98941a735e7add9f2f69,
         type: 3}
       propertyPath: m_Name
-      value: Station
+      value: StationIcon
       objectReference: {fileID: 0}
     - target: {fileID: 185991705040669837, guid: aa0c78fefd4b98941a735e7add9f2f69,
         type: 3}
@@ -3272,7 +3272,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7330400170956577659, guid: aa0c78fefd4b98941a735e7add9f2f69, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: aa0c78fefd4b98941a735e7add9f2f69, type: 3}
 --- !u!1 &1685891289
 GameObject:
@@ -3821,7 +3822,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 7801748868781013149}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.10000002
   m_Height: 0.2
   m_Direction: 1
@@ -3838,7 +3839,7 @@ GameObject:
   - component: {fileID: 7801748868781013151}
   - component: {fileID: 7801748868781013136}
   m_Layer: 0
-  m_Name: TrainView
+  m_Name: TrainIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

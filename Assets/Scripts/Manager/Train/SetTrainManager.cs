@@ -24,10 +24,17 @@ namespace TraPortation
         {
             if (this.gameManager.Status != GameStatus.SetTrain)
             {
+                if (trainIcon.activeSelf)
+                {
+                    trainIcon.SetActive(false);
+                }
+
                 return;
             }
-
-            trainIcon.SetActive(true);
+            if (!trainIcon.activeSelf)
+            {
+                trainIcon.SetActive(true);
+            }
 
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             trainIcon.transform.position = new Vector3(mousePosition.x, mousePosition.y, 8f);
@@ -45,7 +52,7 @@ namespace TraPortation
                 if (Mathf.Pow(mousePosition.x - lastMousePosition.x, 2) + Mathf.Pow(mousePosition.y - lastMousePosition.y, 2) > 0.1f)
                 {
                     var euler = Mathf.Atan2(mousePosition.y - lastMousePosition.y, mousePosition.x - lastMousePosition.x) * Mathf.Rad2Deg;
-                    
+
                     // なんか逆になるので180度足している
                     var railEuler = hitInfo.collider.gameObject.transform.rotation.eulerAngles.z + 180;
 
