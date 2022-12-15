@@ -36,7 +36,12 @@ namespace TraPortation.UI
             {
                 if (this.manager.Status == GameStatus.SetRail)
                 {
-                    if (e.Station is null) {
+                    if (e.Station is null)
+                    {
+                        return;
+                    }
+                    if (this.stations.Count != 0 && this.stations.Last() == e.Station)
+                    {
                         return;
                     }
                     this.positions.Add(new Vector3(e.Position.x, e.Position.y, 9));
