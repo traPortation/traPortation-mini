@@ -23,7 +23,8 @@ public class Person : MovingObject
         this.board = board;
         this.factory = factory;
 
-        var (path, _) = this.getRandomPath();
+        var (path, goal) = this.getRandomPath();
+        this.goalNode = goal;
         this.Initialize(path);
     }
 
