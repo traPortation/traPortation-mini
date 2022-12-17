@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TraPortation.Const;
 using UnityEngine;
 
 #nullable enable
@@ -15,6 +16,8 @@ namespace TraPortation
             this.Capacity = Const.Train.Capacity;
             this.Wage = Const.Train.Wage;
             this.velocity = Const.Velocity.Train;
+
+            this.transform.position = new Vector3(0, 0, Z.Train);
         }
 
         void FixedUpdate()

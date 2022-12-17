@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MessagePipe;
+using TraPortation.Const;
 using TraPortation.Event;
 using TraPortation.Game;
 using TraPortation.Traffic;
@@ -64,7 +65,7 @@ namespace TraPortation
                 if (this.nodes.Count != 0)
                 {
                     this.nodes.Clear();
-                    this.line.SetLine(this.nodes.Select(n => new Vector3(n.X, n.Y, 7.0f)).ToArray());
+                    this.line.SetLine(this.nodes.Select(n => new Vector3(n.X, n.Y, Z.BusRail)).ToArray());
                     this.curLine.SetLine(new Vector3[] { });
                 }
 
@@ -76,7 +77,7 @@ namespace TraPortation
             var mousePos3D = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             var mousePos = new Vector2(mousePos3D.x, mousePos3D.y);
 
-            this.curLine.SetLine(new Vector3[] { new Vector3(this.nodes.Last().X, this.nodes.Last().Y, 7.0f), new Vector3(mousePos.x, mousePos.y, 7.0f) });
+            this.curLine.SetLine(new Vector3[] { new Vector3(this.nodes.Last().X, this.nodes.Last().Y, Z.BusRail), new Vector3(mousePos.x, mousePos.y, Z.BusRail) });
 
             // 解除
             if (nodes.Count > 1)
@@ -86,7 +87,7 @@ namespace TraPortation
                 if (Vector2.Distance(mousePos, secondToLast) < 0.1f)
                 {
                     nodes.RemoveAt(nodes.Count - 1);
-                    this.line.SetLine(this.nodes.Select(n => new Vector3(n.X, n.Y, 7.0f)).ToArray());
+                    this.line.SetLine(this.nodes.Select(n => new Vector3(n.X, n.Y, Z.BusRail)).ToArray());
                 }
             }
 
@@ -104,7 +105,7 @@ namespace TraPortation
                     if (cos < -0.9f)
                     {
                         nodes.Add(r.To);
-                        this.line.SetLine(this.nodes.Select(n => new Vector3(n.X, n.Y, 7.0f)).ToArray());
+                        this.line.SetLine(this.nodes.Select(n => new Vector3(n.X, n.Y, Z.BusRail)).ToArray());
                         break;
                     }
                 }

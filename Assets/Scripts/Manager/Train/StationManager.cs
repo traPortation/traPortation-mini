@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TraPortation.Const;
 using TraPortation.Game;
 using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
@@ -37,7 +38,7 @@ namespace TraPortation
             }
 
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 8f;
+            mousePosition.z = Z.MouseIcon;
             stationIcon.transform.position = mousePosition;
             Color stationColor = stationIcon.GetComponent<SpriteRenderer>().color;
 
@@ -51,7 +52,7 @@ namespace TraPortation
 
                 if (Input.GetMouseButtonDown(0) && this.gameManager.ManageMoney.ExpenseMoney(Const.Train.StationCost, false))
                 {
-                    this.AddStation(mousePosition);
+                    this.AddStation(mousePosition.x, mousePosition.y);
                 }
             }
             else
@@ -74,10 +75,10 @@ namespace TraPortation
         /// </summary>
         /// <param name="vec"></param>
         /// <returns></returns>
-        public Station AddStation(Vector3 vec)
+        public Station AddStation(float x, float y)
         {
-            var (road, _) = this.board.GetNearestRoad(vec);
-            var node = this.board.AddStationNode(vec.x, vec.y, StationKind.Train);
+            var (road, _) = this.board.GetNearestRoad(new Vector2(x, y));
+            var node = this.board.AddStationNode(x, y, StationKind.Train);
 
             this.board.AddRoadEdge(road.From, node);
             this.board.AddRoadEdge(node, road.From);
@@ -85,7 +86,7 @@ namespace TraPortation
             this.board.AddRoadEdge(node, road.To);
 
             GameObject newStation = container.InstantiatePrefab(this.prefab);
-            newStation.transform.position = vec;
+            newStation.transform.position = new Vector3(x, y, Z.Station);
             var station = new Station(node);
             var view = newStation.GetComponent<StationView>();
             view.SetStation(station);

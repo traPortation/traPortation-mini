@@ -1,3 +1,4 @@
+using TraPortation.Const;
 using TraPortation.Game;
 using UnityEngine;
 using Zenject;
@@ -31,7 +32,7 @@ namespace TraPortation
                 busIcon.SetActive(true);
 
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 9f;
+            mousePosition.z = Z.MouseIcon;
             busIcon.transform.position = mousePosition;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

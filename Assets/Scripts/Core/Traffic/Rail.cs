@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TraPortation.Const;
 using TraPortation.Moving;
 using TraPortation.UI;
 using UnityEngine;
@@ -54,7 +55,7 @@ namespace TraPortation.Traffic
 
             this.line = line;
             this.line.SetRail(this);
-            this.line.SetLine(this.stations.Select(node => new Vector3(node.Node.X, node.Node.Y, 5)).ToArray());
+            this.line.SetLine(this.stations.Select(node => new Vector3(node.Node.X, node.Node.Y, Z.Rail)).ToArray());
 
             this.line.SetColor(railColors[id % railColors.Count]);
 

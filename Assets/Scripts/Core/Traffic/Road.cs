@@ -1,3 +1,4 @@
+using TraPortation.Const;
 using TraPortation.Traffic.Node;
 using TraPortation.UI;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace TraPortation.Traffic
             this.board.AddRoadEdge(from, to);
             this.board.AddRoadEdge(to, from);
 
-            this.view.SetLine(new Vector3[] { new Vector3(from.X, from.Y, -1), new Vector3(to.X, to.Y, -1) });
+            this.view.SetLine(new Vector3[] { new Vector3(from.X, from.Y, Z.Road), new Vector3(to.X, to.Y, Z.Road) });
             this.view.SetColor(Color.white);
             this.view.SetWidth(Mathf.Sqrt(roadLength) * 0.1f);
         }

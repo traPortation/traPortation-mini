@@ -1,4 +1,5 @@
 using TraPortation.Game;
+using TraPortation.Const;
 using TraPortation.UI;
 using UnityEngine;
 using Zenject;
@@ -37,7 +38,7 @@ namespace TraPortation
             }
 
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            trainIcon.transform.position = new Vector3(mousePosition.x, mousePosition.y, 8f);
+            trainIcon.transform.position = new Vector3(mousePosition.x, mousePosition.y, Z.MouseIcon);
 
             Color trainColor = trainIcon.GetComponent<SpriteRenderer>().color;
 
