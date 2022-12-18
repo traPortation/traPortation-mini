@@ -1,5 +1,5 @@
-using TraPortation.Game;
 using TraPortation.Const;
+using TraPortation.Game;
 using TraPortation.UI;
 using UnityEngine;
 using Zenject;
@@ -76,6 +76,7 @@ namespace TraPortation
                     this.gameManager.ManageMoney.ExpenseMoney(Const.Train.VehicleCost);
                     var trainObj = Instantiate(trainPrefab);
                     var train = trainObj.GetComponent<Train>();
+                    train.transform.position = new Vector3(mousePosition.x, mousePosition.y, Z.Train);
                     train.SetId(nextTrainId);
                     nextTrainId++;
                     var rail = hitInfo.collider.gameObject.GetComponent<RailLine>().Rail;

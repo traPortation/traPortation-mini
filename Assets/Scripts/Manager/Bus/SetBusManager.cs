@@ -49,7 +49,7 @@ namespace TraPortation
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    var busObj = Instantiate(busPrefab, mousePosition, Quaternion.identity);
+                    var busObj = Instantiate(busPrefab, new Vector3(mousePosition.x, mousePosition.y, Z.Bus), Quaternion.identity);
                     var bus = busObj.GetComponent<Bus>();
                     bus.SetId(nextBusId);
                     nextBusId++;

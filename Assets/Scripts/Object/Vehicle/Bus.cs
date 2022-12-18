@@ -15,8 +15,6 @@ namespace TraPortation
             this.Capacity = Const.Bus.Capacity;
             this.Wage = Const.Bus.Wage;
             this.velocity = Const.Bus.BusVelocity;
-
-            this.transform.position = new Vector3(0, 0, Z.Bus);
         }
 
         void FixedUpdate()
