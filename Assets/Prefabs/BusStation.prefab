@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8140756103831898591}
   - component: {fileID: 1385863970188127006}
   - component: {fileID: -2138556920135850087}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BusStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}

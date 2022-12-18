@@ -86,6 +86,7 @@ namespace TraPortation
             this.board.AddRoadEdge(node, road.To);
 
             GameObject newStation = container.InstantiatePrefab(this.prefab);
+            newStation.name = "Station";
             newStation.transform.position = new Vector3(x, y, Z.Station);
             var station = new Station(node);
             var view = newStation.GetComponent<StationView>();
