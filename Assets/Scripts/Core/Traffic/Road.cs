@@ -21,7 +21,7 @@ namespace TraPortation.Traffic
             this.board.AddRoadEdge(to, from);
 
             this.view.SetLine(new Vector3[] { new Vector3(from.X, from.Y, Z.Road), new Vector3(to.X, to.Y, Z.Road) });
-            this.view.SetColor(new Color(196 / 255f, 196 / 255f, 196 / 255f));
+            this.view.SetColor(new Color(212 / 255f, 212 / 255f, 212 / 255f));
             this.view.SetWidth(Mathf.Sqrt(roadLength) * 0.1f);
         }
 
