@@ -8,10 +8,8 @@ namespace TraPortation.Const
 
     public enum EdgeType
     {
-        Walk = 10,
-        Train = 1,
-        Finished = -1 // 使い終わったEdge
-        // Multi = ?,
+        Walk,
+        Train,
     }
 
     /// <summary>
@@ -21,7 +19,12 @@ namespace TraPortation.Const
     {
         public static int Get(EdgeType type)
         {
-            return (int)type;
+            return type switch
+            {
+                EdgeType.Walk => 10,
+                EdgeType.Train => 1,
+                _ => 0,
+            };
         }
     }
 
@@ -30,7 +33,8 @@ namespace TraPortation.Const
     /// </summary>
     public static class Count
     {
-        public static readonly int Person = 10;
+        public const int Person = 10;
+        public const int Road = 30;
     }
     /// <summary>
     /// 速度に関する定数

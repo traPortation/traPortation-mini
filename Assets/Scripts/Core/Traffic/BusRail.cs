@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using TraPortation.Const;
 using TraPortation.Moving;
 using TraPortation.Traffic.Node;
 using TraPortation.UI;
@@ -50,8 +49,8 @@ namespace TraPortation.Traffic
             this.factory = factory;
             this.buses = new List<Bus>();
 
-            this.line.SetLine(nodes.Select(n => new Vector3(n.X, n.Y, Z.BusRail)).ToArray());
-            this.line.SetColor(Color.yellow);
+            this.line.SetLine(nodes.Select(n => new Vector3(n.X, n.Y, Const.Z.BusRail)).ToArray());
+            this.line.SetColor(Const.Color.BusRail);
             this.line.SetRail(this);
         }
 

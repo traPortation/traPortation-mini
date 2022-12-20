@@ -1,71 +1,74 @@
 ﻿using System.Linq;
-using TraPortation.Const;
 using TraPortation.Moving;
 using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
 using UnityEngine;
 using Zenject;
 
-#nullable enable
-
-public class Person : MovingObject
+namespace TraPortation
 {
-#nullable disable
-    Board board;
-    PersonPathFactory factory;
-    SpriteRenderer spriteRenderer;
+
 #nullable enable
-    INode? goalNode;
 
-    [Inject]
-    public void Construct(Board board, PersonPathFactory factory)
+    public class Person : MovingObject
     {
-        this.board = board;
-        this.factory = factory;
+#nullable disable
+        Board board;
+        PersonPathFactory factory;
+        SpriteRenderer spriteRenderer;
+#nullable enable
+        INode? goalNode;
 
-        var (path, goal) = this.getRandomPath();
-        this.goalNode = goal;
-        this.Initialize(path);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.velocity = Velocity.Person;
-        this.spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        this.Move(this.velocity);
-
-        if (this.path.Status == SectionStatus.Finished)
+        [Inject]
+        public void Construct(Board board, PersonPathFactory factory)
         {
+            this.board = board;
+            this.factory = factory;
+
             var (path, goal) = this.getRandomPath();
             this.goalNode = goal;
             this.Initialize(path);
         }
 
-        if (this.path.Status == SectionStatus.OnTrain)
+        // Start is called before the first frame update
+        void Start()
         {
-            this.spriteRenderer.enabled = false;
+            this.velocity = Const.Velocity.Person;
+            this.spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         }
-        else
+
+        // Update is called once per frame
+        void FixedUpdate()
         {
-            this.spriteRenderer.enabled = true;
+            this.Move(this.velocity);
+
+            if (this.path.Status == SectionStatus.Finished)
+            {
+                var (path, goal) = this.getRandomPath();
+                this.goalNode = goal;
+                this.Initialize(path);
+            }
+
+            if (this.path.Status == SectionStatus.OnTrain)
+            {
+                this.spriteRenderer.enabled = false;
+            }
+            else
+            {
+                this.spriteRenderer.enabled = true;
+            }
         }
-    }
 
-    /// <summary>
-    /// ランダムにゴールを設定し、そこまでの経路をセットする
-    /// </summary>
-    (PersonPath, INode) getRandomPath()
-    {
-        var start = this.goalNode ?? this.board.GetRandomPoint();
-        var goal = this.board.GetRandomPoint();
+        /// <summary>
+        /// ランダムにゴールを設定し、そこまでの経路をセットする
+        /// </summary>
+        (PersonPath, INode) getRandomPath()
+        {
+            var start = this.goalNode ?? this.board.GetRandomPoint();
+            var goal = this.board.GetRandomPoint();
 
-        var nodes = this.board.GetPath(start, goal);
-        return (this.factory.Create(nodes), goal);
+            var nodes = this.board.GetPath(start, goal);
+            return (this.factory.Create(nodes), goal);
+        }
     }
 }

@@ -15,7 +15,6 @@ namespace TraPortation.UI
         public RailView()
         {
             this.lines = new List<RailLine>();
-            this.color = Color.red;
         }
 
         public void SetRail(Rail rail)

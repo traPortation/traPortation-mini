@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MessagePipe;
-using TraPortation.Const;
 using TraPortation.Event;
 using TraPortation.Game;
 using UnityEngine;
@@ -31,8 +30,8 @@ namespace TraPortation.UI
             this.mainLine.SetParent(this.transform);
             this.currentLine.SetParent(this.transform);
 
-            this.mainLine.SetColor(Color.blue);
-            this.currentLine.SetColor(Color.blue);
+            this.mainLine.SetColor(Const.Color.SetRail);
+            this.currentLine.SetColor(Const.Color.SetRail);
         }
 
         void Update()
@@ -73,7 +72,7 @@ namespace TraPortation.UI
                         {
                             return;
                         }
-                        this.positions.Add(new Vector3(station.Node.X, station.Node.Y, Z.Rail));
+                        this.positions.Add(new Vector3(station.Node.X, station.Node.Y, Const.Z.Rail));
                         this.stations.Add(station);
                         this.mainLine.SetLine(this.positions.ToArray());
                     }
@@ -84,7 +83,7 @@ namespace TraPortation.UI
                     return;
                 }
 
-                this.currentLine.SetLine(new Vector3[2] { this.positions.Last(), new Vector3(mousePos.x, mousePos.y, Z.Rail) });
+                this.currentLine.SetLine(new Vector3[2] { this.positions.Last(), new Vector3(mousePos.x, mousePos.y, Const.Z.Rail) });
             }
         }
 

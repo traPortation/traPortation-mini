@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TraPortation.Const;
 using TraPortation.Core.RoadGen;
 using TraPortation.Game;
 using TraPortation.Moving;
@@ -64,9 +63,9 @@ namespace TraPortation
         /// </summary>
         private void InstantiatePeople()
         {
-            for (int i = 0; i < Count.Person; i++)
+            for (int i = 0; i < Const.Count.Person; i++)
             {
-                var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+                var start = new Vector3(Random.Range(Const.X.Min, Const.X.Max), Random.Range(Const.Y.Min, Const.Y.Max), Const.Z.Person);
                 var obj = this.container.InstantiatePrefab(this.person);
                 obj.transform.position = start;
                 obj.transform.parent = this.peopleFolder.transform;

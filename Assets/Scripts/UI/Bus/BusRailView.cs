@@ -17,7 +17,6 @@ namespace TraPortation.UI
         public BusRailView()
         {
             this.lines = new List<BusRailLine>();
-            this.color = Color.red;
         }
 
         public void SetRail(BusRail rail)

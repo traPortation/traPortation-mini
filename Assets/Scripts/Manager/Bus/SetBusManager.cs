@@ -1,4 +1,3 @@
-using TraPortation.Const;
 using TraPortation.Game;
 using UnityEngine;
 using Zenject;
@@ -32,7 +31,7 @@ namespace TraPortation
                 busIcon.SetActive(true);
 
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = Z.MouseIcon;
+            mousePosition.z = Const.Z.MouseIcon;
             busIcon.transform.position = mousePosition;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -49,7 +48,7 @@ namespace TraPortation
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    var busObj = Instantiate(busPrefab, new Vector3(mousePosition.x, mousePosition.y, Z.Bus), Quaternion.identity);
+                    var busObj = Instantiate(busPrefab, new Vector3(mousePosition.x, mousePosition.y, Const.Z.Bus), Quaternion.identity);
                     var bus = busObj.GetComponent<Bus>();
                     bus.SetId(nextBusId);
                     nextBusId++;

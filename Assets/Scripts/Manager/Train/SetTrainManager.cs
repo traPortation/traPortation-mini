@@ -1,4 +1,3 @@
-using TraPortation.Const;
 using TraPortation.Game;
 using TraPortation.UI;
 using UnityEngine;
@@ -38,7 +37,7 @@ namespace TraPortation
             }
 
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            trainIcon.transform.position = new Vector3(mousePosition.x, mousePosition.y, Z.MouseIcon);
+            trainIcon.transform.position = new Vector3(mousePosition.x, mousePosition.y, Const.Z.MouseIcon);
 
             Color trainColor = trainIcon.GetComponent<SpriteRenderer>().color;
 
@@ -76,7 +75,7 @@ namespace TraPortation
                     this.gameManager.ManageMoney.ExpenseMoney(Const.Train.VehicleCost);
                     var trainObj = Instantiate(trainPrefab);
                     var train = trainObj.GetComponent<Train>();
-                    train.transform.position = new Vector3(mousePosition.x, mousePosition.y, Z.Train);
+                    train.transform.position = new Vector3(mousePosition.x, mousePosition.y, Const.Z.Train);
                     train.SetId(nextTrainId);
                     nextTrainId++;
                     var rail = hitInfo.collider.gameObject.GetComponent<RailLine>().Rail;
