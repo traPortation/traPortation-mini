@@ -19,6 +19,7 @@ namespace TraPortation.Moving.Section.Person
         readonly ISubscriber<int, TrainEvent> trainSubscriber;
         readonly DisposableBagBuilder disposableBag;
         readonly ManageMoney manager;
+        [Inject] IPublisher<TrainRideEvent> trainRidePub { get; set; }
 
         public TrainUsingSection(IReadOnlyList<Station> stations, ISubscriber<int, StationEvent> stationSubscriber, ISubscriber<int, TrainEvent> trainSubscriber, ManageMoney manager)
         {
@@ -62,7 +63,11 @@ namespace TraPortation.Moving.Section.Person
                 // 来た電車について次の駅が同じかを確認
                 if (this.Status != SectionStatus.OnStation || se.NextStation != this.stations[this.index + 1]) return;
 
-                // TODO: 乗れない場合を考慮する
+
+                Debug.Log($"Person {this} got on train {se.TrainId} at station {station.ID}");
+                trainRidePub.Publish(new TrainRideEvent(){
+                    TrainID = se.TrainId,
+                });
 
                 this.Status = SectionStatus.OnTrain;
 
