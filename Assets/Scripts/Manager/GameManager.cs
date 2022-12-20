@@ -22,6 +22,10 @@ namespace TraPortation
         [SerializeField] GameObject person;
         [SerializeField] GameObject building;
         [SerializeField] GameObject train;
+
+        public GameObject roadFolder;
+        public GameObject peopleFolder;
+
         StationManager StationManager;
         BusStationManager busStationManager;
         RailManager railManager;
@@ -65,6 +69,7 @@ namespace TraPortation
                 var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
                 var obj = this.container.InstantiatePrefab(this.person);
                 obj.transform.position = start;
+                obj.transform.parent = this.peopleFolder.transform;
             }
         }
 

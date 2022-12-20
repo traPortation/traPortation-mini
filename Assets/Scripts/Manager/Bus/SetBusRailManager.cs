@@ -29,6 +29,9 @@ namespace TraPortation
             this.curLine = curLine;
             this.curLine.SetColor(Color.red);
             this.factory = factory;
+
+            this.line.SetParent(this.transform);
+            this.curLine.SetParent(this.transform);
         }
 
         void Update()

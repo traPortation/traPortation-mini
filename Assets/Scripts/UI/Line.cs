@@ -64,5 +64,10 @@ namespace TraPortation.UI
             this.lineRenderer.startWidth = width;
             this.lineRenderer.endWidth = width;
         }
+
+        public void SetParent(Transform parent)
+        {
+            this.transform.SetParent(parent);
+        }
     }
 }

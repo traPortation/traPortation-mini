@@ -28,6 +28,9 @@ namespace TraPortation.UI
             this.mainLine = mainLine;
             this.currentLine = currentLine;
 
+            this.mainLine.SetParent(this.transform);
+            this.currentLine.SetParent(this.transform);
+
             this.mainLine.SetColor(Color.blue);
             this.currentLine.SetColor(Color.blue);
         }
