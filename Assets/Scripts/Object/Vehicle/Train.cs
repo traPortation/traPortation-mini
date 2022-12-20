@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 #nullable enable
@@ -12,6 +12,7 @@ namespace TraPortation
             this.Capacity = Const.Train.Capacity;
             this.Wage = Const.Train.Wage;
             this.velocity = Const.Velocity.Train;
+            this.PassengerCount = 0;
         }
 
         void FixedUpdate()
