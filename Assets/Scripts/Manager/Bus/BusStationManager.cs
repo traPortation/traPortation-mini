@@ -43,7 +43,7 @@ namespace TraPortation
             }
 
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 8f;
+            mousePosition.z = Const.Z.MouseIcon;
             stationIcon.transform.position = mousePosition;
             Color stationColor = stationIcon.GetComponent<SpriteRenderer>().color;
 
@@ -57,7 +57,7 @@ namespace TraPortation
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    this.AddBusStation(mousePosition);
+                    this.AddBusStation(mousePosition.x, mousePosition.y);
                 }
             }
             else
@@ -67,17 +67,18 @@ namespace TraPortation
             }
         }
 
-        public BusStation AddBusStation(Vector3 vec)
+        public BusStation AddBusStation(float x, float y)
         {
-            var (road, _) = this.board.GetNearestRoad(new Vector2(vec.x, vec.y));
-            var node = this.board.AddStationNode(vec.x, vec.y, StationKind.Bus);
+            var (road, _) = this.board.GetNearestRoad(new Vector2(x, y));
+            var node = this.board.AddStationNode(x, y, StationKind.Bus);
             this.board.AddRoadEdge(road.From, node);
             this.board.AddRoadEdge(node, road.From);
             this.board.AddRoadEdge(road.To, node);
             this.board.AddRoadEdge(node, road.To);
 
             var newStation = container.InstantiatePrefab(this.prefab);
-            newStation.transform.position = vec;
+            newStation.name = "BusStation";
+            newStation.transform.position = new Vector3(x, y, Const.Z.BusStation);
             var station = new BusStation(node);
             var view = newStation.GetComponent<BusStationView>();
             view.SetBusStation(station);

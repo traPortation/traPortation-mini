@@ -11,7 +11,7 @@ namespace TraPortation.Traffic
         Board board;
 
         [Inject]
-        public Road(IntersectionNode from, IntersectionNode to, IRoadView view, Board board)
+        public Road(IntersectionNode from, IntersectionNode to, float roadLength, IRoadView view, Board board)
         {
             this.view = view;
             this.board = board;
@@ -19,10 +19,11 @@ namespace TraPortation.Traffic
             this.board.AddRoadEdge(from, to);
             this.board.AddRoadEdge(to, from);
 
-            this.view.SetLine(new Vector3[] { new Vector3(from.X, from.Y, -1), new Vector3(to.X, to.Y, -1) });
-            this.view.SetColor(Color.black);
+            this.view.SetLine(new Vector3[] { new Vector3(from.X, from.Y, Const.Z.Road), new Vector3(to.X, to.Y, Const.Z.Road) });
+            this.view.SetColor(Const.Color.Road);
+            this.view.SetWidth(Mathf.Sqrt(roadLength) * 0.1f);
         }
 
-        public class Factory : PlaceholderFactory<IntersectionNode, IntersectionNode, Road> { }
+        public class Factory : PlaceholderFactory<IntersectionNode, IntersectionNode, float, Road> { }
     }
 }

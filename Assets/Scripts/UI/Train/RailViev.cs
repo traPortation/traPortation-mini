@@ -15,7 +15,6 @@ namespace TraPortation.UI
         public RailView()
         {
             this.lines = new List<RailLine>();
-            this.color = Color.red;
         }
 
         public void SetRail(Rail rail)
@@ -37,7 +36,6 @@ namespace TraPortation.UI
                 line.Construct();
                 line.SetLine(new Vector3[] { positions[i], positions[i + 1] });
                 line.SetColor(this.color);
-                line.SetZ(1.0f);
                 line.SetRail(this.Rail);
                 lines.Add(line);
             }

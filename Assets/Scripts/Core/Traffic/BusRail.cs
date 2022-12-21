@@ -49,8 +49,8 @@ namespace TraPortation.Traffic
             this.factory = factory;
             this.buses = new List<Bus>();
 
-            this.line.SetLine(nodes.Select(n => new Vector3(n.X, n.Y, 8.0f)).ToArray());
-            this.line.SetColor(Color.yellow);
+            this.line.SetLine(nodes.Select(n => new Vector3(n.X, n.Y, Const.Z.BusRail)).ToArray());
+            this.line.SetColor(Const.Color.BusRail);
             this.line.SetRail(this);
         }
 
@@ -60,12 +60,9 @@ namespace TraPortation.Traffic
         {
             this.buses.Add(bus);
 
-            // TODO: IDを設定する
             var path = this.factory.Create(bus.ID, this.routes);
             path.MoveTo(vec);
             bus.Initialize(path);
-
-
         }
     }
 }

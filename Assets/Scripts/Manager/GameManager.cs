@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TraPortation.Const;
 using TraPortation.Core.RoadGen;
 using TraPortation.Game;
 using TraPortation.Moving;
@@ -22,6 +21,10 @@ namespace TraPortation
         [SerializeField] GameObject person;
         [SerializeField] GameObject building;
         [SerializeField] GameObject train;
+
+        public GameObject roadFolder;
+        public GameObject peopleFolder;
+
         StationManager StationManager;
         BusStationManager busStationManager;
         RailManager railManager;
@@ -41,7 +44,7 @@ namespace TraPortation
         }
 
         [Inject]
-        public void Construct(Board board, DiContainer container, StationManager stationManager, BusStationManager busStationManager, RailManager railManager, Traffic.Road.Factory roadFactory)
+        public void Construct(Board board, DiContainer container, StationManager stationManager, BusStationManager busStationManager, RailManager railManager, Traffic.Road.Factory roadFactory, ManageMoney manageMoney)
         {
             this.Board = board;
             this.container = container;
@@ -50,7 +53,7 @@ namespace TraPortation
             this.railManager = railManager;
             this.roadFactory = roadFactory;
 
-            this.ManageMoney = new ManageMoney();
+            this.ManageMoney = manageMoney;
 
             Utils.NullChecker.Check(this.person, this.building, this.train, this.StationManager);
         }
@@ -60,11 +63,12 @@ namespace TraPortation
         /// </summary>
         private void InstantiatePeople()
         {
-            for (int i = 0; i < Count.Person; i++)
+            for (int i = 0; i < Const.Count.Person; i++)
             {
-                var start = new Vector3(Random.Range(X.Min, X.Max), Random.Range(Y.Min, Y.Max), Z.Person);
+                var start = new Vector3(Random.Range(Const.X.Min, Const.X.Max), Random.Range(Const.Y.Min, Const.Y.Max), Const.Z.Person);
                 var obj = this.container.InstantiatePrefab(this.person);
                 obj.transform.position = start;
+                obj.transform.parent = this.peopleFolder.transform;
             }
         }
 
@@ -84,6 +88,7 @@ namespace TraPortation
             while (q.Count != 0)
             {
                 var road = q.Dequeue();
+                var length = road.line.Distance();
 
                 var neigbors = road.GetNeigbors();
                 Traffic.Node.IntersectionNode? before = null;
@@ -118,7 +123,7 @@ namespace TraPortation
 
                     if (before != null)
                     {
-                        this.roadFactory.Create(before, node);
+                        this.roadFactory.Create(before, node, length);
                     }
                     before = node;
                 }
@@ -138,7 +143,7 @@ namespace TraPortation
                         dict.Add(road.line.end, node);
                     }
 
-                    this.roadFactory.Create(before, node);
+                    this.roadFactory.Create(before, node, length);
                 }
             }
         }

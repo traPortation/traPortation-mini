@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MessagePipe;
 using NUnit.Framework;
+using TraPortation;
 using TraPortation.Event.Train;
 using TraPortation.Moving;
 using TraPortation.Moving.Section.Person;

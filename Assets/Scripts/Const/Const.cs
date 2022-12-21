@@ -1,19 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TraPortation.Traffic;
 
 namespace TraPortation.Const
 {
-
-    public enum EdgeType
-    {
-        Walk = 10,
-        Train = 1,
-        Finished = -1 // 使い終わったEdge
-        // Multi = ?,
-    }
-
     /// <summary>
     /// Edgeのコスト
     /// </summary>
@@ -21,7 +12,12 @@ namespace TraPortation.Const
     {
         public static int Get(EdgeType type)
         {
-            return (int)type;
+            return type switch
+            {
+                EdgeType.Walk => 10,
+                EdgeType.Train => 1,
+                _ => 0,
+            };
         }
     }
 
@@ -30,22 +26,25 @@ namespace TraPortation.Const
     /// </summary>
     public static class Count
     {
-        public static readonly int Person = 10;
+        public const int Person = 10;
+        public const int Road = 30;
     }
     /// <summary>
     /// 速度に関する定数
     /// </summary>
     public static class Velocity
     {
-        public const float Person = 0.1f;
+        public const float Person = 0.05f;
         public const float Train = 0.3f;
     }
 
     /// <summary>
     /// 所持金に関する定数
     /// </summary>
-    public static class MoneyLimit
+    public static class Money
     {
+        public const int Start = 100000;
+
         public const int minMoney = 0;
         public const int maxMoney = 999999999;
     }

@@ -8,5 +8,6 @@ namespace TraPortation.UI
     {
         void SetLine(Vector3[] positions);
         void SetColor(Color color);
+        void SetParent(Transform parent);
     }
 }

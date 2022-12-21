@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TraPortation.Const;
 using TraPortation.Traffic.Edge;
 using TraPortation.Traffic.Node;
 using UnityEngine;
@@ -58,11 +57,11 @@ namespace TraPortation.Traffic
         /// </summary>
         /// <param name="from"></param>
         /// <param name="to"></param>
-        /// <param name="type">Const.EdgeTypeから指定する</param>
+        /// <param name="type">EdgeTypeから指定する</param>
         /// <returns>追加されたEdge</returns>
         public VehicleEdge AddVehicleRoute(StationNode from, StationNode to, EdgeType type = EdgeType.Walk)
         {
-            float cost = EdgeCost.Get(type) * Utils.Node.Distance(from, to);
+            float cost = Const.EdgeCost.Get(type) * Utils.Node.Distance(from, to);
             var edge = from.AddVehicleRoute(to, cost);
             return edge;
         }
@@ -76,7 +75,7 @@ namespace TraPortation.Traffic
         /// <returns>作成したRoadEdge</returns>
         public RoadEdge AddRoadEdge(IBoardNode from, IBoardNode to)
         {
-            float cost = EdgeCost.Get(EdgeType.Walk) * Utils.Node.Distance(from, to);
+            float cost = Const.EdgeCost.Get(EdgeType.Walk) * Utils.Node.Distance(from, to);
             var edge = from.AddRoad(to, cost);
             this.roads.Add(edge);
             return edge;
@@ -89,15 +88,18 @@ namespace TraPortation.Traffic
         /// <param name="start"></param>
         /// <param name="goal"></param>
         /// <returns>最短経路</returns>
-        private List<INode> searchPath(IIndexedNode start, IIndexedNode goal)
+        private List<INode> searchPath(List<(float, IIndexedNode)> starts, List<(float, IIndexedNode)> goals)
         {
             var from = Enumerable.Repeat<(IIndexedNode?, IEdge<IBoardNode, IBoardNode>?)>((null, null), this.Nodes.Count).ToList();
 
             var dist = Enumerable.Repeat<float>(float.MaxValue, this.Nodes.Count).ToList();
-            dist[start.Index] = 0;
-
             var que = new Utils.PriorityQueue<(float, int)>();
-            que.Push((0, start.Index));
+
+            foreach (var (cost, start) in starts)
+            {
+                dist[start.Index] = cost;
+                que.Push((cost, start.Index));
+            }
 
             while (que.Count != 0)
             {
@@ -121,10 +123,20 @@ namespace TraPortation.Traffic
                             // unreachableなはず
                             throw new System.Exception();
                     }
-
                 }
             }
             var nodes = new List<INode>();
+
+            var goal = goals[0].Item2;
+            var minDist = dist[goals[0].Item2.Index] + goals[0].Item1;
+            foreach (var g in goals)
+            {
+                if (minDist > dist[g.Item2.Index] + g.Item1)
+                {
+                    minDist = dist[g.Item2.Index] + g.Item1;
+                    goal = g.Item2;
+                }
+            }
 
             // startからgoalへの道がない場合は例外を投げる (仮仕様)
             if (dist[goal.Index] == float.MaxValue)
@@ -150,13 +162,28 @@ namespace TraPortation.Traffic
         /// <returns></returns>
         public IReadOnlyList<INode> GetPath(INode start, INode goal)
         {
-            var startIntersection = this.GetNearestNode(start.X, start.Y);
-            var goalIntersection = this.GetNearestNode(goal.X, goal.Y);
+            var (startRoad, startPoint) = this.GetNearestRoad(new Vector2(start.X, start.Y));
+            var (goalRoad, goalPoint) = this.GetNearestRoad(new Vector2(goal.X, goal.Y));
 
-            var searchedNodes = searchPath(startIntersection, goalIntersection);
+            if (startRoad == null || goalRoad == null)
+            {
+                throw new System.Exception("road not found");
+            }
+
+            var startFromCost = Utils.Node.Distance(start, startRoad.From) * Const.EdgeCost.Get(EdgeType.Walk);
+            var startToCost = Utils.Node.Distance(start, startRoad.To) * Const.EdgeCost.Get(EdgeType.Walk);
+            var starts = new List<(float, IIndexedNode)>() { (startFromCost, startRoad.From), (startToCost, startRoad.To) };
+
+            var goalFromCost = Utils.Node.Distance(goal, goalRoad.From) * Const.EdgeCost.Get(EdgeType.Walk);
+            var goalToCost = Utils.Node.Distance(goal, goalRoad.To) * Const.EdgeCost.Get(EdgeType.Walk);
+            var goals = new List<(float, IIndexedNode)>() { (goalFromCost, goalRoad.From), (goalToCost, goalRoad.To) };
+
+            var searchedNodes = this.searchPath(starts, goals);
 
             // TODO: 効率がよくないので改善する
+            searchedNodes.Insert(0, new TemporaryNode(startPoint.x, startPoint.y));
             searchedNodes.Insert(0, start);
+            searchedNodes.Add(new TemporaryNode(goalPoint.x, goalPoint.y));
             searchedNodes.Add(goal);
 
             return searchedNodes;
@@ -189,15 +216,10 @@ namespace TraPortation.Traffic
 
         public TemporaryNode GetRandomPoint()
         {
-            var x = Random.Range(X.Min, X.Max);
-            var y = Random.Range(Y.Min, Y.Max);
+            var x = Random.Range(Const.X.Min, Const.X.Max);
+            var y = Random.Range(Const.Y.Min, Const.Y.Max);
 
             return new TemporaryNode(x, y);
-        }
-
-        public void Test()
-        {
-            Debug.Log("Test");
         }
     }
 }

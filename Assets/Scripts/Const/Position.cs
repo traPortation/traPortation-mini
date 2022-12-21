@@ -21,8 +21,29 @@ namespace TraPortation.Const
     /// </summary>
     public static class Z
     {
-        public static readonly float Building = 0f;
-        public static readonly float Person = 8f;
-        public static readonly float Camera = 10f;
+        public const float Camera = -100f;
+
+        public const float MouseIcon = -10f;
+
+        public const float Person = 0f;
+
+        // 乗り物
+        public const float Train = 10f;
+        public const float Bus = 11f;
+
+        // 路線
+        public const float Rail = 20f;
+        public const float BusRail = 21f;
+
+
+        // 駅
+        public const float Station = 30f;
+        public const float BusStation = 31f;
+
+
+        public const float Road = 50f;
+
+        public const float Background = 100f;
+
     }
 }

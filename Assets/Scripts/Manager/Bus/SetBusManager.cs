@@ -9,6 +9,7 @@ namespace TraPortation
         GameManager manager;
         [SerializeField] GameObject busIcon;
         [SerializeField] GameObject busPrefab;
+        int nextBusId = 0;
 
         [Inject]
         public void Construct(GameManager manager)
@@ -19,13 +20,18 @@ namespace TraPortation
         {
             if (this.manager.Status != GameStatus.SetBus)
             {
+                if (busIcon.activeSelf)
+                {
+                    busIcon.SetActive(false);
+                }
                 return;
             }
 
-            busIcon.SetActive(true);
+            if (!busIcon.activeSelf)
+                busIcon.SetActive(true);
 
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 9f;
+            mousePosition.z = Const.Z.MouseIcon;
             busIcon.transform.position = mousePosition;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -38,12 +44,15 @@ namespace TraPortation
                 color.a = 1f;
                 busIcon.GetComponent<SpriteRenderer>().material.color = color;
 
-				// TODO: 向きの処理
+                // TODO: 向きの処理
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    var busObj = Instantiate(busPrefab, mousePosition, Quaternion.identity);
+                    var busObj = Instantiate(busPrefab, new Vector3(mousePosition.x, mousePosition.y, Const.Z.Bus), Quaternion.identity);
                     var bus = busObj.GetComponent<Bus>();
+                    bus.SetId(nextBusId);
+                    nextBusId++;
+
                     var rail = hitInfo.collider.gameObject.GetComponent<UI.BusRailLine>().Rail;
                     rail.AddBus(bus, mousePosition);
                 }

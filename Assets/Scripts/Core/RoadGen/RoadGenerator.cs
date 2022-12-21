@@ -11,7 +11,7 @@ namespace TraPortation.Core.RoadGen
 
         public void GenerateRoads()
         {
-            while (this.roads.Count < 30)
+            while (this.roads.Count < Const.Count.Road)
             {
                 var p = this.randomPoint();
                 var angle = this.randomAngle();

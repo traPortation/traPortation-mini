@@ -22,29 +22,6 @@ namespace TraPortation.Traffic
         IRailView line;
         TrainPath.Factory factory;
 
-        List<Color> railColors = new List<Color>() {
-            new Color(1, 0, 0, 1),
-            new Color(0, 1, 0, 1),
-            new Color(0, 0, 1, 1),
-            new Color(1, 1, 0, 1),
-            new Color(1, 0, 1, 1),
-            new Color(0, 1, 1, 1),
-            new Color(0.5f, 0, 0, 1),
-            new Color(0, 0.5f, 0, 1),
-            new Color(0, 0, 0.5f, 1),
-            new Color(0.5f, 0.5f, 0, 1),
-            new Color(0.5f, 0, 0.5f, 1),
-            new Color(0, 0.5f, 0.5f, 1),
-            new Color(0.5f, 0.5f, 0.5f, 1),
-            new Color(1, 0.5f, 1, 1),
-            new Color(1f, 0.7f, 0.5f, 1f),
-            new Color(1f, 0.9f, 0.3f, 1f),
-            new Color(0.3f, 0.3f, 0.3f, 1f),
-            new Color(1, 0.4f, 0.2f, 1f),
-            new Color(0.7f, 0.3f, 0.4f, 1f),
-            new Color(0.2f, 0.6f, 0.3f, 1f),
-        };
-
         public Rail(List<Station> stations, int id, string name, IRailView line, TrainPath.Factory factory)
         {
             this.stations = stations;
@@ -54,9 +31,9 @@ namespace TraPortation.Traffic
 
             this.line = line;
             this.line.SetRail(this);
-            this.line.SetLine(this.stations.Select(node => new Vector3(node.Node.X, node.Node.Y, 5)).ToArray());
+            this.line.SetLine(this.stations.Select(node => new Vector3(node.Node.X, node.Node.Y, Const.Z.Rail)).ToArray());
 
-            this.line.SetColor(railColors[id % railColors.Count]);
+            this.line.SetColor(Const.Color.RailColors[id % Const.Color.RailColors.Count]);
 
             this.factory = factory;
         }
@@ -66,16 +43,14 @@ namespace TraPortation.Traffic
         /// <summary>
         /// 線路上に車両を作成する
         /// </summary>
-        public void AddTrain(Train train, Vector3 vec)
+        public void AddTrain(Train train, Vector3 vec, bool direction)
         {
             this.trains.Add(train);
 
-            // TODO: IDを設定する
             var path = factory.Create(train.ID, this.stations);
 
             // 指定した位置に移動させる
-            // TODO: 向きの指定
-            path.MoveTo(vec);
+            path.MoveTo(vec, direction);
 
             train.Initialize(path);
         }

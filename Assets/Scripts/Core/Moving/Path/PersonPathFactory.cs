@@ -27,48 +27,35 @@ namespace TraPortation.Moving
         {
             var sections = new List<ISection>();
 
-            var walkSectionNodes = new List<INode>();
-            var stations = new List<Station>();
+            var positions = new List<Position>();
 
-            foreach (var node in nodes)
+            for (int i = 0; i < nodes.Count; i++)
             {
-                if (node is StationNode sNode && sNode.Kind == StationKind.Train)
+                var node = nodes[i];
+                if (node is StationNode sNode && sNode.Kind == StationKind.Train && nodes[i + 1] is StationNode sNext && sNext.Kind == StationKind.Train)
                 {
-                    var station = this.stationManager.GetStation(sNode);
-                    stations.Add(station);
+                    positions.Add(new Position(node));
+                    sections.Add(new SimpleSection(positions));
+                    positions = new List<Position>();
 
-                    if (walkSectionNodes.Count != 0)
+                    var stations = new List<Station>();
+                    while (i < nodes.Count && nodes[i] is StationNode s && sNode.Kind == StationKind.Train)
                     {
-                        // WalkSectionを追加
-                        walkSectionNodes.Add(node);
-                        var positions = walkSectionNodes.Select(n => new Position(n)).ToList();
-                        sections.Add(new SimpleSection(positions));
-
-                        walkSectionNodes = new List<INode>();
+                        stations.Add(this.stationManager.GetStation(s));
+                        i++;
                     }
+                    i--;
+                    positions.Add(new Position(nodes[i]));
+                    sections.Add(this.trainFactory.Create(stations));
                 }
                 else
                 {
-                    walkSectionNodes.Add(node);
-
-                    if (stations.Count > 1)
-                    {
-                        // TrainUsingSectionを追加
-                        sections.Add(this.trainFactory.Create(stations));
-                        stations = new List<Station>();
-                    }
+                    positions.Add(new Position(node));
                 }
             }
-
-            // 最後のSectionを作成
-            if (walkSectionNodes.Count > 1)
+            if (positions.Count > 1)
             {
-                var positions = walkSectionNodes.Select(n => new Position(n)).ToList();
                 sections.Add(new SimpleSection(positions));
-            }
-            else if (stations.Count > 1)
-            {
-                sections.Add(this.trainFactory.Create(stations));
             }
 
             return new PersonPath(sections);

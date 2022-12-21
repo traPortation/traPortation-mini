@@ -19,6 +19,11 @@ namespace TraPortation.Core.RoadGen
             return Mathf.Atan2(end.y - start.y, end.x - start.x);
         }
 
+        public float Distance()
+        {
+            return (end - start).magnitude;
+        }
+
         Vector2 vector()
         {
             return (end - start);

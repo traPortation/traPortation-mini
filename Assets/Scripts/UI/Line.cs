@@ -41,7 +41,7 @@ namespace TraPortation.UI
             this.lineRenderer.startWidth = 0.1f;
             this.lineRenderer.endWidth = 0.1f;
 
-            this.transform.position = new Vector3((positions.First().x + positions.Last().x) / 2, (positions.First().y + positions.Last().y) / 2, 2);
+            this.transform.position = new Vector3((positions.First().x + positions.Last().x) / 2, (positions.First().y + positions.Last().y) / 2, positions.First().z);
 
             var distance = Mathf.Sqrt(
                 Mathf.Pow(positions.Last().x - positions.First().x, 2) +
@@ -59,9 +59,15 @@ namespace TraPortation.UI
             this.lineRenderer.endColor = color;
         }
 
-        public void SetZ(float z)
+        public void SetWidth(float width)
         {
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, z);
+            this.lineRenderer.startWidth = width;
+            this.lineRenderer.endWidth = width;
+        }
+
+        public void SetParent(Transform parent)
+        {
+            this.transform.SetParent(parent);
         }
     }
 }

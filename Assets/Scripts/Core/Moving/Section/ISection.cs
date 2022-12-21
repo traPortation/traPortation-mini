@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace TraPortation.Moving
 {
@@ -6,6 +7,7 @@ namespace TraPortation.Moving
     {
         SectionStatus Status { get; }
         Position Position { get; }
+        Quaternion Rotation { get; }
         void Start();
         void Move(float distance);
     }

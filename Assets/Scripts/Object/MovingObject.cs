@@ -13,6 +13,7 @@ public abstract class MovingObject : MonoBehaviour
     {
         this.path.Move(distance);
         this.transform.position = this.path.Position.ToVector3(transform.position.z);
+        this.transform.rotation = this.path.Rotation;
     }
 
     /// <summary>
@@ -23,5 +24,6 @@ public abstract class MovingObject : MonoBehaviour
     {
         this.path = path;
         this.transform.position = this.path.Position.ToVector3(transform.position.z);
+        this.transform.rotation = this.path.Rotation;
     }
 }
