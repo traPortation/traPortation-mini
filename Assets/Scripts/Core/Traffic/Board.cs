@@ -17,11 +17,13 @@ namespace TraPortation.Traffic
     {
         List<IntersectionNode> nodes;
         public IReadOnlyList<IntersectionNode> Nodes => this.nodes;
+        List<RoadEdge> roads;
 
         [Inject]
         public Board()
         {
             this.nodes = new List<IntersectionNode>();
+            this.roads = new List<RoadEdge>();
         }
 
         /// <summary>
@@ -30,10 +32,10 @@ namespace TraPortation.Traffic
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns>追加されたNode</returns>
-        public StationNode AddStationNode(float x, float y)
+        public StationNode AddStationNode(float x, float y, StationKind kind)
         {
             // TODO: 画面外への設置は弾く
-            var node = new StationNode(x, y, this.nodes.Count);
+            var node = new StationNode(x, y, this.nodes.Count, kind);
             this.nodes.Add(node);
             return node;
         }
@@ -72,11 +74,11 @@ namespace TraPortation.Traffic
         /// <param name="to">終点</param>
         /// <typeparam name="T">始点の型</typeparam>
         /// <returns>作成したRoadEdge</returns>
-        public RoadEdge AddRoadEdge<T>(T from, IBoardNode to)
-            where T : IntersectionNode
+        public RoadEdge AddRoadEdge(IBoardNode from, IBoardNode to)
         {
             float cost = EdgeCost.Get(EdgeType.Walk) * Utils.Node.Distance(from, to);
             var edge = from.AddRoad(to, cost);
+            this.roads.Add(edge);
             return edge;
         }
 
@@ -163,6 +165,26 @@ namespace TraPortation.Traffic
         public IntersectionNode GetNearestNode(float x, float y)
         {
             return this.nodes.OrderBy(node => Mathf.Pow(node.X - x, 2) + Mathf.Pow(node.Y - y, 2)).First();
+        }
+
+        public (RoadEdge?, Vector2) GetNearestRoad(Vector2 vec)
+        {
+            float dist = float.MaxValue;
+            RoadEdge? nearest = null;
+            Vector2 nearestPos = Vector2.zero;
+
+            foreach (var r in this.roads)
+            {
+                var (d, pos) = r.DistanceToPoint(vec);
+                if (d < dist)
+                {
+                    dist = d;
+                    nearest = r;
+                    nearestPos = pos;
+                }
+            }
+
+            return (nearest, nearestPos);
         }
 
         public TemporaryNode GetRandomPoint()

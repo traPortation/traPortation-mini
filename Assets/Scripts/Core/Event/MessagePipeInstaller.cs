@@ -1,5 +1,6 @@
 using MessagePipe;
 using TraPortation.Event;
+using TraPortation.Event.Bus;
 using TraPortation.Event.Train;
 using Zenject;
 
@@ -12,6 +13,9 @@ public class MessagePipeInstaller : Installer<MessagePipeInstaller>
         Container.BindMessageBroker<int, StationEvent>(option);
         Container.BindMessageBroker<int, TrainEvent>(option);
         Container.BindMessageBroker<StationClickedEvent>(option);
-        Container.BindMessageBroker<RoadClickedEvent>(option);
+
+        Container.BindMessageBroker<int, BusEvent>(option);
+        Container.BindMessageBroker<int, BusStationEvent>(option);
+        Container.BindMessageBroker<BusStationClickedEvent>(option);
     }
 }

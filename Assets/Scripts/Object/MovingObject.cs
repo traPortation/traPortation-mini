@@ -6,12 +6,12 @@ using UnityEngine;
 // 動くもの全般 (人間、乗り物など)
 public abstract class MovingObject : MonoBehaviour
 {
-    protected Path path { get; private set; }
+    protected IPath path { get; private set; }
     protected float velocity;
 
-    protected void Move(float delta)
+    protected void Move(float distance)
     {
-        this.path.Move(delta);
+        this.path.Move(distance);
         this.transform.position = this.path.Position.ToVector3(transform.position.z);
     }
 
@@ -19,7 +19,7 @@ public abstract class MovingObject : MonoBehaviour
     /// pathをsetし、自分の位置をpathの始点にする
     /// </summary>
     /// <param name="path"></param>
-    public void Initialize(Path path)
+    public void Initialize(IPath path)
     {
         this.path = path;
         this.transform.position = this.path.Position.ToVector3(transform.position.z);

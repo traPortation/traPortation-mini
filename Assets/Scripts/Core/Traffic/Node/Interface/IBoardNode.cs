@@ -9,5 +9,6 @@ namespace TraPortation.Traffic.Node
     public interface IBoardNode : IIndexedNode
     {
         IEnumerable<IEdge<IBoardNode, IBoardNode>> Edges { get; }
+        RoadEdge AddRoad(IBoardNode toNode, float cost);
     }
 }

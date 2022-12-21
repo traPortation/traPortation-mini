@@ -5,15 +5,10 @@ namespace TraPortation.Moving
         // 共通
         NotStarted,
         Finished,
-
-        // WalkSection用
-        Walking,
+        Moving,
 
         // TrainUsingSection用
         OnStation,
         OnTrain,
-
-        // TrainSection用
-        TrainMoving
     }
 }

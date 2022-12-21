@@ -2,6 +2,7 @@
 using TraPortation.Const;
 using TraPortation.Moving;
 using TraPortation.Traffic;
+using TraPortation.Traffic.Node;
 using UnityEngine;
 using Zenject;
 
@@ -11,16 +12,18 @@ public class Person : MovingObject
 {
 #nullable disable
     Board board;
-    PathFactory factory;
+    PersonPathFactory factory;
     SpriteRenderer spriteRenderer;
 #nullable enable
+    INode? goalNode;
+
     [Inject]
-    public void Construct(Board board, PathFactory factory)
+    public void Construct(Board board, PersonPathFactory factory)
     {
         this.board = board;
         this.factory = factory;
 
-        var path = this.getRandomPath();
+        var (path, _) = this.getRandomPath();
         this.Initialize(path);
     }
 
@@ -38,7 +41,8 @@ public class Person : MovingObject
 
         if (this.path.Status == SectionStatus.Finished)
         {
-            var path = this.getRandomPath();
+            var (path, goal) = this.getRandomPath();
+            this.goalNode = goal;
             this.Initialize(path);
         }
 
@@ -55,12 +59,12 @@ public class Person : MovingObject
     /// <summary>
     /// ランダムにゴールを設定し、そこまでの経路をセットする
     /// </summary>
-    Path getRandomPath()
+    (PersonPath, INode) getRandomPath()
     {
-        var start = this.path?.LastNode ?? this.board.GetRandomPoint();
+        var start = this.goalNode ?? this.board.GetRandomPoint();
         var goal = this.board.GetRandomPoint();
 
         var nodes = this.board.GetPath(start, goal);
-        return this.factory.Create(nodes);
+        return (this.factory.Create(nodes), goal);
     }
 }

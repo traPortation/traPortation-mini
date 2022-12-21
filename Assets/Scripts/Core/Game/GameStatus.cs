@@ -4,8 +4,13 @@ namespace TraPortation.Game
     {
         Normal,
         Pause,
+
         SetTrain,
         SetRail,
-        SetStation
+        SetStation,
+
+        SetBus,
+        SetBusStation,
+        SetBusRail,
     }
 }

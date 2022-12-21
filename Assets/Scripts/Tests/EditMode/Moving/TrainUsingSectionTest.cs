@@ -5,6 +5,7 @@ using NUnit.Framework;
 using TraPortation.Event.Train;
 using TraPortation.Moving;
 using TraPortation.Moving.Section.Person;
+using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
 using UnityEngine;
 using Zenject;
@@ -32,13 +33,14 @@ namespace Tests
             Container.BindFactory<IReadOnlyList<Station>, TrainUsingSection, TrainUsingSection.Factory>();
             Container.BindMessageBroker<int, TrainEvent>(option);
             Container.BindMessageBroker<int, StationEvent>(option);
+            Container.Bind<ManageMoney>().FromNew().AsSingle();
 
             Container.Inject(this);
 
             var nodes = new List<StationNode>();
-            nodes.Add(new StationNode(0, 0, 0));
-            nodes.Add(new StationNode(1, 1, 1));
-            nodes.Add(new StationNode(2, 2, 2));
+            nodes.Add(new StationNode(0, 0, 0, StationKind.Train));
+            nodes.Add(new StationNode(1, 1, 1, StationKind.Train));
+            nodes.Add(new StationNode(2, 2, 2, StationKind.Train));
 
             this.stations = nodes.Select(n => new Station(n)).ToList();
 
