@@ -91,7 +91,7 @@ namespace TraPortation.Moving
                 a = new Position(this.stations[i].Node);
                 b = new Position(this.stations[i + 1].Node);
 
-                var dist = v.DistanceToLine(a, b);
+                var dist = v.DistanceToSegment(a, b);
                 if (mindist > dist)
                 {
                     mindist = dist;

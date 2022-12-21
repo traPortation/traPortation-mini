@@ -33,5 +33,13 @@ namespace TraPortation.Moving
         {
             return Mathf.Abs((b.Y - a.Y) * this.X - (b.X - a.X) * this.Y + b.X * a.Y - b.Y * a.X) / Mathf.Sqrt(Mathf.Pow(b.X - a.X, 2) + Mathf.Pow(a.Y - b.Y, 2));
         }
+
+        // a, bを通る線分との距離
+        public float DistanceToSegment(Position a, Position b)
+        {
+            var t = ((this.X - a.X) * (b.X - a.X) + (this.Y - a.Y) * (b.Y - a.Y)) / Position.Distance(a, b);
+            if (t < 0 || t > 1) return Mathf.Min(Position.Distance(this, a), Position.Distance(this, b));
+            return this.DistanceToLine(a, b);
+        }
     }
 }

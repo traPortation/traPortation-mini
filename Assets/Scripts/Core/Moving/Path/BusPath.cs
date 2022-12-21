@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using TraPortation.Event.Bus;
@@ -29,8 +30,15 @@ namespace TraPortation.Moving
             this.busId = busId;
             this.routes = routes;
             this.curSection = new SimpleSection(routes[0].Positions);
+
+            for (int i = 0; i < routes.Count - 1; i++)
+            {
+                Debug.Assert(routes[i].End.ID == routes[i + 1].Start.ID);
+            }
+
             this.busPub = busPub;
             this.busStationPub = busStationPub;
+            this.direction = true;
         }
 
         public class Factory : PlaceholderFactory<int, IReadOnlyList<BusRoute>, BusPath> { }
@@ -54,9 +62,15 @@ namespace TraPortation.Moving
                 this.curSection.Dispose();
 
                 if (this.direction && this.index == this.routes.Count - 1)
+                {
+                    this.index++;
                     this.direction = false;
+                }
                 else if (!this.direction && this.index == 0)
+                {
+                    this.index--;
                     this.direction = true;
+                }
 
                 if (this.direction) this.index++;
                 else this.index--;
@@ -69,7 +83,10 @@ namespace TraPortation.Moving
                 this.stopOnStation();
 
                 // curSectionを更新
-                this.curSection = new SimpleSection(nextRoute.Positions);
+                if (this.direction)
+                    this.curSection = new SimpleSection(nextRoute.Positions);
+                else
+                    this.curSection = new SimpleSection(nextRoute.Positions.Reverse().ToList());
             }
         }
 
@@ -77,31 +94,41 @@ namespace TraPortation.Moving
         {
             var v = new Position(vec.x, vec.y);
             var mindist = float.MaxValue;
-            BusRoute minRoute = null;
+            int minRouteIdx = 0;
             int minindex = 0;
             Position a, b;
-            foreach (var route in this.routes)
+
+            for (var j = 0; j < this.routes.Count; j++)
             {
-                for (var i = 0; i < route.Positions.Count - 1; i++)
+                var route = this.routes[j];
                 {
-                    a = route.Positions[i];
-                    b = route.Positions[i + 1];
-                    var dist = v.DistanceToLine(a, b);
-                    if (dist < mindist)
+                    for (var i = 0; i < route.Positions.Count - 1; i++)
                     {
-                        mindist = dist;
-                        minRoute = route;
-                        minindex = i;
+                        a = route.Positions[i];
+                        b = route.Positions[i + 1];
+                        var dist = v.DistanceToSegment(a, b);
+                        if (dist < mindist)
+                        {
+                            mindist = dist;
+                            minRouteIdx = j;
+                            minindex = i;
+                        }
                     }
                 }
             }
 
+            var minRoute = this.routes[minRouteIdx];
+
             this.curSection = new SimpleSection(minRoute.Positions);
+            this.index = minRouteIdx;
+
             for (var i = 0; i < minindex; i++)
             {
                 this.curSection.Move(float.MaxValue);
             }
             this.curSection.Move(Position.Distance(minRoute.Positions[minindex], v));
+
+            Debug.Assert(Position.Distance(this.curSection.Position, v) < 0.5f);
         }
 
         async void stopOnStation()
