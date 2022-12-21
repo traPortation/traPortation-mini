@@ -10,7 +10,7 @@ namespace TraPortation.UI
     public class UIManager : MonoBehaviour
     {
         private GameManager manager;
-        private float timeLimit = 300f;
+        private float timeLimit = Const.Time.TimeLimitSeconds;
         private int score = 0;
         private int money;
         public Text timeLimitText;

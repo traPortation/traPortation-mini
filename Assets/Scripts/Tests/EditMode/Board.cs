@@ -87,7 +87,7 @@ namespace Tests
                 var node1 = nodes[idx1];
                 var node2 = nodes[idx2];
 
-                var edges = this.board.AddVehicleRoute(node1, node2, TraPortation.Const.EdgeType.Train);
+                var edges = this.board.AddVehicleRoute(node1, node2, EdgeType.Train);
 
                 Assert.AreEqual(edges, node1.Edges.Last());
                 Assert.AreEqual(edges.To, node2);

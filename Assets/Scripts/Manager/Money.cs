@@ -6,10 +6,7 @@ namespace TraPortation
 
     public class ManageMoney
     {
-        private int nowMoney = 100000;  // 所持金
-                                        // const.cs内のnamespace Const class MoneyLimitにある
-                                        // private static const int minMoney = 0; // 下限
-                                        // private static const int maxMoney = 999999999; // 上限
+        private int nowMoney = Const.Money.Start;  // 所持金
 
         // 現在の所持金を返すだけの関数
         public int money
@@ -20,7 +17,7 @@ namespace TraPortation
         // 所持金を下限と上限の間になるようにするやつ
         public bool ExpenseCheck(int expense)
         {
-            if (Const.MoneyLimit.minMoney <= this.nowMoney + expense && this.nowMoney + expense <= Const.MoneyLimit.maxMoney)
+            if (Const.Money.minMoney <= this.nowMoney + expense && this.nowMoney + expense <= Const.Money.maxMoney)
             {
                 return true;
             }

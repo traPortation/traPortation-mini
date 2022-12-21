@@ -57,9 +57,9 @@ namespace TraPortation.Traffic
         /// </summary>
         /// <param name="from"></param>
         /// <param name="to"></param>
-        /// <param name="type">Const.EdgeTypeから指定する</param>
+        /// <param name="type">EdgeTypeから指定する</param>
         /// <returns>追加されたEdge</returns>
-        public VehicleEdge AddVehicleRoute(StationNode from, StationNode to, Const.EdgeType type = Const.EdgeType.Walk)
+        public VehicleEdge AddVehicleRoute(StationNode from, StationNode to, EdgeType type = EdgeType.Walk)
         {
             float cost = Const.EdgeCost.Get(type) * Utils.Node.Distance(from, to);
             var edge = from.AddVehicleRoute(to, cost);
@@ -75,7 +75,7 @@ namespace TraPortation.Traffic
         /// <returns>作成したRoadEdge</returns>
         public RoadEdge AddRoadEdge(IBoardNode from, IBoardNode to)
         {
-            float cost = Const.EdgeCost.Get(Const.EdgeType.Walk) * Utils.Node.Distance(from, to);
+            float cost = Const.EdgeCost.Get(EdgeType.Walk) * Utils.Node.Distance(from, to);
             var edge = from.AddRoad(to, cost);
             this.roads.Add(edge);
             return edge;
@@ -170,12 +170,12 @@ namespace TraPortation.Traffic
                 throw new System.Exception("road not found");
             }
 
-            var startFromCost = Utils.Node.Distance(start, startRoad.From) * Const.EdgeCost.Get(Const.EdgeType.Walk);
-            var startToCost = Utils.Node.Distance(start, startRoad.To) * Const.EdgeCost.Get(Const.EdgeType.Walk);
+            var startFromCost = Utils.Node.Distance(start, startRoad.From) * Const.EdgeCost.Get(EdgeType.Walk);
+            var startToCost = Utils.Node.Distance(start, startRoad.To) * Const.EdgeCost.Get(EdgeType.Walk);
             var starts = new List<(float, IIndexedNode)>() { (startFromCost, startRoad.From), (startToCost, startRoad.To) };
 
-            var goalFromCost = Utils.Node.Distance(goal, goalRoad.From) * Const.EdgeCost.Get(Const.EdgeType.Walk);
-            var goalToCost = Utils.Node.Distance(goal, goalRoad.To) * Const.EdgeCost.Get(Const.EdgeType.Walk);
+            var goalFromCost = Utils.Node.Distance(goal, goalRoad.From) * Const.EdgeCost.Get(EdgeType.Walk);
+            var goalToCost = Utils.Node.Distance(goal, goalRoad.To) * Const.EdgeCost.Get(EdgeType.Walk);
             var goals = new List<(float, IIndexedNode)>() { (goalFromCost, goalRoad.From), (goalToCost, goalRoad.To) };
 
             var searchedNodes = this.searchPath(starts, goals);

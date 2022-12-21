@@ -1,17 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TraPortation.Traffic;
 
 namespace TraPortation.Const
 {
-
-    public enum EdgeType
-    {
-        Walk,
-        Train,
-    }
-
     /// <summary>
     /// Edgeのコスト
     /// </summary>
@@ -48,8 +41,10 @@ namespace TraPortation.Const
     /// <summary>
     /// 所持金に関する定数
     /// </summary>
-    public static class MoneyLimit
+    public static class Money
     {
+        public const int Start = 100000;
+
         public const int minMoney = 0;
         public const int maxMoney = 999999999;
     }
