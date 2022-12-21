@@ -21,7 +21,7 @@ namespace TraPortation.Moving
         bool stopping;
         bool direction;
         // テストで書き換えるためにpublicにしている
-        public int StopMilliseconds = Const.Time.TrainStopMilliSeconds;
+        public int StopMilliseconds = Const.Train.StopMilliseconds;
         ISection curSection;
         readonly IPublisher<int, TrainEvent> trainPub;
         readonly IPublisher<int, StationEvent> stationPub;

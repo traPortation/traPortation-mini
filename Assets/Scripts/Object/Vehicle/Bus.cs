@@ -13,7 +13,7 @@ namespace TraPortation
         {
             this.Capacity = Const.Bus.Capacity;
             this.Wage = Const.Bus.Wage;
-            this.velocity = Const.Bus.BusVelocity;
+            this.velocity = Const.Velocity.Bus;
         }
 
         void FixedUpdate()

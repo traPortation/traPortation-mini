@@ -14,7 +14,7 @@ namespace TraPortation.Moving
         public Position Position => this.curSection.Position;
         public Quaternion Rotation => this.curSection.Rotation;
         public SectionStatus Status => this.curSection.Status;
-        public int StopMilliseconds = Const.Time.BusStopMilliSeconds;
+        public int StopMilliseconds = Const.Bus.StopMilliseconds;
         ISection curSection;
         int busId;
         int index;
