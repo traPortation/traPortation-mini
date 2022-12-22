@@ -10,5 +10,9 @@ namespace TraPortation.Moving
         // TrainUsingSection用
         OnStation,
         OnTrain,
+
+        // BusUsingSection用
+        OnBusStation,
+        OnBus,
     }
 }

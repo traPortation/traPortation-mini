@@ -4,5 +4,6 @@ namespace TraPortation.Traffic
     {
         Walk,
         Train,
+        Bus,
     }
 }

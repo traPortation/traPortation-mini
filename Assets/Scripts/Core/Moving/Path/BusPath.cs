@@ -76,8 +76,20 @@ namespace TraPortation.Moving
                 else this.index--;
 
                 var nextRoute = this.routes[this.index];
-                this.busStationPub.Publish(nextRoute.Start.ID, new BusStationEvent(this.busId, nextRoute.End));
-                this.busPub.Publish(this.busId, new BusEvent(nextRoute.Start, nextRoute.End));
+                BusStation cur, next;
+
+                if (this.direction)
+                {
+                    cur = nextRoute.Start;
+                    next = nextRoute.End;
+                }
+                else
+                {
+                    cur = nextRoute.End;
+                    next = nextRoute.Start;
+                }
+                this.busStationPub.Publish(cur.ID, new BusStationEvent(this.busId, next));
+                this.busPub.Publish(this.busId, new BusEvent(cur, next));
 
                 // 止まる
                 this.stopOnStation();

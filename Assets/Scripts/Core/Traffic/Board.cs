@@ -59,9 +59,15 @@ namespace TraPortation.Traffic
         /// <param name="to"></param>
         /// <param name="type">EdgeTypeから指定する</param>
         /// <returns>追加されたEdge</returns>
-        public VehicleEdge AddVehicleRoute(StationNode from, StationNode to, EdgeType type = EdgeType.Walk)
+        public VehicleEdge AddVehicleRoute(StationNode from, StationNode to, EdgeType type)
         {
             float cost = Const.EdgeCost.Get(type) * Utils.Node.Distance(from, to);
+            var edge = from.AddVehicleRoute(to, cost);
+            return edge;
+        }
+
+        public VehicleEdge AddVehicleRoute(StationNode from, StationNode to, float cost)
+        {
             var edge = from.AddVehicleRoute(to, cost);
             return edge;
         }
