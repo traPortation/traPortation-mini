@@ -63,7 +63,7 @@ namespace TraPortation
         /// </summary>
         private void InstantiatePeople()
         {
-            for (int i = 0; i < Const.Count.Person; i++)
+            for (int i = 0; i < Const.General.PersonCount; i++)
             {
                 var start = new Vector3(Random.Range(Const.X.Min, Const.X.Max), Random.Range(Const.Y.Min, Const.Y.Max), Const.Z.Person);
                 var obj = this.container.InstantiatePrefab(this.person);
