@@ -113,7 +113,17 @@ namespace TraPortation.Core.RoadGen
                     var (point, road) = n;
                     if ((point - start).magnitude < Const.RoadGen.NearRoadDist)
                     {
-                        if (angleNear(angle, road.line.Angle(), Const.RoadGen.RoadMinAngle))
+                        var ang = road.line.Angle();
+                        if (point == road.line.start) ang += Mathf.PI;
+
+                        if (point == startNearestRoad.line.start || point == startNearestRoad.line.end)
+                        {
+                            if (angleNear(angle, road.line.Angle(), Const.RoadGen.RoadMinAngle))
+                            {
+                                return;
+                            }
+                        }
+                        else if (angleNearSameWay(angle, ang, Const.RoadGen.RoadMinAngle))
                         {
                             return;
                         }
@@ -128,7 +138,17 @@ namespace TraPortation.Core.RoadGen
                     var (point, road) = n;
                     if ((point - end).magnitude < Const.RoadGen.NearRoadDist)
                     {
-                        if (angleNear(angle, road.line.Angle(), Const.RoadGen.RoadMinAngle))
+                        var ang = road.line.Angle();
+                        if (point == road.line.end) ang += Mathf.PI;
+
+                        if (point == endNearestRoad.line.start || point == endNearestRoad.line.end)
+                        {
+                            if (angleNear(angle, road.line.Angle(), Const.RoadGen.RoadMinAngle))
+                            {
+                                return;
+                            }
+                        }
+                        else if (angleNearSameWay(angle, ang, Const.RoadGen.RoadMinAngle))
                         {
                             return;
                         }
@@ -167,6 +187,11 @@ namespace TraPortation.Core.RoadGen
         bool angleNear(float a, float b, float angle)
         {
             return Mathf.Abs(a - b) % Mathf.PI < angle || Mathf.Abs(a - b) % Mathf.PI > Mathf.PI - angle;
+        }
+
+        bool angleNearSameWay(float a, float b, float angle)
+        {
+            return Mathf.Abs(a - b) < angle || Mathf.Abs(a - b) > Mathf.PI * 2 - angle;
         }
     }
 }

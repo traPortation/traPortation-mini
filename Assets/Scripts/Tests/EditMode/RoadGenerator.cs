@@ -54,6 +54,27 @@ namespace Tests
             generator.AddRoad(new Vector2(1.1f, 1.01f), 0.2f);
 
             Assert.AreEqual(generator.roads.Count, 1);
+
+            generator.AddRoad(new Vector2(1, 2), Mathf.PI / 2);
+            Assert.AreEqual(generator.roads.Count, 2);
+
+            generator.AddRoad(new Vector2(1.1f, 2), Mathf.PI / 2 + 0.2f);
+            Assert.AreEqual(generator.roads.Count, 2);
+
+            generator.AddRoad(new Vector2(1.1f, 2f), Mathf.PI * 3 / 2 + 0.2f);
+            Assert.AreEqual(generator.roads.Count, 2);
+
+            generator.AddRoad(new Vector2(1.1f, 0.1f), Mathf.PI / 2 + 0.2f);
+            Assert.AreEqual(generator.roads.Count, 3);
+
+            generator.AddRoad(new Vector2(1.1f, 1.1f), 0.1f);
+            Assert.AreEqual(generator.roads.Count, 3);
+
+            generator.AddRoad(new Vector2(1.1f, 1.1f), Mathf.PI + 0.1f);
+            Assert.AreEqual(generator.roads.Count, 3);
+
+            generator.AddRoad(new Vector2(1.1f, 3), Mathf.PI);
+            Assert.AreEqual(generator.roads.Count, 4);
         }
     }
 }
