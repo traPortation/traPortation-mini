@@ -16,16 +16,20 @@ namespace TraPortation.Const
             {
                 EdgeType.Walk => 10,
                 EdgeType.Train => 1,
-                _ => 0,
+                EdgeType.Bus => 5,
+                _ => throw new System.NotImplementedException(),
             };
         }
     }
 
+    /// <summary>
+    /// 速度に関する定数
+    /// </summary>
     public static class Velocity
     {
         public const float Person = 0.05f;
         public const float Train = 0.3f;
-        public const float Bus = 0.03f;
+        public const float Bus = 0.1f;
     }
 
     /// <summary>
@@ -37,5 +41,11 @@ namespace TraPortation.Const
 
         public const int minMoney = 0;
         public const int maxMoney = 999999999;
+    }
+
+
+    public static class Person
+    {
+        public const int StopMilliseconds = 1000;
     }
 }

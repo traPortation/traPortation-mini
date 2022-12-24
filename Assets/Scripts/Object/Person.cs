@@ -49,7 +49,7 @@ namespace TraPortation
                 this.Initialize(path);
             }
 
-            if (this.path.Status == SectionStatus.OnTrain)
+            if (this.path.Status == SectionStatus.OnTrain || this.path.Status == SectionStatus.OnBus)
             {
                 this.spriteRenderer.enabled = false;
             }

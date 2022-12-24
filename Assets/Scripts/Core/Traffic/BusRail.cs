@@ -17,7 +17,7 @@ namespace TraPortation.Traffic
         IReadOnlyList<BusRoute> routes;
         IBusRailView line;
         BusPath.Factory factory;
-        public BusRail(IReadOnlyList<IBoardNode> nodes, IBusRailView line, BusStationManager manager, BusPath.Factory factory)
+        public BusRail(IReadOnlyList<IBoardNode> nodes, IBusRailView line, BusStationManager manager, BusPath.Factory factory, Board board)
         {
             var start = nodes.First() as StationNode;
             if (start == null)
@@ -39,6 +39,10 @@ namespace TraPortation.Traffic
                     var e = manager.GetBusStation(end);
                     var route = new BusRoute(s, e, positions);
                     routes.Add(route);
+
+                    board.AddVehicleRoute(start, end, route.Distance() * Const.EdgeCost.Get(EdgeType.Bus));
+                    board.AddVehicleRoute(end, start, route.Distance() * Const.EdgeCost.Get(EdgeType.Bus));
+
                     start = end;
                     positions = new List<Position>() { new Position(start) };
                 }
