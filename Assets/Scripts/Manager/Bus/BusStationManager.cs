@@ -4,6 +4,7 @@ using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
 using TraPortation.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace TraPortation
@@ -57,7 +58,7 @@ namespace TraPortation
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity);
 
-            if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "RoadView")
+            if (!EventSystem.current.IsPointerOverGameObject() && hitInfo.collider != null && hitInfo.collider.gameObject.name == "RoadView")
             {
                 stationColor.a = 1f;
                 stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
