@@ -16,12 +16,20 @@ namespace TraPortation
         {
             this.manager = manager;
         }
+
+        void Start()
+        {
+            busIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
+            busIcon.SetActive(false);
+        }
+
         void Update()
         {
             if (this.manager.Status != GameStatus.SetBus)
             {
                 if (busIcon.activeSelf)
                 {
+                    busIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
                     busIcon.SetActive(false);
                 }
                 return;

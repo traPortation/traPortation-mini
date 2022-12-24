@@ -20,12 +20,19 @@ namespace TraPortation
             this.gameManager = gameManager;
         }
 
+        void Start()
+        {
+            trainIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
+            trainIcon.SetActive(false);
+        }
+
         void Update()
         {
             if (this.gameManager.Status != GameStatus.SetTrain)
             {
                 if (trainIcon.activeSelf)
                 {
+                    trainIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
                     trainIcon.SetActive(false);
                 }
 

@@ -26,12 +26,19 @@ namespace TraPortation
             this.gameManager = gameManager;
         }
 
+        void Start()
+        {
+            stationIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
+            stationIcon.SetActive(false);
+        }
+
         void Update()
         {
             if (this.gameManager.Status != GameStatus.SetBusStation)
             {
                 if (stationIcon.activeSelf)
                 {
+                    stationIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
                     stationIcon.SetActive(false);
                 }
                 return;

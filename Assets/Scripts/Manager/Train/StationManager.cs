@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TraPortation.Game;
@@ -19,6 +19,12 @@ namespace TraPortation
         Board board;
         DiContainer container;
 
+        void Start()
+        {
+            stationIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
+            stationIcon.SetActive(false);
+        }
+
         // TODO: 別のクラスに分ける
         void Update()
         {
@@ -26,6 +32,7 @@ namespace TraPortation
             {
                 if (stationIcon.activeSelf)
                 {
+                    stationIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
                     stationIcon.SetActive(false);
                 }
                 return;
