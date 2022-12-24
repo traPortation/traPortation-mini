@@ -21,7 +21,7 @@ namespace TraPortation.Traffic
 
             this.view.SetLine(new Vector3[] { new Vector3(from.X, from.Y, Const.Z.Road), new Vector3(to.X, to.Y, Const.Z.Road) });
             this.view.SetColor(Const.Color.Road);
-            this.view.SetWidth(Mathf.Sqrt(roadLength) * 0.1f);
+            this.view.SetWidth(Const.General.RoadWidth(roadLength));
         }
 
         public class Factory : PlaceholderFactory<IntersectionNode, IntersectionNode, float, Road> { }
