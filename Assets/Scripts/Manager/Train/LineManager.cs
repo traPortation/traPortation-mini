@@ -46,6 +46,7 @@ namespace TraPortation.UI
                 this.railManager.AddRail(this.stations);
 
                 this.positions = new List<Vector3>();
+                this.stations = new List<Station>();
                 this.mainLine.SetLine(Array.Empty<Vector3>());
                 this.currentLine.SetLine(Array.Empty<Vector3>());
             }
