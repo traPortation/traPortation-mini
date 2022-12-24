@@ -33,6 +33,7 @@ namespace TraPortation
         DiContainer container;
         public ManageMoney ManageMoney { get; private set; }
         public GameStatus Status { get; private set; }
+        AudioSwitcher audioSwitcher;
 #nullable enable
 
         void Start()
@@ -44,7 +45,9 @@ namespace TraPortation
         }
 
         [Inject]
-        public void Construct(Board board, DiContainer container, StationManager stationManager, BusStationManager busStationManager, RailManager railManager, Traffic.Road.Factory roadFactory, ManageMoney manageMoney)
+        public void Construct(Board board, DiContainer container, StationManager stationManager,
+            BusStationManager busStationManager, RailManager railManager,
+            Traffic.Road.Factory roadFactory, ManageMoney manageMoney, AudioSwitcher audioSwitcher)
         {
             this.Board = board;
             this.container = container;
@@ -54,6 +57,7 @@ namespace TraPortation
             this.roadFactory = roadFactory;
 
             this.ManageMoney = manageMoney;
+            this.audioSwitcher = audioSwitcher;
 
             Utils.NullChecker.Check(this.person, this.building, this.train, this.StationManager);
         }
@@ -153,11 +157,15 @@ namespace TraPortation
             Debug.Log("Status Changed");
             this.Status = status;
 
-            Time.timeScale = status switch
+            if (status == GameStatus.Normal)
             {
-                GameStatus.Normal => 1,
-                _ => 0
-            };
+                Time.timeScale = 1;
+            }
+            else
+            {
+                Time.timeScale = 0;
+            }
+
         }
     }
 }

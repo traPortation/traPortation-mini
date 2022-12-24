@@ -62,6 +62,5 @@ namespace TraPortation.Const
         public const float Road = 50f;
 
         public const float Background = 100f;
-
     }
 }

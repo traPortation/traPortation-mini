@@ -22,6 +22,8 @@ namespace TraPortation
             Container.Bind<SetBusRailManager>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<SetBusManager>().FromComponentInHierarchy().AsSingle().NonLazy();
 
+            Container.Bind<AudioSwitcher>().FromComponentInHierarchy().AsSingle().NonLazy();
+
             // 増えてきたら単独のInstallerに分ける
             Container.BindFactory<List<Station>, int, string, Rail, Rail.Factory>();
             Container.BindFactory<IReadOnlyList<IBoardNode>, BusRail, BusRail.Factory>();
