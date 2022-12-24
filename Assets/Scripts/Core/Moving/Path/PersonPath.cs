@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TraPortation.Moving.Section;
 using UnityEngine;
 
 #nullable enable
@@ -14,12 +15,13 @@ namespace TraPortation.Moving
 
         readonly IReadOnlyList<ISection> sections;
         int index;
-        ISection curSection => this.sections[this.index];
+        ISection curSection;
         bool finished => this.sections.Last().Status == SectionStatus.Finished;
 
         public PersonPath(IReadOnlyList<ISection> sections)
         {
             this.sections = sections;
+            this.curSection = this.sections[0];
             this.index = 0;
         }
 
@@ -40,7 +42,16 @@ namespace TraPortation.Moving
             if (this.curSection.Status == SectionStatus.Finished)
             {
                 this.curSection.Dispose();
-                if (!this.finished) this.index++;
+                if (!this.finished)
+                {
+                    this.index++;
+                    this.curSection = this.sections[this.index];
+                }
+                else
+                {
+                    this.curSection = new StopSection(this.curSection.Position, Const.Person.StopMilliseconds);
+                    this.curSection.Start();
+                }
             }
         }
     }

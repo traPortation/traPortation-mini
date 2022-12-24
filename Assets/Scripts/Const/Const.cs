@@ -42,4 +42,10 @@ namespace TraPortation.Const
         public const int minMoney = 0;
         public const int maxMoney = 999999999;
     }
+
+
+    public static class Person
+    {
+        public const int StopMilliseconds = 1000;
+    }
 }
