@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace TraPortation.Const
 {
     /// <summary>
@@ -16,6 +18,22 @@ namespace TraPortation.Const
         public static readonly float Min = 0f;
         public static readonly float Max = 8f;
     }
+
+    public static class Map
+    {
+        public static readonly float Margin = 0.3f;
+
+        public static readonly float XMin = X.Min - Margin;
+        public static readonly float XMax = X.Max + Margin;
+        public static readonly float YMin = Y.Min - Margin;
+        public static readonly float YMax = Y.Max + Margin;
+
+        public static readonly float Width = XMax - XMin;
+        public static readonly float Height = YMax - YMin;
+
+        public static readonly Vector2 Center = new Vector2((XMax + XMin) / 2, (YMax + YMin) / 2);
+    }
+
     /// <summary>
     /// Z座標に関する定数
     /// </summary>
