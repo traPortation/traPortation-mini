@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TraPortation.Game;
 using UnityEngine;
+using Zenject;
 
 
 namespace TraPortation
@@ -16,6 +18,8 @@ namespace TraPortation
         [SerializeField]
         private Camera mainCamera;
         private Vector3 preMousePos;
+
+        private GameManager manager;
 
         private float Left => transform.position.x - mainCamera.orthographicSize * mainCamera.aspect;
         private float Right => transform.position.x + mainCamera.orthographicSize * mainCamera.aspect;
@@ -40,9 +44,17 @@ namespace TraPortation
             return;
         }
 
+        [Inject]
+        void Construct(GameManager manager)
+        {
+            this.manager = manager;
+        }
+
 
         private void MouseUpdate()
         {
+            if (this.manager.Status == GameStatus.SubMenu) return;
+
             float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
             if (scrollWheel != 0.0f)
                 MouseWheel(scrollWheel);
