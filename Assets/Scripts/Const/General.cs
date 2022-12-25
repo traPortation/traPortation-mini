@@ -13,5 +13,7 @@ namespace TraPortation.Const
         {
             return Mathf.Sqrt(length) * 0.1f;
         }
+
+        public const float LineWidth = 0.1f;
     }
 }
