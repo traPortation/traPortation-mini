@@ -43,8 +43,6 @@ namespace TraPortation.UI
                     return;
                 }
 
-                this.railManager.AddRail(this.stations);
-
                 this.positions = new List<Vector3>();
                 this.stations = new List<Station>();
                 this.mainLine.SetLine(Array.Empty<Vector3>());
@@ -71,6 +69,14 @@ namespace TraPortation.UI
                         }
                         if (this.stations.Count != 0 && this.stations.Last() == station)
                         {
+                            this.railManager.AddRail(this.stations);
+
+                            this.positions = new List<Vector3>();
+                            this.stations = new List<Station>();
+                            this.mainLine.SetLine(Array.Empty<Vector3>());
+                            this.currentLine.SetLine(Array.Empty<Vector3>());
+                            
+                            this.manager.SetStatus(GameStatus.Normal);
                             return;
                         }
                         this.positions.Add(new Vector3(station.Node.X, station.Node.Y, Const.Z.Rail));
