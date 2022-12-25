@@ -39,7 +39,7 @@ namespace TraPortation.Const
         // 路線設置時の色
         // 設置後の色と揃えたほうがいいかも
         public static readonly UColor SetRail = UColor.blue;
-        public static readonly UColor SetBusRail = UColor.red;
+        public static readonly UColor SetBusRail = new UColor(1, 0, 0, 0.5f);
 
     }
 }

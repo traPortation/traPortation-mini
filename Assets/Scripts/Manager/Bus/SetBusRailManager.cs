@@ -14,15 +14,17 @@ namespace TraPortation
     public class SetBusRailManager : MonoBehaviour
     {
         GameManager manager;
+        Board board;
         List<IBoardNode> nodes = new List<IBoardNode>();
         ILine line;
         ILine curLine;
         BusRail.Factory factory;
 
         [Inject]
-        public void Construct(GameManager manager, ILine line, ILine curLine, BusRail.Factory factory)
+        public void Construct(GameManager manager, Board board, ILine line, ILine curLine, BusRail.Factory factory)
         {
             this.manager = manager;
+            this.board = board;
             this.line = line;
             this.line.SetColor(Const.Color.SetBusRail);
             this.curLine = curLine;
@@ -47,6 +49,12 @@ namespace TraPortation
                 return;
             }
 
+            if (this.nodes.Count != 0)
+            {
+                var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                this.curLine.SetLine(new Vector3[] { new Vector3(this.nodes.Last().X, this.nodes.Last().Y, Const.Z.BusRail), new Vector3(mousePos.x, mousePos.y, Const.Z.BusRail) });
+            }
+
             if (Input.GetMouseButtonDown(0))
             {
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -61,57 +69,21 @@ namespace TraPortation
                         this.nodes.Add(busStation.Node);
                         return;
                     }
+                    else if (this.nodes.Last() == busStation.Node)
+                    {
+                        this.factory.Create(this.nodes);
+                        this.nodes.Clear();
+                        this.line.SetLine(this.nodes.Select(n => new Vector3(n.X, n.Y, Const.Z.BusRail)).ToArray());
+                        this.curLine.SetLine(new Vector3[] { });
+                        this.manager.SetStatus(GameStatus.Normal);
+                        return;
+                    }
                     else
                     {
-                        if (this.nodes.Last() != busStation.Node)
-                        {
-                            return;
-                        }
-                        else
-                        {
-                            factory.Create(this.nodes);
-                            this.manager.SetStatus(GameStatus.Normal);
-                        }
-                    }
-                }
-            }
+                        var nodes = this.board.SearchRoad(this.nodes.Last(), busStation.Node);
+                        this.nodes = this.nodes.Concat(nodes).ToList();
 
-
-            if (this.nodes.Count == 0) return;
-
-            var mousePos3D = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var mousePos = new Vector2(mousePos3D.x, mousePos3D.y);
-
-            this.curLine.SetLine(new Vector3[] { new Vector3(this.nodes.Last().X, this.nodes.Last().Y, Const.Z.BusRail), new Vector3(mousePos.x, mousePos.y, Const.Z.BusRail) });
-
-            // 解除
-            if (nodes.Count > 1)
-            {
-                var secondToLast = new Vector2(nodes[nodes.Count - 2].X, nodes[nodes.Count - 2].Y);
-
-                if (Vector2.Distance(mousePos, secondToLast) < 0.1f)
-                {
-                    nodes.RemoveAt(nodes.Count - 1);
-                    this.line.SetLine(this.nodes.Select(n => new Vector3(n.X, n.Y, Const.Z.BusRail)).ToArray());
-                }
-            }
-
-            // 繋げられる点のうち最も近い点に繋げる
-            foreach (var e in nodes.Last().Edges)
-            {
-                if (e is RoadEdge r)
-                {
-                    if (nodes.Count >= 2 && e.To == nodes[nodes.Count - 2]) continue;
-
-                    var from = new Vector2(r.From.X, r.From.Y);
-                    var to = new Vector2(r.To.X, r.To.Y);
-
-                    var cos = Vector2.Dot(mousePos - to, from - to) / (Vector2.Distance(mousePos, to) * Vector2.Distance(from, to));
-                    if (cos < -0.9f)
-                    {
-                        nodes.Add(r.To);
                         this.line.SetLine(this.nodes.Select(n => new Vector3(n.X, n.Y, Const.Z.BusRail)).ToArray());
-                        break;
                     }
                 }
             }
