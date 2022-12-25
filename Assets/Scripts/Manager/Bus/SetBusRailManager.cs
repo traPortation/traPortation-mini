@@ -19,6 +19,7 @@ namespace TraPortation
         ILine line;
         ILine curLine;
         BusRail.Factory factory;
+        List<BusRail> rails = new List<BusRail>();
 
         [Inject]
         public void Construct(GameManager manager, Board board, ILine line, ILine curLine, BusRail.Factory factory)
@@ -71,7 +72,9 @@ namespace TraPortation
                     }
                     else if (this.nodes.Last() == busStation.Node)
                     {
-                        this.factory.Create(this.nodes);
+                        var rail = this.factory.Create(this.rails.Count, this.nodes);
+                        this.rails.Add(rail);
+
                         this.nodes.Clear();
                         this.line.SetLine(this.nodes.Select(n => new Vector3(n.X, n.Y, Const.Z.BusRail)).ToArray());
                         this.curLine.SetLine(new Vector3[] { });

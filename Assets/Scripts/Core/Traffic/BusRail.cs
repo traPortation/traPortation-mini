@@ -13,11 +13,12 @@ namespace TraPortation.Traffic
 {
     public class BusRail
     {
+        public int ID { get; }
         List<Bus> buses;
         IReadOnlyList<BusRoute> routes;
         IBusRailView line;
         BusPath.Factory factory;
-        public BusRail(IReadOnlyList<IBoardNode> nodes, IBusRailView line, BusStationManager manager, BusPath.Factory factory, Board board)
+        public BusRail(int id, IReadOnlyList<IBoardNode> nodes, IBusRailView line, BusStationManager manager, BusPath.Factory factory, Board board)
         {
             var start = nodes.First() as StationNode;
             if (start == null)
@@ -48,17 +49,18 @@ namespace TraPortation.Traffic
                 }
             }
 
+            this.ID = id;
             this.routes = routes;
             this.line = line;
             this.factory = factory;
             this.buses = new List<Bus>();
 
             this.line.SetLine(nodes.Select(n => new Vector3(n.X, n.Y, Const.Z.BusRail)).ToArray());
-            this.line.SetColor(Const.Color.BusRail);
+            this.line.SetColor(Const.Color.BusRails[id % Const.Color.BusRails.Count]);
             this.line.SetRail(this);
         }
 
-        public class Factory : PlaceholderFactory<IReadOnlyList<IBoardNode>, BusRail> { }
+        public class Factory : PlaceholderFactory<int, IReadOnlyList<IBoardNode>, BusRail> { }
 
         public void AddBus(Bus bus, Vector3 vec)
         {
