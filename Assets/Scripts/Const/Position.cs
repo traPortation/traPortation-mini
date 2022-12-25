@@ -21,7 +21,7 @@ namespace TraPortation.Const
 
     public static class Map
     {
-        public static readonly float Margin = 0.3f;
+        public static readonly float Margin = 0f;
 
         public static readonly float XMin = X.Min - Margin;
         public static readonly float XMax = X.Max + Margin;
@@ -42,8 +42,9 @@ namespace TraPortation.Const
         public const float Camera = -100f;
 
         public const float MouseIcon = -10f;
+        public const float Gradation = 0.5f;
 
-        public const float Person = 0f;
+        public const float Person = 5f;
 
         // 乗り物
         public const float Train = 10f;

@@ -4458,6 +4458,8 @@ MonoBehaviour:
   building: {fileID: 7706427037400990607, guid: 3d4163803c84c5241ae7d153056bbcd6,
     type: 3}
   train: {fileID: 5553516055370163822, guid: 6f806955cffb8bd4a8daf3ab74329023, type: 3}
+  gradation: {fileID: 1036440661392838212, guid: 2f17a5aed3f4de04e8d5b308f0cb76d4,
+    type: 3}
   roadFolder: {fileID: 1590177597}
   peopleFolder: {fileID: 1726671073}
 --- !u!4 &1121038819

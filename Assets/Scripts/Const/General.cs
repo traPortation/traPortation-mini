@@ -15,5 +15,6 @@ namespace TraPortation.Const
         }
 
         public const float LineWidth = 0.1f;
+        public const float GradationWidth = 0.5f;
     }
 }
