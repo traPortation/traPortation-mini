@@ -6,6 +6,7 @@ using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
 using TraPortation.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace TraPortation
@@ -19,6 +20,12 @@ namespace TraPortation
         Board board;
         DiContainer container;
 
+        void Start()
+        {
+            stationIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
+            stationIcon.SetActive(false);
+        }
+
         // TODO: 別のクラスに分ける
         void Update()
         {
@@ -26,6 +33,7 @@ namespace TraPortation
             {
                 if (stationIcon.activeSelf)
                 {
+                    stationIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
                     stationIcon.SetActive(false);
                 }
                 return;
@@ -44,7 +52,7 @@ namespace TraPortation
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity);
 
-            if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "RoadView" && this.gameManager.ManageMoney.ExpenseCheck(Const.Train.StationCost))
+            if (!EventSystem.current.IsPointerOverGameObject() && hitInfo.collider != null && hitInfo.collider.gameObject.name == "RoadView" && this.gameManager.ManageMoney.ExpenseCheck(Const.Train.StationCost))
             {
                 stationColor.a = 1f;
                 stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;

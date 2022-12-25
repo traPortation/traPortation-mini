@@ -32,14 +32,16 @@ namespace TraPortation.Const
         };
 
 
-        // TODO: 複数にする
-        public static readonly UColor BusRail = UColor.yellow;
+        public static readonly IReadOnlyList<UColor> BusRails = new List<UColor>() {
+            UColor.yellow,
+            UColor.green,
+        };
 
 
         // 路線設置時の色
         // 設置後の色と揃えたほうがいいかも
-        public static readonly UColor SetRail = UColor.blue;
-        public static readonly UColor SetBusRail = UColor.red;
+        public static readonly UColor SetRail = new UColor(0, 0, 1, 0.5f);
+        public static readonly UColor SetBusRail = new UColor(1, 0, 0, 0.5f);
 
     }
 }

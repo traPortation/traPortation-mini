@@ -1,5 +1,6 @@
 using TraPortation.Game;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace TraPortation
@@ -16,12 +17,20 @@ namespace TraPortation
         {
             this.manager = manager;
         }
+
+        void Start()
+        {
+            busIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
+            busIcon.SetActive(false);
+        }
+
         void Update()
         {
             if (this.manager.Status != GameStatus.SetBus)
             {
                 if (busIcon.activeSelf)
                 {
+                    busIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
                     busIcon.SetActive(false);
                 }
                 return;
@@ -39,7 +48,7 @@ namespace TraPortation
 
             var color = busIcon.GetComponent<SpriteRenderer>().color;
 
-            if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "BusRailView")
+            if (!EventSystem.current.IsPointerOverGameObject() && hitInfo.collider != null && hitInfo.collider.gameObject.name == "BusRailView")
             {
                 color.a = 1f;
                 busIcon.GetComponent<SpriteRenderer>().material.color = color;

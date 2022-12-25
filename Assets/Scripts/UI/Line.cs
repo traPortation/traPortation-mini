@@ -29,6 +29,9 @@ namespace TraPortation.UI
         /// </summary>
         public void SetLine(Vector3[] positions)
         {
+            this.lineRenderer.numCornerVertices = 5;
+            this.lineRenderer.numCapVertices = 5;
+
             this.lineRenderer.positionCount = positions.Count();
             this.lineRenderer.SetPositions(positions);
 
@@ -37,9 +40,8 @@ namespace TraPortation.UI
                 return;
             }
 
-            // TODO: Constに置く / メソッドから変更可能にする
-            this.lineRenderer.startWidth = 0.1f;
-            this.lineRenderer.endWidth = 0.1f;
+            this.lineRenderer.startWidth = Const.General.LineWidth;
+            this.lineRenderer.endWidth = Const.General.LineWidth;
 
             this.transform.position = new Vector3((positions.First().x + positions.Last().x) / 2, (positions.First().y + positions.Last().y) / 2, positions.First().z);
 
