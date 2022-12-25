@@ -56,7 +56,8 @@ namespace TraPortation
             Color stationColor = stationIcon.GetComponent<SpriteRenderer>().color;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity);
+            var mask = LayerMask.GetMask("Road");
+            RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity, mask);
 
             if (!EventSystem.current.IsPointerOverGameObject() && hitInfo.collider != null && hitInfo.collider.gameObject.name == "RoadView")
             {
