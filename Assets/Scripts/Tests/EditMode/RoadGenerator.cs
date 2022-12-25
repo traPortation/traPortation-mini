@@ -10,6 +10,14 @@ namespace Tests
 {
     public class RoadGeneratorTest
     {
+        RoadGenerator generator = new RoadGenerator();
+
+        [SetUp]
+        public void Setup()
+        {
+            this.generator = new RoadGenerator();
+        }
+
         [Test]
         public void CollideToHalfLineTest()
         {
@@ -21,6 +29,52 @@ namespace Tests
 
             (collide, point) = line.CollideToHalfLine(new Vector2(2, -2), Mathf.PI / 4 + Mathf.PI);
             Assert.IsFalse(collide);
+        }
+
+
+        [Test]
+        public void RoadGenerateTest()
+        {
+            generator.AddRoad(new Vector2(3, 3), 0);
+            generator.AddRoad(new Vector2(4, 3), 0f);
+
+            Assert.AreEqual(generator.roads.Count, 1);
+
+            generator.AddRoad(new Vector2(3, 5), 0.1f);
+            Assert.AreEqual(generator.roads.Count, 1);
+
+            generator.AddRoad(new Vector2(4, 5), Mathf.PI / 2);
+            Assert.AreEqual(generator.roads.Count, 2);
+        }
+
+        [Test]
+        public void RoadGenerateTest2()
+        {
+            generator.AddRoad(new Vector2(1, 1), 0);
+            generator.AddRoad(new Vector2(1.1f, 1.01f), 0.2f);
+
+            Assert.AreEqual(generator.roads.Count, 1);
+
+            generator.AddRoad(new Vector2(1, 2), Mathf.PI / 2);
+            Assert.AreEqual(generator.roads.Count, 2);
+
+            generator.AddRoad(new Vector2(1.1f, 2), Mathf.PI / 2 + 0.2f);
+            Assert.AreEqual(generator.roads.Count, 2);
+
+            generator.AddRoad(new Vector2(1.1f, 2f), Mathf.PI * 3 / 2 + 0.2f);
+            Assert.AreEqual(generator.roads.Count, 2);
+
+            generator.AddRoad(new Vector2(1.1f, 0.1f), Mathf.PI / 2 + 0.2f);
+            Assert.AreEqual(generator.roads.Count, 3);
+
+            generator.AddRoad(new Vector2(1.1f, 1.1f), 0.1f);
+            Assert.AreEqual(generator.roads.Count, 3);
+
+            generator.AddRoad(new Vector2(1.1f, 1.1f), Mathf.PI + 0.1f);
+            Assert.AreEqual(generator.roads.Count, 3);
+
+            generator.AddRoad(new Vector2(1.1f, 3), Mathf.PI);
+            Assert.AreEqual(generator.roads.Count, 4);
         }
     }
 }

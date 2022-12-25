@@ -7,8 +7,14 @@ namespace TraPortation.Moving
         Finished,
         Moving,
 
+        Stopping,
+
         // TrainUsingSection用
         OnStation,
         OnTrain,
+
+        // BusUsingSection用
+        OnBusStation,
+        OnBus,
     }
 }

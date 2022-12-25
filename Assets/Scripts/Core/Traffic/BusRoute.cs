@@ -15,5 +15,15 @@ namespace TraPortation.Traffic
             this.End = end;
             this.Positions = positions;
         }
+
+        public float Distance()
+        {
+            float distance = 0;
+            for (int i = 0; i < this.Positions.Count - 1; i++)
+            {
+                distance += Position.Distance(this.Positions[i], this.Positions[i + 1]);
+            }
+            return distance;
+        }
     }
 }

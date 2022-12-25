@@ -21,7 +21,7 @@ namespace TraPortation.Moving
         bool stopping;
         bool direction;
         // テストで書き換えるためにpublicにしている
-        public int StopMilliseconds = Const.Time.TrainStopMilliSeconds;
+        public int StopMilliseconds = Const.Train.StopMilliseconds;
         ISection curSection;
         readonly IPublisher<int, TrainEvent> trainPub;
         readonly IPublisher<int, StationEvent> stationPub;
@@ -91,7 +91,7 @@ namespace TraPortation.Moving
                 a = new Position(this.stations[i].Node);
                 b = new Position(this.stations[i + 1].Node);
 
-                var dist = v.DistanceToLine(a, b);
+                var dist = v.DistanceToSegment(a, b);
                 if (mindist > dist)
                 {
                     mindist = dist;
