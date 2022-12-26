@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using TraPortation.Game;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,8 +14,9 @@ namespace TraPortation.UI
         private float timeLimit = Const.General.TimeLimitSeconds;
         private int score = 0;
         private int money;
-        public Text timeLimitText;
-        public Text moneyText;
+        public TextMeshProUGUI timeLimitText;
+        public TextMeshProUGUI moneyText;
+        public TextMeshProUGUI populationText;
         public Text scoreText;
         public Text statusText;
         // Start is called before the first frame update
@@ -33,6 +35,7 @@ namespace TraPortation.UI
             timeLimitText.text = string.Format("{0:#.#} 秒", timeLimit);
             moneyText.text = string.Format("{0} 円", money);
             scoreText.text = string.Format("{0} 点", score);
+            populationText.text = Const.General.PersonCount.ToString();
             statusText.text = manager.Status switch
             {
                 GameStatus.Normal => "Normal",
