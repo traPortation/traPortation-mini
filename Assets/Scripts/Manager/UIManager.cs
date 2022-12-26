@@ -32,8 +32,8 @@ namespace TraPortation.UI
             money = manager.ManageMoney.money;
             timeLimit -= Time.deltaTime;
 
-            timeLimitText.text = string.Format("{0:#.#} 秒", timeLimit);
-            moneyText.text = string.Format("{0} 円", money);
+            timeLimitText.text = string.Format("{0} 秒", ((int)timeLimit));
+            moneyText.text = string.Format("¥{0}", money);
             scoreText.text = string.Format("{0} 点", score);
             populationText.text = Const.General.PersonCount.ToString();
             statusText.text = manager.Status switch
