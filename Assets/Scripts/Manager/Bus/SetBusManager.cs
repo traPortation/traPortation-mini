@@ -48,14 +48,17 @@ namespace TraPortation
 
             var color = busIcon.GetComponent<SpriteRenderer>().color;
 
-            if (!EventSystem.current.IsPointerOverGameObject() && hitInfo.collider != null && hitInfo.collider.gameObject.name == "BusRailView")
+            if (!EventSystem.current.IsPointerOverGameObject()
+                && hitInfo.collider != null
+                && hitInfo.collider.gameObject.name == "BusRailView"
+                && this.manager.ManageMoney.ExpenseCheck(Const.Money.BusCost))
             {
                 color.a = 1f;
                 busIcon.GetComponent<SpriteRenderer>().material.color = color;
 
                 // TODO: 向きの処理
 
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && this.manager.ManageMoney.Expense(Const.Money.BusCost))
                 {
                     var busObj = Instantiate(busPrefab, new Vector3(mousePosition.x, mousePosition.y, Const.Z.Bus), Quaternion.identity);
                     var bus = busObj.GetComponent<Bus>();

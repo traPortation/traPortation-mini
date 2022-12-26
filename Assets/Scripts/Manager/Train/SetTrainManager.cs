@@ -52,7 +52,9 @@ namespace TraPortation
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity);
 
-            if (!EventSystem.current.IsPointerOverGameObject() && hitInfo.collider != null && hitInfo.collider.gameObject.name == "RailView" && this.gameManager.ManageMoney.ExpenseCheck(Const.Train.VehicleCost))
+            if (!EventSystem.current.IsPointerOverGameObject()
+                && hitInfo.collider != null && hitInfo.collider.gameObject.name == "RailView"
+                && this.gameManager.ManageMoney.ExpenseCheck(Const.Money.TrainCost))
             {
                 trainColor.a = 1f;
                 trainIcon.GetComponent<SpriteRenderer>().material.color = trainColor;
@@ -80,14 +82,18 @@ namespace TraPortation
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    this.gameManager.ManageMoney.ExpenseMoney(Const.Train.VehicleCost);
-                    var trainObj = Instantiate(trainPrefab);
-                    var train = trainObj.GetComponent<Train>();
-                    train.transform.position = new Vector3(mousePosition.x, mousePosition.y, Const.Z.Train);
-                    train.SetId(nextTrainId);
-                    nextTrainId++;
-                    var rail = hitInfo.collider.gameObject.GetComponent<RailLine>().Rail;
-                    rail.AddTrain(train, mousePosition, this.direction);
+                    // TODO: エラーハンドリング
+                    var ok = this.gameManager.ManageMoney.Expense(Const.Money.TrainCost);
+                    if (ok)
+                    {
+                        var trainObj = Instantiate(trainPrefab);
+                        var train = trainObj.GetComponent<Train>();
+                        train.transform.position = new Vector3(mousePosition.x, mousePosition.y, Const.Z.Train);
+                        train.SetId(nextTrainId);
+                        nextTrainId++;
+                        var rail = hitInfo.collider.gameObject.GetComponent<RailLine>().Rail;
+                        rail.AddTrain(train, mousePosition, this.direction);
+                    }
                 }
             }
             else

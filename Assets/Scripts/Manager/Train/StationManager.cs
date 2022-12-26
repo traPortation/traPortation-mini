@@ -53,12 +53,16 @@ namespace TraPortation
             var mask = LayerMask.GetMask("Road");
             RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity, mask);
 
-            if (!EventSystem.current.IsPointerOverGameObject() && hitInfo.collider != null && hitInfo.collider.gameObject.name == "RoadView" && this.gameManager.ManageMoney.ExpenseCheck(Const.Train.StationCost))
+            if (!EventSystem.current.IsPointerOverGameObject()
+                && hitInfo.collider != null
+                && hitInfo.collider.gameObject.name == "RoadView"
+                && this.gameManager.ManageMoney.ExpenseCheck(Const.Money.StationCost))
             {
                 stationColor.a = 1f;
                 stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
 
-                if (Input.GetMouseButtonDown(0) && this.gameManager.ManageMoney.ExpenseMoney(Const.Train.StationCost, false))
+                if (Input.GetMouseButtonDown(0)
+                    && this.gameManager.ManageMoney.Expense(Const.Money.StationCost))
                 {
                     this.AddStation(mousePosition.x, mousePosition.y);
                 }
