@@ -1716,6 +1716,7 @@ MonoBehaviour:
   - {fileID: 1671495470}
   - {fileID: 46800734}
   - {fileID: 283470262}
+  otherButton: {fileID: 1599512658}
 --- !u!114 &310957999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3137,6 +3138,7 @@ MonoBehaviour:
   - {fileID: 1308595085}
   - {fileID: 1055730760}
   - {fileID: 602092524}
+  otherButton: {fileID: 0}
 --- !u!1 &662492061
 GameObject:
   m_ObjectHideFlags: 0
@@ -6602,6 +6604,7 @@ MonoBehaviour:
   - {fileID: 1665934020}
   - {fileID: 1219049482}
   - {fileID: 1371440565}
+  otherButton: {fileID: 310957998}
 --- !u!1 &1656527878
 GameObject:
   m_ObjectHideFlags: 0
