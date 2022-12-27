@@ -1,6 +1,7 @@
 using MessagePipe;
 using TraPortation.Event;
 using TraPortation.Traffic.Edge;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
@@ -14,6 +15,8 @@ namespace TraPortation.UI
         public void ConstructRoad(GameManager manager)
         {
             this.transform.parent = manager.roadFolder.transform;
+
+            this.gameObject.layer = LayerMask.NameToLayer("Road");
         }
     }
 }

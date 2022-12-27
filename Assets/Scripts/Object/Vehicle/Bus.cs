@@ -7,12 +7,10 @@ namespace TraPortation
     public class Bus : MovingObject
     {
         public int ID { get; private set; }
-        public int Wage { get; private set; }
         public int Capacity { get; private set; }
         void Start()
         {
             this.Capacity = Const.Bus.Capacity;
-            this.Wage = Const.Bus.Wage;
             this.velocity = Const.Velocity.Bus;
         }
 

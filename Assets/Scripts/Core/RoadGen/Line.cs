@@ -87,6 +87,7 @@ namespace TraPortation.Core.RoadGen
 
             Debug.Log(point);
             Debug.Log(angle);
+            // TODO: 後で直す 端に近すぎるとだめそう
             throw new System.Exception();
         }
     }

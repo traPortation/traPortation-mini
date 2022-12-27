@@ -15,7 +15,7 @@ public class MenuSelect : MonoBehaviour
     public void StartGame() {
         StartCoroutine("Fadeout");
         fadeInTime = 1f * fadeInTime / 10f;
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("Loading");
         Debug.Log("Loading");
         
 	}

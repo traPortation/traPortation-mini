@@ -69,7 +69,7 @@ namespace TraPortation.Moving.Section.Person
                 this.Status = SectionStatus.OnBus;
 
                 // 運賃を加算して電車に乗る
-                this.manager.ExpenseMoney(Const.Bus.Wage);
+                this.manager.Income(Const.Money.BusIncome);
                 this.busSubscriber.Subscribe(se.BusId, ve =>
                 {
                     // 自分が乗った駅への到着は無視する

@@ -16,62 +16,54 @@ namespace TraPortation
         Board board;
         [SerializeField] GameObject prefab;
         [SerializeField] GameObject stationIcon;
+        MouseIcon icon;
         DiContainer container;
         GameManager gameManager;
+        InputManager inputManager;
 
         [Inject]
-        public void Construct(Board board, DiContainer container, GameManager gameManager)
+        public void Construct(Board board, DiContainer container, GameManager gameManager, InputManager inputManager)
         {
             this.board = board;
             this.container = container;
             this.gameManager = gameManager;
+            this.inputManager = inputManager;
         }
 
         void Start()
         {
-            stationIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
-            stationIcon.SetActive(false);
+            this.icon = new MouseIcon(stationIcon, this.inputManager);
+            this.icon.SetActive(false);
         }
 
         void Update()
         {
             if (this.gameManager.Status != GameStatus.SetBusStation)
             {
-                if (stationIcon.activeSelf)
-                {
-                    stationIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
-                    stationIcon.SetActive(false);
-                }
+                this.icon.SetActive(false);
                 return;
             }
 
-            if (!stationIcon.activeSelf)
+            this.icon.SetActive(true);
+            this.icon.Update();
+
+            var mask = LayerMask.GetMask("Road");
+            var obj = this.inputManager.RayCast(mask);
+
+            if (obj != null && obj.name == "RoadView"
+                && this.gameManager.ManageMoney.ExpenseCheck(Const.Money.BusStationCost))
             {
-                stationIcon.SetActive(true);
-            }
+                this.icon.SetAlpha(1.0f);
 
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = Const.Z.MouseIcon;
-            stationIcon.transform.position = mousePosition;
-            Color stationColor = stationIcon.GetComponent<SpriteRenderer>().color;
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity);
-
-            if (!EventSystem.current.IsPointerOverGameObject() && hitInfo.collider != null && hitInfo.collider.gameObject.name == "RoadView")
-            {
-                stationColor.a = 1f;
-                stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
-
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && this.gameManager.ManageMoney.Expense(Const.Money.BusStationCost))
                 {
-                    this.AddBusStation(mousePosition.x, mousePosition.y);
+                    var pos = this.inputManager.GetMousePosition();
+                    this.AddBusStation(pos.x, pos.y);
                 }
             }
             else
             {
-                stationColor.a = 0.5f;
-                stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
+                this.icon.SetAlpha(0.5f);
             }
         }
 
