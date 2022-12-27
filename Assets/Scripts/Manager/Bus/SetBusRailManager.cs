@@ -30,9 +30,7 @@ namespace TraPortation
             this.inputManager = inputManager;
             this.board = board;
             this.line = line;
-            this.line.SetColor(Const.Color.SetBusRail);
             this.curLine = curLine;
-            this.curLine.SetColor(Const.Color.SetBusRail);
 
             var color = this.nextColor;
             color.a = 0.5f;
