@@ -1,53 +1,74 @@
 using UnityEngine;
+using Zenject;
 
-public class AudioSwitcher : MonoBehaviour
+namespace TraPortation
 {
-    [SerializeField]
-    private AudioSource[] audios;
+    using Game;
 
-    [Range(0, 3)]
-    public int bgmNum = 0;
-
-    [Range(0, 1)]
-    public float masterVolume = 0.5f;
-
-    public void Start()
+    public class AudioSwitcher : MonoBehaviour
     {
-        foreach (var audio in audios)
-        {
-            audio.volume = 0;
-            audio.loop = true;
-        }
-    }
+        [SerializeField]
+        private AudioSource[] audios;
 
-    private void Update()
-    {
-        foreach (var (audio, index) in audios.Indexed())
+        [Range(0, 3)]
+        public int bgmNum = 0;
+
+        [Range(0, 1)]
+        public float masterVolume = 0.5f;
+        [Inject]
+        GameManager manager;
+        bool menu = false;
+
+        public void Start()
         {
-            if (index == bgmNum)
+            foreach (var audio in audios)
             {
-                audio.volume = Mathf.Min(audio.volume + 0.01f, masterVolume);
-            }
-            else
-            {
-                audio.volume = Mathf.Max(audio.volume - 0.01f, 0);
+                audio.volume = 0;
+                audio.loop = true;
             }
         }
-    }
 
-    public void Pause()
-    {
-        foreach (var audio in audios)
+        private void Update()
         {
-            audio.Pause();
+            foreach (var (audio, index) in audios.Indexed())
+            {
+                if (index == bgmNum)
+                {
+                    audio.volume = Mathf.Min(audio.volume + 0.01f, masterVolume);
+                }
+                else
+                {
+                    audio.volume = Mathf.Max(audio.volume - 0.01f, 0);
+                }
+            }
+
+            if (manager.Status == GameStatus.SubMenu && !this.menu)
+            {
+                this.masterVolume /= 2;
+                this.menu = true;
+            }
+
+            if (manager.Status != GameStatus.SubMenu && this.menu)
+            {
+                this.masterVolume *= 2;
+                this.menu = false;
+            }
         }
-    }
 
-    public void UnPause()
-    {
-        foreach (var audio in audios)
+        public void Pause()
         {
-            audio.UnPause();
+            foreach (var audio in audios)
+            {
+                audio.Pause();
+            }
+        }
+
+        public void UnPause()
+        {
+            foreach (var audio in audios)
+            {
+                audio.UnPause();
+            }
         }
     }
 }

@@ -31,14 +31,18 @@ namespace TraPortation.Moving
         // a, bを通る直線との距離
         public float DistanceToLine(Position a, Position b)
         {
-            return Mathf.Abs((b.Y - a.Y) * this.X - (b.X - a.X) * this.Y + b.X * a.Y - b.Y * a.X) / Mathf.Sqrt(Mathf.Pow(b.X - a.X, 2) + Mathf.Pow(a.Y - b.Y, 2));
+            return Mathf.Abs((b.Y - a.Y) * (this.X - a.X) - (b.X - a.X) * (this.Y - a.Y)) / Position.Distance(a, b);
         }
 
         // a, bを通る線分との距離
         public float DistanceToSegment(Position a, Position b)
         {
-            var t = ((this.X - a.X) * (b.X - a.X) + (this.Y - a.Y) * (b.Y - a.Y)) / Position.Distance(a, b);
-            if (t < 0 || t > 1) return Mathf.Min(Position.Distance(this, a), Position.Distance(this, b));
+            var t = ((this.X - a.X) * (b.X - a.X) + (this.Y - a.Y) * (b.Y - a.Y));
+            if (t < 0) return Position.Distance(this, a);
+            
+            t = ((this.X - b.X) * (a.X - b.X) + (this.Y - b.Y) * (a.Y - b.Y));
+            if (t < 0) return Position.Distance(this, b);
+
             return this.DistanceToLine(a, b);
         }
     }
