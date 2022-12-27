@@ -59,9 +59,15 @@ namespace TraPortation.Traffic
         /// <param name="to"></param>
         /// <param name="type">EdgeTypeから指定する</param>
         /// <returns>追加されたEdge</returns>
-        public VehicleEdge AddVehicleRoute(StationNode from, StationNode to, EdgeType type = EdgeType.Walk)
+        public VehicleEdge AddVehicleRoute(StationNode from, StationNode to, EdgeType type)
         {
             float cost = Const.EdgeCost.Get(type) * Utils.Node.Distance(from, to);
+            var edge = from.AddVehicleRoute(to, cost);
+            return edge;
+        }
+
+        public VehicleEdge AddVehicleRoute(StationNode from, StationNode to, float cost)
+        {
             var edge = from.AddVehicleRoute(to, cost);
             return edge;
         }
@@ -187,6 +193,64 @@ namespace TraPortation.Traffic
             searchedNodes.Add(goal);
 
             return searchedNodes;
+        }
+
+        public List<IBoardNode> SearchRoad(IBoardNode start, IBoardNode goal)
+        {
+            var from = Enumerable.Repeat<(IBoardNode?, IEdge<IBoardNode, IBoardNode>?)>((null, null), this.Nodes.Count).ToList();
+
+            var dist = Enumerable.Repeat<float>(float.MaxValue, this.Nodes.Count).ToList();
+            var que = new Utils.PriorityQueue<(float, int)>();
+            que.Push((0, start.Index));
+            dist[start.Index] = 0;
+
+            while (que.Count != 0)
+            {
+                var (cost, idx) = que.Top;
+                que.Pop();
+                if (dist[idx] < cost) continue;
+
+                // 道のみを探索
+                foreach (var edge in this.Nodes[idx].Roads)
+                {
+                    var nextCost = cost + edge.Cost;
+                    switch (edge)
+                    {
+                        case IEdge<IBoardNode, IBoardNode> e:
+                            if (dist[e.To.Index] <= nextCost) continue;
+                            dist[e.To.Index] = nextCost;
+                            from[e.To.Index] = (this.Nodes[idx], e);
+                            que.Push((dist[e.To.Index], e.To.Index));
+                            break;
+                        default:
+                            // unreachableなはず
+                            throw new System.Exception();
+                    }
+                }
+            }
+            var nodes = new List<IBoardNode>();
+
+            // startからgoalへの道がない場合は例外を投げる (仮仕様)
+            if (dist[goal.Index] == float.MaxValue)
+            {
+                throw new System.Exception("path not found");
+            }
+
+            nodes.Add(goal);
+            int i = 0;
+            for (var cur = from[goal.Index]; cur.Item1 != null; cur = from[cur.Item1.Index])
+            {
+                nodes.Add(cur.Item1);
+                i++;
+                if (i > this.Nodes.Count)
+                {
+                    throw new System.Exception("loop detected");
+                }
+            }
+
+            nodes.Reverse();
+
+            return nodes;
         }
 
         public IntersectionNode GetNearestNode(float x, float y)

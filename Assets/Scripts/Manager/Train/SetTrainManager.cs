@@ -1,6 +1,7 @@
 using TraPortation.Game;
 using TraPortation.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace TraPortation
@@ -20,12 +21,19 @@ namespace TraPortation
             this.gameManager = gameManager;
         }
 
+        void Start()
+        {
+            trainIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
+            trainIcon.SetActive(false);
+        }
+
         void Update()
         {
             if (this.gameManager.Status != GameStatus.SetTrain)
             {
                 if (trainIcon.activeSelf)
                 {
+                    trainIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
                     trainIcon.SetActive(false);
                 }
 
@@ -44,7 +52,7 @@ namespace TraPortation
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity);
 
-            if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "RailView" && this.gameManager.ManageMoney.ExpenseCheck(Const.Train.VehicleCost))
+            if (!EventSystem.current.IsPointerOverGameObject() && hitInfo.collider != null && hitInfo.collider.gameObject.name == "RailView" && this.gameManager.ManageMoney.ExpenseCheck(Const.Train.VehicleCost))
             {
                 trainColor.a = 1f;
                 trainIcon.GetComponent<SpriteRenderer>().material.color = trainColor;

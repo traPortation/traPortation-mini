@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TraPortation.Traffic;
+using UnityEngine;
 
 namespace TraPortation.Const
 {
     /// <summary>
-    /// Edgeのコスト
+    /// 辺の長さあたりのコスト (経路探索で使用する)
     /// </summary>
     public static class EdgeCost
     {
@@ -16,19 +16,12 @@ namespace TraPortation.Const
             {
                 EdgeType.Walk => 10,
                 EdgeType.Train => 1,
-                _ => 0,
+                EdgeType.Bus => 5,
+                _ => throw new System.NotImplementedException(),
             };
         }
     }
 
-    /// <summary>
-    /// 数に関する定数
-    /// </summary>
-    public static class Count
-    {
-        public const int Person = 10;
-        public const int Road = 30;
-    }
     /// <summary>
     /// 速度に関する定数
     /// </summary>
@@ -36,6 +29,7 @@ namespace TraPortation.Const
     {
         public const float Person = 0.05f;
         public const float Train = 0.3f;
+        public const float Bus = 0.1f;
     }
 
     /// <summary>
@@ -47,5 +41,11 @@ namespace TraPortation.Const
 
         public const int minMoney = 0;
         public const int maxMoney = 999999999;
+    }
+
+
+    public static class Person
+    {
+        public const int StopMilliseconds = 1000;
     }
 }

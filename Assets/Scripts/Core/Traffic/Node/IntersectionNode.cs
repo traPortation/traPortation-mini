@@ -12,6 +12,7 @@ namespace TraPortation.Traffic.Node
         public float Y { get; }
         public int Index { get; }
         protected List<RoadEdge> roads { get; }
+        public IReadOnlyList<RoadEdge> Roads => this.roads;
         public virtual IEnumerable<IEdge<IBoardNode, IBoardNode>> Edges => this.roads;
         public IntersectionNode(float x, float y, int index)
         {
