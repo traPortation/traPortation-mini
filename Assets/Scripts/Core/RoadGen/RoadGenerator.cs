@@ -20,13 +20,22 @@ namespace TraPortation.Core.RoadGen
                 if (i > 1000)
                 {
                     Debug.Log("RoadGenerator: Failed to generate roads");
-                    return;
+                    this.roads = new List<Road>();
+                    i = 0;
+                    continue;
                 }
 
                 var p = this.randomPoint();
                 var angle = this.randomAngle();
 
-                this.AddRoad(p, angle);
+                try
+                {
+                    this.AddRoad(p, angle);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.Log(e);
+                }
             }
         }
 
