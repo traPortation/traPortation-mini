@@ -8,71 +8,62 @@ namespace TraPortation
     public class SetBusManager : MonoBehaviour
     {
         GameManager manager;
+        InputManager inputManager;
         [SerializeField] GameObject busIcon;
         [SerializeField] GameObject busPrefab;
+        MouseIcon icon;
         int nextBusId = 0;
 
         [Inject]
-        public void Construct(GameManager manager)
+        public void Construct(GameManager manager, InputManager inputManager)
         {
             this.manager = manager;
+            this.inputManager = inputManager;
         }
 
         void Start()
         {
-            busIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
-            busIcon.SetActive(false);
+            this.icon = new MouseIcon(busIcon, this.inputManager);
+            this.icon.SetActive(false);
         }
 
         void Update()
         {
             if (this.manager.Status != GameStatus.SetBus)
             {
-                if (busIcon.activeSelf)
-                {
-                    busIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
-                    busIcon.SetActive(false);
-                }
+                this.icon.SetActive(false);
                 return;
             }
 
-            if (!busIcon.activeSelf)
-                busIcon.SetActive(true);
 
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = Const.Z.MouseIcon;
-            busIcon.transform.position = mousePosition;
+            this.icon.SetActive(true);
+            this.icon.Update();
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity);
+            var obj = this.inputManager.RayCast();
 
-            var color = busIcon.GetComponent<SpriteRenderer>().color;
-
-            if (!EventSystem.current.IsPointerOverGameObject()
-                && hitInfo.collider != null
-                && hitInfo.collider.gameObject.name == "BusRailView"
+            if (obj != null
+                && obj.name == "BusRailView"
                 && this.manager.ManageMoney.ExpenseCheck(Const.Money.BusCost))
             {
-                color.a = 1f;
-                busIcon.GetComponent<SpriteRenderer>().material.color = color;
+                this.icon.SetAlpha(1.0f);
 
                 // TODO: 向きの処理
 
                 if (Input.GetMouseButtonDown(0) && this.manager.ManageMoney.Expense(Const.Money.BusCost))
                 {
-                    var busObj = Instantiate(busPrefab, new Vector3(mousePosition.x, mousePosition.y, Const.Z.Bus), Quaternion.identity);
+                    var pos = this.inputManager.GetMousePosition();
+                    var busObj = Instantiate(busPrefab, new Vector3(pos.x, pos.y, Const.Z.Bus), Quaternion.identity);
                     var bus = busObj.GetComponent<Bus>();
                     bus.SetId(nextBusId);
                     nextBusId++;
 
-                    var rail = hitInfo.collider.gameObject.GetComponent<UI.BusRailLine>().Rail;
-                    rail.AddBus(bus, mousePosition);
+                    var rail = obj.GetComponent<UI.BusRailLine>().Rail;
+                    rail.AddBus(bus, pos);
                 }
             }
             else
             {
-                color.a = 0.5f;
-                busIcon.GetComponent<SpriteRenderer>().material.color = color;
+                this.icon.SetAlpha(0.5f);
             }
         }
 

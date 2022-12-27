@@ -14,6 +14,7 @@ namespace TraPortation
     public class SetBusRailManager : MonoBehaviour
     {
         GameManager manager;
+        InputManager inputManager;
         Board board;
         List<IBoardNode> nodes = new List<IBoardNode>();
         ILine line;
@@ -22,9 +23,10 @@ namespace TraPortation
         List<BusRail> rails = new List<BusRail>();
 
         [Inject]
-        public void Construct(GameManager manager, Board board, ILine line, ILine curLine, BusRail.Factory factory)
+        public void Construct(GameManager manager, InputManager inputManager, Board board, ILine line, ILine curLine, BusRail.Factory factory)
         {
             this.manager = manager;
+            this.inputManager = inputManager;
             this.board = board;
             this.line = line;
             this.line.SetColor(Const.Color.SetBusRail);
@@ -52,18 +54,17 @@ namespace TraPortation
 
             if (this.nodes.Count != 0)
             {
-                var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var mousePos = this.inputManager.GetMousePosition();
                 this.curLine.SetLine(new Vector3[] { new Vector3(this.nodes.Last().X, this.nodes.Last().Y, Const.Z.BusRail), new Vector3(mousePos.x, mousePos.y, Const.Z.BusRail) });
             }
 
             if (Input.GetMouseButtonDown(0))
             {
-                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                var mask = LayerMask.GetMask("BusStation");
-                var hitInfo = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, mask);
-                if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "BusStation")
+                var obj = this.inputManager.RayCast(LayerMask.GetMask("BusStation"));
+
+                if (obj != null && obj.name == "BusStation")
                 {
-                    var busStation = hitInfo.collider.gameObject.GetComponent<BusStationView>().BusStation;
+                    var busStation = obj.GetComponent<BusStationView>().BusStation;
 
                     if (this.nodes.Count == 0)
                     {

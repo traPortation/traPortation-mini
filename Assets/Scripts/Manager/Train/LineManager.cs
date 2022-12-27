@@ -14,15 +14,18 @@ namespace TraPortation.UI
     {
         GameManager manager;
         RailManager railManager;
+        InputManager inputManager;
         ILine mainLine;
         ILine currentLine;
         List<Vector3> positions = new List<Vector3>();
         List<Station> stations = new List<Station>();
 
         [Inject]
-        public void Construct(GameManager manager, ILine mainLine, ILine currentLine, RailManager railManager)
+        public void Construct(GameManager manager, InputManager inputManager,
+            ILine mainLine, ILine currentLine, RailManager railManager)
         {
             this.manager = manager;
+            this.inputManager = inputManager;
             this.railManager = railManager;
             this.mainLine = mainLine;
             this.currentLine = currentLine;
@@ -50,17 +53,13 @@ namespace TraPortation.UI
             }
             else
             {
-                var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
                 if (Input.GetMouseButtonDown(0))
                 {
-                    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    var mask = LayerMask.GetMask("Station");
-                    var hitInfo = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, mask);
+                    var obj = this.inputManager.RayCast(LayerMask.GetMask("Station"));
 
-                    if (hitInfo.collider != null && hitInfo.collider.gameObject.name == "Station")
+                    if (obj != null && obj.name == "Station")
                     {
-                        var view = hitInfo.collider.gameObject.GetComponent<StationView>();
+                        var view = obj.GetComponent<StationView>();
                         var station = view.Station;
 
                         if (station is null)
@@ -75,7 +74,7 @@ namespace TraPortation.UI
                             this.stations = new List<Station>();
                             this.mainLine.SetLine(Array.Empty<Vector3>());
                             this.currentLine.SetLine(Array.Empty<Vector3>());
-                            
+
                             this.manager.SetStatus(GameStatus.Normal);
                             return;
                         }
@@ -90,6 +89,7 @@ namespace TraPortation.UI
                     return;
                 }
 
+                var mousePos = this.inputManager.GetMousePosition();
                 this.currentLine.SetLine(new Vector3[2] { this.positions.Last(), new Vector3(mousePos.x, mousePos.y, Const.Z.Rail) });
             }
         }

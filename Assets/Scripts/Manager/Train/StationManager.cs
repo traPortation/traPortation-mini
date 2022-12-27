@@ -16,14 +16,16 @@ namespace TraPortation
         List<Station> stations = new List<Station>();
         [SerializeField] GameObject prefab;
         [SerializeField] GameObject stationIcon;
+        MouseIcon icon;
         GameManager gameManager;
+        InputManager inputManager;
         Board board;
         DiContainer container;
 
         void Start()
         {
-            stationIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
-            stationIcon.SetActive(false);
+            this.icon = new MouseIcon(stationIcon, this.inputManager);
+            this.icon.SetActive(false);
         }
 
         // TODO: 別のクラスに分ける
@@ -31,53 +33,37 @@ namespace TraPortation
         {
             if (this.gameManager.Status != GameStatus.SetStation)
             {
-                if (stationIcon.activeSelf)
-                {
-                    stationIcon.transform.position = new Vector3(Const.Map.XMin - 1, Const.Map.YMin - 1, Const.Z.MouseIcon);
-                    stationIcon.SetActive(false);
-                }
+                this.icon.SetActive(false);
                 return;
             }
 
-            if (!stationIcon.activeSelf)
-            {
-                stationIcon.SetActive(true);
-            }
+            this.icon.SetActive(true);
+            this.icon.Update();
 
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = Const.Z.MouseIcon;
-            stationIcon.transform.position = mousePosition;
-            Color stationColor = stationIcon.GetComponent<SpriteRenderer>().color;
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            var mask = LayerMask.GetMask("Road");
-            RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity, mask);
-
-            if (!EventSystem.current.IsPointerOverGameObject()
-                && hitInfo.collider != null
-                && hitInfo.collider.gameObject.name == "RoadView"
+            var obj = this.inputManager.RayCast(LayerMask.GetMask("Road"));
+            if (obj != null && obj.name == "RoadView"
                 && this.gameManager.ManageMoney.ExpenseCheck(Const.Money.StationCost))
             {
-                stationColor.a = 1f;
-                stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
+                this.icon.SetAlpha(1.0f);
 
                 if (Input.GetMouseButtonDown(0)
                     && this.gameManager.ManageMoney.Expense(Const.Money.StationCost))
                 {
+                    var mousePosition = this.inputManager.GetMousePosition();
                     this.AddStation(mousePosition.x, mousePosition.y);
                 }
             }
             else
             {
-                stationColor.a = 0.5f;
-                stationIcon.GetComponent<SpriteRenderer>().material.color = stationColor;
+                this.icon.SetAlpha(0.5f);
             }
         }
 
         [Inject]
-        public void Construct(GameManager gameManager, Board board, DiContainer container)
+        public void Construct(GameManager gameManager, Board board, DiContainer container, InputManager inputManager)
         {
             this.gameManager = gameManager;
+            this.inputManager = inputManager;
             this.board = board;
             this.container = container;
         }
