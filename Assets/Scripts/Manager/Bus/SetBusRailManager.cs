@@ -21,6 +21,7 @@ namespace TraPortation
         ILine curLine;
         BusRail.Factory factory;
         List<BusRail> rails = new List<BusRail>();
+        Color nextColor => Const.Color.BusRails[this.rails.Count % Const.Color.BusRails.Count];
 
         [Inject]
         public void Construct(GameManager manager, InputManager inputManager, Board board, ILine line, ILine curLine, BusRail.Factory factory)
@@ -29,9 +30,13 @@ namespace TraPortation
             this.inputManager = inputManager;
             this.board = board;
             this.line = line;
-            this.line.SetColor(Const.Color.SetBusRail);
             this.curLine = curLine;
-            this.curLine.SetColor(Const.Color.SetBusRail);
+
+            var color = this.nextColor;
+            color.a = 0.5f;
+            this.line.SetColor(color);
+            this.curLine.SetColor(color);
+
             this.factory = factory;
 
             this.line.SetParent(this.transform);
@@ -79,6 +84,12 @@ namespace TraPortation
                         this.nodes.Clear();
                         this.line.SetLine(this.nodes.Select(n => new Vector3(n.X, n.Y, Const.Z.BusRail)).ToArray());
                         this.curLine.SetLine(new Vector3[] { });
+
+                        var color = this.nextColor;
+                        color.a = 0.5f;
+                        this.line.SetColor(color);
+                        this.curLine.SetColor(color);
+
                         this.manager.SetStatus(GameStatus.Normal);
                         return;
                     }
