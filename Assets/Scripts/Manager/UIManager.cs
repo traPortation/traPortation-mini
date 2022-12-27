@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using TraPortation.Game;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace TraPortation.UI
         private int money;
         public TextMeshProUGUI timeLimitText;
         public TextMeshProUGUI moneyText;
+        public TextMeshProUGUI moneyDiffText;
         public TextMeshProUGUI populationText;
         public Text scoreText;
         public Text statusText;
@@ -35,6 +37,8 @@ namespace TraPortation.UI
 
             this.setVehicleImage(Vehicle.None);
             this.setVerbImage(Verb.None);
+
+            this.startMoney = this.manager.ManageMoney.money;
         }
 
         // Update is called once per frame
@@ -43,10 +47,26 @@ namespace TraPortation.UI
             money = manager.ManageMoney.money;
             timeLimit -= Time.deltaTime;
 
+            this.updateDiff();
+
             timeLimitText.text = string.Format("{0} 秒", ((int)timeLimit));
             moneyText.text = string.Format("¥{0}", money);
+
+            if (diffAverage > 0)
+            {
+                moneyDiffText.color = Color.blue;
+                moneyDiffText.text = string.Format("+{0}", diffAverage);
+            }
+            else if (diffAverage < 0)
+            {
+                moneyDiffText.color = Color.red;
+                moneyDiffText.text = string.Format("{0}", diffAverage);
+            }
+            else
+                moneyDiffText.text = "";
             scoreText.text = string.Format("{0} 点", score);
             populationText.text = Const.General.PersonCount.ToString();
+
             statusText.text = manager.Status switch
             {
                 GameStatus.Normal => "Normal",
@@ -99,6 +119,32 @@ namespace TraPortation.UI
                         this.setVerbImage(Verb.None);
                         break;
                 }
+            }
+        }
+
+        float time;
+        int startMoney;
+        int intervalSeconds = 5;
+        int targetSeconds = 60;
+        List<int> diffs = new List<int>();
+        int diffAverage;
+
+        void updateDiff()
+        {
+            time += Time.deltaTime;
+            if (time > intervalSeconds)
+            {
+                time -= intervalSeconds;
+                int diff = this.manager.ManageMoney.money - startMoney;
+                startMoney = this.manager.ManageMoney.money;
+
+                if (diffs.Count >= targetSeconds / intervalSeconds)
+                {
+                    diffs.RemoveAt(0);
+                }
+                diffs.Add(diff);
+
+                this.diffAverage = diffs.Sum();
             }
         }
 
