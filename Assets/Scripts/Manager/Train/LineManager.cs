@@ -33,8 +33,11 @@ namespace TraPortation.UI
             this.mainLine.SetParent(this.transform);
             this.currentLine.SetParent(this.transform);
 
-            this.mainLine.SetColor(Const.Color.SetRail);
-            this.currentLine.SetColor(Const.Color.SetRail);
+            var color = this.railManager.NextColor;
+            color.a = 0.5f;
+
+            this.mainLine.SetColor(color);
+            this.currentLine.SetColor(color);
         }
 
         void Update()
@@ -74,6 +77,10 @@ namespace TraPortation.UI
                             this.stations = new List<Station>();
                             this.mainLine.SetLine(Array.Empty<Vector3>());
                             this.currentLine.SetLine(Array.Empty<Vector3>());
+                            var color = this.railManager.NextColor;
+                            color.a = 0.5f;
+                            this.mainLine.SetColor(color);
+                            this.currentLine.SetColor(color);
 
                             this.manager.SetStatus(GameStatus.Normal);
                             return;
