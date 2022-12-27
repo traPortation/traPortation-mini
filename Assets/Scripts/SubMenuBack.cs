@@ -25,5 +25,11 @@ namespace TraPortation
             SceneManager.LoadScene("Opening");
             this.manager.SetStatus(GameStatus.Normal);
         }
+
+        public void restart()
+        {
+            Time.timeScale = 1;
+            SceneManager.LoadScene("Loading");
+        }
     }
 }
