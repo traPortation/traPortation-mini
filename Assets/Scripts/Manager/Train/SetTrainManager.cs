@@ -58,7 +58,7 @@ namespace TraPortation
                     // なんか逆になるので180度足している
                     var railEuler = obj.transform.rotation.eulerAngles.z + 180;
 
-                    if (Mathf.Abs(euler - railEuler) < 180)
+                    if (Mathf.Cos(Mathf.Abs(euler - railEuler) * Mathf.Deg2Rad) > 0)
                     {
                         this.icon.obj.transform.rotation = Quaternion.Euler(0, 0, railEuler);
                         this.direction = true;
