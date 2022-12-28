@@ -9,32 +9,48 @@ namespace TraPortation.Const
     {
         public static readonly UColor Road = new UColor(212 / 255f, 212 / 255f, 212 / 255f);
         public static readonly IReadOnlyList<UColor> RailColors = new List<UColor>() {
-            new UColor(1, 0, 0, 1),
-            new UColor(0, 1, 0, 1),
-            new UColor(0, 0, 1, 1),
-            new UColor(1, 1, 0, 1),
-            new UColor(1, 0, 1, 1),
-            new UColor(0, 1, 1, 1),
-            new UColor(0.5f, 0, 0, 1),
-            new UColor(0, 0.5f, 0, 1),
-            new UColor(0, 0, 0.5f, 1),
-            new UColor(0.5f, 0.5f, 0, 1),
-            new UColor(0.5f, 0, 0.5f, 1),
-            new UColor(0, 0.5f, 0.5f, 1),
-            new UColor(0.5f, 0.5f, 0.5f, 1),
-            new UColor(1, 0.5f, 1, 1),
-            new UColor(1f, 0.7f, 0.5f, 1f),
-            new UColor(1f, 0.9f, 0.3f, 1f),
-            new UColor(0.3f, 0.3f, 0.3f, 1f),
-            new UColor(1, 0.4f, 0.2f, 1f),
-            new UColor(0.7f, 0.3f, 0.4f, 1f),
-            new UColor(0.2f, 0.6f, 0.3f, 1f),
+            HexC("EE5050"),
+            HexC("FFE920"),
+            HexC("65EE62"),
+            HexC("63C7FF"),
+            HexC("5451F5"),
+            HexC("F551D1"),
+            HexC("FF6C01"),
+            HexC("CAEE62"),
+            HexC("35FBCB"),
+            HexC("6398FF"),
+            HexC("A351F5"),
+            HexC("F55178"),
         };
 
 
         public static readonly IReadOnlyList<UColor> BusRails = new List<UColor>() {
-            UColor.yellow,
-            UColor.green,
+            HexC("BC1B42"),
+            HexC("450089"),
+            HexC("065987"),
+            HexC("00A47C"),
+            HexC("6D9400"),
+            HexC("BA4E00"),
+            HexC("7A0260"),
+            HexC("030098"),
+            HexC("007ABF"),
+            HexC("0C800A"),
+            HexC("B9A600"),
+            HexC("8C0000"),
         };
+
+        //HEXを変換する関数定義
+        public static UColor HexC(string hex)
+        {
+            //HEXをRGBに変換
+            float r = (float)System.Convert.ToInt32(hex.Substring(0, 2), 16) / 255f;
+            float g = (float)System.Convert.ToInt32(hex.Substring(2, 2), 16) / 255f;
+            float b = (float)System.Convert.ToInt32(hex.Substring(4, 2), 16) / 255f;
+
+            //RGBをColor型に変換
+            UColor color = new UColor(r, g, b, 1);
+
+            return color;
+        }
     }
 }
