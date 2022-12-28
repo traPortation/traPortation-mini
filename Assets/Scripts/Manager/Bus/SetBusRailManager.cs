@@ -85,7 +85,6 @@ namespace TraPortation
                         var rail = this.factory.Create(this.rails.Count, this.nodes);
                         this.rails.Add(rail);
 
-                        this.publisher.Publish(new CreatedEvent(CreateType.BusRail));
 
                         this.nodes.Clear();
                         this.line.SetLine(this.nodes.Select(n => new Vector3(n.X, n.Y, Const.Z.BusRail)).ToArray());
@@ -101,6 +100,7 @@ namespace TraPortation
                     }
                     else
                     {
+                        this.publisher.Publish(new CreatedEvent(CreateType.BusRail));
                         var nodes = this.board.SearchRoad(this.nodes.Last(), busStation.Node);
                         this.nodes = this.nodes.Concat(nodes).ToList();
 

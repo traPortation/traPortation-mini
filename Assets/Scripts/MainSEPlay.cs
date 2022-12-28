@@ -15,6 +15,7 @@ public class MainSEPlay : MonoBehaviour
     [SerializeField] private AudioClip Pause;//AudioClip型の変数b3を宣言 使用するAudioClipをアタッチ必要 
     [SerializeField] private AudioClip Set;
     [SerializeField] private AudioClip Build;
+    [SerializeField] private AudioClip Route;
 
 
     [Inject]
@@ -25,9 +26,11 @@ public class MainSEPlay : MonoBehaviour
             switch(e.Type) {
                 case CreateType.Train:
                 case CreateType.Bus:
+                    SetFn();
+                    break;
                 case CreateType.Rail:
                 case CreateType.BusRail:
-                    SetFn();
+                    RouteFn();
                     break;
                 case CreateType.Station:
                 case CreateType.BusStation:
@@ -61,6 +64,11 @@ public class MainSEPlay : MonoBehaviour
     public void BuildFn()
     {
         AudioComponent.PlayOneShot(Build);
+    }
+
+    public void RouteFn()
+    {
+        AudioComponent.PlayOneShot(Route);
     }
 
 }
