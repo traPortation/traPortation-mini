@@ -1,3 +1,5 @@
+using MessagePipe;
+using TraPortation.Event;
 using TraPortation.Game;
 using TraPortation.UI;
 using UnityEngine;
@@ -10,6 +12,7 @@ namespace TraPortation
     {
         GameManager gameManager;
         InputManager inputManager;
+        IPublisher<CreatedEvent> publisher;
         Vector3 lastMousePosition;
         bool direction = true;
         [SerializeField] GameObject trainIcon;
@@ -18,10 +21,11 @@ namespace TraPortation
         int nextTrainId = 0;
 
         [Inject]
-        public void Construct(GameManager gameManager, InputManager inputManager)
+        public void Construct(GameManager gameManager, InputManager inputManager, IPublisher<CreatedEvent> publisher)
         {
             this.gameManager = gameManager;
             this.inputManager = inputManager;
+            this.publisher = publisher;
         }
 
         void Start()
@@ -79,6 +83,7 @@ namespace TraPortation
                     if (ok)
                     {
                         var trainObj = Instantiate(trainPrefab);
+                        this.publisher.Publish(new CreatedEvent(CreateType.Train));
                         var train = trainObj.GetComponent<Train>();
                         train.transform.position = new Vector3(mousePosition.x, mousePosition.y, Const.Z.Train);
                         train.SetId(nextTrainId);

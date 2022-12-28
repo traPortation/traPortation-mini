@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using MessagePipe;
 using TraPortation.Event;
 using TraPortation.Game;
 using TraPortation.Traffic;
@@ -16,6 +17,7 @@ namespace TraPortation
         GameManager manager;
         InputManager inputManager;
         Board board;
+        IPublisher<CreatedEvent> publisher;
         List<IBoardNode> nodes = new List<IBoardNode>();
         ILine line;
         ILine curLine;
@@ -24,11 +26,13 @@ namespace TraPortation
         Color nextColor => Const.Color.BusRails[this.rails.Count % Const.Color.BusRails.Count];
 
         [Inject]
-        public void Construct(GameManager manager, InputManager inputManager, Board board, ILine line, ILine curLine, BusRail.Factory factory)
+        public void Construct(GameManager manager, InputManager inputManager,
+            Board board, ILine line, ILine curLine, BusRail.Factory factory, IPublisher<CreatedEvent> publisher)
         {
             this.manager = manager;
             this.inputManager = inputManager;
             this.board = board;
+            this.publisher = publisher;
             this.line = line;
             this.curLine = curLine;
 
@@ -80,6 +84,8 @@ namespace TraPortation
                     {
                         var rail = this.factory.Create(this.rails.Count, this.nodes);
                         this.rails.Add(rail);
+
+                        this.publisher.Publish(new CreatedEvent(CreateType.BusRail));
 
                         this.nodes.Clear();
                         this.line.SetLine(this.nodes.Select(n => new Vector3(n.X, n.Y, Const.Z.BusRail)).ToArray());

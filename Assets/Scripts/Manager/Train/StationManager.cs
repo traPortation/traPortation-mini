@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using MessagePipe;
+using TraPortation.Event;
 using TraPortation.Game;
 using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
@@ -19,6 +21,7 @@ namespace TraPortation
         MouseIcon icon;
         GameManager gameManager;
         InputManager inputManager;
+        IPublisher<CreatedEvent> publisher;
         Board board;
         DiContainer container;
 
@@ -60,12 +63,13 @@ namespace TraPortation
         }
 
         [Inject]
-        public void Construct(GameManager gameManager, Board board, DiContainer container, InputManager inputManager)
+        public void Construct(GameManager gameManager, Board board, DiContainer container, InputManager inputManager, IPublisher<CreatedEvent> publisher)
         {
             this.gameManager = gameManager;
             this.inputManager = inputManager;
             this.board = board;
             this.container = container;
+            this.publisher = publisher;
         }
 
         /// <summary>
@@ -84,6 +88,7 @@ namespace TraPortation
             this.board.AddRoadEdge(node, road.To);
 
             GameObject newStation = container.InstantiatePrefab(this.prefab);
+            this.publisher.Publish(new CreatedEvent(CreateType.Station));
             newStation.name = "Station";
             newStation.transform.position = new Vector3(x, y, Const.Z.Station);
             var station = new Station(node);

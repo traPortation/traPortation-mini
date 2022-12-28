@@ -15,6 +15,7 @@ namespace TraPortation.UI
         GameManager manager;
         RailManager railManager;
         InputManager inputManager;
+        IPublisher<CreatedEvent> publisher;
         ILine mainLine;
         ILine currentLine;
         List<Vector3> positions = new List<Vector3>();
@@ -22,13 +23,15 @@ namespace TraPortation.UI
 
         [Inject]
         public void Construct(GameManager manager, InputManager inputManager,
-            ILine mainLine, ILine currentLine, RailManager railManager)
+            ILine mainLine, ILine currentLine, RailManager railManager, IPublisher<CreatedEvent> publisher)
         {
             this.manager = manager;
             this.inputManager = inputManager;
             this.railManager = railManager;
+            this.publisher = publisher;
             this.mainLine = mainLine;
             this.currentLine = currentLine;
+
 
             this.mainLine.SetParent(this.transform);
             this.currentLine.SetParent(this.transform);
@@ -72,6 +75,7 @@ namespace TraPortation.UI
                         if (this.stations.Count != 0 && this.stations.Last() == station)
                         {
                             this.railManager.AddRail(this.stations);
+                            this.publisher.Publish(new CreatedEvent(CreateType.Rail));
 
                             this.positions = new List<Vector3>();
                             this.stations = new List<Station>();
