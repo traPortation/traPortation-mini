@@ -99,7 +99,7 @@ namespace TraPortation.Traffic
             var from = Enumerable.Repeat<(IIndexedNode?, IEdge<IBoardNode, IBoardNode>?)>((null, null), this.Nodes.Count).ToList();
 
             var dist = Enumerable.Repeat<float>(float.MaxValue, this.Nodes.Count).ToList();
-            var que = new Utils.PriorityQueue<(float, int)>();
+            var que = new Utils.PriorityQueue<(float, int)>(this.Nodes.Count + 10);
 
             foreach (var (cost, start) in starts)
             {

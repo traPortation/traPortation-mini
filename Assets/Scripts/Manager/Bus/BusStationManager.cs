@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using MessagePipe;
+using TraPortation.Event;
 using TraPortation.Game;
 using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
@@ -20,14 +22,17 @@ namespace TraPortation
         DiContainer container;
         GameManager gameManager;
         InputManager inputManager;
+        IPublisher<CreatedEvent> publisher;
 
         [Inject]
-        public void Construct(Board board, DiContainer container, GameManager gameManager, InputManager inputManager)
+        public void Construct(Board board, DiContainer container,
+            GameManager gameManager, InputManager inputManager, IPublisher<CreatedEvent> publisher)
         {
             this.board = board;
             this.container = container;
             this.gameManager = gameManager;
             this.inputManager = inputManager;
+            this.publisher = publisher;
         }
 
         void Start()
@@ -79,6 +84,7 @@ namespace TraPortation
             var newStation = container.InstantiatePrefab(this.prefab);
             newStation.name = "BusStation";
             newStation.transform.position = new Vector3(x, y, Const.Z.BusStation);
+            this.publisher.Publish(new CreatedEvent(CreateType.BusStation));
             var station = new BusStation(node);
             var view = newStation.GetComponent<BusStationView>();
             view.SetBusStation(station);
