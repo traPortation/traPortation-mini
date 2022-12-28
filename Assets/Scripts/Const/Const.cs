@@ -28,13 +28,13 @@ namespace TraPortation.Const
     public static class Velocity
     {
         public const float Person = 0.01f;
-        public const float Train = 0.3f;
-        public const float Bus = 0.1f;
+        public const float Train = 0.08f;
+        public const float Bus = 0.03f;
     }
 
 
     public static class Person
     {
-        public const int StopMilliseconds = 1000;
+        public const int StopMilliseconds = 3000;
     }
 }
