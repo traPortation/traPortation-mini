@@ -14,36 +14,42 @@ namespace TraPortation
             get => this.nowMoney;
         }
 
-        // 所持金を下限と上限の間になるようにするやつ
         public bool ExpenseCheck(int expense)
         {
-            if (Const.Money.minMoney <= this.nowMoney + expense && this.nowMoney + expense <= Const.Money.maxMoney)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return Const.Money.Min <= this.nowMoney + expense
+                && this.nowMoney + expense <= Const.Money.Max;
         }
-        public bool ExpenseMoney(int expense, bool allowMinus = false)
+
+        public bool Expense(int expense, bool allowMinus = false)
         {
             if (allowMinus)
             {
-                this.nowMoney += expense;
+                this.nowMoney -= expense;
                 return true;
             }
             else
             {
                 if (ExpenseCheck(expense))
                 {
-                    this.nowMoney += expense;
+                    this.nowMoney -= expense;
                     return true;
                 }
                 else
                 {
                     return false;
                 }
+            }
+        }
+
+        public void Income(int income)
+        {
+            if (ExpenseCheck(income))
+            {
+                this.nowMoney += income;
+            }
+            else
+            {
+                this.nowMoney = Const.Money.Max;
             }
         }
 

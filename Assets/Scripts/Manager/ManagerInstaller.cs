@@ -21,6 +21,7 @@ namespace TraPortation
             Container.Bind<BusStationManager>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<SetBusRailManager>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<SetBusManager>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.Bind<InputManager>().FromComponentInHierarchy().AsSingle().NonLazy();
 
             Container.Bind<AudioSwitcher>().FromComponentInHierarchy().AsSingle().NonLazy();
 

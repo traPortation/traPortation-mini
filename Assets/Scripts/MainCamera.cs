@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TraPortation.Game;
 using UnityEngine;
+using Zenject;
 
 
 namespace TraPortation
@@ -10,12 +12,14 @@ namespace TraPortation
         [SerializeField, Range(0.1f, 10f)]
         private float wheelSpeed = 1f;
 
-        [SerializeField, Range(0.1f, 10f)]
-        private float moveSpeed = 0.3f;
+        [SerializeField, Range(0.005f, 0.5f)]
+        private float moveSpeed = 0.01f;
 
         [SerializeField]
         private Camera mainCamera;
         private Vector3 preMousePos;
+
+        private GameManager manager;
 
         private float Left => transform.position.x - mainCamera.orthographicSize * mainCamera.aspect;
         private float Right => transform.position.x + mainCamera.orthographicSize * mainCamera.aspect;
@@ -23,6 +27,7 @@ namespace TraPortation
         private float Bottom => transform.position.y - mainCamera.orthographicSize;
 
         private float maxSize;
+        private float minSize = 1.0f;
 
         // Start is called before the first frame update
         void Start()
@@ -39,9 +44,17 @@ namespace TraPortation
             return;
         }
 
+        [Inject]
+        void Construct(GameManager manager)
+        {
+            this.manager = manager;
+        }
+
 
         private void MouseUpdate()
         {
+            if (this.manager.Status == GameStatus.SubMenu) return;
+
             float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
             if (scrollWheel != 0.0f)
                 MouseWheel(scrollWheel);
@@ -58,7 +71,7 @@ namespace TraPortation
         {
             float s = mainCamera.orthographicSize;
             s = s + (-1f) * delta * wheelSpeed;
-            mainCamera.orthographicSize = Mathf.Min(s, maxSize);
+            mainCamera.orthographicSize = Mathf.Max(Mathf.Min(s, maxSize), minSize);
             // transform.position += transform.forward * delta * wheelSpeed;
 
             FitCamera();
@@ -74,7 +87,7 @@ namespace TraPortation
                 return;
 
             if (Input.GetMouseButton(1))
-                transform.Translate(-diff * Time.deltaTime * moveSpeed);
+                transform.Translate(-diff * moveSpeed * mainCamera.orthographicSize);
 
             preMousePos = mousePos;
 

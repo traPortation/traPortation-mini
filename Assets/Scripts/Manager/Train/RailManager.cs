@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TraPortation.Traffic;
+using UnityEngine;
 using Zenject;
 
 #nullable enable
@@ -12,6 +13,7 @@ namespace TraPortation
         List<Rail> rails { get; }
         public IReadOnlyList<Rail> Rails => this.rails;
         Rail.Factory railFactory;
+        public Color NextColor => Const.Color.RailColors[this.rails.Count % Const.Color.RailColors.Count];
         Board board;
 
         [Inject]
@@ -27,11 +29,7 @@ namespace TraPortation
         /// </summary>
         public Rail AddRail(List<Station> stations)
         {
-            int index = 0;
-            if (this.rails.Count != 0)
-            {
-                index = this.rails[this.rails.Count - 1].ID + 1;
-            }
+            int index = this.rails.Count;
 
             string defaultName = $"Rail {index.ToString()}";
 

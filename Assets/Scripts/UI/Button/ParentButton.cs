@@ -1,17 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using TraPortation.Game;
 using UnityEngine;
+using Zenject;
 
-public class ParentButton : MonoBehaviour
+namespace TraPortation
 {
-    [SerializeField]
-    private List<GameObject> children;
-
-    public void PushParentButton()
+    public class ParentButton : MonoBehaviour
     {
-        for (int i = 0; i < children.Count; i++)
+        [SerializeField]
+        private List<GameObject> children;
+
+        [SerializeField]
+        private ParentButton otherButton;
+
+        [Inject]
+        GameManager manager;
+
+        bool isActive = false;
+
+        public void PushParentButton()
         {
-            children[i].SetActive(!children[i].activeSelf);
+            this.manager.SetStatus(GameStatus.Normal);
+
+            this.SetActive(!this.isActive);
+            otherButton.SetActive(false);
+        }
+
+        public void SetActive(bool active)
+        {
+            if (this.isActive == active)
+                return;
+
+            this.isActive = active;
+            for (int i = 0; i < children.Count; i++)
+            {
+                children[i].SetActive(active);
+            }
         }
     }
 }

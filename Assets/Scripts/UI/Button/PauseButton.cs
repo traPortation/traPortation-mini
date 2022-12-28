@@ -22,7 +22,7 @@ namespace TraPortation.UI.Button
         void IPointerClickHandler.OnPointerClick(PointerEventData e)
         {
 
-            if (this.manager.Status == GameStatus.Pause)
+            if (this.manager.Status != GameStatus.Normal)
             {
                 this.manager.SetStatus(GameStatus.Normal);
             }
@@ -33,16 +33,13 @@ namespace TraPortation.UI.Button
         }
         void Update()
         {
-            if (this.manager.Status == GameStatus.Pause ||
-                this.manager.Status == GameStatus.SetRail ||
-                this.manager.Status == GameStatus.SetTrain ||
-                this.manager.Status == GameStatus.SetStation)
+            if (this.manager.Status == GameStatus.Normal)
             {
-                this.image.sprite = this.pauseSprite[1];
+                this.image.sprite = this.pauseSprite[0];
             }
             else
             {
-                this.image.sprite = this.pauseSprite[0];
+                this.image.sprite = this.pauseSprite[1];
             }
         }
     }

@@ -21,6 +21,7 @@ namespace TraPortation
         [SerializeField] GameObject person;
         [SerializeField] GameObject building;
         [SerializeField] GameObject train;
+        [SerializeField] GameObject gradation;
 
         public GameObject roadFolder;
         public GameObject peopleFolder;
@@ -42,6 +43,7 @@ namespace TraPortation
 
             this.initBoardForTest();
             this.InstantiatePeople();
+            this.setGradation();
         }
 
         [Inject]
@@ -150,6 +152,35 @@ namespace TraPortation
                     this.roadFactory.Create(before, node, length);
                 }
             }
+        }
+
+        void setGradation()
+        {
+            var parent = new GameObject("Gradation");
+
+            var top = Instantiate(gradation);
+            top.transform.position = new Vector3(Const.Map.YMin + Const.Map.Width / 2, Const.Map.YMax - Const.General.GradationWidth / 2, Const.Z.Gradation);
+            top.transform.localScale = new Vector3(Const.Map.Width, Const.General.GradationWidth, 1);
+
+            var bottom = Instantiate(gradation);
+            bottom.transform.position = new Vector3(Const.Map.YMin + Const.Map.Width / 2, Const.Map.YMin + Const.General.GradationWidth / 2, Const.Z.Gradation);
+            bottom.transform.localScale = new Vector3(Const.Map.Width, Const.General.GradationWidth, 1);
+            bottom.transform.Rotate(0, 0, 180);
+
+            var left = Instantiate(gradation);
+            left.transform.position = new Vector3(Const.Map.XMin + Const.General.GradationWidth / 2, Const.Map.YMin + Const.Map.Height / 2, Const.Z.Gradation);
+            left.transform.localScale = new Vector3(Const.Map.Height, Const.General.GradationWidth, 1);
+            left.transform.Rotate(0, 0, 90);
+
+            var right = Instantiate(gradation);
+            right.transform.position = new Vector3(Const.Map.XMax - Const.General.GradationWidth / 2, Const.Map.YMin + Const.Map.Height / 2, Const.Z.Gradation);
+            right.transform.localScale = new Vector3(Const.Map.Height, Const.General.GradationWidth, 1);
+            right.transform.Rotate(0, 0, -90);
+
+            top.transform.parent = parent.transform;
+            bottom.transform.parent = parent.transform;
+            left.transform.parent = parent.transform;
+            right.transform.parent = parent.transform;
         }
 
         public void SetStatus(GameStatus status)
