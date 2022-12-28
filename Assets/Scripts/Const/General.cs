@@ -5,7 +5,7 @@ namespace TraPortation.Const
     public static class General
     {
         public const int PersonCount = 100;
-        public const int RoadCount = 100;
+        public const int RoadCount = 200;
 
         public const float TimeLimitSeconds = 600f;
 

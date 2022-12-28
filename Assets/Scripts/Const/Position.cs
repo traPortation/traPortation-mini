@@ -8,7 +8,7 @@ namespace TraPortation.Const
     public static class X
     {
         public static readonly float Min = 0f;
-        public static readonly float Max = 16f;
+        public static readonly float Max = 32f;
     }
     /// <summary>
     /// Y座標に関する定数
@@ -16,7 +16,7 @@ namespace TraPortation.Const
     public static class Y
     {
         public static readonly float Min = 0f;
-        public static readonly float Max = 9f;
+        public static readonly float Max = 18f;
     }
 
     public static class Map
