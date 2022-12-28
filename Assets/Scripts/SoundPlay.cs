@@ -1,9 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundPlay : MonoBehaviour
 {
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
+
+    void Update()
+    {
+        if (SceneManager.GetActiveScene().name == "Game Scene"){
+            Destroy(this.gameObject);
+        }
+    }
     AudioClip clip;
 
     void Start()
