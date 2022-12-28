@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using MessagePipe;
+using TraPortation.Event;
 using UnityEngine;
+using Zenject;
 
 public class MainSEPlay : MonoBehaviour
 {
@@ -13,6 +16,26 @@ public class MainSEPlay : MonoBehaviour
     [SerializeField] private AudioClip Set;
     [SerializeField] private AudioClip Build;
 
+
+    [Inject]
+    public void Construct(ISubscriber<CreatedEvent> subscriber)
+    {
+        subscriber.Subscribe(e =>
+        {
+            switch(e.Type) {
+                case CreateType.Train:
+                case CreateType.Bus:
+                case CreateType.Rail:
+                case CreateType.BusRail:
+                    SetFn();
+                    break;
+                case CreateType.Station:
+                case CreateType.BusStation:
+                    BuildFn();
+                    break;
+            }
+        });
+    }
 
     //自作の関数1
     public void ClickFn()
@@ -31,10 +54,12 @@ public class MainSEPlay : MonoBehaviour
     {
         AudioComponent.PlayOneShot(Pause);
     }
-    public void SetFn(){
+    public void SetFn()
+    {
         AudioComponent.PlayOneShot(Set);
     }
-    public void BuildFn(){
+    public void BuildFn()
+    {
         AudioComponent.PlayOneShot(Build);
     }
 
