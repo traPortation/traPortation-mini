@@ -60,7 +60,7 @@ namespace TraPortation.UI
             this.updateDiff();
 
             timeLimitText.text = string.Format("{0} 秒", ((int)timeLimit));
-            moneyText.text = string.Format("¥{0}", money);
+            moneyText.text = string.Format("${0}", money);
 
             if (diffAverage > 0)
             {
@@ -73,7 +73,8 @@ namespace TraPortation.UI
                 moneyDiffText.text = string.Format("{0}", diffAverage);
             }
             else
-                moneyDiffText.text = "";
+                moneyDiffText.color = Color.gray;
+                moneyDiffText.text = string.Format("{0}", diffAverage);
             scoreText.text = string.Format("{0} 点", score);
             populationText.text = Const.General.PersonCount.ToString();
 
@@ -135,8 +136,8 @@ namespace TraPortation.UI
 
         float time;
         int startMoney;
-        int intervalSeconds = 5;
-        int targetSeconds = 60;
+        int intervalSeconds = 1;
+        int targetSeconds = 10;
         List<int> diffs = new List<int>();
         int diffAverage;
 
