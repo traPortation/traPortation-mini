@@ -1,3 +1,5 @@
+using MessagePipe;
+using TraPortation.Event;
 using TraPortation.Game;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,16 +11,18 @@ namespace TraPortation
     {
         GameManager manager;
         InputManager inputManager;
+        IPublisher<CreatedEvent> publisher;
         [SerializeField] GameObject busIcon;
         [SerializeField] GameObject busPrefab;
         MouseIcon icon;
         int nextBusId = 0;
 
         [Inject]
-        public void Construct(GameManager manager, InputManager inputManager)
+        public void Construct(GameManager manager, InputManager inputManager, IPublisher<CreatedEvent> publisher)
         {
             this.manager = manager;
             this.inputManager = inputManager;
+            this.publisher = publisher;
         }
 
         void Start()
@@ -54,6 +58,7 @@ namespace TraPortation
                     var pos = this.inputManager.GetMousePosition();
                     var busObj = Instantiate(busPrefab, new Vector3(pos.x, pos.y, Const.Z.Bus), Quaternion.identity);
                     var bus = busObj.GetComponent<Bus>();
+                    this.publisher.Publish(new CreatedEvent(CreateType.Bus));
                     bus.SetId(nextBusId);
                     nextBusId++;
 

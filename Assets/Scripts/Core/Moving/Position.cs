@@ -20,7 +20,9 @@ namespace TraPortation.Moving
 
         static public float Distance(Position a, Position b)
         {
-            return Mathf.Sqrt(Mathf.Pow(a.X - b.X, 2) + Mathf.Pow(a.Y - b.Y, 2));
+            var x = a.X - b.X;
+            var y = a.Y - b.Y;
+            return Mathf.Sqrt(x * x + y * y);
         }
 
         public Vector3 ToVector3(float z)
