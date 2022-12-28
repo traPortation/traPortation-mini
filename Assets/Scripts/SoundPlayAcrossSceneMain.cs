@@ -16,13 +16,16 @@ public class SoundPlayAcrossSceneMain : MonoBehaviour
     }
     void DelayMethod()
     {
+        
         Debug.Log("Delay call");
         Destroy(this.gameObject);
     }
 
     void Update()
     {
-        Invoke(nameof(DelayMethod), 5.5f);
+        if (SceneManager.GetActiveScene().name != "Game Scene"){
+            Invoke(nameof(DelayMethod), 2.0f);
+        }
     }
     AudioClip clip;
 
