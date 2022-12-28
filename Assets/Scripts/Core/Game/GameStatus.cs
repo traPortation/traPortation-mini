@@ -14,5 +14,7 @@ namespace TraPortation.Game
         SetBus,
         SetBusStation,
         SetBusRail,
+
+        Result
     }
 }

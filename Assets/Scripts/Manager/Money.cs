@@ -16,8 +16,7 @@ namespace TraPortation
 
         public bool ExpenseCheck(int expense)
         {
-            return Const.Money.Min <= this.nowMoney + expense
-                && this.nowMoney + expense <= Const.Money.Max;
+            return this.nowMoney - expense >= Const.Money.Min;
         }
 
         public bool Expense(int expense, bool allowMinus = false)
@@ -43,14 +42,7 @@ namespace TraPortation
 
         public void Income(int income)
         {
-            if (ExpenseCheck(income))
-            {
-                this.nowMoney += income;
-            }
-            else
-            {
-                this.nowMoney = Const.Money.Max;
-            }
+            this.nowMoney = Math.Min(this.nowMoney + income, Const.Money.Max);
         }
 
     }
