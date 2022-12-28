@@ -44,6 +44,16 @@ namespace TraPortation.UI
         // Update is called once per frame
         void Update()
         {
+            if (timeLimit <= 0)
+            {
+                if (this.manager.Status != GameStatus.Result)
+                {
+                    this.manager.SetStatus(GameStatus.Result);
+                }
+                timeLimit = 0;
+                return;
+            }
+
             money = manager.ManageMoney.money;
             timeLimit -= Time.deltaTime;
 
@@ -78,6 +88,7 @@ namespace TraPortation.UI
                 GameStatus.SetBusStation => "SetBusStation",
                 GameStatus.SetBusRail => "SetBusRail",
                 GameStatus.SetBus => "SetBus",
+                GameStatus.Result => "Result",
                 _ => throw new InvalidOperationException(),
             };
 

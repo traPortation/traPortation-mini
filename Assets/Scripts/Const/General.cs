@@ -16,5 +16,8 @@ namespace TraPortation.Const
 
         public const float LineWidth = 0.1f;
         public const float GradationWidth = 0.5f;
+
+        public const float PeopleScoreRatio = 0.4f;
+        public const float MoneyScoreRatio = 0.6f;
     }
 }
