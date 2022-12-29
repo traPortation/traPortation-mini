@@ -10,7 +10,7 @@ namespace TraPortation
     public class MainCamera : MonoBehaviour
     {
         [SerializeField, Range(0.1f, 10f)]
-        private float wheelSpeed = 1f;
+        private float wheelSpeed = 3f;
 
         [SerializeField, Range(0.005f, 0.5f)]
         private float moveSpeed = 0.01f;
@@ -28,6 +28,8 @@ namespace TraPortation
 
         private float maxSize;
         private float minSize = 1.0f;
+        private float currentSize;
+        private Vector3 currentPosition;
 
         // Start is called before the first frame update
         void Start()
@@ -35,12 +37,17 @@ namespace TraPortation
             this.maxSize = Mathf.Min(Const.Map.Height, Const.Map.Width / this.mainCamera.aspect) / 2;
 
             SetCenter();
+            this.currentSize = this.mainCamera.orthographicSize;
+            this.currentPosition = transform.position;
         }
 
         // Update is called once per frame
         void Update()
         {
             MouseUpdate();
+
+            CameraUpdate();
+
             return;
         }
 
@@ -48,6 +55,11 @@ namespace TraPortation
         void Construct(GameManager manager)
         {
             this.manager = manager;
+        }
+
+        private void CameraUpdate()
+        {
+            this.mainCamera.orthographicSize = Mathf.Lerp(this.mainCamera.orthographicSize, this.currentSize, 0.1f);
         }
 
 
@@ -69,9 +81,9 @@ namespace TraPortation
 
         private void MouseWheel(float delta)
         {
-            float s = mainCamera.orthographicSize;
+            float s = this.currentSize;
             s = s + (-1f) * delta * wheelSpeed;
-            mainCamera.orthographicSize = Mathf.Max(Mathf.Min(s, maxSize), minSize);
+            this.currentSize = Mathf.Max(Mathf.Min(s, maxSize), minSize);
             // transform.position += transform.forward * delta * wheelSpeed;
 
             FitCamera();

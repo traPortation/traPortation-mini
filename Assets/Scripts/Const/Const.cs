@@ -15,7 +15,7 @@ namespace TraPortation.Const
             return type switch
             {
                 EdgeType.Walk => 10,
-                EdgeType.Train => 1,
+                EdgeType.Train => 2,
                 EdgeType.Bus => 5,
                 _ => throw new System.NotImplementedException(),
             };
