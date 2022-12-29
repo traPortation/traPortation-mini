@@ -14,7 +14,7 @@ public class MenuSelect : MonoBehaviour
 
     void Awake()
     {
-        Screen.SetResolution(Screen.width, Screen.width * 9 / 16, false);
+        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.width * 9 / 16, false);
     }
 
     public void StartGame()
