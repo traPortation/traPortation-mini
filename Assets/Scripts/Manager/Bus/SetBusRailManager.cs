@@ -102,6 +102,7 @@ namespace TraPortation
                     {
                         this.publisher.Publish(new CreatedEvent(CreateType.BusRail));
                         var nodes = this.board.SearchRoad(this.nodes.Last(), busStation.Node);
+                        this.nodes.RemoveAt(this.nodes.Count - 1);
                         this.nodes = this.nodes.Concat(nodes).ToList();
 
                         this.line.SetLine(this.nodes.Select(n => new Vector3(n.X, n.Y, Const.Z.BusRail)).ToArray());
