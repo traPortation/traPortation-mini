@@ -7875,7 +7875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wheelSpeed: 3
-  moveSpeed: 0.005
+  moveSpeed: 0.03
   mainCamera: {fileID: 1456269678}
 --- !u!1001 &1486500831
 PrefabInstance:
