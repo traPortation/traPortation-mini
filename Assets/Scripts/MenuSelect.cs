@@ -30,6 +30,11 @@ public class MenuSelect : MonoBehaviour
         Application.Quit();
     }
 
+    public void Info()
+    {
+        Application.OpenURL("https://gist.github.com/reyu0722/59bd1b973ee70290119f67de7797afb1");
+    }
+
     IEnumerator Fadeout()
     {
         for (var i = 1f; i >= 0; i -= 0.1f)

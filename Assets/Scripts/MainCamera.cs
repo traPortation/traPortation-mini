@@ -21,10 +21,10 @@ namespace TraPortation
 
         private GameManager manager;
 
-        private float Left => transform.position.x - mainCamera.orthographicSize * mainCamera.aspect;
-        private float Right => transform.position.x + mainCamera.orthographicSize * mainCamera.aspect;
-        private float Top => transform.position.y + mainCamera.orthographicSize;
-        private float Bottom => transform.position.y - mainCamera.orthographicSize;
+        private float Left => this.currentPosition.x - mainCamera.orthographicSize * mainCamera.aspect;
+        private float Right => this.currentPosition.x + mainCamera.orthographicSize * mainCamera.aspect;
+        private float Top => this.currentPosition.y + mainCamera.orthographicSize;
+        private float Bottom => this.currentPosition.y - mainCamera.orthographicSize;
 
         private float maxSize;
         private float minSize = 1.0f;
@@ -60,6 +60,7 @@ namespace TraPortation
         private void CameraUpdate()
         {
             this.mainCamera.orthographicSize = Mathf.Lerp(this.mainCamera.orthographicSize, this.currentSize, 0.1f);
+            this.transform.position = Vector3.Lerp(this.transform.position, this.currentPosition, 0.3f);
         }
 
 
@@ -99,7 +100,7 @@ namespace TraPortation
                 return;
 
             if (Input.GetMouseButton(1))
-                transform.Translate(-diff * moveSpeed * mainCamera.orthographicSize);
+                this.currentPosition += -diff * moveSpeed / 10 * mainCamera.orthographicSize;
 
             preMousePos = mousePos;
 
@@ -110,19 +111,19 @@ namespace TraPortation
         {
             if (Left < Const.Map.XMin)
             {
-                transform.position += new Vector3(Const.Map.XMin - Left, 0, 0);
+                this.currentPosition += new Vector3(Const.Map.XMin - Left, 0, 0);
             }
             if (Right > Const.Map.XMax)
             {
-                transform.position += new Vector3(Const.Map.XMax - Right, 0, 0);
+                this.currentPosition += new Vector3(Const.Map.XMax - Right, 0, 0);
             }
             if (Top > Const.Map.YMax)
             {
-                transform.position += new Vector3(0, Const.Map.YMax - Top, 0);
+                this.currentPosition += new Vector3(0, Const.Map.YMax - Top, 0);
             }
             if (Bottom < Const.Map.YMin)
             {
-                transform.position += new Vector3(0, Const.Map.YMin - Bottom, 0);
+                this.currentPosition += new Vector3(0, Const.Map.YMin - Bottom, 0);
             }
         }
 
