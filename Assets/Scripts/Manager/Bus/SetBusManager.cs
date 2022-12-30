@@ -51,7 +51,8 @@ namespace TraPortation
             {
                 this.icon.SetAlpha(1.0f);
 
-                // TODO: 向きの処理
+                var railEuler = obj.transform.rotation.eulerAngles.z + 180;
+                this.icon.obj.transform.rotation = Quaternion.Euler(0, 0, railEuler);
 
                 if (Input.GetMouseButtonDown(0) && this.manager.ManageMoney.Expense(Const.Money.BusCost))
                 {
