@@ -18,7 +18,7 @@ namespace TraPortation
         public int bgmNum = 0;
 
         [Range(0, 1)]
-        public float masterVolume = 0.5f;
+        public float masterVolume = 0.4f;
         [Inject]
         GameManager manager;
         bool menu = false;
