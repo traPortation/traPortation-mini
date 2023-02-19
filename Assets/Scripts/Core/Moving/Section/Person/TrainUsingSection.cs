@@ -21,7 +21,10 @@ namespace TraPortation.Moving.Section.Person
         readonly DisposableBagBuilder disposableBag;
         readonly ManageMoney manager;
 
-        public TrainUsingSection(IReadOnlyList<Station> stations, ISubscriber<int, StationEvent> stationSubscriber, ISubscriber<int, TrainEvent> trainSubscriber, ManageMoney manager)
+        public TrainUsingSection(IReadOnlyList<Station> stations,
+            ISubscriber<int, StationEvent> stationSubscriber,
+            ISubscriber<int, TrainEvent> trainSubscriber,
+            ManageMoney manager)
         {
             this.Status = SectionStatus.NotStarted;
             this.Position = new Position(stations.First().Node);
@@ -56,6 +59,7 @@ namespace TraPortation.Moving.Section.Person
             this.Dispose();
 
             this.Status = SectionStatus.OnStation;
+            station.ChangePeopleCount(1);
 
             // 駅で電車を待つ
             this.stationSubscriber.Subscribe(station.ID, se =>
@@ -69,6 +73,7 @@ namespace TraPortation.Moving.Section.Person
 
                 // 運賃を加算して電車に乗る
                 this.manager.Income(Const.Money.TrainIncome);
+                station.ChangePeopleCount(-1);
                 this.trainSubscriber.Subscribe(se.TrainId, ve =>
                 {
                     // 自分が乗った駅への到着は無視する
