@@ -20,6 +20,7 @@ namespace TraPortation.UI
         public TextMeshProUGUI moneyText;
         public TextMeshProUGUI moneyDiffText;
         public TextMeshProUGUI populationText;
+        public TextMeshProUGUI moneyExpenseText;
         public Text scoreText;
         public Text statusText;
 
@@ -28,6 +29,7 @@ namespace TraPortation.UI
         public Image stationImage;
         public Image vehicleImage;
         public Image routeImage;
+        private Vector3 position;
         // Start is called before the first frame update
         void Start()
         {
@@ -39,6 +41,7 @@ namespace TraPortation.UI
             this.setVerbImage(Verb.None);
 
             this.startMoney = this.manager.ManageMoney.money;
+            moneyExpenseText.enabled = false;
         }
 
         // Update is called once per frame
@@ -61,6 +64,11 @@ namespace TraPortation.UI
 
             timeLimitText.text = string.Format("{0} 秒", ((int)timeLimit));
             moneyText.text = string.Format("${0}", money);
+
+            position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            position.y += 1.2f;
+            position.z = 0;
+            moneyExpenseText.transform.position = position;
 
             if (diffAverage > 0)
             {
@@ -118,17 +126,37 @@ namespace TraPortation.UI
                     case GameStatus.SetRail:
                     case GameStatus.SetBusRail:
                         this.setVerbImage(Verb.Route);
+                        moneyExpenseText.enabled = false;
                         break;
                     case GameStatus.SetStation:
                     case GameStatus.SetBusStation:
                         this.setVerbImage(Verb.Station);
+                        moneyExpenseText.enabled = true;
                         break;
                     case GameStatus.SetTrain:
                     case GameStatus.SetBus:
                         this.setVerbImage(Verb.Vehicle);
+                        moneyExpenseText.enabled = true;
                         break;
                     default:
                         this.setVerbImage(Verb.None);
+                        moneyExpenseText.enabled = false;
+                        break;
+                }
+
+                switch (this.manager.Status)
+                {
+                    case GameStatus.SetStation:
+                        moneyExpenseText.text = string.Format("${0}", Const.Money.StationCost);
+                        break;
+                    case GameStatus.SetBusStation:
+                        moneyExpenseText.text = string.Format("${0}", Const.Money.BusStationCost);
+                        break;
+                    case GameStatus.SetTrain:
+                        moneyExpenseText.text = string.Format("${0}", Const.Money.TrainCost);
+                        break;
+                    case GameStatus.SetBus:
+                        moneyExpenseText.text = string.Format("${0}", Const.Money.BusCost);
                         break;
                 }
             }
