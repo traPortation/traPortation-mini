@@ -19,6 +19,7 @@ namespace TraPortation
 
         [Range(0, 1)]
         public float masterVolume = 0.5f;
+        List<float> relativeVolumes = new List<float>() { 0, 0, 0, 0 };
         [Inject]
         GameManager manager;
         bool menu = false;
@@ -33,20 +34,20 @@ namespace TraPortation
                 audio.loop = true;
             }
 
-            audios[bgmNum].volume = masterVolume;
+            relativeVolumes[bgmNum] = masterVolume;
         }
 
         private void Update()
         {
             if (manager.Status == GameStatus.SubMenu && !this.menu)
             {
-                this.changeTo[bgmNum] = this.masterVolume / 2;
+                this.changeTo[bgmNum] = 1 / 2;
                 this.menu = true;
             }
 
             if (manager.Status != GameStatus.SubMenu && this.menu)
             {
-                this.changeTo[bgmNum] = this.masterVolume;
+                this.changeTo[bgmNum] = 1;
                 this.menu = false;
             }
 
@@ -58,13 +59,23 @@ namespace TraPortation
                 {
                     this.changeTo[this.bgmNum] = 0;
                     this.bgmNum++;
-                    this.changeTo[this.bgmNum] = this.masterVolume;
+                    this.changeTo[this.bgmNum] = 1;
                 }
             }
 
             this.changeVolume();
+            this.setVolume();
         }
 
+        // relativeVolumeを反映する
+        void setVolume() {
+            for (int i = 0; i < audios.Length; i++)
+            {
+                audios[i].volume = relativeVolumes[i] * masterVolume;
+            }
+        }
+
+        // changeTo[i] を relativeVolume[i] に近づける
         private void changeVolume()
         {
             for (int i = 0; i < audios.Length; i++)
@@ -74,19 +85,19 @@ namespace TraPortation
                     continue;
                 }
 
-                if (Mathf.Abs(changeTo[i] - audios[i].volume) < 0.01f)
+                if (Mathf.Abs(changeTo[i] - relativeVolumes[i]) < 0.01f)
                 {
-                    audios[i].volume = changeTo[i];
+                    relativeVolumes[i] = changeTo[i];
                     changeTo[i] = -1;
                     continue;
                 }
-                else if (changeTo[i] > audios[i].volume)
+                else if (changeTo[i] > relativeVolumes[i])
                 {
-                    audios[i].volume += 0.01f;
+                    relativeVolumes[i] += 0.01f;
                 }
                 else
                 {
-                    audios[i].volume -= 0.01f;
+                    relativeVolumes[i] -= 0.01f;
                 }
             }
         }
