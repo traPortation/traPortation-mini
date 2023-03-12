@@ -59,8 +59,8 @@ namespace Tests
             Assert.AreEqual(this.path.Position, new Position(0, 0));
         }
 
-        [UnityTest]
-        public IEnumerator MoveTest() => UniTask.ToCoroutine(async () =>
+        [Test]
+        public void MoveTest() 
         {
             // 次の駅まで着かない場合
             this.path.Move(0.5f);
@@ -70,31 +70,45 @@ namespace Tests
             this.path.Move(10);
             Assert.AreEqual(this.path.Position, new Position(0, 1));
 
-            // 止まっている間は動かない
-            this.path.Move(10);
-            Assert.AreEqual(this.path.Position, new Position(0, 1));
-
-            await UniTask.Delay(20);
+            for (int i = 0; i < this.path.StopFrame; i++)
+            {
+                this.path.Move(10);
+                Assert.AreEqual(this.path.Position, new Position(0, 1));
+            }
 
             this.path.Move(10);
             Assert.AreEqual(this.path.Position, new Position(2, 2));
 
-            await UniTask.Delay(200);
+            for (int i = 0; i < this.path.StopFrame; i++)
+            {
+                this.path.Move(10);
+                Assert.AreEqual(this.path.Position, new Position(2, 2));
+            }
 
             // 折り返し
             this.path.Move(10);
             Assert.AreEqual(this.path.Position, new Position(0, 1));
 
-            await UniTask.Delay(20);
+            for (int i = 0; i < this.path.StopFrame; i++)
+            {
+                this.path.Move(10);
+                Assert.AreEqual(this.path.Position, new Position(0, 1));
+            }
+
 
             this.path.Move(10);
             Assert.AreEqual(this.path.Position, new Position(0, 0));
 
-            await UniTask.Delay(20);
+            for (int i = 0; i < this.path.StopFrame; i++)
+            {
+                this.path.Move(10);
+                Assert.AreEqual(this.path.Position, new Position(0, 0));
+            }
+
 
             // 折り返し
             this.path.Move(10);
             Assert.AreEqual(this.path.Position, new Position(0, 1));
-        });
+        }
     }
 }

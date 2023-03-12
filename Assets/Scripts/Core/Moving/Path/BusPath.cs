@@ -54,6 +54,7 @@ namespace TraPortation.Moving
                     this.stopping = false;
                     this.stopCount = 0;
                 }
+                return;
             }
 
             // Sectionが始まっていないなら始める
@@ -102,6 +103,7 @@ namespace TraPortation.Moving
 
                 // 止まる
                 this.stopping = true;
+                this.stopCount = 0;
 
                 // curSectionを更新
                 if (this.direction)
