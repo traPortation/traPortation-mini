@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MessagePipe;
+using Moq;
 using NUnit.Framework;
 using TraPortation;
 using TraPortation.Event.Train;
@@ -8,6 +9,7 @@ using TraPortation.Moving;
 using TraPortation.Moving.Section.Person;
 using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
+using TraPortation.UI;
 using UnityEngine;
 using Zenject;
 using Assert = UnityEngine.Assertions.Assert;
@@ -43,7 +45,7 @@ namespace Tests
             nodes.Add(new StationNode(1, 1, 1, StationKind.Train));
             nodes.Add(new StationNode(2, 2, 2, StationKind.Train));
 
-            this.stations = nodes.Select(n => new Station(n)).ToList();
+            this.stations = nodes.Select(n => new Station(n, new Mock<IStationView>().Object)).ToList();
 
             this.section = this.factory.Create(stations);
         }

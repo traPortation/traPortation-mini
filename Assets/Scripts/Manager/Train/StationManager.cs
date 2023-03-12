@@ -91,8 +91,8 @@ namespace TraPortation
             this.publisher.Publish(new CreatedEvent(CreateType.Station));
             newStation.name = "Station";
             newStation.transform.position = new Vector3(x, y, Const.Z.Station);
-            var station = new Station(node);
             var view = newStation.GetComponent<StationView>();
+            var station = new Station(node, view);
             view.SetStation(station);
 
             this.stations.Add(station);

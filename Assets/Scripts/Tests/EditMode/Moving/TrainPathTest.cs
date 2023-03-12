@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
+using Moq;
 using NUnit.Framework;
 using TraPortation.Event.Train;
 using TraPortation.Moving;
 using TraPortation.Traffic;
 using TraPortation.Traffic.Node;
+using TraPortation.UI;
 using UnityEngine;
 using UnityEngine.TestTools;
 using Zenject;
@@ -43,7 +45,7 @@ namespace Tests
             nodes.Add(new StationNode(0, 1, 1, StationKind.Train));
             nodes.Add(new StationNode(2, 2, 2, StationKind.Train));
 
-            this.stations = nodes.Select(n => new Station(n)).ToList();
+            this.stations = nodes.Select(n => new Station(n, new Mock<IStationView>().Object)).ToList();
 
             this.path = this.factory.Create(1, stations);
             this.path.StopMilliseconds = 10;
