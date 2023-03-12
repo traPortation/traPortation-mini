@@ -59,6 +59,7 @@ namespace TraPortation
                     var pos = this.inputManager.GetMousePosition();
                     var busObj = Instantiate(busPrefab, new Vector3(pos.x, pos.y, Const.Z.Bus), Quaternion.identity);
                     var bus = busObj.GetComponent<Bus>();
+                    bus.Construct(this.manager);
                     this.publisher.Publish(new CreatedEvent(CreateType.Bus));
                     bus.SetId(nextBusId);
                     nextBusId++;

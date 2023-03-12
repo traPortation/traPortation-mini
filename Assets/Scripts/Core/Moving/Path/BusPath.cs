@@ -15,11 +15,12 @@ namespace TraPortation.Moving
         public Position Position => this.curSection.Position;
         public Quaternion Rotation => this.curSection.Rotation;
         public SectionStatus Status => this.curSection.Status;
-        public int StopMilliseconds = Const.Bus.StopMilliseconds;
+        public int StopFrame = (int)(Const.Bus.StopMilliseconds / 1000f * 60f);
         ISection curSection;
         int busId;
         int index;
         bool stopping;
+        int stopCount;
         bool direction;
         IReadOnlyList<BusRoute> routes;
         IPublisher<int, BusEvent> busPub;
@@ -45,7 +46,16 @@ namespace TraPortation.Moving
 
         public void Move(float distance)
         {
-            if (this.stopping) return;
+            if (this.stopping)
+            {
+                this.stopCount++;
+                if (this.stopCount >= this.StopFrame)
+                {
+                    this.stopping = false;
+                    this.stopCount = 0;
+                }
+                return;
+            }
 
             // Sectionが始まっていないなら始める
             if (this.curSection.Status == SectionStatus.NotStarted)
@@ -92,7 +102,8 @@ namespace TraPortation.Moving
                 this.busPub.Publish(this.busId, new BusEvent(cur, next));
 
                 // 止まる
-                this.stopOnStation();
+                this.stopping = true;
+                this.stopCount = 0;
 
                 // curSectionを更新
                 if (this.direction)
@@ -141,13 +152,6 @@ namespace TraPortation.Moving
             this.curSection.Move(Position.Distance(minRoute.Positions[minindex], v));
 
             Debug.Assert(Position.Distance(this.curSection.Position, v) < 0.5f);
-        }
-
-        async void stopOnStation()
-        {
-            this.stopping = true;
-            await UniTask.Delay(this.StopMilliseconds);
-            this.stopping = false;
         }
     }
 }

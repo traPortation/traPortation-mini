@@ -16,14 +16,16 @@ namespace TraPortation
         Board board;
         PersonPathFactory factory;
         SpriteRenderer spriteRenderer;
+        GameManager manager;
 #nullable enable
         INode? goalNode;
 
         [Inject]
-        public void Construct(Board board, PersonPathFactory factory)
+        public void Construct(Board board, PersonPathFactory factory, GameManager manager)
         {
             this.board = board;
             this.factory = factory;
+            this.manager = manager;
 
             var (path, goal) = this.getRandomPath();
             this.goalNode = goal;
@@ -40,22 +42,25 @@ namespace TraPortation
         // Update is called once per frame
         void FixedUpdate()
         {
-            this.Move(this.velocity);
+            for (int i = 0; i < this.manager.GameSpeed; i++)
+            {
+                this.Move(this.velocity);
 
-            if (this.path.Status == SectionStatus.Finished)
-            {
-                var (path, goal) = this.getRandomPath();
-                this.goalNode = goal;
-                this.Initialize(path);
-            }
+                if (this.path.Status == SectionStatus.Finished)
+                {
+                    var (path, goal) = this.getRandomPath();
+                    this.goalNode = goal;
+                    this.Initialize(path);
+                }
 
-            if (this.path.Status == SectionStatus.OnTrain || this.path.Status == SectionStatus.OnBus)
-            {
-                this.spriteRenderer.enabled = false;
-            }
-            else
-            {
-                this.spriteRenderer.enabled = true;
+                if (this.path.Status == SectionStatus.OnTrain || this.path.Status == SectionStatus.OnBus)
+                {
+                    this.spriteRenderer.enabled = false;
+                }
+                else
+                {
+                    this.spriteRenderer.enabled = true;
+                }
             }
         }
 

@@ -19,9 +19,10 @@ namespace TraPortation.Moving
         int index;
         int trainId;
         bool stopping;
+        int stopCount;
         bool direction;
         // テストで書き換えるためにpublicにしている
-        public int StopMilliseconds = Const.Train.StopMilliseconds;
+        public int StopFrame = (int)(Const.Train.StopMilliseconds / 1000f * 60f);
         ISection curSection;
         readonly IPublisher<int, TrainEvent> trainPub;
         readonly IPublisher<int, StationEvent> stationPub;
@@ -42,7 +43,16 @@ namespace TraPortation.Moving
 
         public void Move(float distance)
         {
-            if (this.stopping) return;
+            if (this.stopping)
+            {
+                this.stopCount++;
+                if (this.stopCount >= this.StopFrame)
+                {
+                    this.stopping = false;
+                    this.stopCount = 0;
+                }
+                return;
+            }
 
             // Sectionが始まっていないなら始める
             if (this.curSection.Status == SectionStatus.NotStarted)
@@ -73,7 +83,8 @@ namespace TraPortation.Moving
                 this.trainPub.Publish(this.trainId, new TrainEvent(station, nextStation));
 
                 // 止まる
-                this.stopOnStation();
+                this.stopping = true;
+                this.stopCount = 0;
 
                 // curSectionを更新
                 this.curSection = new SimpleSection(new List<Position> { new Position(station.Node), new Position(nextStation.Node) });
@@ -122,13 +133,5 @@ namespace TraPortation.Moving
                 this.curSection.Move(t);
             }
         }
-
-        async void stopOnStation()
-        {
-            this.stopping = true;
-            await UniTask.Delay(this.StopMilliseconds);
-            this.stopping = false;
-        }
-
     }
 }
