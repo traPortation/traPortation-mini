@@ -47,11 +47,6 @@ namespace TraPortation.Moving
                     this.index++;
                     this.curSection = this.sections[this.index];
                 }
-                else
-                {
-                    this.curSection = new StopSection(this.curSection.Position, Const.Person.StopMilliseconds);
-                    this.curSection.Start();
-                }
             }
         }
     }

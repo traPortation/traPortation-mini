@@ -46,7 +46,7 @@ namespace Tests
             this.stations = nodes.Select(n => new Station(n)).ToList();
 
             this.path = this.factory.Create(1, stations);
-            this.path.StopMilliseconds = 10;
+            this.path.StopFrame = 2;
         }
 
         [Test]

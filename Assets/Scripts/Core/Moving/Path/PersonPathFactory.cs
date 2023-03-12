@@ -32,6 +32,7 @@ namespace TraPortation.Moving
             var sections = new List<ISection>();
 
             var positions = new List<Position>();
+            var lastPos = new Position(nodes[0]);
 
             for (int i = 0; i < nodes.Count; i++)
             {
@@ -40,6 +41,7 @@ namespace TraPortation.Moving
                 {
                     positions.Add(new Position(node));
                     sections.Add(new SimpleSection(positions));
+                    lastPos = positions.Last();
                     positions = new List<Position>();
 
                     if (sNode.Kind == StationKind.Train)
@@ -53,7 +55,10 @@ namespace TraPortation.Moving
                         i--;
 
                         if (stations.Count > 1)
+                        {
                             sections.Add(this.trainFactory.Create(stations));
+                            lastPos = new Position(stations.Last().Node);
+                        }
 
                         positions.Add(new Position(nodes[i]));
                     }
@@ -69,7 +74,10 @@ namespace TraPortation.Moving
                         i--;
 
                         if (busStations.Count > 1)
+                        {
                             sections.Add(this.busFactory.Create(busStations));
+                            lastPos = new Position(busStations.Last().Node);
+                        }
 
                         positions.Add(new Position(nodes[i]));
                     }
@@ -84,7 +92,10 @@ namespace TraPortation.Moving
             if (positions.Count > 1)
             {
                 sections.Add(new SimpleSection(positions));
+                lastPos = positions.Last();
             }
+
+            sections.Add(new StopSection(lastPos, Const.Person.StopMilliseconds));
 
             return new PersonPath(sections);
         }

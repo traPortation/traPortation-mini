@@ -26,6 +26,8 @@ namespace TraPortation
         public GameObject roadFolder;
         public GameObject peopleFolder;
 
+        public int GameSpeed = 1;
+
         StationManager StationManager;
         BusStationManager busStationManager;
         RailManager railManager;

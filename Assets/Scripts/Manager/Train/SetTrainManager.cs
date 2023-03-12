@@ -85,6 +85,7 @@ namespace TraPortation
                         var trainObj = Instantiate(trainPrefab);
                         this.publisher.Publish(new CreatedEvent(CreateType.Train));
                         var train = trainObj.GetComponent<Train>();
+                        train.Construct(this.gameManager);
                         train.transform.position = new Vector3(mousePosition.x, mousePosition.y, Const.Z.Train);
                         train.SetId(nextTrainId);
                         nextTrainId++;
