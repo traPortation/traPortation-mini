@@ -24,13 +24,13 @@ namespace TraPortation
         [SerializeField] GameObject gradation;
 
         public GameObject roadFolder;
-        public GameObject peopleFolder;
 
         public int GameSpeed = 1;
 
         StationManager StationManager;
         BusStationManager busStationManager;
         RailManager railManager;
+        PersonManager personManager;
         Traffic.Road.Factory roadFactory;
         // TODO: 消す
         DiContainer container;
@@ -51,7 +51,8 @@ namespace TraPortation
         [Inject]
         public void Construct(Board board, DiContainer container, StationManager stationManager,
             BusStationManager busStationManager, RailManager railManager,
-            Traffic.Road.Factory roadFactory, ManageMoney manageMoney, AudioSwitcher audioSwitcher)
+            Traffic.Road.Factory roadFactory, ManageMoney manageMoney,
+            AudioSwitcher audioSwitcher, PersonManager personManager)
         {
             this.Board = board;
             this.container = container;
@@ -59,6 +60,7 @@ namespace TraPortation
             this.busStationManager = busStationManager;
             this.railManager = railManager;
             this.roadFactory = roadFactory;
+            this.personManager = personManager;
 
             this.ManageMoney = manageMoney;
             this.audioSwitcher = audioSwitcher;
@@ -73,10 +75,7 @@ namespace TraPortation
         {
             for (int i = 0; i < Const.General.PersonCount; i++)
             {
-                var start = new Vector3(Random.Range(Const.X.Min, Const.X.Max), Random.Range(Const.Y.Min, Const.Y.Max), Const.Z.Person);
-                var obj = this.container.InstantiatePrefab(this.person);
-                obj.transform.position = start;
-                obj.transform.parent = this.peopleFolder.transform;
+                this.personManager.AddPeopleOnRandomPoint();
             }
         }
 

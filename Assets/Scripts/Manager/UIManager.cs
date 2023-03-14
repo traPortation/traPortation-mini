@@ -6,12 +6,14 @@ using TMPro;
 using TraPortation.Game;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace TraPortation.UI
 {
     public class UIManager : MonoBehaviour
     {
         private GameManager manager;
+        private PersonManager personManager;
         GameStatus currentStatus;
         private float timeLimit = Const.General.TimeLimitSeconds;
         private int score = 0;
@@ -30,11 +32,17 @@ namespace TraPortation.UI
         public Image vehicleImage;
         public Image routeImage;
         private Vector3 position;
+
+        [Inject]
+        public void Construct(GameManager manager, PersonManager personManager)
+        {
+            this.manager = manager;
+            this.personManager = personManager;
+        }
+
         // Start is called before the first frame update
         void Start()
         {
-            this.manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-            Utils.NullChecker.Check(this.manager);
             this.currentStatus = this.manager.Status;
 
             this.setVehicleImage(Vehicle.None);
@@ -47,6 +55,7 @@ namespace TraPortation.UI
         // Update is called once per frame
         void Update()
         {
+            // TODO: 別のクラスに移動
             if (timeLimit <= 0)
             {
                 if (this.manager.Status != GameStatus.Result)
@@ -82,9 +91,9 @@ namespace TraPortation.UI
             }
             else
                 moneyDiffText.color = Color.gray;
-                moneyDiffText.text = string.Format("{0}", diffAverage);
+            moneyDiffText.text = string.Format("{0}", diffAverage);
             scoreText.text = string.Format("{0} 点", score);
-            populationText.text = Const.General.PersonCount.ToString();
+            populationText.text = this.personManager.PeopleCount.ToString();
 
             statusText.text = manager.Status switch
             {

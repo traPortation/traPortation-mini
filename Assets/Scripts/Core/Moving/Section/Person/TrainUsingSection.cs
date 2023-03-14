@@ -18,12 +18,14 @@ namespace TraPortation.Moving.Section.Person
         int index;
         readonly ISubscriber<int, StationEvent> stationSubscriber;
         readonly ISubscriber<int, TrainEvent> trainSubscriber;
+        readonly IPublisher<GetOnTrainEvent> getOnTrainPublisher;
         readonly DisposableBagBuilder disposableBag;
         readonly ManageMoney manager;
 
         public TrainUsingSection(IReadOnlyList<Station> stations,
             ISubscriber<int, StationEvent> stationSubscriber,
             ISubscriber<int, TrainEvent> trainSubscriber,
+            IPublisher<GetOnTrainEvent> getOnTrainPublisher,
             ManageMoney manager)
         {
             this.Status = SectionStatus.NotStarted;
@@ -31,6 +33,7 @@ namespace TraPortation.Moving.Section.Person
             this.stations = stations;
             this.stationSubscriber = stationSubscriber;
             this.trainSubscriber = trainSubscriber;
+            this.getOnTrainPublisher = getOnTrainPublisher;
             this.disposableBag = DisposableBag.CreateBuilder();
             this.manager = manager;
 
@@ -74,6 +77,7 @@ namespace TraPortation.Moving.Section.Person
                 // 運賃を加算して電車に乗る
                 this.manager.Income(Const.Money.TrainIncome);
                 station.ChangePeopleCount(-1);
+                this.getOnTrainPublisher.Publish(new GetOnTrainEvent());
                 this.trainSubscriber.Subscribe(se.TrainId, ve =>
                 {
                     // 自分が乗った駅への到着は無視する
