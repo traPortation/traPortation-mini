@@ -36,6 +36,7 @@ namespace Tests
             Container.BindFactory<IReadOnlyList<Station>, TrainUsingSection, TrainUsingSection.Factory>();
             Container.BindMessageBroker<int, TrainEvent>(option);
             Container.BindMessageBroker<int, StationEvent>(option);
+            Container.BindMessageBroker<GetOnTrainEvent>(option);
             Container.Bind<ManageMoney>().FromNew().AsSingle();
 
             Container.Inject(this);
