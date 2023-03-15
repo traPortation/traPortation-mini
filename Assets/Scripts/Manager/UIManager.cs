@@ -83,6 +83,7 @@ namespace TraPortation.UI
                 GameStatus.Normal => "Normal",
                 GameStatus.Pause => "Pause",
                 GameStatus.SubMenu => "SubMenu",
+                GameStatus.Settings => "Settings",
                 GameStatus.SetTrain => "SetTrain",
                 GameStatus.SetRail => "SetRail",
                 GameStatus.SetStation => "SetStation",

@@ -6,6 +6,7 @@ namespace TraPortation.Game
         Normal,
         Pause,
         SubMenu,
+        Settings,
 
         SetTrain,
         SetRail,
