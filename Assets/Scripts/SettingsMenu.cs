@@ -21,6 +21,10 @@ namespace TraPortation
         {
             this.manager.SetStatus(GameStatus.Settings);
         }
+        public void GoSubMenu()
+        {
+            this.manager.SetStatus(GameStatus.SubMenu);
+        }
     }
 
 

@@ -37,11 +37,17 @@ namespace TraPortation
             relativeVolumes[bgmNum] = masterVolume;
         }
 
+        public void MainVolumeSliderOnValueChange(float newSliderValue)
+	    {
+		    // 音楽の音量をスライドバーの値に変更
+		    masterVolume = newSliderValue;
+	    }
+
         private void Update()
         {
             if (manager.Status == GameStatus.SubMenu && !this.menu)
             {
-                this.changeTo[bgmNum] = 1 / 2;
+                this.changeTo[bgmNum] = 1f / 2f;
                 this.menu = true;
             }
 
