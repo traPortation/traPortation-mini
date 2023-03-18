@@ -3,7 +3,7 @@ namespace TraPortation.Const
     public static class Money
     {
 
-        public const int Start = 10000;
+        public const int Start = 1000;
 
         public const int Min = 0;
         public const int Max = 999999;
